@@ -37,13 +37,14 @@ public class NavigationHandler {
     private ImageView find_local_pros_img, support_img, about_img;
     private ProBoldTextView find_local_pros_text, support_text, about_text;
 
-    private RelativeLayout notifications, invite_a_friend, quick_reply,request_review;
+    private RelativeLayout notifications, invite_a_friend, quick_reply,request_review,RLAvailability;
 
     public static final String
             REQUEST_REVIEW = "request_review",
             QUICK_REPLY = "find_local_pros",
             NOTIFICATION = "noti",
-            INVITE_FRIEND = "invite_fr";
+            INVITE_FRIEND = "invite_fr",
+            AvailableTimeSlot = "available_time_slot";
 
     public static NavigationHandler getInstance() {
         if (instance == null)
@@ -75,6 +76,7 @@ public class NavigationHandler {
         invite_a_friend = (RelativeLayout) view.findViewById(R.id.invite_a_friend);
         quick_reply = (RelativeLayout) view.findViewById(R.id.quick_reply);
         request_review = (RelativeLayout) view.findViewById(R.id.request_review);
+        RLAvailability = (RelativeLayout) view.findViewById(R.id.RLAvailability);
 
 
         request_review.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +106,14 @@ public class NavigationHandler {
             public void onClick(View v) {
               //  highlightTag(QUICK_REPLY);
                 listener.onClickItem(QUICK_REPLY);
+            }
+        });
+
+        RLAvailability.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  highlightTag(QUICK_REPLY);
+                listener.onClickItem(AvailableTimeSlot);
             }
         });
 

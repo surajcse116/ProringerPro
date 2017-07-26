@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.FragmentAvailabilityTimeSlot;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfriend;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.Notifications;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReply;
@@ -109,6 +110,11 @@ public class LandScreenActivity extends AppCompatActivity {
                     case NavigationHandler.INVITE_FRIEND:
                         closeDrawer();
                         transactInviteFriend();
+                        break;
+
+                    case NavigationHandler.AvailableTimeSlot:
+                        closeDrawer();
+                        transactTimeAvailibility();
                         break;
 
                 }
@@ -206,6 +212,22 @@ public class LandScreenActivity extends AppCompatActivity {
         FragmentTransaction trasaction = fragmentManager.beginTransaction();
         trasaction.replace(R.id.fragment_container, new Notifications(), "" + Notifications.class.getCanonicalName());
         trasaction.addToBackStack("" + Notifications.class.getCanonicalName());
+        trasaction.commit();
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+    }
+
+
+    private void transactTimeAvailibility() {
+
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + FragmentAvailabilityTimeSlot.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + FragmentAvailabilityTimeSlot.class.getCanonicalName());
+
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + FragmentAvailabilityTimeSlot.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + FragmentAvailabilityTimeSlot.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        FragmentTransaction trasaction = fragmentManager.beginTransaction();
+        trasaction.replace(R.id.fragment_container, new FragmentAvailabilityTimeSlot(), "" + FragmentAvailabilityTimeSlot.class.getCanonicalName());
+        trasaction.addToBackStack("" + FragmentAvailabilityTimeSlot.class.getCanonicalName());
         trasaction.commit();
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
     }

@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".activities.GetStarted"
-            android:screenOrientation="reversePortrait" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.SignUp"
             android:configChanges="orientation|screenSize"

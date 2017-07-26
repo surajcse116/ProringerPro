@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBGblueShade"
+    android:padding="15dp">
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open on selected hours"
+            android:textColor="#000000" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Always open"
+            android:textColor="#000000" />
+    </RadioGroup>
+
+    <View
+        android:id="@+id/line_view"
+        android:layout_below="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorDarkGray" />
+
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProLightTextView
+        android:id="@+id/tv_save"
+        android:text="SAVE"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@+id/days_week"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorAccent"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/line_view"
+        android:layout_above="@+id/tv_save"
+        android:id="@+id/rcv_"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+       />
+</RelativeLayout>
