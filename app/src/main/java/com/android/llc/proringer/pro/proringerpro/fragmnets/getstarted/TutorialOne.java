@@ -48,7 +48,7 @@ public class TutorialOne extends Fragment {
         description = (ProLightTextView) view.findViewById(R.id.description);
 
         header_text.setText("NEVER MISS A MESSAGE");
-        description.setText("Stay in touch with your clients through in-app messaging");
+        description.setText("Stay in touch with your clients\nthrough in-app messaging");
 
     }
 }

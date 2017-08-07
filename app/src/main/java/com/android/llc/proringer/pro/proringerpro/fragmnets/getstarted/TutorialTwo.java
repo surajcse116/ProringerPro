@@ -49,7 +49,7 @@ public class TutorialTwo extends Fragment {
         description = (ProLightTextView) view.findViewById(R.id.description);
 
         header_text.setText("EDIT BUSINESS PROFILE");
-        description.setText("Edit your company logo, company information, business description, and hour of operation ");
+        description.setText("Edit your company logo, company\ninformation, business description, and\nhour of operation ");
 
     }
 }

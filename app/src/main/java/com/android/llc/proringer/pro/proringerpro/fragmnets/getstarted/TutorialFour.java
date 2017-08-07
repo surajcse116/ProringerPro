@@ -48,7 +48,7 @@ public class TutorialFour extends Fragment {
         description = (ProLightTextView) view.findViewById(R.id.description);
 
         header_text.setText("RESPOND TO REVIEWS");
-        description.setText("Keep customers top of mind,even on the go! Read and respond to reviews directly from the app");
+        description.setText("Keep customers top of mind,even on\nthe go! Read and respond to reviews\ndirectly from the app");
 
     }
 }

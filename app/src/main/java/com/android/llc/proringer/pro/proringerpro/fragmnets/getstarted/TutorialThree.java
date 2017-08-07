@@ -48,6 +48,6 @@ public class TutorialThree extends Fragment {
         description = (ProLightTextView) view.findViewById(R.id.description);
 
         header_text.setText("SHOWCASE YOUR WORK");
-        description.setText("Upload new images and manage your project gallaries to display some of your best work");
+        description.setText("Upload new images and manage your\nproject gallaries to display some of\nyour best work");
     }
 }
