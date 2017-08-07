@@ -44,5 +44,10 @@ public class TutorialThree extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        header_text = (ProRegularTextView) view.findViewById(R.id.header_text);
+        description = (ProLightTextView) view.findViewById(R.id.description);
+
+        header_text.setText("SHOWCASE YOUR WORK");
+        description.setText("Upload new images and manage your project gallaries to display some of your best work");
     }
 }

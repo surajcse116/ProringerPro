@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.4"
-        android:background="@drawable/get_started_background" />
+        android:background="@drawable/welcome_intro_get_started" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,32 +21,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".8">
-
-            <ImageView
-                android:id="@+id/abc"
-                android:layout_width="200dp"
-                android:layout_height="60dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerInParent="true"
-                android:background="@drawable/header" />
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="13dp"
-                android:layout_alignEnd="@+id/abc"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/abc"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/business" />
-        </RelativeLayout>
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.7">
+            android:layout_weight="2.5">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/get_started_pager"
@@ -88,12 +63,6 @@
                     android:layout_height="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/circle_dark" />
-
-                <ImageView
-                    android:id="@+id/pager_dot_five"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
                     android:background="@drawable/circle_dark" />
             </LinearLayout>
         </RelativeLayout>

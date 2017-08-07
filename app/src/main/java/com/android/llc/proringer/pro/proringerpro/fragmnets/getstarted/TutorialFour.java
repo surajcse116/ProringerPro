@@ -44,5 +44,11 @@ public class TutorialFour extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        header_text = (ProRegularTextView) view.findViewById(R.id.header_text);
+        description = (ProLightTextView) view.findViewById(R.id.description);
+
+        header_text.setText("RESPOND TO REVIEWS");
+        description.setText("Keep customers top of mind,even on the go! Read and respond to reviews directly from the app");
+
     }
 }

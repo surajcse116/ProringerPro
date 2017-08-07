@@ -45,5 +45,11 @@ public class TutorialTwo extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        header_text = (ProRegularTextView) view.findViewById(R.id.header_text);
+        description = (ProLightTextView) view.findViewById(R.id.description);
+
+        header_text.setText("EDIT BUSINESS PROFILE");
+        description.setText("Edit your company logo, company information, business description, and hour of operation ");
+
     }
 }

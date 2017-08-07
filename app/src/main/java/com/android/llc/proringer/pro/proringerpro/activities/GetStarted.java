@@ -37,7 +37,7 @@ public class GetStarted extends AppCompatActivity {
 
     private ViewPager get_started_pager;
     private GetStartedTutorial adapter;
-    private ImageView pager_dot_one, pager_dot_two, pager_dot_three, pager_dot_four, pager_dot_five, slide_left, slide_right;
+    private ImageView pager_dot_one, pager_dot_two, pager_dot_three, pager_dot_four, slide_left, slide_right;
     private ProRegularTextView get_started, sign_in;
     public static final int LOG_IN_REQUEST = 1;
     public static final int SIGN_UP_REQUEST = 2;
@@ -55,7 +55,6 @@ public class GetStarted extends AppCompatActivity {
         pager_dot_two = (ImageView) findViewById(R.id.pager_dot_two);
         pager_dot_three = (ImageView) findViewById(R.id.pager_dot_three);
         pager_dot_four = (ImageView) findViewById(R.id.pager_dot_four);
-        pager_dot_five = (ImageView) findViewById(R.id.pager_dot_five);
 
 
         get_started_pager = (ViewPager) findViewById(R.id.get_started_pager);
@@ -104,35 +103,30 @@ public class GetStarted extends AppCompatActivity {
                 pager_dot_two.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_three.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_four.setBackgroundResource(R.drawable.circle_dark);
-                pager_dot_five.setBackgroundResource(R.drawable.circle_dark);
                 break;
             case 1:
                 pager_dot_one.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_two.setBackgroundResource(R.drawable.circle_orenge_border);
                 pager_dot_three.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_four.setBackgroundResource(R.drawable.circle_dark);
-                pager_dot_five.setBackgroundResource(R.drawable.circle_dark);
                 break;
             case 2:
                 pager_dot_one.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_two.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_three.setBackgroundResource(R.drawable.circle_orenge_border);
                 pager_dot_four.setBackgroundResource(R.drawable.circle_dark);
-                pager_dot_five.setBackgroundResource(R.drawable.circle_dark);
                 break;
             case 3:
                 pager_dot_one.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_two.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_three.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_four.setBackgroundResource(R.drawable.circle_orenge_border);
-                pager_dot_five.setBackgroundResource(R.drawable.circle_dark);
                 break;
             case 4:
                 pager_dot_one.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_two.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_three.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_four.setBackgroundResource(R.drawable.circle_dark);
-                pager_dot_five.setBackgroundResource(R.drawable.circle_orenge_border);
                 break;
         }
     }
