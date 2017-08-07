@@ -1,11 +1,13 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,6 +17,9 @@ import android.widget.RelativeLayout;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.GetStartedTutorial;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
+import com.bumptech.glide.Glide;
+
+import java.util.logging.Logger;
 
 
 /**
@@ -45,6 +50,8 @@ public class GetStarted extends AppCompatActivity {
     //RelativeLayout RLBottom;
     public static final int SIGN_UP_REQUEST = 2;
 
+    ImageView img_background;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +69,10 @@ public class GetStarted extends AppCompatActivity {
 
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
+
+        img_background= (ImageView) findViewById(R.id.img_background);
+
+        Glide.with(GetStarted.this).load(R.drawable.welcome_intro_get_started).into(img_background);
 
         //RLBottom= (RelativeLayout) findViewById(R.id.RLBottom);
 
