@@ -45,7 +45,9 @@ public class GetStarted extends AppCompatActivity {
     private ViewPager get_started_pager;
     private GetStartedTutorial adapter;
     private ImageView pager_dot_one, pager_dot_two, pager_dot_three, pager_dot_four, slide_left, slide_right;
-    private ProRegularTextView get_started, sign_in;
+    private ProRegularTextView
+//            get_started,
+            sign_in;
     public static final int LOG_IN_REQUEST = 1;
     //RelativeLayout RLBottom;
     public static final int SIGN_UP_REQUEST = 2;
@@ -86,15 +88,17 @@ public class GetStarted extends AppCompatActivity {
 
 
         get_started_pager = (ViewPager) findViewById(R.id.get_started_pager);
-        get_started = (ProRegularTextView) findViewById(R.id.get_started);
+        //get_started = (ProRegularTextView) findViewById(R.id.get_started);
         sign_in = (ProRegularTextView) findViewById(R.id.sign_in);
 
-        get_started.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(GetStarted.this, SignUp.class), SIGN_UP_REQUEST);
-            }
-        });
+//        get_started.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivityForResult(new Intent(GetStarted.this, SignUp.class), SIGN_UP_REQUEST);
+//            }
+//        });
+//
+
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
