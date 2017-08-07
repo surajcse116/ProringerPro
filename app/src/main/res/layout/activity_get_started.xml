@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBGblueShade"
     android:fitsSystemWindows="false"
-    android:orientation="vertical">
-
+    >
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,24 +15,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@android:color/transparent"
         android:weightSum="4">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@android:color/transparent"
             android:layout_weight="2">
 
         </RelativeLayout>
 
 
         <RelativeLayout
+            android:id="@+id/RLBottom"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
             android:gravity="bottom"
-            android:orientation="vertical">
-
-
+            >
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                 android:layout_alignParentBottom="true"
                 android:id="@+id/sign_in"

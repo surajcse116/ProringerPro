@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.GetStartedTutorial;
@@ -40,6 +42,7 @@ public class GetStarted extends AppCompatActivity {
     private ImageView pager_dot_one, pager_dot_two, pager_dot_three, pager_dot_four, slide_left, slide_right;
     private ProRegularTextView get_started, sign_in;
     public static final int LOG_IN_REQUEST = 1;
+    //RelativeLayout RLBottom;
     public static final int SIGN_UP_REQUEST = 2;
 
 
@@ -47,9 +50,23 @@ public class GetStarted extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_get_started);
+
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
+        //RLBottom= (RelativeLayout) findViewById(R.id.RLBottom);
+
+        //RLBottom.getLayoutParams().width = width;
+        //RLBottom.getLayoutParams().height = height/2;
 
         pager_dot_one = (ImageView) findViewById(R.id.pager_dot_one);
         pager_dot_two = (ImageView) findViewById(R.id.pager_dot_two);
