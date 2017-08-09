@@ -66,7 +66,7 @@ public class LandScreenActivity extends AppCompatActivity {
         bottomNavInstance.init(new BottomNav.onSelectListener() {
             @Override
             public void onClick(String selected_tag) {
-                Logger.printMessage("Fragmnet_stack", "" + getSupportFragmentManager().getBackStackEntryCount());
+                Logger.printMessage("Fragment_stack", "" + getSupportFragmentManager().getBackStackEntryCount());
                 switch (selected_tag) {
                     case BottomNav.DASHBOARD:
                         closeDrawer();
@@ -80,7 +80,6 @@ public class LandScreenActivity extends AppCompatActivity {
                     case BottomNav.FAV_PROS:
                         closeDrawer();
                         break;
-
                 }
             }
         });
@@ -115,6 +114,12 @@ public class LandScreenActivity extends AppCompatActivity {
                     case NavigationHandler.AvailableTimeSlot:
                         closeDrawer();
                         transactTimeAvailibility();
+                        break;
+                    case NavigationHandler.LOGOUT:
+                        closeDrawer();
+                        Intent intent=new Intent(LandScreenActivity.this,GetStarted.class);
+                        startActivity(intent);
+                        finish();
                         break;
 
                 }

@@ -35,9 +35,9 @@ public class BottomNav {
     private View inflatedView;
     private ImageView dashboard_image, my_projects_image, messages_image, fav_pro_image;
     private ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
-    private LinearLayout dashboard_cont, my_projects_cont, messages_cont, fav_pro_cont;
+    private LinearLayout dashboard_cont, my_projects_cont, messages_cont, fav_pro_cont,log_out_pro_cont;
 
-    public static final String DASHBOARD = "dshboard", MY_PROJECTS = "my_project", MESSAGES = "messages", FAV_PROS = "fav_pros", CREATE_PROJECT = "create_project";
+    public static final String DASHBOARD = "dashboard", MY_PROJECTS = "my_project", MESSAGES = "messages", FAV_PROS = "fav_pros", CREATE_PROJECT = "create_project";
 
     public static BottomNav getInstance(Context context, View view) {
         return new BottomNav(context, view);
@@ -64,8 +64,8 @@ public class BottomNav {
 
     }
 
-    public void highLightSelected(String selcted) {
-        switchSelection(selcted);
+    public void highLightSelected(String selected) {
+        switchSelection(selected);
     }
 
     public void init(onSelectListener callback) {

@@ -1,6 +1,5 @@
 package com.android.llc.proringer.pro.proringerpro.viewsmod;
 
-import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,14 +36,16 @@ public class NavigationHandler {
     private ImageView find_local_pros_img, support_img, about_img;
     private ProBoldTextView find_local_pros_text, support_text, about_text;
 
-    private RelativeLayout notifications, invite_a_friend, quick_reply,request_review,RLAvailability;
+    private RelativeLayout notifications, invite_a_friend, quick_reply, request_review, RLAvailability,log_out_pro_cont;
 
     public static final String
             REQUEST_REVIEW = "request_review",
             QUICK_REPLY = "find_local_pros",
             NOTIFICATION = "noti",
             INVITE_FRIEND = "invite_fr",
+            LOGOUT = "log_out",
             AvailableTimeSlot = "available_time_slot";
+
 
     public static NavigationHandler getInstance() {
         if (instance == null)
@@ -77,18 +78,20 @@ public class NavigationHandler {
         quick_reply = (RelativeLayout) view.findViewById(R.id.quick_reply);
         request_review = (RelativeLayout) view.findViewById(R.id.request_review);
         RLAvailability = (RelativeLayout) view.findViewById(R.id.RLAvailability);
+        log_out_pro_cont = (RelativeLayout) view.findViewById(R.id.log_out_pro_cont);
 
 
         request_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  highlightTag(NOTIFICATION);
+                //  highlightTag(NOTIFICATION);
                 listener.onClickItem(REQUEST_REVIEW);
             }
-        });  notifications.setOnClickListener(new View.OnClickListener() {
+        });
+        notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  highlightTag(NOTIFICATION);
+                //  highlightTag(NOTIFICATION);
                 listener.onClickItem(NOTIFICATION);
             }
         });
@@ -96,7 +99,7 @@ public class NavigationHandler {
         invite_a_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  highlightTag(INVITE_FRIEND);
+                //  highlightTag(INVITE_FRIEND);
                 listener.onClickItem(INVITE_FRIEND);
             }
         });
@@ -104,7 +107,7 @@ public class NavigationHandler {
         quick_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  highlightTag(QUICK_REPLY);
+                //  highlightTag(QUICK_REPLY);
                 listener.onClickItem(QUICK_REPLY);
             }
         });
@@ -112,8 +115,15 @@ public class NavigationHandler {
         RLAvailability.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  highlightTag(QUICK_REPLY);
+                //  highlightTag(QUICK_REPLY);
                 listener.onClickItem(AvailableTimeSlot);
+            }
+        });
+
+        log_out_pro_cont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClickItem(LOGOUT);
             }
         });
 
