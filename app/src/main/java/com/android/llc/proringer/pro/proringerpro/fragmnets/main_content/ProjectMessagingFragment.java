@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.activities.IndividualMessageActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProjectDetailedMessageAdapter;
 import com.android.llc.proringer.pro.proringerpro.helper.onItemClick;
@@ -66,7 +67,7 @@ public class ProjectMessagingFragment extends Fragment {
         projectDetailedMessageAdapter=new ProjectDetailedMessageAdapter((LandScreenActivity)getActivity(),projectMessageDetailsArrayList, new onItemClick() {
             @Override
             public void onItemClick(int position) {
-                //startActivity(new Intent((LandScreenActivity)getActivity(), IndividualMessageActivity.class));
+                startActivity(new Intent((LandScreenActivity)getActivity(), IndividualMessageActivity.class));
             }
         });
         message_list.setAdapter(projectDetailedMessageAdapter);
