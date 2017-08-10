@@ -25,6 +25,7 @@ public class ContactUsActivity extends AppCompatActivity {
     ProgressDialog pgDia;
     EditText contact_info;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

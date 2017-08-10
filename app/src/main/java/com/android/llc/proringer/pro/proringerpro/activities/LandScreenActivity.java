@@ -12,13 +12,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.FragmentAvailabilityTimeSlot;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfriend;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.Notifications;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReply;
@@ -75,6 +73,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         closeDrawer();
                         break;
                     case BottomNav.MESSAGES:
+                        transactMessages();
                         closeDrawer();
                         break;
                     case BottomNav.FAV_PROS:
@@ -235,6 +234,30 @@ public class LandScreenActivity extends AppCompatActivity {
         trasaction.addToBackStack("" + FragmentAvailabilityTimeSlot.class.getCanonicalName());
         trasaction.commit();
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+    }
+
+
+    /**
+     * Fragment transaction for Messages
+     */
+    private void transactMessages() {
+//        toggleToolBar(false);
+
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + MessageFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + MessageFragment.class.getCanonicalName());
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + MessageFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + MessageFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        FragmentTransaction trasaction = fragmentManager.beginTransaction();
+        trasaction.replace(R.id.fragment_container, new MessageFragment(), "" + MessageFragment.class.getCanonicalName());
+        trasaction.addToBackStack("" + MessageFragment.class.getCanonicalName());
+        trasaction.commit();
+
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
+        }
     }
 
 }
