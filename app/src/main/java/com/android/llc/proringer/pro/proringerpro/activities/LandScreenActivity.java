@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.FragmentAvailabilityTimeSlot;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MyProjectsFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.WatchListFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfriend;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.Notifications;
@@ -74,7 +75,8 @@ public class LandScreenActivity extends AppCompatActivity {
                         closeDrawer();
                         break;
                     case BottomNav.MY_PROJECTS:
-                        closeDrawer();
+                        toggleProMapSearch(false);
+                        transactMyProjects();
                         break;
                     case BottomNav.MESSAGES:
                         transactMessages();
@@ -166,6 +168,17 @@ public class LandScreenActivity extends AppCompatActivity {
                     mDrawer.closeDrawer(GravityCompat.START);
             }
         });
+    }
+
+
+    private void toggleProMapSearch(boolean state) {
+        if (!state) {
+            findViewById(R.id.search_local_pro_header_map).setVisibility(View.GONE);
+            findViewById(R.id.search_local_pro_header).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.search_local_pro_header_map).setVisibility(View.VISIBLE);
+            findViewById(R.id.search_local_pro_header).setVisibility(View.GONE);
+        }
     }
 
     private void transactInviteFriend() {
@@ -310,6 +323,30 @@ public class LandScreenActivity extends AppCompatActivity {
     }
 
 
+
+    /**
+     * Fragment transaction for MyProject
+     */
+    public void transactMyProjects() {
+        toggleToolBar(false);
+
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + MyProjectsFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + MyProjectsFragment.class.getCanonicalName());
+
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + MyProjectsFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + MyProjectsFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new MyProjectsFragment(), "" + MyProjectsFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + MyProjectsFragment.class.getCanonicalName());
+        transaction.commit();
+
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
+        }
+    }
 
 
 

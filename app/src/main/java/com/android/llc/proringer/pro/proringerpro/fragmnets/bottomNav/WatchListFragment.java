@@ -33,7 +33,6 @@ import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 
 public class WatchListFragment extends Fragment {
     private RecyclerView pros_list;
-    LinearLayout LLMain,LLNetworkDisconnection;
 
     @Nullable
     @Override
@@ -44,11 +43,6 @@ public class WatchListFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        LLMain= (LinearLayout) view.findViewById(R.id.LLMain);
-        LLNetworkDisconnection= (LinearLayout) view.findViewById(R.id.LLNetworkDisconnection);
-
-        view.findViewById(R.id.tv_empty_show).setVisibility(View.GONE);
 
         pros_list = (RecyclerView) view.findViewById(R.id.pros_list);
         pros_list.setLayoutManager(new LinearLayoutManager((LandScreenActivity)getActivity()));

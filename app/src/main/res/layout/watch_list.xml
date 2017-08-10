@@ -20,7 +20,7 @@
             android:layout_marginTop="20dp"
             android:background="@color/colorLightBrick"
             android:gravity="center"
-            android:text="You have not added any pros to your favorite."
+            android:text="You have not added any project to your watchlist."
             android:textColor="@color/colorTextDark"
             android:textSize="14sp" />
 

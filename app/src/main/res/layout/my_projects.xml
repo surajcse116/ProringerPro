@@ -18,7 +18,7 @@
             android:layout_height="80dp"
             android:background="@color/colorLightBrick"
             android:gravity="center"
-            android:text="You have not started any project yet."
+            android:text="You have not active any project yet."
             android:textColor="@color/colorTextDark"
             android:textSize="14sp" />
 
