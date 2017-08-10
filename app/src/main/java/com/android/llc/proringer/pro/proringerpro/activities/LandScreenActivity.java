@@ -289,7 +289,7 @@ public class LandScreenActivity extends AppCompatActivity {
 
 
     /**
-     * Fragment transaction for Favorite Pros
+     * Fragment transaction for Watch List
      */
     private void transactWatchList() {
         toggleToolBar(false);
