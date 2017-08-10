@@ -12,6 +12,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.android.llc.proringer.pro.proringerpro.R;
@@ -113,7 +115,7 @@ public class LandScreenActivity extends AppCompatActivity {
 
                     case NavigationHandler.AvailableTimeSlot:
                         closeDrawer();
-                        transactTimeAvailibility();
+                        transactTimeAvailability();
                         break;
                     case NavigationHandler.LOGOUT:
                         closeDrawer();
@@ -222,7 +224,7 @@ public class LandScreenActivity extends AppCompatActivity {
     }
 
 
-    private void transactTimeAvailibility() {
+    private void transactTimeAvailability() {
 
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + FragmentAvailabilityTimeSlot.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + FragmentAvailabilityTimeSlot.class.getCanonicalName());
@@ -242,9 +244,7 @@ public class LandScreenActivity extends AppCompatActivity {
      * Fragment transaction for Messages
      */
     private void transactMessages() {
-
-//        toggleToolBar(false);
-
+        toggleToolBar(false);
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + MessageFragment.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + MessageFragment.class.getCanonicalName());
             fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + MessageFragment.class.getCanonicalName())).commit();
@@ -267,7 +267,7 @@ public class LandScreenActivity extends AppCompatActivity {
      * flow is MessageFragment(main sectional fragment)->detailedMessage(fragment)
      */
     public void transactProjectMessaging() {
-        //toggleToolBar(true);
+        toggleToolBar(true);
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + ProjectMessagingFragment.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + ProjectMessagingFragment.class.getCanonicalName());
             fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + ProjectMessagingFragment.class.getCanonicalName())).commit();
@@ -282,6 +282,46 @@ public class LandScreenActivity extends AppCompatActivity {
 
         for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
             Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (fragmentManager.findFragmentByTag(ProjectMessagingFragment.class.getCanonicalName()) != null && fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName().equals(ProjectMessagingFragment.class.getCanonicalName())) {
+                toggleToolBar(false);
+                transactMessages();
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Toggle toolbar header for message details
+     *
+     * @param state
+     */
+    public void toggleToolBar(boolean state) {
+        if (state) {
+            back_toolbar.setVisibility(View.VISIBLE);
+            toolbar.setVisibility(View.GONE);
+            setSupportActionBar(back_toolbar);
+            getSupportActionBar().setTitle("");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        } else {
+            back_toolbar.setVisibility(View.GONE);
+            toolbar.setVisibility(View.VISIBLE);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            mDrawer.addDrawerListener(toggle);
+            toggle.syncState();
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.nav_toggle_icon, null));
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
         }
     }
 
