@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.FragmentAvailabilityTimeSlot;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.WatchListFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfriend;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.Notifications;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReply;
@@ -79,7 +80,8 @@ public class LandScreenActivity extends AppCompatActivity {
                         transactMessages();
                         closeDrawer();
                         break;
-                    case BottomNav.FAV_PROS:
+                    case BottomNav.WATCH_LIST:
+                        transactWatchList();
                         closeDrawer();
                         break;
                 }
@@ -284,6 +286,33 @@ public class LandScreenActivity extends AppCompatActivity {
             Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
         }
     }
+
+
+    /**
+     * Fragment transaction for Favorite Pros
+     */
+    private void transactWatchList() {
+        toggleToolBar(false);
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + WatchListFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + WatchListFragment.class.getCanonicalName());
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + WatchListFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + WatchListFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        FragmentTransaction trasaction = fragmentManager.beginTransaction();
+        trasaction.replace(R.id.fragment_container, new WatchListFragment(), "" + WatchListFragment.class.getCanonicalName());
+        trasaction.addToBackStack("" + WatchListFragment.class.getCanonicalName());
+        trasaction.commit();
+
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
+        }
+    }
+
+
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

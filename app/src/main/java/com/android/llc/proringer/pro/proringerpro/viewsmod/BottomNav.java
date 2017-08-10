@@ -37,7 +37,7 @@ public class BottomNav {
     private ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
     private LinearLayout dashboard_cont, my_projects_cont, messages_cont, fav_pro_cont,log_out_pro_cont;
 
-    public static final String DASHBOARD = "dashboard", MY_PROJECTS = "my_project", MESSAGES = "messages", FAV_PROS = "fav_pros", CREATE_PROJECT = "create_project";
+    public static final String DASHBOARD = "dashboard", MY_PROJECTS = "my_project", MESSAGES = "messages", WATCH_LIST = "watch_list", CREATE_PROJECT = "create_project";
 
     public static BottomNav getInstance(Context context, View view) {
         return new BottomNav(context, view);
@@ -96,8 +96,8 @@ public class BottomNav {
         fav_pro_cont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchSelection(FAV_PROS);
-                listener.onClick(FAV_PROS);
+                switchSelection(WATCH_LIST);
+                listener.onClick(WATCH_LIST);
             }
         });
 
@@ -149,7 +149,7 @@ public class BottomNav {
                 fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
                 fav_pro_text.setTextColor(Color.parseColor("#505050"));
                 break;
-            case FAV_PROS:
+            case WATCH_LIST:
                 dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
                 dashboard_text.setTextColor(Color.parseColor("#505050"));
 
