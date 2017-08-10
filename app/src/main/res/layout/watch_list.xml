@@ -53,7 +53,7 @@
         <android.support.v7.widget.RecyclerView
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:id="@+id/pros_list"
+            android:id="@+id/rcv_watch_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

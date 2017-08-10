@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
+import com.android.llc.proringer.pro.proringerpro.adapter.WatchListAdapter;
 
 /**
  * Created by bodhidipta on 12/06/17.
@@ -32,8 +33,8 @@ import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
  */
 
 public class WatchListFragment extends Fragment {
-    private RecyclerView pros_list;
-
+    private RecyclerView rcv_watch_list;
+    WatchListAdapter watchListAdapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,8 +45,19 @@ public class WatchListFragment extends Fragment {
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        pros_list = (RecyclerView) view.findViewById(R.id.pros_list);
-        pros_list.setLayoutManager(new LinearLayoutManager((LandScreenActivity)getActivity()));
+        rcv_watch_list = (RecyclerView) view.findViewById(R.id.rcv_watch_list);
+        rcv_watch_list.setLayoutManager(new LinearLayoutManager((LandScreenActivity)getActivity()));
+
+        watchListAdapter=new WatchListAdapter(getActivity(), new onOptionSelected() {
+            @Override
+            public void onItemPassed(int position, String value) {
+
+            }
+        });
+
+
+        rcv_watch_list.setAdapter(watchListAdapter);
+
 
         view.findViewById(R.id.find_local_pros).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,4 +66,8 @@ public class WatchListFragment extends Fragment {
             }
         });
     }
+    public interface onOptionSelected {
+        void onItemPassed(int position, String value);
+    }
+
 }
