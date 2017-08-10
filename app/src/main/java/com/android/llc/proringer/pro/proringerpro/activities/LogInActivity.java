@@ -1,18 +1,15 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 
@@ -35,7 +32,7 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldT
  * -->
  */
 
-public class LogIn extends AppCompatActivity {
+public class LogInActivity extends AppCompatActivity {
     private ProSemiBoldTextView sign_up;
     private ProSemiBoldTextView log_in;
     private ProLightEditText email, password;
@@ -55,7 +52,7 @@ public class LogIn extends AppCompatActivity {
         findViewById(R.id.forget_password).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // startActivity(new Intent(LogIn.this, ForgetPassword.class));
+                startActivity(new Intent(LogInActivity.this, ForgetPasswordActivity.class));
             }
         });
         sign_up = (ProSemiBoldTextView) findViewById(R.id.sign_up);
@@ -71,13 +68,13 @@ public class LogIn extends AppCompatActivity {
                 } else if (password.getText().toString().trim().equals("")) {
                     password.setError("Please enter password.");
                 } else {
-//                    HelperClass.getInstance(LogIn.this).authenticateUser(
+//                    HelperClass.getInstance(LogInActivity.this).authenticateUser(
 //                            email.getText().toString().trim(),
 //                            password.getText().toString().trim(),
 //                            new HelperClass.onResponseCallback() {
 //                                @Override
 //                                public void onStart() {
-//                                    pgDialog = new ProgressDialog(LogIn.this);
+//                                    pgDialog = new ProgressDialog(LogInActivity.this);
 //                                    pgDialog.setTitle("Log In");
 //                                    pgDialog.setMessage("Logging in. Please wait.");
 //                                    pgDialog.setCancelable(false);
@@ -94,7 +91,7 @@ public class LogIn extends AppCompatActivity {
 //                                public void onError(String error) {
 //                                    if (pgDialog != null && pgDialog.isShowing())
 //                                        pgDialog.dismiss();
-//                                    new AlertDialog.Builder(LogIn.this)
+//                                    new AlertDialog.Builder(LogInActivity.this)
 //                                            .setTitle("Log In Error")
 //                                            .setMessage("" + error)
 //                                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -117,8 +114,7 @@ public class LogIn extends AppCompatActivity {
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LogIn.this, SignUp.class));
-                finish();
+                startActivity(new Intent(LogInActivity.this, SignUpActivity.class));
             }
         });
 

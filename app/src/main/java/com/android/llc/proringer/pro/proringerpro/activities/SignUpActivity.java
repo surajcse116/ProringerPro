@@ -34,7 +34,7 @@ import com.android.llc.proringer.pro.proringerpro.utils.Logger;
  * -->
  */
 
-public class SignUp extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
     private InputMethodManager keyboard;
     private FragmentManager fragmentManager;
 

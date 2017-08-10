@@ -1,25 +1,20 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.GetStartedTutorial;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
-
-import java.util.logging.Logger;
 
 
 /**
@@ -94,7 +89,7 @@ public class GetStarted extends AppCompatActivity {
 //        get_started.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                startActivityForResult(new Intent(GetStarted.this, SignUp.class), SIGN_UP_REQUEST);
+//                startActivityForResult(new Intent(GetStarted.this, SignUpActivity.class), SIGN_UP_REQUEST);
 //            }
 //        });
 //
@@ -102,7 +97,7 @@ public class GetStarted extends AppCompatActivity {
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(GetStarted.this, LogIn.class), LOG_IN_REQUEST);
+                startActivityForResult(new Intent(GetStarted.this, LogInActivity.class), LOG_IN_REQUEST);
             }
         });
 
@@ -168,7 +163,7 @@ public class GetStarted extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SIGN_UP_REQUEST) {
             if (resultCode == RESULT_OK) {
-//                startActivity(new Intent(GetStarted.this, LogIn.class));
+//                startActivity(new Intent(GetStarted.this, LogInActivity.class));
 //                finish();
             }
 

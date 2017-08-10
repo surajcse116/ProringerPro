@@ -77,7 +77,7 @@ public class HelperClass {
                                 .build();
                         Response response = client.newCall(request).execute();
 
-                        Logger.printMessage("LogIn", "" + response);
+                        Logger.printMessage("LogInActivity", "" + response);
 
                         /*{
                             info_array:

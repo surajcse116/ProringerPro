@@ -1,16 +1,11 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BaseTransientBottomBar;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -37,7 +32,7 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTe
  * -->
  */
 
-public class ForgetPassword extends AppCompatActivity {
+public class ForgetPasswordActivity extends AppCompatActivity {
     private ProRegularTextView header_text;
     private ProLightEditText email, request_code, password, confirm_password;
     private ProgressDialog pgDialog = null;
@@ -68,14 +63,14 @@ public class ForgetPassword extends AppCompatActivity {
         tv_contact_us.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               startActivity(new Intent(ForgetPassword.this,ContactUsActivity.class));
+               startActivity(new Intent(ForgetPasswordActivity.this,ContactUsActivity.class));
             }
         });
 
         findViewById(R.id.resend_confirmation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ForgetPassword.this,ResendConfirmation.class));
+                startActivity(new Intent(ForgetPasswordActivity.this,ResendConfirmation.class));
             }
         });
 
@@ -83,10 +78,10 @@ public class ForgetPassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                if (Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()) {
-//                    ProServiceApiHelper.getInstance(ForgetPassword.this).forgetPassword(email.getText().toString().trim(), new ProServiceApiHelper.getApiProcessCallback() {
+//                    ProServiceApiHelper.getInstance(ForgetPasswordActivity.this).forgetPassword(email.getText().toString().trim(), new ProServiceApiHelper.getApiProcessCallback() {
 //                        @Override
 //                        public void onStart() {
-//                            pgDialog = new ProgressDialog(ForgetPassword.this);
+//                            pgDialog = new ProgressDialog(ForgetPasswordActivity.this);
 //                            pgDialog.setTitle("Requesting password");
 //                            pgDialog.setMessage("Requesting password reset code to your registered email address. Please wait ..");
 //                            pgDialog.setCancelable(false);
@@ -105,7 +100,7 @@ public class ForgetPassword extends AppCompatActivity {
 //                        public void onError(String error) {
 //                            if (pgDialog != null && pgDialog.isShowing())
 //                                pgDialog.dismiss();
-//                            new AlertDialog.Builder(ForgetPassword.this)
+//                            new AlertDialog.Builder(ForgetPasswordActivity.this)
 //                                    .setTitle("Request password error")
 //                                    .setMessage("" + error)
 //                                    .setCancelable(false)
@@ -146,13 +141,13 @@ public class ForgetPassword extends AppCompatActivity {
                             password.setError("Please enter confirm password.");
                         } else {
                             if (password.getText().toString().trim().equals(confirm_password.getText().toString().trim())) {
-//                                ProServiceApiHelper.getInstance(ForgetPassword.this).resetPassword(
+//                                ProServiceApiHelper.getInstance(ForgetPasswordActivity.this).resetPassword(
 //                                        request_code.getText().toString().trim(),
 //                                        confirm_password.getText().toString().trim(),
 //                                        new ProServiceApiHelper.getApiProcessCallback() {
 //                                            @Override
 //                                            public void onStart() {
-//                                                pgDialog = new ProgressDialog(ForgetPassword.this);
+//                                                pgDialog = new ProgressDialog(ForgetPasswordActivity.this);
 //                                                pgDialog.setTitle("Resetting password");
 //                                                pgDialog.setMessage("Please wait ..");
 //                                                pgDialog.setCancelable(false);
@@ -163,7 +158,7 @@ public class ForgetPassword extends AppCompatActivity {
 //                                            public void onComplete(String message) {
 //                                                if (pgDialog != null && pgDialog.isShowing())
 //                                                    pgDialog.dismiss();
-//                                                new AlertDialog.Builder(ForgetPassword.this)
+//                                                new AlertDialog.Builder(ForgetPasswordActivity.this)
 //                                                        .setTitle("Reset password success")
 //                                                        .setMessage("" + message)
 //                                                        .setCancelable(false)
@@ -182,7 +177,7 @@ public class ForgetPassword extends AppCompatActivity {
 //                                            public void onError(String error) {
 //                                                if (pgDialog != null && pgDialog.isShowing())
 //                                                    pgDialog.dismiss();
-//                                                new AlertDialog.Builder(ForgetPassword.this)
+//                                                new AlertDialog.Builder(ForgetPasswordActivity.this)
 //                                                        .setTitle("Reset password error")
 //                                                        .setMessage("" + error)
 //                                                        .setCancelable(false)

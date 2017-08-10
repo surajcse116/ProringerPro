@@ -1,5 +1,6 @@
 package com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.activities.SignUp;
+import com.android.llc.proringer.pro.proringerpro.activities.LogInActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.SignUpActivity;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 /**
@@ -45,7 +47,13 @@ public class RegistrationOne extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((SignUp) getActivity()).transactRegistrationFragmentTwo();
+                ((SignUpActivity) getActivity()).transactRegistrationFragmentTwo();
+            }
+        });
+        view.findViewById(R.id.tv_login).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), LogInActivity.class));
             }
         });
 
