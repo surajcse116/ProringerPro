@@ -65,11 +65,10 @@ public class MessageFragment extends Fragment {
             @Override
             public void onItemClick(int pos) {
                 //((LandScreenActivity) getActivity()).toggleToolBar(true);
-                //((LandScreenActivity) getActivity()).transactProjectMessaging();
+                ((LandScreenActivity) getActivity()).transactProjectMessaging();
             }
         });
 
         project_message_list.setAdapter(adapter);
     }
-
 }

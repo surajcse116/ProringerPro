@@ -21,6 +21,7 @@ import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfri
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.Notifications;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReply;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.RequestReview;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.main_content.ProjectMessagingFragment;
 import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.BottomNav;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.NavigationHandler;
@@ -252,6 +253,29 @@ public class LandScreenActivity extends AppCompatActivity {
         trasaction.replace(R.id.fragment_container, new MessageFragment(), "" + MessageFragment.class.getCanonicalName());
         trasaction.addToBackStack("" + MessageFragment.class.getCanonicalName());
         trasaction.commit();
+
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
+        }
+    }
+
+    /**
+     * Transact individual message from details message
+     * flow is MessageFragment(main sectional fragment)->detailedMessage(fragment)
+     */
+    public void transactProjectMessaging() {
+        //toggleToolBar(true);
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + ProjectMessagingFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + ProjectMessagingFragment.class.getCanonicalName());
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + ProjectMessagingFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + ProjectMessagingFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, new ProjectMessagingFragment(), "" + ProjectMessagingFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + ProjectMessagingFragment.class.getCanonicalName());
+        transaction.commit();
 
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
 
