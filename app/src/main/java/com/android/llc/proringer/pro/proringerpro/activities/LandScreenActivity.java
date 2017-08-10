@@ -242,6 +242,7 @@ public class LandScreenActivity extends AppCompatActivity {
      * Fragment transaction for Messages
      */
     private void transactMessages() {
+
 //        toggleToolBar(false);
 
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + MessageFragment.class.getCanonicalName()) != null) {
