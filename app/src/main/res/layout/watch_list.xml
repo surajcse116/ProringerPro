@@ -27,10 +27,10 @@
         <LinearLayout
             android:id="@+id/find_local_pros"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height"
+            android:layout_height="?android:attr/actionBarSize"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:background="@color/colorGreen"
             android:gravity="center"
             android:orientation="horizontal">
@@ -51,6 +51,8 @@
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:id="@+id/pros_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
