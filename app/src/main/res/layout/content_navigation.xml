@@ -146,7 +146,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/home_scheduler"
+                android:id="@+id/RLSocialMedia"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:paddingLeft="15dp"

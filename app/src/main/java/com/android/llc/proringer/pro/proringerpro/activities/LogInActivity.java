@@ -103,7 +103,7 @@ public class LogInActivity extends AppCompatActivity {
 //                                }
 //                            }
 //                    );
-                    setResult(GetStarted.RESULT_OK);
+                    setResult(GetStartedActivity.RESULT_OK);
                     finish();
 
                 }
@@ -128,7 +128,7 @@ public class LogInActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        setResult(GetStarted.RESULT_CANCELED);
+        setResult(GetStartedActivity.RESULT_CANCELED);
         finish();
     }
 }

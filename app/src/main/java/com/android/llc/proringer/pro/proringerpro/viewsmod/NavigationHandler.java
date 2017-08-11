@@ -36,7 +36,7 @@ public class NavigationHandler {
     private ImageView find_local_pros_img, support_img, about_img;
     private ProBoldTextView find_local_pros_text, support_text, about_text;
 
-    private RelativeLayout notifications, invite_a_friend, quick_reply, request_review, RLAvailability,log_out_pro_cont;
+    private RelativeLayout notifications, invite_a_friend, quick_reply, request_review, RLAvailability,log_out_pro_cont,RLSocialMedia;
 
     public static final String
             REQUEST_REVIEW = "request_review",
@@ -44,7 +44,8 @@ public class NavigationHandler {
             NOTIFICATION = "noti",
             INVITE_FRIEND = "invite_fr",
             LOGOUT = "log_out",
-            AvailableTimeSlot = "available_time_slot";
+            AvailableTimeSlot = "available_time_slot",
+            SocialMedia = "social_media";
 
 
     public static NavigationHandler getInstance() {
@@ -79,6 +80,7 @@ public class NavigationHandler {
         request_review = (RelativeLayout) view.findViewById(R.id.request_review);
         RLAvailability = (RelativeLayout) view.findViewById(R.id.RLAvailability);
         log_out_pro_cont = (RelativeLayout) view.findViewById(R.id.log_out_pro_cont);
+        RLSocialMedia = (RelativeLayout) view.findViewById(R.id.RLSocialMedia);
 
 
         request_review.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +119,13 @@ public class NavigationHandler {
             public void onClick(View v) {
                 //  highlightTag(QUICK_REPLY);
                 listener.onClickItem(AvailableTimeSlot);
+            }
+        });
+
+        RLSocialMedia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClickItem(SocialMedia);
             }
         });
 

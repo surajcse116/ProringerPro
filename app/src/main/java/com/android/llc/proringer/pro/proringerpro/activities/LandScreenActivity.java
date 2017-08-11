@@ -121,10 +121,15 @@ public class LandScreenActivity extends AppCompatActivity {
                         closeDrawer();
                         transactTimeAvailability();
                         break;
+
+                    case NavigationHandler.SocialMedia:
+                        closeDrawer();
+                        startActivity(new Intent(LandScreenActivity.this,SocialMediaActivity.class));
+                        break;
+
                     case NavigationHandler.LOGOUT:
                         closeDrawer();
-                        Intent intent=new Intent(LandScreenActivity.this,GetStarted.class);
-                        startActivity(intent);
+                        startActivity(new Intent(LandScreenActivity.this,GetStartedActivity.class));
                         finish();
                         break;
 

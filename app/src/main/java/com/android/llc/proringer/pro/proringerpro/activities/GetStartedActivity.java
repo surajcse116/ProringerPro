@@ -35,7 +35,7 @@ import com.bumptech.glide.Glide;
  * -->
  */
 
-public class GetStarted extends AppCompatActivity {
+public class GetStartedActivity extends AppCompatActivity {
 
     private ViewPager get_started_pager;
     private GetStartedTutorial adapter;
@@ -69,7 +69,7 @@ public class GetStarted extends AppCompatActivity {
 
         img_background= (ImageView) findViewById(R.id.img_background);
 
-        Glide.with(GetStarted.this).load(R.drawable.welcome_intro_get_started).into(img_background);
+        Glide.with(GetStartedActivity.this).load(R.drawable.welcome_intro_get_started).into(img_background);
 
         //RLBottom= (RelativeLayout) findViewById(R.id.RLBottom);
 
@@ -89,7 +89,7 @@ public class GetStarted extends AppCompatActivity {
 //        get_started.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                startActivityForResult(new Intent(GetStarted.this, SignUpActivity.class), SIGN_UP_REQUEST);
+//                startActivityForResult(new Intent(GetStartedActivity.this, SignUpActivity.class), SIGN_UP_REQUEST);
 //            }
 //        });
 //
@@ -97,7 +97,7 @@ public class GetStarted extends AppCompatActivity {
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(GetStarted.this, LogInActivity.class), LOG_IN_REQUEST);
+                startActivityForResult(new Intent(GetStartedActivity.this, LogInActivity.class), LOG_IN_REQUEST);
             }
         });
 
@@ -163,13 +163,13 @@ public class GetStarted extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SIGN_UP_REQUEST) {
             if (resultCode == RESULT_OK) {
-//                startActivity(new Intent(GetStarted.this, LogInActivity.class));
+//                startActivity(new Intent(GetStartedActivity.this, LogInActivity.class));
 //                finish();
             }
 
         } else if (requestCode == LOG_IN_REQUEST) {
             if (resultCode == RESULT_OK) {
-                startActivity(new Intent(GetStarted.this, LandScreenActivity.class));
+                startActivity(new Intent(GetStartedActivity.this, LandScreenActivity.class));
                 finish();
             }
         }
