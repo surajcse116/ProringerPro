@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.WatchListFragment;
@@ -17,9 +18,9 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
     WatchListFragment.onOptionSelected callback;
     Context mcontext;
 
-    public WatchListAdapter(Context mcontext,WatchListFragment.onOptionSelected callback){
-        this.mcontext=mcontext;
-        this.callback=callback;
+    public WatchListAdapter(Context mcontext, WatchListFragment.onOptionSelected callback) {
+        this.mcontext = mcontext;
+        this.callback = callback;
     }
 
     @Override
@@ -30,6 +31,12 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
     @Override
     public void onBindViewHolder(WatchListAdapter.MyViewHolder holder, int position) {
 //        callback.onItemPassed(position, jsonInfoArray.getJSONObject(position).getString("pros_id"));
+
+        if(position==0){
+            holder.find_local_pros.setVisibility(View.VISIBLE);
+        }else {
+            holder.find_local_pros.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -37,9 +44,13 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
         return 15;
     }
 
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout find_local_pros;
         public MyViewHolder(View itemView) {
             super(itemView);
+            find_local_pros = (LinearLayout) itemView.findViewById(R.id.find_local_pros);
         }
     }
 }

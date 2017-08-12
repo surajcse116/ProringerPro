@@ -58,13 +58,6 @@ public class WatchListFragment extends Fragment {
 
         rcv_watch_list.setAdapter(watchListAdapter);
 
-
-        view.findViewById(R.id.find_local_pros).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //((LandScreenActivity)getActivity()).transactSearchLocalPros();
-            }
-        });
     }
     public interface onOptionSelected {
         void onItemPassed(int position, String value);

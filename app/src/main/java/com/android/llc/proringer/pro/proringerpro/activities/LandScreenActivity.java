@@ -77,6 +77,7 @@ public class LandScreenActivity extends AppCompatActivity {
                     case BottomNav.MY_PROJECTS:
                         toggleProMapSearch(false);
                         transactMyProjects();
+                        closeDrawer();
                         break;
                     case BottomNav.MESSAGES:
                         transactMessages();
