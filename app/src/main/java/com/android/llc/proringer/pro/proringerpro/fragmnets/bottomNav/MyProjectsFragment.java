@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
+import com.android.llc.proringer.pro.proringerpro.adapter.ProjectListingAdapter;
 
 import java.util.List;
 
@@ -37,7 +37,6 @@ import java.util.List;
  */
 
 public class MyProjectsFragment extends Fragment {
-
     RecyclerView project_list;
     LinearLayout no_project_available, LLNetworkDisconnection;
 
@@ -55,7 +54,20 @@ public class MyProjectsFragment extends Fragment {
         LLNetworkDisconnection = (LinearLayout) view.findViewById(R.id.LLNetworkDisconnection);
         project_list = (RecyclerView) view.findViewById(R.id.project_list);
         project_list.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+        project_list.setVisibility(View.VISIBLE);
+
+
+        project_list.setAdapter(new ProjectListingAdapter(getActivity(), new onOptionSelected() {
+            @Override
+            public void onItemPassed(int position, String value) {
+
+            }
+        }));
+
     }
+
 
     public interface onOptionSelected {
         void onItemPassed(int position, String value);
