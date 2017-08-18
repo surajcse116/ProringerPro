@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MyProjectsFragment;
 
@@ -34,11 +35,17 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         switch (holder.getItemViewType()) {
             case 0:
                 ViewHolder0 viewHolder0 = (ViewHolder0) holder;
+                viewHolder0.totalView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        callback.onItemPassed(position, "value shift to details page");
+                    }
+                });
 
                 if(position==0){
                     viewHolder0.start_project.setVisibility(View.VISIBLE);
@@ -84,10 +91,11 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     class ViewHolder0 extends RecyclerView.ViewHolder {
         LinearLayout start_project;
-
+        View totalView;
         public ViewHolder0(View itemView) {
             super(itemView);
             start_project = (LinearLayout) itemView.findViewById(R.id.start_project);
+            totalView = itemView;
         }
     }
 
@@ -104,6 +112,7 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public ViewHolder2(View itemView) {
             super(itemView);
             start_project = (LinearLayout) itemView.findViewById(R.id.start_project);
+
         }
     }
 }

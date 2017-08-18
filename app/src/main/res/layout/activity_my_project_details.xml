@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="5dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/icon" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/RLAddLicence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:id="@+id/tv_request_review"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="REQUEST REVIEW"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/tv_request_review"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                    android:id="@+id/tv_project_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Planning and budgeting for a roofing project-more than 2 weeks"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp" />
+
+
+                <LinearLayout
+                    android:id="@+id/LLImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_project_title"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:id="@+id/img_project"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorDarkGray" />
+
+                </LinearLayout>
+
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                    android:id="@+id/tv_posted_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/LLImage"
+                    android:text="03-06-2017"
+                    android:textSize="10sp" />
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                    android:id="@+id/tv_posted_by"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/LLImage"
+                    android:text="posted By:"
+                    android:textSize="10sp" />
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                    android:id="@+id/tv_posted_by_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/LLImage"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/tv_posted_date"
+                    android:layout_toRightOf="@+id/tv_posted_by"
+                    android:text="Kelly W"
+                    android:textColor="@color/colorTextBlack"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:id="@+id/LLMap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_posted_by_value"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="4">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Type of Work:  "
+                                android:textColor="@color/colorAccent"
+                                android:textSize="12sp" />
+
+
+                            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:text="Installation"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+
+                            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Service:             "
+                                android:textColor="@color/colorAccent"
+                                android:textSize="12sp" />
+
+
+                            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:text="Shingles"
+                                android:textSize="12sp" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Property:          "
+                                android:textColor="@color/colorAccent"
+                                android:textSize="12sp" />
+
+
+                            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:text="Installation"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Phone:              "
+                                android:textColor="@color/colorAccent"
+                                android:textSize="12sp" />
+
+
+                            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:text="Installation"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/img_map"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorDarkGray" />
+
+
+                </LinearLayout>
+
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/LLMap"
+                    android:text="Grove City,OH 43123" />
+
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/tv_address"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/colorDarkGray" />
+
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                    android:id="@+id/tv_describetion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view"
+                    android:layout_marginBottom="10dp"
+                    android:text="Looking for someone to km bkbvck vbckv bckbghg hhgh gjhgjgh vkvbkvbkbvkkbvkbkbb ghgnghjghjgjgjghjghjgjghj jghjghjhj g  jg jgjg jhnbc jhvfd fdfdd fgdfc jvcjvcj vcjvfdgcjvcjvcj"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
