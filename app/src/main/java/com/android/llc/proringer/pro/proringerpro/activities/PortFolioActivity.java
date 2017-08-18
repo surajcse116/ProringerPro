@@ -90,6 +90,7 @@ public class PortFolioActivity extends AppCompatActivity {
 
             portFolioAdapter=new PortFolioAdapter(PortFolioActivity.this);
             rcv_port_folio.setAdapter(portFolioAdapter);
+
         }
     }
     public void addImageInAdapter(){
