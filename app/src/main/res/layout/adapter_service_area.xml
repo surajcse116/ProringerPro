@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+        android:id="@+id/tv_city"
+        android:layout_width="match_parent"
+        android:text="Grove City,OH"
+        android:background="@color/colorDarkGray"
+        android:gravity="center_vertical"
+        android:layout_height="45dp" />
+
+
+    <ImageView
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:id="@+id/img_delete"
+        android:src="@drawable/ic_close_black_24dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

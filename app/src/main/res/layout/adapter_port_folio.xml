@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    >
+    <View
+        android:layout_alignParentBottom="true"
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDarkGray" />
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:id="@+id/img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@color/colorDarkGray"/>
+
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+            android:id="@+id/tv_name"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="General Contractor"/>
+
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+            android:id="@+id/tv_date"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="April 2017"/>
+
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:id="@+id/tv_number"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="10 photos"/>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:src="@drawable/ic_chevron_right_black_24dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</RelativeLayout>

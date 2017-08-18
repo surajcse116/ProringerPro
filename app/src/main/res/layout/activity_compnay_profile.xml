@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
+    android:paddingBottom="10dp"
     android:background="@color/colorBGblueShade"
-    android:orientation="vertical">
+   >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -26,8 +27,24 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+        android:id="@+id/tv_save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="SAVE"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp" />
+
 
     <ScrollView
+        android:layout_above="@+id/tv_save"
+        android:layout_below="@+id/toolbar"
         android:id="@+id/ScrollViewMAin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -57,6 +74,7 @@
 
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:layout_below="@+id/tv_name_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -264,7 +282,6 @@
 
     </ScrollView>
 
-
     <LinearLayout
         android:id="@+id/LLNetworkDisconnection"
         android:layout_width="match_parent"
@@ -291,4 +308,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>
