@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/colorBGblueShade"
     android:orientation="vertical">
 
@@ -19,13 +20,13 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="PortFolio"
+            android:text="Licence"
             android:textColor="@color/colorTextDark"
             android:textSize="16sp"
             app:textAllCaps="true" />
 
         <ImageView
-            android:id="@+id/img_add_port_folio"
+            android:id="@+id/img_add_licence"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical|right"
@@ -36,22 +37,22 @@
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcv_port_folio"
+        android:id="@+id/rcv_licence_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:visibility="gone"
-        ></android.support.v7.widget.RecyclerView>
+        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
 
     <RelativeLayout
-        android:id="@+id/RLAddPortFolio"
+        android:id="@+id/RLAddLicence"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:visibility="gone">
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-            android:id="@+id/tv_save_port_folio"
+            android:id="@+id/tv_save_licence"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:layout_alignParentBottom="true"
@@ -75,13 +76,13 @@
 
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-            android:id="@+id/tv_month"
+            android:id="@+id/tv_issue"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@+id/tv_category"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/edit_text_selecter"
-            android:hint="Month"
+            android:hint="Issue"
             android:inputType="text"
             android:padding="10dp"
             android:textColor="@color/colorTextDark"
@@ -89,13 +90,27 @@
 
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-            android:id="@+id/tv_year"
+            android:id="@+id/tv_licence_number"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_below="@+id/tv_month"
-            android:layout_marginTop="20dp"
+            android:layout_below="@+id/tv_issue"
+            android:layout_marginTop="15dp"
             android:background="@drawable/edit_text_selecter"
-            android:hint="Year"
+            android:hint="Licence #"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textColor="@color/colorTextDark"
+            android:textSize="14sp" />
+
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+            android:id="@+id/tv_expires"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/tv_licence_number"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_selecter"
+            android:hint="Expires"
             android:inputType="text"
             android:padding="10dp"
             android:textColor="@color/colorTextDark"
@@ -105,16 +120,16 @@
             android:id="@+id/tv_upload_limit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_year"
+            android:layout_below="@+id/tv_expires"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:text="add up to 10 photos"
+            android:text="add image or PDF"
             app:textAllCaps="true" />
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
             android:id="@+id/tv_add"
             android:layout_width="150dp"
-            android:layout_height="@dimen/button_height"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tv_upload_limit"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="10dp"
@@ -122,18 +137,10 @@
             android:layout_marginTop="5dp"
             android:background="@color/colorAccent"
             android:gravity="center"
-            android:text="Add Photos"
+            android:padding="8dp"
+            android:text="UPLOAD LICENCE"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rcv_add_port_folio"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/tv_save_port_folio"
-            android:layout_below="@+id/tv_add"
-            android:layout_marginTop="30dp"></android.support.v7.widget.RecyclerView>
-
 
     </RelativeLayout>
 
@@ -160,11 +167,12 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
-            android:text="           Tab plus sign  \n to add a portfolio gallery"
+            android:text="   Tab plus sign  \n to add a licence"
             android:textColor="@color/colorAccent"
             android:textSize="18sp" />
 
 
     </RelativeLayout>
+
 
 </LinearLayout>

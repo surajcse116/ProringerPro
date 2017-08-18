@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -26,7 +27,7 @@ public class PortFolioActivity extends AppCompatActivity {
 
     PortFolioAdapter portFolioAdapter=null;
     RecyclerView rcv_port_folio,rcv_add_port_folio;
-    RelativeLayout RLAddPortFolio;
+    RelativeLayout RLAddPortFolio, RLEmpty;
     ProSemiBoldTextView tv_add;
 
     AddImageAdapter addImageAdapter=null;
@@ -44,6 +45,7 @@ public class PortFolioActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RLAddPortFolio= (RelativeLayout) findViewById(R.id.RLAddPortFolio);
+        RLEmpty = (RelativeLayout) findViewById(R.id.RLEmpty);
 
         tv_add= (ProSemiBoldTextView) findViewById(R.id.tv_add);
 
@@ -56,7 +58,8 @@ public class PortFolioActivity extends AppCompatActivity {
         rcv_add_port_folio.setLayoutManager(new GridLayoutManager(PortFolioActivity.this,5));
 
         RLAddPortFolio.setVisibility(View.GONE);
-        rcv_port_folio.setVisibility(View.VISIBLE);
+        rcv_port_folio.setVisibility(View.GONE);
+        RLEmpty.setVisibility(View.VISIBLE);
 
         findViewById(R.id.img_add_port_folio).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +90,6 @@ public class PortFolioActivity extends AppCompatActivity {
 
     public void loadListAndSetAdapter(){
         if (portFolioAdapter==null){
-
             portFolioAdapter=new PortFolioAdapter(PortFolioActivity.this);
             rcv_port_folio.setAdapter(portFolioAdapter);
         }
@@ -108,5 +110,13 @@ public class PortFolioActivity extends AppCompatActivity {
                 addImageAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
