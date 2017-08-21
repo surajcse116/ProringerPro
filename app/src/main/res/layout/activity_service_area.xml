@@ -38,12 +38,12 @@
         >
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:id="@+id/tv_continue_service_area"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/colorAccent"
             android:gravity="center"
             android:text="SAVE"
@@ -52,13 +52,13 @@
 
 
         <View
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:id="@+id/splitLine_hor2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_above="@+id/tv_continue_service_area"
             android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="@color/colorDarkGray" />
 
@@ -66,18 +66,19 @@
             android:id="@+id/tv_cities"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You can add one or more cities"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:text="You can add one or more cities"
+            android:textColor="@color/colorTextBlack"
              />
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:id="@+id/edt_cities"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@id/tv_cities"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/edit_text_selecter"
             android:hint="e.g.Chicago"
@@ -92,24 +93,24 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:layout_below="@+id/edt_cities"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="@color/colorAccent"
             android:gravity="center"
             android:text="ADD"
             android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:textSize="16sp" />
 
 
         <View
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:id="@+id/SplitLine_hor1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/tv_add"
             android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
             android:background="@color/colorDarkGray" />
 
