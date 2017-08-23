@@ -6,19 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ExpandableListView;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.ServiceOfferedAdapter;
-import com.android.llc.proringer.pro.proringerpro.adapter.ServiceRefineAdapter;
 import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 /**
@@ -28,13 +29,10 @@ import java.util.List;
 public class AddServicesActivity extends AppCompatActivity {
     RecyclerView rcv_service;
     ServiceOfferedAdapter serviceOfferedAdapter = null;
-    ServiceRefineAdapter serviceRefineAdapter = null;
     ArrayList<String> stringServiceList = null;
 
+    LinearLayout linear_refine_service = null;
 
-    ExpandableListView Expandable_service_refine;
-    ArrayList<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +44,7 @@ public class AddServicesActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Expandable_service_refine = (ExpandableListView) findViewById(R.id.Expandable_service_refine);
+        linear_refine_service = (LinearLayout) findViewById(R.id.linear_refine_service);
 
         rcv_service = (RecyclerView) findViewById(R.id.rcv_service);
         rcv_service.setLayoutManager(new GridLayoutManager(AddServicesActivity.this, 2));
@@ -65,9 +63,8 @@ public class AddServicesActivity extends AppCompatActivity {
             }
         });
 
-        prepareListData();
-        serviceRefineAdapter = new ServiceRefineAdapter(AddServicesActivity.this, listDataHeader, listDataChild);
-        Expandable_service_refine.setAdapter(serviceRefineAdapter);
+        runtimeServiceRefineView();
+
     }
 
     @Override
@@ -91,26 +88,62 @@ public class AddServicesActivity extends AppCompatActivity {
         }
     }
 
-    /*
-     * Preparing the list data
-     */
-    private void prepareListData() {
-
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
-
-        // Adding child data
-        listDataHeader.add("Home Inspector");
-
-        // Adding child data
-        List<String> child1 = new ArrayList<String>();
-        child1.add("Termite Inspection");
-        child1.add("Radon Testing");
-        child1.add("Energy Audits");
-        child1.add("Mold Inspection");
+    public void runtimeServiceRefineView() {
 
 
-        listDataChild.put(listDataHeader.get(0), child1); // Header, Child data
+        for (int i = 0; i < 4; i++) {
+
+            CheckBox checkRefineHeader = new CheckBox(this);
+            checkRefineHeader.setText(i + "header");
+            checkRefineHeader.setTag(i + "header");
+
+            LinearLayout.LayoutParams L = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            L.setMargins(10, 0, 10, 0);
+
+//            linear_refine_service.addView(checkRefineHeader,i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//            linear_refine_service.addView(checkRefineHeader, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            linear_refine_service.addView(checkRefineHeader, L);
+
+
+            LinearLayout linearLayoutChild = new LinearLayout(AddServicesActivity.this);
+            linearLayoutChild.setOrientation(LinearLayout.VERTICAL);
+            linearLayoutChild.setPadding(40, 5, 0, 5);
+
+            for (int j = 0; j < 5; j++) {
+                CheckBox checkRefineChild = new CheckBox(this);
+                checkRefineChild.setText(j + "child");
+                checkRefineChild.setTag(j + "child");
+//                linearLayoutChild.addView(checkRefineChild,j, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                linearLayoutChild.addView(checkRefineChild, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            }
+
+            checkRefineHeader.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    //is chkIos checked?
+                    if (((CheckBox) v).isChecked()) {
+                        //Case 1
+                    } else {
+
+                    }
+                    //case 2
+
+                }
+            });
+
+            checkRefineHeader.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    Log.i("isCheck", "" + b);
+                }
+            });
+
+            linear_refine_service.addView(linearLayoutChild);
+        }
 
     }
+
+
 }

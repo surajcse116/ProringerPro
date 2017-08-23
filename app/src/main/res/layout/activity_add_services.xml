@@ -162,12 +162,13 @@
                     android:background="@color/colorDarkGray" />
 
 
-                <ExpandableListView
-                    android:id="@+id/Expandable_service_refine"
+                <LinearLayout
+                    android:id="@+id/linear_refine_service"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/SplitLine_hor2"
-                    android:layout_marginBottom="55dp" />
+                    android:layout_marginBottom="55dp"
+                    android:orientation="vertical" />
 
             </RelativeLayout>
 
