@@ -93,11 +93,11 @@ public class AddServicesActivity extends AppCompatActivity {
 
         for (int i = 0; i < 4; i++) {
 
-            CheckBox checkRefineHeader = new CheckBox(this);
-            checkRefineHeader.setText(i + "header");
-            checkRefineHeader.setTag(i + "header");
+            final CheckBox checkRefineHeader = new CheckBox(this);
+            checkRefineHeader.setText(i + " header");
+            checkRefineHeader.setTag(i + " header");
 
-            LinearLayout.LayoutParams L = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams L = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             L.setMargins(10, 0, 10, 0);
 
 //            linear_refine_service.addView(checkRefineHeader,i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -105,14 +105,14 @@ public class AddServicesActivity extends AppCompatActivity {
             linear_refine_service.addView(checkRefineHeader, L);
 
 
-            LinearLayout linearLayoutChild = new LinearLayout(AddServicesActivity.this);
+            final LinearLayout linearLayoutChild = new LinearLayout(AddServicesActivity.this);
             linearLayoutChild.setOrientation(LinearLayout.VERTICAL);
-            linearLayoutChild.setPadding(40, 5, 0, 5);
+            linearLayoutChild.setPadding(62, 5, 0, 5);
 
             for (int j = 0; j < 5; j++) {
                 CheckBox checkRefineChild = new CheckBox(this);
-                checkRefineChild.setText(j + "child");
-                checkRefineChild.setTag(j + "child");
+                checkRefineChild.setText(j + " child");
+                checkRefineChild.setTag(j + " child");
 //                linearLayoutChild.addView(checkRefineChild,j, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 linearLayoutChild.addView(checkRefineChild, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
@@ -125,10 +125,17 @@ public class AddServicesActivity extends AppCompatActivity {
                     //is chkIos checked?
                     if (((CheckBox) v).isChecked()) {
                         //Case 1
+                        for (int i = 0; i < linearLayoutChild.getChildCount(); i++) {
+                            CheckBox checkBox = (CheckBox) linearLayoutChild.getChildAt(i);
+                            checkBox.setChecked(true);
+                        }
                     } else {
-
+                        //Case 2
+                        for (int i = 0; i < linearLayoutChild.getChildCount(); i++) {
+                            CheckBox checkBox = (CheckBox) linearLayoutChild.getChildAt(i);
+                            checkBox.setChecked(false);
+                        }
                     }
-                    //case 2
 
                 }
             });

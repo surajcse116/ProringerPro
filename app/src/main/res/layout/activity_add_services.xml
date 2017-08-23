@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
     android:background="@color/colorBGblueShade"
     android:orientation="vertical">
 
@@ -29,7 +28,7 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
             android:id="@+id/tv_continue_service_area"
@@ -59,6 +58,7 @@
             android:id="@+id/scrollViewMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/tv_continue_service_area"
             android:fillViewport="true">
 
             <RelativeLayout
