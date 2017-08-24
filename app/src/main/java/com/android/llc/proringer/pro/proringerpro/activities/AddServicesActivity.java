@@ -115,7 +115,29 @@ public class AddServicesActivity extends AppCompatActivity {
                 checkRefineChild.setTag(j + " child");
 //                linearLayoutChild.addView(checkRefineChild,j, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 linearLayoutChild.addView(checkRefineChild, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            }
 
+            for (int p = 0; p < linearLayoutChild.getChildCount(); p++) {
+                final CheckBox checkBox = (CheckBox) linearLayoutChild.getChildAt(p);
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        Log.i("isCheckChild", "" + b);
+                        if (b) {
+                            checkRefineHeader.setChecked(true);
+                        } else {
+                            int count = 0;
+                            for (int k = 0; k < linearLayoutChild.getChildCount(); k++) {
+                                if (((CheckBox) linearLayoutChild.getChildAt(k)).isChecked()) {
+                                    count++;
+                                }
+                            }
+                            if (count == 0) {
+                                checkRefineHeader.setChecked(false);
+                            }
+                        }
+                    }
+                });
             }
 
             checkRefineHeader.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +158,6 @@ public class AddServicesActivity extends AppCompatActivity {
                             checkBox.setChecked(false);
                         }
                     }
-
                 }
             });
 
