@@ -28,25 +28,33 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextV
  */
 
 public class NavigationHandler {
-    private View inflatedView = null;
-    private OnHandleInput listener = null;
-    private static NavigationHandler instance = null;
-
-    private LinearLayout find_local_pros_cont, support_cont, about_cont;
-    private ImageView find_local_pros_img, support_img, about_img;
-    private ProBoldTextView find_local_pros_text, support_text, about_text;
-
-    private RelativeLayout notifications, invite_a_friend, quick_reply, request_review, RLAvailability,log_out_pro_cont,RLSocialMedia;
-
     public static final String
             REQUEST_REVIEW = "request_review",
             QUICK_REPLY = "find_local_pros",
-            NOTIFICATION = "noti",
-            INVITE_FRIEND = "invite_fr",
+            NOTIFICATION = "notification",
+            INVITE_FRIEND = "invite_friend",
+            SHARE_PROFILE = "share_profile",
             LOGOUT = "log_out",
-            AvailableTimeSlot = "available_time_slot",
-            SocialMedia = "social_media";
+            AVAILABLE_TIME_SLOT = "available_time_slot",
+            SOCIAL_MEDIA = "social_media",
+            EMAIL_SUPPORT = "email_support",
+            FAQ = "faq",
+            PROVIDE_FEEDBACK = "provide_feedback",
+            TERMS_OF_SERVICE = "terms_of_service",
+            PRIVACY_POLICY = "privacy_policy";
+    private static NavigationHandler instance = null;
+    private View inflatedView = null;
+    private OnHandleInput listener = null;
+    private LinearLayout find_local_pros_cont, support_cont, about_cont;
+    private ImageView find_local_pros_img, support_img, about_img;
+    private ProBoldTextView find_local_pros_text, support_text, about_text;
+    private RelativeLayout RLNotifications, RLInvite_a_friend, RLQuick_reply, RLRequest_review, RLAvailability,
+            RLLog_out_pro_cont, RLSocialMedia, RLEmailSupport, RLShare_profile,
+            RLFAQ, RLProvideFeedback, RLTermsOfService, RLPrivacyPolicy;
 
+
+    private NavigationHandler() {
+    }
 
     public static NavigationHandler getInstance() {
         if (instance == null)
@@ -74,23 +82,29 @@ public class NavigationHandler {
 //        userInformation = (RelativeLayout) view.findViewById(R.id.userInformation);
 //        login_settings = (RelativeLayout) view.findViewById(R.id.login_settings);
 //        notification = (RelativeLayout) view.findViewById(R.id.notification);
-        notifications = (RelativeLayout) view.findViewById(R.id.notifications);
-        invite_a_friend = (RelativeLayout) view.findViewById(R.id.invite_a_friend);
-        quick_reply = (RelativeLayout) view.findViewById(R.id.quick_reply);
-        request_review = (RelativeLayout) view.findViewById(R.id.request_review);
+        RLNotifications = (RelativeLayout) view.findViewById(R.id.RLNotifications);
+        RLInvite_a_friend = (RelativeLayout) view.findViewById(R.id.RLInvite_a_friend);
+        RLQuick_reply = (RelativeLayout) view.findViewById(R.id.RLQuick_reply);
+        RLRequest_review = (RelativeLayout) view.findViewById(R.id.RLRequest_review);
         RLAvailability = (RelativeLayout) view.findViewById(R.id.RLAvailability);
-        log_out_pro_cont = (RelativeLayout) view.findViewById(R.id.log_out_pro_cont);
+        RLLog_out_pro_cont = (RelativeLayout) view.findViewById(R.id.RLLog_out_pro_cont);
         RLSocialMedia = (RelativeLayout) view.findViewById(R.id.RLSocialMedia);
+        RLShare_profile = (RelativeLayout) view.findViewById(R.id.RLShare_profile);
+        RLEmailSupport = (RelativeLayout) view.findViewById(R.id.RLEmailSupport);
+        RLFAQ = (RelativeLayout) view.findViewById(R.id.RLFAQ);
+        RLProvideFeedback = (RelativeLayout) view.findViewById(R.id.RLProvideFeedback);
+        RLTermsOfService = (RelativeLayout) view.findViewById(R.id.RLTermsOfService);
+        RLPrivacyPolicy = (RelativeLayout) view.findViewById(R.id.RLPrivacyPolicy);
 
 
-        request_review.setOnClickListener(new View.OnClickListener() {
+        RLRequest_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //  highlightTag(NOTIFICATION);
                 listener.onClickItem(REQUEST_REVIEW);
             }
         });
-        notifications.setOnClickListener(new View.OnClickListener() {
+        RLNotifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //  highlightTag(NOTIFICATION);
@@ -98,7 +112,7 @@ public class NavigationHandler {
             }
         });
 
-        invite_a_friend.setOnClickListener(new View.OnClickListener() {
+        RLInvite_a_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //  highlightTag(INVITE_FRIEND);
@@ -106,7 +120,7 @@ public class NavigationHandler {
             }
         });
 
-        quick_reply.setOnClickListener(new View.OnClickListener() {
+        RLQuick_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //  highlightTag(QUICK_REPLY);
@@ -118,23 +132,66 @@ public class NavigationHandler {
             @Override
             public void onClick(View v) {
                 //  highlightTag(QUICK_REPLY);
-                listener.onClickItem(AvailableTimeSlot);
+                listener.onClickItem(AVAILABLE_TIME_SLOT);
             }
         });
 
         RLSocialMedia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onClickItem(SocialMedia);
+                listener.onClickItem(SOCIAL_MEDIA);
             }
         });
 
-        log_out_pro_cont.setOnClickListener(new View.OnClickListener() {
+        RLLog_out_pro_cont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onClickItem(LOGOUT);
             }
         });
+
+
+        RLEmailSupport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClickItem(EMAIL_SUPPORT);
+            }
+        });
+
+        RLFAQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClickItem(FAQ);
+            }
+        });
+
+        RLProvideFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClickItem(PROVIDE_FEEDBACK);
+            }
+        });
+
+        RLTermsOfService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClickItem(TERMS_OF_SERVICE);
+            }
+        });
+
+        RLPrivacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClickItem(PRIVACY_POLICY);
+            }
+        });
+        RLShare_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClickItem(SHARE_PROFILE);
+            }
+        });
+
 
 //        userInformation.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -179,9 +236,6 @@ public class NavigationHandler {
 //
 
         handleViewInput(listener);
-    }
-
-    private NavigationHandler() {
     }
 
     private void handleViewInput(OnHandleInput callback) {

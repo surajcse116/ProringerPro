@@ -77,7 +77,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:id="@+id/notifications"
+                android:id="@+id/RLNotifications"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:paddingLeft="15dp"
@@ -100,7 +100,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/quick_reply"
+                android:id="@+id/RLQuick_reply"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:paddingLeft="15dp"
@@ -169,7 +169,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/invite_friend"
+                android:id="@+id/RLShare_profile"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:paddingLeft="15dp"
@@ -192,7 +192,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/request_review"
+                android:id="@+id/RLRequest_review"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:paddingLeft="15dp"
@@ -215,7 +215,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/invite_a_friend"
+                android:id="@+id/RLInvite_a_friend"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:paddingLeft="15dp"
@@ -238,7 +238,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/log_out_pro_cont"
+                android:id="@+id/RLLog_out_pro_cont"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:paddingLeft="15dp"
@@ -269,31 +269,111 @@
             android:background="@color/colorPrimary" />
 
         <LinearLayout
-            android:id="@+id/support_cont"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@drawable/nav_selecter"
+            android:layout_height="wrap_content"
+            android:background="@color/colorHeader"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/support_img"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/ic_support" />
-
-            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
-                android:id="@+id/support_text"
+            <LinearLayout
+                android:id="@+id/support_cont"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="56dp"
+                android:background="@color/colorPrimaryDark"
                 android:gravity="center_vertical"
-                android:text="Support"
-                android:textColor="@color/colorTextDark"
-                android:textSize="14sp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
 
-                />
+                <ImageView
+                    android:id="@+id/support_img"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/ic_support" />
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                    android:id="@+id/support_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Support"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="14sp"
+
+                    />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/RLEmailSupport"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp">
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Email Support"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_chevron_right_white" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/RLFAQ"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp">
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="FAQ"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_chevron_right_white" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RLProvideFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp">
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Provide Feedback"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_chevron_right_white" />
+            </RelativeLayout>
+
+
         </LinearLayout>
 
         <View
@@ -302,32 +382,88 @@
             android:background="@color/colorPrimary" />
 
         <LinearLayout
-            android:id="@+id/about_cont"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@drawable/nav_selecter"
+            android:layout_height="wrap_content"
+            android:background="@color/colorHeader"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/about_img"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/ic_about" />
-
-            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
-                android:id="@+id/about_text"
+            <LinearLayout
+                android:id="@+id/about_cont"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="56dp"
+                android:background="@color/colorPrimaryDark"
                 android:gravity="center_vertical"
-                android:text="About"
-                android:textColor="@color/colorTextDark"
-                android:textSize="14sp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
 
-                />
+                <ImageView
+                    android:id="@+id/about_img"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/ic_about" />
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                    android:id="@+id/about_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="About"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/RLTermsOfService"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp">
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Terms of Service"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_chevron_right_white" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/RLPrivacyPolicy"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp">
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Privacy Policy"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_chevron_right_white" />
+            </RelativeLayout>
+
+
         </LinearLayout>
+
 
         <View
             android:layout_width="match_parent"

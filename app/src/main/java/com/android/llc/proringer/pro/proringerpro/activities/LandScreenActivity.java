@@ -2,6 +2,7 @@ package com.android.llc.proringer.pro.proringerpro.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.FragmentAvailabilityTimeSlot;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFragment;
@@ -32,10 +34,9 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.NavigationHandler;
 
 
 public class LandScreenActivity extends AppCompatActivity {
+    public BottomNav bottomNavInstance = null;
     ImageView nav_toggle;
     private DrawerLayout mDrawer;
-    public BottomNav bottomNavInstance = null;
-
     private Toolbar toolbar = null;
     private Toolbar back_toolbar = null;
     private ActionBarDrawerToggle toggle = null;
@@ -118,12 +119,12 @@ public class LandScreenActivity extends AppCompatActivity {
                         transactInviteFriend();
                         break;
 
-                    case NavigationHandler.AvailableTimeSlot:
+                    case NavigationHandler.AVAILABLE_TIME_SLOT:
                         closeDrawer();
                         transactTimeAvailability();
                         break;
 
-                    case NavigationHandler.SocialMedia:
+                    case NavigationHandler.SOCIAL_MEDIA:
                         closeDrawer();
                         startActivity(new Intent(LandScreenActivity.this,SocialMediaActivity.class));
                         break;
@@ -132,6 +133,42 @@ public class LandScreenActivity extends AppCompatActivity {
                         closeDrawer();
                         startActivity(new Intent(LandScreenActivity.this,GetStartedActivity.class));
                         finish();
+                        break;
+                    case NavigationHandler.EMAIL_SUPPORT:
+                        closeDrawer();
+                        String[] TOSuppory = {"support@proringer.com"};
+                        Uri uriSupport = Uri.parse("mailto:support@proringer.com")
+                                .buildUpon()
+                                .appendQueryParameter("subject", "Support")
+                                .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1")
+                                .build();
+                        Intent emailSupportIntent = new Intent(Intent.ACTION_SENDTO, uriSupport);
+                        emailSupportIntent.putExtra(Intent.EXTRA_EMAIL, TOSuppory);
+                        startActivity(Intent.createChooser(emailSupportIntent, "Send mail..."));
+                        break;
+                    case NavigationHandler.FAQ:
+                        closeDrawer();
+                        break;
+                    case NavigationHandler.PROVIDE_FEEDBACK:
+                        closeDrawer();
+                        String[] TOFeedback = {"feedback@proringer.com"};
+                        Uri uriFeedback = Uri.parse("mailto:feedback@proringer.com")
+                                .buildUpon()
+                                .appendQueryParameter("subject", "Leave Feedback")
+                                .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1")
+                                .build();
+                        Intent emailFeedbackIntent = new Intent(Intent.ACTION_SENDTO, uriFeedback);
+                        emailFeedbackIntent.putExtra(Intent.EXTRA_EMAIL, TOFeedback);
+                        startActivity(Intent.createChooser(emailFeedbackIntent, "Send mail..."));
+                        break;
+                    case NavigationHandler.TERMS_OF_SERVICE:
+                        closeDrawer();
+                        break;
+                    case NavigationHandler.PRIVACY_POLICY:
+                        closeDrawer();
+                        break;
+                    case NavigationHandler.SHARE_PROFILE:
+                        closeDrawer();
                         break;
 
                 }
