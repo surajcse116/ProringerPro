@@ -29,6 +29,9 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextV
 
 public class NavigationHandler {
     public static final String
+            ACCOUNT = "account",
+            SUPPORT = "support",
+            ABOUT = "about",
             REQUEST_REVIEW = "request_review",
             QUICK_REPLY = "find_local_pros",
             NOTIFICATION = "notification",
@@ -83,8 +86,8 @@ public class NavigationHandler {
 //        login_settings = (RelativeLayout) view.findViewById(R.id.login_settings);
 //        notification = (RelativeLayout) view.findViewById(R.id.notification);
         RLNotifications = (RelativeLayout) view.findViewById(R.id.RLNotifications);
-        RLInvite_a_friend = (RelativeLayout) view.findViewById(R.id.RLInvite_a_friend);
         RLQuick_reply = (RelativeLayout) view.findViewById(R.id.RLQuick_reply);
+        RLInvite_a_friend = (RelativeLayout) view.findViewById(R.id.RLInvite_a_friend);
         RLRequest_review = (RelativeLayout) view.findViewById(R.id.RLRequest_review);
         RLAvailability = (RelativeLayout) view.findViewById(R.id.RLAvailability);
         RLLog_out_pro_cont = (RelativeLayout) view.findViewById(R.id.RLLog_out_pro_cont);
@@ -241,209 +244,6 @@ public class NavigationHandler {
     private void handleViewInput(OnHandleInput callback) {
         listener = callback;
     }
-
-//    public void highlightTag(String tag) {
-//        switch (tag) {
-//            case FIND_LOCAL_PROS:
-//
-//                find_local_pros_cont.setBackgroundColor(Color.parseColor("#656565"));
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro_white);
-//                find_local_pros_text.setTextColor(Color.WHITE);
-//
-//                support_cont.setBackgroundColor(Color.TRANSPARENT);
-//                support_img.setBackgroundResource(R.drawable.ic_support);
-//                support_text.setTextColor(Color.parseColor("#505050"));
-//
-//                about_cont.setBackgroundColor(Color.TRANSPARENT);
-//                about_img.setBackgroundResource(R.drawable.ic_about);
-//                about_text.setTextColor(Color.parseColor("#505050"));
-//
-//                userInformation.setBackgroundColor(Color.TRANSPARENT);
-//                login_settings.setBackgroundColor(Color.TRANSPARENT);
-//                notification.setBackgroundColor(Color.TRANSPARENT);
-//                home_scheduler.setBackgroundColor(Color.TRANSPARENT);
-//                invite_friend.setBackgroundColor(Color.TRANSPARENT);
-//                log_out.setBackgroundColor(Color.TRANSPARENT);
-//                listener.onClickItem(FIND_LOCAL_PROS);
-//                break;
-//            case USER_INFORMATION:
-//                listener.onClickItem(USER_INFORMATION);
-//                userInformation.setBackgroundColor(Color.parseColor("#656565"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                support_cont.setBackgroundColor(Color.TRANSPARENT);
-//                support_img.setBackgroundResource(R.drawable.ic_support);
-//                support_text.setTextColor(Color.parseColor("#505050"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                login_settings.setBackgroundColor(Color.TRANSPARENT);
-//                notification.setBackgroundColor(Color.TRANSPARENT);
-//                home_scheduler.setBackgroundColor(Color.TRANSPARENT);
-//                invite_friend.setBackgroundColor(Color.TRANSPARENT);
-//                log_out.setBackgroundColor(Color.TRANSPARENT);
-//                break;
-//            case LOGIN_SETTINGS:
-//                listener.onClickItem(LOGIN_SETTINGS);
-//                login_settings.setBackgroundColor(Color.parseColor("#656565"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                support_cont.setBackgroundColor(Color.TRANSPARENT);
-//                support_img.setBackgroundResource(R.drawable.ic_support);
-//                support_text.setTextColor(Color.parseColor("#505050"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                userInformation.setBackgroundColor(Color.TRANSPARENT);
-//                notification.setBackgroundColor(Color.TRANSPARENT);
-//                home_scheduler.setBackgroundColor(Color.TRANSPARENT);
-//                invite_friend.setBackgroundColor(Color.TRANSPARENT);
-//                log_out.setBackgroundColor(Color.TRANSPARENT);
-//                break;
-//            case NOTIFICATION:
-//                listener.onClickItem(NOTIFICATION);
-//                notification.setBackgroundColor(Color.parseColor("#656565"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                support_cont.setBackgroundColor(Color.TRANSPARENT);
-//                support_img.setBackgroundResource(R.drawable.ic_support);
-//                support_text.setTextColor(Color.parseColor("#505050"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                userInformation.setBackgroundColor(Color.TRANSPARENT);
-//                login_settings.setBackgroundColor(Color.TRANSPARENT);
-//                home_scheduler.setBackgroundColor(Color.TRANSPARENT);
-//                invite_friend.setBackgroundColor(Color.TRANSPARENT);
-//                log_out.setBackgroundColor(Color.TRANSPARENT);
-//                break;
-//            case HOME_SCHEDUL:
-//                listener.onClickItem(HOME_SCHEDUL);
-//                home_scheduler.setBackgroundColor(Color.parseColor("#656565"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                support_cont.setBackgroundColor(Color.TRANSPARENT);
-//                support_img.setBackgroundResource(R.drawable.ic_support);
-//                support_text.setTextColor(Color.parseColor("#505050"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                userInformation.setBackgroundColor(Color.TRANSPARENT);
-//                login_settings.setBackgroundColor(Color.TRANSPARENT);
-//                notification.setBackgroundColor(Color.TRANSPARENT);
-//                invite_friend.setBackgroundColor(Color.TRANSPARENT);
-//                log_out.setBackgroundColor(Color.TRANSPARENT);
-//                break;
-//            case INVITE_FRIEND:
-//                listener.onClickItem(INVITE_FRIEND);
-//                invite_friend.setBackgroundColor(Color.parseColor("#656565"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                support_cont.setBackgroundColor(Color.TRANSPARENT);
-//                support_img.setBackgroundResource(R.drawable.ic_support);
-//                support_text.setTextColor(Color.parseColor("#505050"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                userInformation.setBackgroundColor(Color.TRANSPARENT);
-//                login_settings.setBackgroundColor(Color.TRANSPARENT);
-//                notification.setBackgroundColor(Color.TRANSPARENT);
-//                home_scheduler.setBackgroundColor(Color.TRANSPARENT);
-//                log_out.setBackgroundColor(Color.TRANSPARENT);
-//                break;
-//            case SUPPORT:
-//                listener.onClickItem(SUPPORT);
-//                support_cont.setBackgroundColor(Color.parseColor("#656565"));
-//                support_img.setBackgroundResource(R.drawable.ic_support_white);
-//                support_text.setTextColor(Color.WHITE);
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                about_cont.setBackgroundColor(Color.TRANSPARENT);
-//                about_img.setBackgroundResource(R.drawable.ic_about);
-//                about_text.setTextColor(Color.parseColor("#505050"));
-//
-//                userInformation.setBackgroundColor(Color.TRANSPARENT);
-//                login_settings.setBackgroundColor(Color.TRANSPARENT);
-//                notification.setBackgroundColor(Color.TRANSPARENT);
-//                home_scheduler.setBackgroundColor(Color.TRANSPARENT);
-//                invite_friend.setBackgroundColor(Color.TRANSPARENT);
-//                log_out.setBackgroundColor(Color.TRANSPARENT);
-//                break;
-//            case ABOUT:
-//                listener.onClickItem(ABOUT);
-//                about_cont.setBackgroundColor(Color.parseColor("#656565"));
-//                about_img.setBackgroundResource(R.drawable.ic_about_white);
-//                about_text.setTextColor(Color.WHITE);
-//
-//                support_cont.setBackgroundColor(Color.TRANSPARENT);
-//                support_img.setBackgroundResource(R.drawable.ic_support);
-//                support_text.setTextColor(Color.parseColor("#505050"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                userInformation.setBackgroundColor(Color.TRANSPARENT);
-//                login_settings.setBackgroundColor(Color.TRANSPARENT);
-//                notification.setBackgroundColor(Color.TRANSPARENT);
-//                home_scheduler.setBackgroundColor(Color.TRANSPARENT);
-//                invite_friend.setBackgroundColor(Color.TRANSPARENT);
-//                log_out.setBackgroundColor(Color.TRANSPARENT);
-//                break;
-//            case LOGOUT:
-//                listener.onClickItem(LOGOUT);
-//                log_out.setBackgroundColor(Color.parseColor("#656565"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                support_cont.setBackgroundColor(Color.TRANSPARENT);
-//                support_img.setBackgroundResource(R.drawable.ic_support);
-//                support_text.setTextColor(Color.parseColor("#505050"));
-//
-//                find_local_pros_cont.setBackgroundColor(Color.TRANSPARENT);
-//                find_local_pros_img.setBackgroundResource(R.drawable.ic_search_pro);
-//                find_local_pros_text.setTextColor(Color.parseColor("#505050"));
-//
-//                userInformation.setBackgroundColor(Color.TRANSPARENT);
-//                login_settings.setBackgroundColor(Color.TRANSPARENT);
-//                notification.setBackgroundColor(Color.TRANSPARENT);
-//                home_scheduler.setBackgroundColor(Color.TRANSPARENT);
-//                invite_friend.setBackgroundColor(Color.TRANSPARENT);
-//                break;
-//            default:
-//
-//        }
-//    }
 
 
     public interface OnHandleInput {
