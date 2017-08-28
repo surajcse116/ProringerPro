@@ -283,7 +283,7 @@ public class NavigationHandler {
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
-                account_cont.setBackgroundColor(Color.parseColor("#656565"));
+                account_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
                 account_img.setBackgroundResource(R.drawable.ic_settings_white);
                 account_text.setTextColor(Color.WHITE);
 
@@ -314,6 +314,11 @@ public class NavigationHandler {
             case NOTIFICATION:
                 listener.onClickItem(NOTIFICATION);
 
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
+
                 RLNotification.setBackgroundColor(Color.parseColor("#656565"));
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
@@ -332,6 +337,11 @@ public class NavigationHandler {
 
             case QUICK_REPLY:
                 listener.onClickItem(QUICK_REPLY);
+
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.parseColor("#656565"));
@@ -352,6 +362,11 @@ public class NavigationHandler {
             case AVAILABILITY:
                 listener.onClickItem(NOTIFICATION);
 
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
+
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.parseColor("#656565"));
@@ -371,6 +386,11 @@ public class NavigationHandler {
             case SOCIAL_MEDIA:
                 listener.onClickItem(SOCIAL_MEDIA);
 
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
+
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
@@ -389,6 +409,11 @@ public class NavigationHandler {
             case SHARE_PROFILE:
                 listener.onClickItem(INVITE_FRIEND);
 
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
+
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
@@ -406,6 +431,10 @@ public class NavigationHandler {
 
             case REQUEST_REVIEW:
                 listener.onClickItem(REQUEST_REVIEW);
+
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
@@ -426,6 +455,11 @@ public class NavigationHandler {
             case INVITE_FRIEND:
                 listener.onClickItem(INVITE_FRIEND);
 
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
+
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
@@ -443,6 +477,10 @@ public class NavigationHandler {
 
             case LOGOUT:
                 listener.onClickItem(LOGOUT);
+
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
@@ -479,7 +517,7 @@ public class NavigationHandler {
                 account_img.setBackgroundResource(R.drawable.ic_settings);
                 account_text.setTextColor(Color.parseColor("#505050"));
 
-                support_cont.setBackgroundColor(Color.parseColor("#656565"));
+                support_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
                 support_img.setBackgroundResource(R.drawable.ic_support_white);
                 support_text.setTextColor(Color.WHITE);
 
@@ -512,6 +550,12 @@ public class NavigationHandler {
                 listener.onClickItem(EMAIL_SUPPORT);
 
 
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
+
+
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
@@ -532,6 +576,10 @@ public class NavigationHandler {
 
                 listener.onClickItem(FAQ);
 
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
@@ -551,6 +599,11 @@ public class NavigationHandler {
             case PROVIDE_FEEDBACK:
 
                 listener.onClickItem(PROVIDE_FEEDBACK);
+
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
@@ -580,7 +633,7 @@ public class NavigationHandler {
                     LLAbout.setVisibility(View.VISIBLE);
                 }
 
-                about_cont.setBackgroundColor(Color.parseColor("#656565"));
+                about_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
                 about_img.setBackgroundResource(R.drawable.ic_about_white);
                 about_text.setTextColor(Color.WHITE);
 
@@ -617,6 +670,10 @@ public class NavigationHandler {
 
                 listener.onClickItem(TERMS_OF_SERVICE);
 
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
@@ -638,6 +695,10 @@ public class NavigationHandler {
             case PRIVACY_POLICY:
 
                 listener.onClickItem(PRIVACY_POLICY);
+
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
