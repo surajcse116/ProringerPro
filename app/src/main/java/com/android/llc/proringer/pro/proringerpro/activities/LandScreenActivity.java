@@ -117,7 +117,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         transactQuickReply();
                         break;
 
-                    case NavigationHandler.AVAILABLE_TIME_SLOT:
+                    case NavigationHandler.AVAILABILITY:
                         closeDrawer();
                         transactTimeAvailability();
                         break;

@@ -29,35 +29,33 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextV
  */
 
 public class NavigationHandler {
-    public static final String
-            FIND_LOCAL_PROJECT = "find_local_project",
+    public static final String FIND_LOCAL_PROJECT = "find_local_projects",
             ACCOUNT = "account",
-            SUPPORT = "support",
-            ABOUT = "about",
-            REQUEST_REVIEW = "request_review",
-            QUICK_REPLY = "quick_reply",
             NOTIFICATION = "notification",
-            INVITE_FRIEND = "invite_friend",
-            SHARE_PROFILE = "share_profile",
-            LOGOUT = "log_out",
-            AVAILABLE_TIME_SLOT = "available_time_slot",
+            QUICK_REPLY = "quick_reply",
+            AVAILABILITY = "availability",
             SOCIAL_MEDIA = "social_media",
+            SHARE_PROFILE = "share_profile",
+            REQUEST_REVIEW = "request_review",
+            INVITE_FRIEND = "invite_friend",
+            LOGOUT = "log_out",
+
+    SUPPORT = "support",
             EMAIL_SUPPORT = "email_support",
             FAQ = "faq",
             PROVIDE_FEEDBACK = "provide_feedback",
+
+    ABOUT = "about",
             TERMS_OF_SERVICE = "terms_of_service",
             PRIVACY_POLICY = "privacy_policy";
     private static NavigationHandler instance = null;
     private View inflatedView = null;
     private OnHandleInput listener = null;
-    private LinearLayout find_local_project_cont, support_cont, about_cont, account_cont,
-            LLAccount, LLSupport, LLAbout;
-    private ImageView find_local_project_img, support_img, about_img, account_img;
-    private ProBoldTextView find_local_project_text, support_text, about_text, account_text;
-    private RelativeLayout RLNotifications, RLInvite_a_friend, RLQuick_reply, RLRequest_review, RLAvailability,
-            RLLog_out_pro_cont, RLSocialMedia, RLEmailSupport, RLShare_profile,
-            RLFAQ, RLProvideFeedback, RLTermsOfService, RLPrivacyPolicy;
-
+    private LinearLayout find_local_projects_cont, account_cont, support_cont, about_cont, LLAccount, LLSupport, LLAbout;
+    private ImageView find_local_projects_img, account_img, support_img, about_img;
+    private ProBoldTextView find_local_projects_text, account_text, support_text, about_text;
+    private RelativeLayout RLNotification, RLQuick_Reply, RLAvailability, RL_Social_Media, RL_Share_Profile, RL_Request_Review, RLInvite_friend, RLLog_out,
+            RLEmailSupport, RLFaq, RLProvideFeedback, RLTermsOfService, RLPrivacyPolicy;
 
     private NavigationHandler() {
     }
@@ -68,183 +66,159 @@ public class NavigationHandler {
         return instance;
     }
 
-    public void init(View view, final OnHandleInput listener) {
+    public void init(View view, OnHandleInput listener) {
         inflatedView = view;
-        /**
-         * Id's need to be bound with xml, xml id changes are necessary
-         */
 
-        RLNotifications = (RelativeLayout) view.findViewById(R.id.RLNotifications);
-        RLQuick_reply = (RelativeLayout) view.findViewById(R.id.RLQuick_reply);
-        RLInvite_a_friend = (RelativeLayout) view.findViewById(R.id.RLInvite_a_friend);
-        RLRequest_review = (RelativeLayout) view.findViewById(R.id.RLRequest_review);
+        find_local_projects_cont = (LinearLayout) view.findViewById(R.id.find_local_projects_cont);
+        find_local_projects_img = (ImageView) view.findViewById(R.id.find_local_projects_img);
+        find_local_projects_text = (ProBoldTextView) view.findViewById(R.id.find_local_projects_text);
+
+        account_cont = (LinearLayout) view.findViewById(R.id.account_cont);
+        account_img = (ImageView) view.findViewById(R.id.account_img);
+        account_text = (ProBoldTextView) view.findViewById(R.id.account_text);
+
+        support_cont = (LinearLayout) view.findViewById(R.id.support_cont);
+        support_img = (ImageView) view.findViewById(R.id.support_img);
+        support_text = (ProBoldTextView) view.findViewById(R.id.support_text);
+
+        about_cont = (LinearLayout) view.findViewById(R.id.about_cont);
+        about_img = (ImageView) view.findViewById(R.id.about_img);
+        about_text = (ProBoldTextView) view.findViewById(R.id.about_text);
+
+
+        RLNotification = (RelativeLayout) view.findViewById(R.id.RLNotification);
+        RLQuick_Reply = (RelativeLayout) view.findViewById(R.id.RLQuick_Reply);
         RLAvailability = (RelativeLayout) view.findViewById(R.id.RLAvailability);
-        RLLog_out_pro_cont = (RelativeLayout) view.findViewById(R.id.RLLog_out_pro_cont);
-        RLSocialMedia = (RelativeLayout) view.findViewById(R.id.RLSocialMedia);
-        RLShare_profile = (RelativeLayout) view.findViewById(R.id.RLShare_profile);
+        RLInvite_friend = (RelativeLayout) view.findViewById(R.id.RLInvite_friend);
+        RL_Share_Profile = (RelativeLayout) view.findViewById(R.id.RL_Share_Profile);
+        RL_Social_Media = (RelativeLayout) view.findViewById(R.id.RL_Social_Media);
+        RL_Request_Review = (RelativeLayout) view.findViewById(R.id.RL_Request_Review);
+        RLLog_out = (RelativeLayout) view.findViewById(R.id.RLLog_out);
         RLEmailSupport = (RelativeLayout) view.findViewById(R.id.RLEmailSupport);
-        RLFAQ = (RelativeLayout) view.findViewById(R.id.RLFAQ);
+        RLFaq = (RelativeLayout) view.findViewById(R.id.RLFaq);
         RLProvideFeedback = (RelativeLayout) view.findViewById(R.id.RLProvideFeedback);
         RLTermsOfService = (RelativeLayout) view.findViewById(R.id.RLTermsOfService);
         RLPrivacyPolicy = (RelativeLayout) view.findViewById(R.id.RLPrivacyPolicy);
-        find_local_project_cont = (LinearLayout) view.findViewById(R.id.find_local_project_cont);
-        account_cont = (LinearLayout) view.findViewById(R.id.account_cont);
-        support_cont = (LinearLayout) view.findViewById(R.id.support_cont);
-        about_cont = (LinearLayout) view.findViewById(R.id.about_cont);
-
 
         LLAccount = (LinearLayout) view.findViewById(R.id.LLAccount);
         LLSupport = (LinearLayout) view.findViewById(R.id.LLSupport);
         LLAbout = (LinearLayout) view.findViewById(R.id.LLAbout);
 
-        find_local_project_img = (ImageView) view.findViewById(R.id.find_local_project_img);
-        account_img = (ImageView) view.findViewById(R.id.account_img);
-        support_img = (ImageView) view.findViewById(R.id.support_img);
-        about_img = (ImageView) view.findViewById(R.id.about_img);
 
-
-        find_local_project_text = (ProBoldTextView) view.findViewById(R.id.find_local_project_text);
-        account_text = (ProBoldTextView) view.findViewById(R.id.account_text);
-        support_text = (ProBoldTextView) view.findViewById(R.id.support_text);
-        about_text = (ProBoldTextView) view.findViewById(R.id.about_text);
-
-        find_local_project_cont.setOnClickListener(new View.OnClickListener() {
+        find_local_projects_cont.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 highlightTag(FIND_LOCAL_PROJECT);
             }
         });
-
         account_cont.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 highlightTag(ACCOUNT);
-
-                LLSupport.setVisibility(View.GONE);
-                LLAbout.setVisibility(View.GONE);
-
-                if (LLAccount.getVisibility() == View.VISIBLE) {
-                    LLAccount.setVisibility(View.GONE);
-                } else {
-                    LLAccount.setVisibility(View.VISIBLE);
-                }
             }
         });
-
-        RLQuick_reply.setOnClickListener(new View.OnClickListener() {
+        support_cont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                highlightTag(QUICK_REPLY);
+                highlightTag(SUPPORT);
             }
         });
-        RLNotifications.setOnClickListener(new View.OnClickListener() {
+        about_cont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                highlightTag(ABOUT);
+            }
+        });
+
+
+        RLNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 highlightTag(NOTIFICATION);
             }
         });
+
+
         RLAvailability.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                highlightTag(AVAILABLE_TIME_SLOT);
-            }
-        });
-        RLSocialMedia.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
-                highlightTag(SOCIAL_MEDIA);
-            }
-        });
-        RLShare_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                highlightTag(SHARE_PROFILE);
+                highlightTag(AVAILABILITY);
             }
         });
 
-        RLRequest_review.setOnClickListener(new View.OnClickListener() {
+        RLQuick_Reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                highlightTag(QUICK_REPLY);
+            }
+        });
+
+        RLInvite_friend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                highlightTag(INVITE_FRIEND);
+            }
+        });
+
+        RL_Share_Profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                highlightTag(SHARE_PROFILE);
+            }
+        });
+        RL_Social_Media.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                highlightTag(SOCIAL_MEDIA);
+            }
+        });
+        RL_Request_Review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 highlightTag(REQUEST_REVIEW);
             }
         });
-        RLInvite_a_friend.setOnClickListener(new View.OnClickListener() {
+        RLLog_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                highlightTag(INVITE_FRIEND);
-            }
-        });
-
-        RLLog_out_pro_cont.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 highlightTag(LOGOUT);
             }
         });
 
-
-        support_cont.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                highlightTag(SUPPORT);
-                LLAccount.setVisibility(View.GONE);
-                LLAbout.setVisibility(View.GONE);
-
-                if (LLSupport.getVisibility() == View.VISIBLE) {
-                    LLSupport.setVisibility(View.GONE);
-                } else {
-                    LLSupport.setVisibility(View.VISIBLE);
-                }
-            }
-        });
         RLEmailSupport.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 highlightTag(EMAIL_SUPPORT);
             }
         });
-
-        RLFAQ.setOnClickListener(new View.OnClickListener() {
+        RLFaq.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 highlightTag(FAQ);
             }
         });
+
         RLProvideFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 highlightTag(PROVIDE_FEEDBACK);
             }
         });
 
-
-        about_cont.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                highlightTag(ABOUT);
-                LLAccount.setVisibility(View.GONE);
-                LLSupport.setVisibility(View.GONE);
-
-                if (LLAbout.getVisibility() == View.VISIBLE) {
-                    LLAbout.setVisibility(View.GONE);
-                } else {
-                    LLAbout.setVisibility(View.VISIBLE);
-                }
-            }
-        });
         RLTermsOfService.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 highlightTag(TERMS_OF_SERVICE);
             }
         });
 
         RLPrivacyPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 highlightTag(PRIVACY_POLICY);
             }
         });
+
 
 
         handleViewInput(listener);
@@ -254,16 +228,15 @@ public class NavigationHandler {
         listener = callback;
     }
 
-
     public void highlightTag(String tag) {
         switch (tag) {
             case FIND_LOCAL_PROJECT:
 
                 listener.onClickItem(FIND_LOCAL_PROJECT);
 
-                find_local_project_cont.setBackgroundColor(Color.parseColor("#656565"));
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro_white);
-                find_local_project_text.setTextColor(Color.WHITE);
+                find_local_projects_cont.setBackgroundColor(Color.parseColor("#656565"));
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro_white);
+                find_local_projects_text.setTextColor(Color.WHITE);
 
                 account_cont.setBackgroundColor(Color.TRANSPARENT);
                 account_img.setBackgroundResource(R.drawable.ic_settings);
@@ -278,17 +251,16 @@ public class NavigationHandler {
                 about_img.setBackgroundResource(R.drawable.ic_about);
                 about_text.setTextColor(Color.parseColor("#505050"));
 
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
@@ -298,11 +270,18 @@ public class NavigationHandler {
             case ACCOUNT:
                 listener.onClickItem(ACCOUNT);
 
-                //userInformation.setBackgroundColor(Color.parseColor("#656565"));
+                LLSupport.setVisibility(View.GONE);
+                LLAbout.setVisibility(View.GONE);
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
+                if (LLAccount.getVisibility() == View.VISIBLE) {
+                    LLAccount.setVisibility(View.GONE);
+                } else {
+                    LLAccount.setVisibility(View.VISIBLE);
+                }
+
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
                 account_cont.setBackgroundColor(Color.parseColor("#656565"));
                 account_img.setBackgroundResource(R.drawable.ic_settings_white);
@@ -313,50 +292,38 @@ public class NavigationHandler {
                 support_text.setTextColor(Color.parseColor("#505050"));
 
                 about_cont.setBackgroundColor(Color.TRANSPARENT);
-                about_img.setBackgroundResource(R.drawable.ic_search_pro);
+                about_img.setBackgroundResource(R.drawable.ic_about);
                 about_text.setTextColor(Color.parseColor("#505050"));
 
 
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
+                break;
 
             case NOTIFICATION:
                 listener.onClickItem(NOTIFICATION);
 
-                RLNotifications.setBackgroundColor(Color.parseColor("#656565"));
-
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
-
-                account_cont.setBackgroundColor(Color.TRANSPARENT);
-                account_img.setBackgroundResource(R.drawable.ic_settings);
-                account_text.setTextColor(Color.parseColor("#505050"));
-
-                support_cont.setBackgroundColor(Color.TRANSPARENT);
-                support_img.setBackgroundResource(R.drawable.ic_support);
-                support_text.setTextColor(Color.parseColor("#505050"));
-
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.parseColor("#656565"));
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
@@ -364,123 +331,74 @@ public class NavigationHandler {
                 break;
 
             case QUICK_REPLY:
-
                 listener.onClickItem(QUICK_REPLY);
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
-
-                account_cont.setBackgroundColor(Color.TRANSPARENT);
-                account_img.setBackgroundResource(R.drawable.ic_settings);
-                account_text.setTextColor(Color.parseColor("#505050"));
-
-                support_cont.setBackgroundColor(Color.TRANSPARENT);
-                support_img.setBackgroundResource(R.drawable.ic_support);
-                support_text.setTextColor(Color.parseColor("#505050"));
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.parseColor("#656565"));
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.parseColor("#656565"));
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
 
                 break;
 
-            case AVAILABLE_TIME_SLOT:
-                listener.onClickItem(AVAILABLE_TIME_SLOT);
+            case AVAILABILITY:
+                listener.onClickItem(NOTIFICATION);
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
-
-                account_cont.setBackgroundColor(Color.TRANSPARENT);
-                account_img.setBackgroundResource(R.drawable.ic_settings);
-                account_text.setTextColor(Color.parseColor("#505050"));
-
-                support_cont.setBackgroundColor(Color.TRANSPARENT);
-                support_img.setBackgroundResource(R.drawable.ic_support);
-                support_text.setTextColor(Color.parseColor("#505050"));
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.parseColor("#656565"));
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
+
                 break;
 
             case SOCIAL_MEDIA:
                 listener.onClickItem(SOCIAL_MEDIA);
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
-
-                account_cont.setBackgroundColor(Color.TRANSPARENT);
-                account_img.setBackgroundResource(R.drawable.ic_settings);
-                account_text.setTextColor(Color.parseColor("#505050"));
-
-                support_cont.setBackgroundColor(Color.TRANSPARENT);
-                support_img.setBackgroundResource(R.drawable.ic_support);
-                support_text.setTextColor(Color.parseColor("#505050"));
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.parseColor("#656565"));
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.parseColor("#656565"));
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
                 break;
 
-
             case SHARE_PROFILE:
-                listener.onClickItem(SHARE_PROFILE);
+                listener.onClickItem(INVITE_FRIEND);
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
-
-                account_cont.setBackgroundColor(Color.TRANSPARENT);
-                account_img.setBackgroundResource(R.drawable.ic_settings);
-                account_text.setTextColor(Color.parseColor("#505050"));
-
-                support_cont.setBackgroundColor(Color.TRANSPARENT);
-                support_img.setBackgroundResource(R.drawable.ic_support);
-                support_text.setTextColor(Color.parseColor("#505050"));
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.parseColor("#656565"));
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.parseColor("#656565"));
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
@@ -489,28 +407,17 @@ public class NavigationHandler {
             case REQUEST_REVIEW:
                 listener.onClickItem(REQUEST_REVIEW);
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
 
-                account_cont.setBackgroundColor(Color.TRANSPARENT);
-                account_img.setBackgroundResource(R.drawable.ic_settings);
-                account_text.setTextColor(Color.parseColor("#505050"));
-
-                support_cont.setBackgroundColor(Color.TRANSPARENT);
-                support_img.setBackgroundResource(R.drawable.ic_support);
-                support_text.setTextColor(Color.parseColor("#505050"));
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.parseColor("#656565"));
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.parseColor("#656565"));
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
@@ -518,69 +425,55 @@ public class NavigationHandler {
 
             case INVITE_FRIEND:
                 listener.onClickItem(INVITE_FRIEND);
-                RLInvite_a_friend.setBackgroundColor(Color.parseColor("#656565"));
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
-
-                account_cont.setBackgroundColor(Color.TRANSPARENT);
-                account_img.setBackgroundResource(R.drawable.ic_settings);
-                account_text.setTextColor(Color.parseColor("#505050"));
-
-                support_cont.setBackgroundColor(Color.TRANSPARENT);
-                support_img.setBackgroundResource(R.drawable.ic_support);
-                support_text.setTextColor(Color.parseColor("#505050"));
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.parseColor("#656565"));
-
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.parseColor("#656565"));
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
                 break;
-
 
             case LOGOUT:
                 listener.onClickItem(LOGOUT);
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
 
-                account_cont.setBackgroundColor(Color.TRANSPARENT);
-                account_img.setBackgroundResource(R.drawable.ic_settings);
-                account_text.setTextColor(Color.parseColor("#505050"));
-
-                support_cont.setBackgroundColor(Color.TRANSPARENT);
-                support_img.setBackgroundResource(R.drawable.ic_support);
-                support_text.setTextColor(Color.parseColor("#505050"));
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.parseColor("#656565"));
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.parseColor("#656565"));
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
+
                 break;
 
+
             case SUPPORT:
+
                 listener.onClickItem(SUPPORT);
+
+                LLAccount.setVisibility(View.GONE);
+                LLAbout.setVisibility(View.GONE);
+
+                if (LLSupport.getVisibility() == View.VISIBLE) {
+                    LLSupport.setVisibility(View.GONE);
+                } else {
+                    LLSupport.setVisibility(View.VISIBLE);
+                }
 
                 account_cont.setBackgroundColor(Color.TRANSPARENT);
                 account_img.setBackgroundResource(R.drawable.ic_settings);
@@ -590,25 +483,24 @@ public class NavigationHandler {
                 support_img.setBackgroundResource(R.drawable.ic_support_white);
                 support_text.setTextColor(Color.WHITE);
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
                 about_cont.setBackgroundColor(Color.TRANSPARENT);
                 about_img.setBackgroundResource(R.drawable.ic_about);
                 about_text.setTextColor(Color.parseColor("#505050"));
 
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
@@ -619,32 +511,17 @@ public class NavigationHandler {
 
                 listener.onClickItem(EMAIL_SUPPORT);
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
 
-                account_cont.setBackgroundColor(Color.TRANSPARENT);
-                account_img.setBackgroundResource(R.drawable.ic_settings);
-                account_text.setTextColor(Color.parseColor("#505050"));
-
-                support_cont.setBackgroundColor(Color.TRANSPARENT);
-                support_img.setBackgroundResource(R.drawable.ic_support);
-                support_text.setTextColor(Color.parseColor("#505050"));
-
-                about_cont.setBackgroundColor(Color.TRANSPARENT);
-                about_img.setBackgroundResource(R.drawable.ic_about);
-                about_text.setTextColor(Color.parseColor("#505050"));
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.parseColor("#656565"));
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
@@ -652,34 +529,19 @@ public class NavigationHandler {
                 break;
 
             case FAQ:
+
                 listener.onClickItem(FAQ);
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
-
-                account_cont.setBackgroundColor(Color.TRANSPARENT);
-                account_img.setBackgroundResource(R.drawable.ic_settings);
-                account_text.setTextColor(Color.parseColor("#505050"));
-
-                support_cont.setBackgroundColor(Color.TRANSPARENT);
-                support_img.setBackgroundResource(R.drawable.ic_support);
-                support_text.setTextColor(Color.parseColor("#505050"));
-
-                about_cont.setBackgroundColor(Color.TRANSPARENT);
-                about_img.setBackgroundResource(R.drawable.ic_about);
-                about_text.setTextColor(Color.parseColor("#505050"));
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.parseColor("#656565"));
+                RLFaq.setBackgroundColor(Color.parseColor("#656565"));
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
@@ -690,45 +552,37 @@ public class NavigationHandler {
 
                 listener.onClickItem(PROVIDE_FEEDBACK);
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
-
-                account_cont.setBackgroundColor(Color.TRANSPARENT);
-                account_img.setBackgroundResource(R.drawable.ic_settings);
-                account_text.setTextColor(Color.parseColor("#505050"));
-
-                support_cont.setBackgroundColor(Color.TRANSPARENT);
-                support_img.setBackgroundResource(R.drawable.ic_support);
-                support_text.setTextColor(Color.parseColor("#505050"));
-
-                about_cont.setBackgroundColor(Color.TRANSPARENT);
-                about_img.setBackgroundResource(R.drawable.ic_about);
-                about_text.setTextColor(Color.parseColor("#505050"));
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.parseColor("#656565"));
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
-
-
                 break;
 
-            case TERMS_OF_SERVICE:
-                listener.onClickItem(TERMS_OF_SERVICE);
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
+            case ABOUT:
+                listener.onClickItem(ABOUT);
+
+                LLAccount.setVisibility(View.GONE);
+                LLSupport.setVisibility(View.GONE);
+
+                if (LLAbout.getVisibility() == View.VISIBLE) {
+                    LLAbout.setVisibility(View.GONE);
+                } else {
+                    LLAbout.setVisibility(View.VISIBLE);
+                }
+
+                about_cont.setBackgroundColor(Color.parseColor("#656565"));
+                about_img.setBackgroundResource(R.drawable.ic_about_white);
+                about_text.setTextColor(Color.WHITE);
 
                 account_cont.setBackgroundColor(Color.TRANSPARENT);
                 account_img.setBackgroundResource(R.drawable.ic_settings);
@@ -738,63 +592,68 @@ public class NavigationHandler {
                 support_img.setBackgroundResource(R.drawable.ic_support);
                 support_text.setTextColor(Color.parseColor("#505050"));
 
-                about_cont.setBackgroundColor(Color.TRANSPARENT);
-                about_img.setBackgroundResource(R.drawable.ic_about);
-                about_text.setTextColor(Color.parseColor("#505050"));
+                find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
+                find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
+                find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
+                RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
+                RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
+                RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
+
+                break;
+
+
+            case TERMS_OF_SERVICE:
+
+                listener.onClickItem(TERMS_OF_SERVICE);
+
+
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
+                RLAvailability.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
+                RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.parseColor("#656565"));
                 RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
 
+
                 break;
 
             case PRIVACY_POLICY:
+
                 listener.onClickItem(PRIVACY_POLICY);
 
 
-                find_local_project_cont.setBackgroundColor(Color.TRANSPARENT);
-                find_local_project_img.setBackgroundResource(R.drawable.ic_search_pro);
-                find_local_project_text.setTextColor(Color.parseColor("#505050"));
-
-                account_cont.setBackgroundColor(Color.TRANSPARENT);
-                account_img.setBackgroundResource(R.drawable.ic_settings);
-                account_text.setTextColor(Color.parseColor("#505050"));
-
-                support_cont.setBackgroundColor(Color.TRANSPARENT);
-                support_img.setBackgroundResource(R.drawable.ic_support);
-                support_text.setTextColor(Color.parseColor("#505050"));
-
-                about_cont.setBackgroundColor(Color.TRANSPARENT);
-                about_img.setBackgroundResource(R.drawable.ic_about);
-                about_text.setTextColor(Color.parseColor("#505050"));
-
-                RLNotifications.setBackgroundColor(Color.TRANSPARENT);
-                RLQuick_reply.setBackgroundColor(Color.TRANSPARENT);
+                RLNotification.setBackgroundColor(Color.TRANSPARENT);
+                RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
                 RLAvailability.setBackgroundColor(Color.TRANSPARENT);
-                RLSocialMedia.setBackgroundColor(Color.TRANSPARENT);
-                RLShare_profile.setBackgroundColor(Color.TRANSPARENT);
-                RLRequest_review.setBackgroundColor(Color.TRANSPARENT);
-                RLInvite_a_friend.setBackgroundColor(Color.TRANSPARENT);
-                RLLog_out_pro_cont.setBackgroundColor(Color.TRANSPARENT);
+                RL_Social_Media.setBackgroundColor(Color.TRANSPARENT);
+                RL_Share_Profile.setBackgroundColor(Color.TRANSPARENT);
+                RL_Request_Review.setBackgroundColor(Color.TRANSPARENT);
+                RLInvite_friend.setBackgroundColor(Color.TRANSPARENT);
+                RLLog_out.setBackgroundColor(Color.TRANSPARENT);
                 RLEmailSupport.setBackgroundColor(Color.TRANSPARENT);
-                RLFAQ.setBackgroundColor(Color.TRANSPARENT);
+                RLFaq.setBackgroundColor(Color.TRANSPARENT);
                 RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
                 RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
                 RLPrivacyPolicy.setBackgroundColor(Color.parseColor("#656565"));
-
                 break;
-
 
             default:
 
