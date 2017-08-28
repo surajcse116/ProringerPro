@@ -318,6 +318,17 @@ public class NavigationHandler {
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
+                account_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                account_img.setBackgroundResource(R.drawable.ic_settings_white);
+                account_text.setTextColor(Color.WHITE);
+
+                support_cont.setBackgroundColor(Color.TRANSPARENT);
+                support_img.setBackgroundResource(R.drawable.ic_support);
+                support_text.setTextColor(Color.parseColor("#505050"));
+
+                about_cont.setBackgroundColor(Color.TRANSPARENT);
+                about_img.setBackgroundResource(R.drawable.ic_about);
+                about_text.setTextColor(Color.parseColor("#505050"));
 
                 RLNotification.setBackgroundColor(Color.parseColor("#656565"));
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
@@ -341,6 +352,18 @@ public class NavigationHandler {
                 find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                account_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                account_img.setBackgroundResource(R.drawable.ic_settings_white);
+                account_text.setTextColor(Color.WHITE);
+
+                support_cont.setBackgroundColor(Color.TRANSPARENT);
+                support_img.setBackgroundResource(R.drawable.ic_support);
+                support_text.setTextColor(Color.parseColor("#505050"));
+
+                about_cont.setBackgroundColor(Color.TRANSPARENT);
+                about_img.setBackgroundResource(R.drawable.ic_about);
+                about_text.setTextColor(Color.parseColor("#505050"));
 
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
@@ -366,6 +389,18 @@ public class NavigationHandler {
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
+                account_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                account_img.setBackgroundResource(R.drawable.ic_settings_white);
+                account_text.setTextColor(Color.WHITE);
+
+                support_cont.setBackgroundColor(Color.TRANSPARENT);
+                support_img.setBackgroundResource(R.drawable.ic_support);
+                support_text.setTextColor(Color.parseColor("#505050"));
+
+                about_cont.setBackgroundColor(Color.TRANSPARENT);
+                about_img.setBackgroundResource(R.drawable.ic_about);
+                about_text.setTextColor(Color.parseColor("#505050"));
+
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
@@ -390,6 +425,18 @@ public class NavigationHandler {
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
+                account_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                account_img.setBackgroundResource(R.drawable.ic_settings_white);
+                account_text.setTextColor(Color.WHITE);
+
+                support_cont.setBackgroundColor(Color.TRANSPARENT);
+                support_img.setBackgroundResource(R.drawable.ic_support);
+                support_text.setTextColor(Color.parseColor("#505050"));
+
+                about_cont.setBackgroundColor(Color.TRANSPARENT);
+                about_img.setBackgroundResource(R.drawable.ic_about);
+                about_text.setTextColor(Color.parseColor("#505050"));
+
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
@@ -413,6 +460,17 @@ public class NavigationHandler {
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
+                account_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                account_img.setBackgroundResource(R.drawable.ic_settings_white);
+                account_text.setTextColor(Color.WHITE);
+
+                support_cont.setBackgroundColor(Color.TRANSPARENT);
+                support_img.setBackgroundResource(R.drawable.ic_support);
+                support_text.setTextColor(Color.parseColor("#505050"));
+
+                about_cont.setBackgroundColor(Color.TRANSPARENT);
+                about_img.setBackgroundResource(R.drawable.ic_about);
+                about_text.setTextColor(Color.parseColor("#505050"));
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
@@ -435,6 +493,18 @@ public class NavigationHandler {
                 find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                account_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                account_img.setBackgroundResource(R.drawable.ic_settings_white);
+                account_text.setTextColor(Color.WHITE);
+
+                support_cont.setBackgroundColor(Color.TRANSPARENT);
+                support_img.setBackgroundResource(R.drawable.ic_support);
+                support_text.setTextColor(Color.parseColor("#505050"));
+
+                about_cont.setBackgroundColor(Color.TRANSPARENT);
+                about_img.setBackgroundResource(R.drawable.ic_about);
+                about_text.setTextColor(Color.parseColor("#505050"));
 
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
@@ -459,6 +529,17 @@ public class NavigationHandler {
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
+                account_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                account_img.setBackgroundResource(R.drawable.ic_settings_white);
+                account_text.setTextColor(Color.WHITE);
+
+                support_cont.setBackgroundColor(Color.TRANSPARENT);
+                support_img.setBackgroundResource(R.drawable.ic_support);
+                support_text.setTextColor(Color.parseColor("#505050"));
+
+                about_cont.setBackgroundColor(Color.TRANSPARENT);
+                about_img.setBackgroundResource(R.drawable.ic_about);
+                about_text.setTextColor(Color.parseColor("#505050"));
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
@@ -481,6 +562,18 @@ public class NavigationHandler {
                 find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                account_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                account_img.setBackgroundResource(R.drawable.ic_settings_white);
+                account_text.setTextColor(Color.WHITE);
+
+                support_cont.setBackgroundColor(Color.TRANSPARENT);
+                support_img.setBackgroundResource(R.drawable.ic_support);
+                support_text.setTextColor(Color.parseColor("#505050"));
+
+                about_cont.setBackgroundColor(Color.TRANSPARENT);
+                about_img.setBackgroundResource(R.drawable.ic_about);
+                about_text.setTextColor(Color.parseColor("#505050"));
 
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
@@ -550,11 +643,21 @@ public class NavigationHandler {
                 listener.onClickItem(EMAIL_SUPPORT);
 
 
+                account_cont.setBackgroundColor(Color.TRANSPARENT);
+                account_img.setBackgroundResource(R.drawable.ic_settings);
+                account_text.setTextColor(Color.parseColor("#505050"));
+
+                support_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                support_img.setBackgroundResource(R.drawable.ic_support_white);
+                support_text.setTextColor(Color.WHITE);
+
                 find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
-
+                about_cont.setBackgroundColor(Color.TRANSPARENT);
+                about_img.setBackgroundResource(R.drawable.ic_about);
+                about_text.setTextColor(Color.parseColor("#505050"));
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
@@ -576,9 +679,21 @@ public class NavigationHandler {
 
                 listener.onClickItem(FAQ);
 
+                account_cont.setBackgroundColor(Color.TRANSPARENT);
+                account_img.setBackgroundResource(R.drawable.ic_settings);
+                account_text.setTextColor(Color.parseColor("#505050"));
+
+                support_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                support_img.setBackgroundResource(R.drawable.ic_support_white);
+                support_text.setTextColor(Color.WHITE);
+
                 find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                about_cont.setBackgroundColor(Color.TRANSPARENT);
+                about_img.setBackgroundResource(R.drawable.ic_about);
+                about_text.setTextColor(Color.parseColor("#505050"));
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
@@ -600,9 +715,21 @@ public class NavigationHandler {
 
                 listener.onClickItem(PROVIDE_FEEDBACK);
 
+                account_cont.setBackgroundColor(Color.TRANSPARENT);
+                account_img.setBackgroundResource(R.drawable.ic_settings);
+                account_text.setTextColor(Color.parseColor("#505050"));
+
+                support_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                support_img.setBackgroundResource(R.drawable.ic_support_white);
+                support_text.setTextColor(Color.WHITE);
+
                 find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                about_cont.setBackgroundColor(Color.TRANSPARENT);
+                about_img.setBackgroundResource(R.drawable.ic_about);
+                about_text.setTextColor(Color.parseColor("#505050"));
 
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
@@ -670,6 +797,18 @@ public class NavigationHandler {
 
                 listener.onClickItem(TERMS_OF_SERVICE);
 
+                about_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                about_img.setBackgroundResource(R.drawable.ic_about_white);
+                about_text.setTextColor(Color.WHITE);
+
+                account_cont.setBackgroundColor(Color.TRANSPARENT);
+                account_img.setBackgroundResource(R.drawable.ic_settings);
+                account_text.setTextColor(Color.parseColor("#505050"));
+
+                support_cont.setBackgroundColor(Color.TRANSPARENT);
+                support_img.setBackgroundResource(R.drawable.ic_support);
+                support_text.setTextColor(Color.parseColor("#505050"));
+
                 find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
@@ -696,10 +835,21 @@ public class NavigationHandler {
 
                 listener.onClickItem(PRIVACY_POLICY);
 
+                about_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                about_img.setBackgroundResource(R.drawable.ic_about_white);
+                about_text.setTextColor(Color.WHITE);
+
+                account_cont.setBackgroundColor(Color.TRANSPARENT);
+                account_img.setBackgroundResource(R.drawable.ic_settings);
+                account_text.setTextColor(Color.parseColor("#505050"));
+
+                support_cont.setBackgroundColor(Color.TRANSPARENT);
+                support_img.setBackgroundResource(R.drawable.ic_support);
+                support_text.setTextColor(Color.parseColor("#505050"));
+
                 find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
-
 
                 RLNotification.setBackgroundColor(Color.TRANSPARENT);
                 RLQuick_Reply.setBackgroundColor(Color.TRANSPARENT);
