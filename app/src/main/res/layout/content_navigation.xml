@@ -49,7 +49,6 @@
             android:id="@+id/account_cont"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@color/colorHeader"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="10dp">
@@ -59,7 +58,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/ic_settings_white" />
+                android:background="@drawable/ic_settings" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
                 android:id="@+id/account_text"
@@ -67,10 +66,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="Account"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="14sp"
-
-                />
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,7 +75,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorHeader"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <RelativeLayout
                 android:id="@+id/RLNotifications"
@@ -272,12 +270,10 @@
             android:layout_height="1px"
             android:background="@color/colorPrimary" />
 
-
         <LinearLayout
             android:id="@+id/support_cont"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@color/colorPrimaryDark"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="10dp">
@@ -377,8 +373,8 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_chevron_right_white" />
             </RelativeLayout>
-        </LinearLayout>
 
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -389,7 +385,7 @@
             android:id="@+id/about_cont"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/nav_selecter"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="10dp">
@@ -408,7 +404,9 @@
                 android:gravity="center_vertical"
                 android:text="About"
                 android:textColor="@color/colorTextDark"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -430,7 +428,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="Terms of Service"
+                    android:text="Terms Of Service"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
@@ -466,7 +464,6 @@
             </RelativeLayout>
 
         </LinearLayout>
-
 
         <View
             android:layout_width="match_parent"

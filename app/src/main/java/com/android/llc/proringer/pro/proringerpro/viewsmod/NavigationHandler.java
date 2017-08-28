@@ -35,7 +35,7 @@ public class NavigationHandler {
             SUPPORT = "support",
             ABOUT = "about",
             REQUEST_REVIEW = "request_review",
-            QUICK_REPLY = "find_local_pros",
+            QUICK_REPLY = "quick_reply",
             NOTIFICATION = "notification",
             INVITE_FRIEND = "invite_friend",
             SHARE_PROFILE = "share_profile",
