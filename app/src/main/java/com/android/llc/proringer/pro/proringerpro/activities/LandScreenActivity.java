@@ -101,22 +101,20 @@ public class LandScreenActivity extends AppCompatActivity {
             public void onClickItem(String tag) {
                 switch (tag) {
 
-                    case NavigationHandler.REQUEST_REVIEW:
-                        closeDrawer();
-                        transactRequestReview();
+                    case NavigationHandler.FIND_LOCAL_PROJECT:
                         break;
-                    case NavigationHandler.QUICK_REPLY:
-                        closeDrawer();
-                        transactQuickReply();
+
+                    case NavigationHandler.ACCOUNT:
                         break;
+
                     case NavigationHandler.NOTIFICATION:
                         closeDrawer();
                         transactNotification();
                         break;
 
-                    case NavigationHandler.INVITE_FRIEND:
+                    case NavigationHandler.QUICK_REPLY:
                         closeDrawer();
-                        transactInviteFriend();
+                        transactQuickReply();
                         break;
 
                     case NavigationHandler.AVAILABLE_TIME_SLOT:
@@ -126,7 +124,21 @@ public class LandScreenActivity extends AppCompatActivity {
 
                     case NavigationHandler.SOCIAL_MEDIA:
                         closeDrawer();
-                        startActivity(new Intent(LandScreenActivity.this,SocialMediaActivity.class));
+                        startActivity(new Intent(LandScreenActivity.this, SocialMediaActivity.class));
+                        break;
+
+                    case NavigationHandler.SHARE_PROFILE:
+                        closeDrawer();
+                        break;
+
+                    case NavigationHandler.REQUEST_REVIEW:
+                        closeDrawer();
+                        transactRequestReview();
+                        break;
+
+                    case NavigationHandler.INVITE_FRIEND:
+                        closeDrawer();
+                        transactInviteFriend();
                         break;
 
                     case NavigationHandler.LOGOUT:
@@ -134,6 +146,10 @@ public class LandScreenActivity extends AppCompatActivity {
                         startActivity(new Intent(LandScreenActivity.this,GetStartedActivity.class));
                         finish();
                         break;
+
+                    case NavigationHandler.SUPPORT:
+                        break;
+
                     case NavigationHandler.EMAIL_SUPPORT:
                         closeDrawer();
                         String[] TOSuppory = {"support@proringer.com"};
@@ -161,15 +177,18 @@ public class LandScreenActivity extends AppCompatActivity {
                         emailFeedbackIntent.putExtra(Intent.EXTRA_EMAIL, TOFeedback);
                         startActivity(Intent.createChooser(emailFeedbackIntent, "Send mail..."));
                         break;
+
+
+                    case NavigationHandler.ABOUT:
+                        break;
+
                     case NavigationHandler.TERMS_OF_SERVICE:
                         closeDrawer();
                         break;
                     case NavigationHandler.PRIVACY_POLICY:
                         closeDrawer();
                         break;
-                    case NavigationHandler.SHARE_PROFILE:
-                        closeDrawer();
-                        break;
+
 
                 }
             }
