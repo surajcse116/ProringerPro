@@ -236,6 +236,8 @@ public class NavigationHandler {
 
                 LLAccount.setVisibility(View.GONE);
                 LLAbout.setVisibility(View.GONE);
+                LLSupport.setVisibility(View.GONE);
+
 
                 find_local_projects_cont.setBackgroundColor(Color.parseColor("#656565"));
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro_white);
@@ -274,9 +276,7 @@ public class NavigationHandler {
                 listener.onClickItem(ACCOUNT);
 
                 LLSupport.setVisibility(View.GONE);
-                LLSupport.setVisibility(View.GONE);
                 LLAbout.setVisibility(View.GONE);
-
 
                 if (LLAccount.getVisibility() == View.VISIBLE) {
                     LLAccount.setVisibility(View.GONE);

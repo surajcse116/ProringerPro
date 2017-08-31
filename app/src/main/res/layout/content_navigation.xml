@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorHeader"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
 
             <RelativeLayout
