@@ -234,6 +234,9 @@ public class NavigationHandler {
 
                 listener.onClickItem(FIND_LOCAL_PROJECT);
 
+                LLAccount.setVisibility(View.GONE);
+                LLAbout.setVisibility(View.GONE);
+
                 find_local_projects_cont.setBackgroundColor(Color.parseColor("#656565"));
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro_white);
                 find_local_projects_text.setTextColor(Color.WHITE);
@@ -271,21 +274,26 @@ public class NavigationHandler {
                 listener.onClickItem(ACCOUNT);
 
                 LLSupport.setVisibility(View.GONE);
+                LLSupport.setVisibility(View.GONE);
                 LLAbout.setVisibility(View.GONE);
+
 
                 if (LLAccount.getVisibility() == View.VISIBLE) {
                     LLAccount.setVisibility(View.GONE);
+                    account_cont.setBackgroundColor(Color.TRANSPARENT);
+                    account_img.setBackgroundResource(R.drawable.ic_settings);
+                    account_text.setTextColor(Color.parseColor("#505050"));
                 } else {
                     LLAccount.setVisibility(View.VISIBLE);
+                    account_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                    account_img.setBackgroundResource(R.drawable.ic_settings_white);
+                    account_text.setTextColor(Color.WHITE);
                 }
 
                 find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
                 find_local_projects_text.setTextColor(Color.parseColor("#505050"));
 
-                account_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
-                account_img.setBackgroundResource(R.drawable.ic_settings_white);
-                account_text.setTextColor(Color.WHITE);
 
                 support_cont.setBackgroundColor(Color.TRANSPARENT);
                 support_img.setBackgroundResource(R.drawable.ic_support);
@@ -602,8 +610,14 @@ public class NavigationHandler {
 
                 if (LLSupport.getVisibility() == View.VISIBLE) {
                     LLSupport.setVisibility(View.GONE);
+                    support_cont.setBackgroundColor(Color.TRANSPARENT);
+                    support_img.setBackgroundResource(R.drawable.ic_support);
+                    support_text.setTextColor(Color.parseColor("#505050"));
                 } else {
                     LLSupport.setVisibility(View.VISIBLE);
+                    support_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                    support_img.setBackgroundResource(R.drawable.ic_support_white);
+                    support_text.setTextColor(Color.WHITE);
                 }
 
                 account_cont.setBackgroundColor(Color.TRANSPARENT);
@@ -756,13 +770,17 @@ public class NavigationHandler {
 
                 if (LLAbout.getVisibility() == View.VISIBLE) {
                     LLAbout.setVisibility(View.GONE);
+                    about_cont.setBackgroundColor(Color.TRANSPARENT);
+                    about_img.setBackgroundResource(R.drawable.ic_about);
+                    about_text.setTextColor(Color.parseColor("#505050"));
                 } else {
                     LLAbout.setVisibility(View.VISIBLE);
+                    about_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
+                    about_img.setBackgroundResource(R.drawable.ic_about_white);
+                    about_text.setTextColor(Color.WHITE);
+
                 }
 
-                about_cont.setBackgroundColor(Color.parseColor("#7c7c7c"));
-                about_img.setBackgroundResource(R.drawable.ic_about_white);
-                about_text.setTextColor(Color.WHITE);
 
                 account_cont.setBackgroundColor(Color.TRANSPARENT);
                 account_img.setBackgroundResource(R.drawable.ic_settings);
