@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RLMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/img_center"
+        android:layout_width="54dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+
+    <ImageView
+        android:id="@+id/img_gallery"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/img_center"
+        android:padding="8dp"
+        android:src="@drawable/ic_gallery_picture" />
+
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_gallery"
+        android:layout_toLeftOf="@+id/img_center"
+        android:text="Gallery"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/img_camera"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/img_center"
+        android:padding="5dp"
+        android:src="@drawable/ic_photo_camera" />
+
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_camera"
+        android:layout_toRightOf="@+id/img_center"
+        android:text="Camera"
+        android:textSize="16sp" />
+
+
+</RelativeLayout>
