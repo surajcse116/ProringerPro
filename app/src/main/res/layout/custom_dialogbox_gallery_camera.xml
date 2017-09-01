@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/img_center"
-        android:layout_width="54dp"
+        android:layout_width="20dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
