@@ -11,7 +11,6 @@ import android.widget.ImageView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.PortFolioActivity;
-import com.android.llc.proringer.pro.proringerpro.pojo.PortPolioImageGallery;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -25,11 +24,11 @@ import java.util.ArrayList;
 
 public class AddImageAdapter extends RecyclerView.Adapter<AddImageAdapter.MyViewHolder> {
     Context mContext;
-    ArrayList<PortPolioImageGallery> portPolioImageGalleryArrayList;
+    ArrayList<String> portPolioImageGalleryArrayList;
     int screenHeight;
     int screenWidth;
 
-    public AddImageAdapter(Context mContext, ArrayList<PortPolioImageGallery> portPolioImageGalleryArrayList) {
+    public AddImageAdapter(Context mContext, ArrayList<String> portPolioImageGalleryArrayList) {
         this.mContext=mContext;
         this.portPolioImageGalleryArrayList = portPolioImageGalleryArrayList;
 
@@ -51,7 +50,7 @@ public class AddImageAdapter extends RecyclerView.Adapter<AddImageAdapter.MyView
         holder.img.getLayoutParams().width=screenWidth/5;
         holder.img.getLayoutParams().height=screenWidth/5;
 
-        Glide.with(mContext).load(portPolioImageGalleryArrayList.get(position).getUri()).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
+        Glide.with(mContext).load("file://" + portPolioImageGalleryArrayList.get(position)).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
             /**
              * {@inheritDoc}
              * If no {@link GlideAnimation} is given or if the animation does not set the

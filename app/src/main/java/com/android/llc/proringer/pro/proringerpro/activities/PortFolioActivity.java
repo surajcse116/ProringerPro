@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,8 @@ import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.AddImageAdapter;
-import com.android.llc.proringer.pro.proringerpro.pojo.PortPolioImageGallery;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
 import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
@@ -36,12 +38,13 @@ import java.util.ArrayList;
  */
 
 public class PortFolioActivity extends AppCompatActivity {
+    private static final int REQUEST_IMAGE_CAPTURE = 5;
     private static final int PICK_IMAGE = 3;
     RecyclerView rcv_port_folio,rcv_add_port_folio;
     RelativeLayout RLAddPortFolio, RLEmpty;
     ProSemiBoldTextView tv_add;
     AddImageAdapter addImageAdapter=null;
-    ArrayList<PortPolioImageGallery> portPolioImageGalleryArrayList = null;
+    ArrayList<String> portPolioImageGalleryArrayList = null;
     private String mCurrentPhotoPath = "";
 
     @Override
@@ -138,8 +141,8 @@ public class PortFolioActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-//                ProConstant.cameraRequested = true;
-//                startActivityForResult(new Intent(getActivity(), ImageTakerActivityCamera.class), REQUEST_IMAGE_CAPTURE);
+                ProConstant.cameraRequested = true;
+                startActivityForResult(new Intent(PortFolioActivity.this, ImageTakerActivityCamera.class), REQUEST_IMAGE_CAPTURE);
             }
         });
 
@@ -163,10 +166,8 @@ public class PortFolioActivity extends AppCompatActivity {
                 Logger.printMessage("list_size", "" + portPolioImageGalleryArrayList.size());
 
                 if (portPolioImageGalleryArrayList.size() < 10) {
-                    PortPolioImageGallery sg = new PortPolioImageGallery();
-                    sg.setImagePath(mCurrentPhotoPath);
-                    sg.setUri(uri);
-                    portPolioImageGalleryArrayList.add(sg);
+
+                    portPolioImageGalleryArrayList.add(mCurrentPhotoPath);
 
                     if (addImageAdapter == null) {
                         addImageAdapter = new AddImageAdapter(PortFolioActivity.this, portPolioImageGalleryArrayList);
@@ -182,6 +183,32 @@ public class PortFolioActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (data != null) {
+                        mCurrentPhotoPath = data.getExtras().get("data").toString();
+                        Logger.printMessage("image****", "" + mCurrentPhotoPath);
+
+
+                        if (portPolioImageGalleryArrayList.size() < 10) {
+
+                            portPolioImageGalleryArrayList.add(mCurrentPhotoPath);
+
+                            if (addImageAdapter == null) {
+                                addImageAdapter = new AddImageAdapter(PortFolioActivity.this, portPolioImageGalleryArrayList);
+                                rcv_add_port_folio.setAdapter(addImageAdapter);
+                            } else {
+                                addImageAdapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            Toast.makeText(PortFolioActivity.this, "You can't select pictures more than 10", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }
+            }, 800);
         } else if (requestCode == 200 && resultCode == RESULT_OK) {
             showImagePickerOption();
         }

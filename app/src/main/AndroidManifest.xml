@@ -153,6 +153,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" />
 
+        <activity
+            android:name=".utils.ImageTakerActivityCamera"
+            android:configChanges="orientation|screenLayout|screenSize"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>
