@@ -106,6 +106,7 @@ public class ImageTakerActivityCamera extends AppCompatActivity {
                 }
                 // Continue only if the File was successfully created
                 if (finalFile != null) {
+                    System.out.println("final file " + finalFile.toString());
                     Uri photoURI = null;
                     photoURI = FileProvider.getUriForFile(ImageTakerActivityCamera.this,
                             BuildConfig.APPLICATION_ID + ".provider",
