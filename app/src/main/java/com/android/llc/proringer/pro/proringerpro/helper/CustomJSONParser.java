@@ -1,5 +1,6 @@
 package com.android.llc.proringer.pro.proringerpro.helper;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
@@ -25,176 +26,187 @@ import okhttp3.Response;
 
 public class CustomJSONParser {
 
-    public void fireAPIForPostMethod(final String url, final HashMap<String, String> apiPostData, final HashMap<String, File> photos, final CustomJSONResponse customJSONResponse) {
-        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+    public void fireAPIForPostMethod(Context mcontext, final String url, final HashMap<String, String> apiPostData, final HashMap<String, File> photos, final CustomJSONResponse customJSONResponse) {
 
-        new AsyncTask<Void, Void, Void>() {
+        if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
 
-            MultipartBody.Builder builderNew;
-            private String stringResponse = null;
-            private Exception exception = null;
+            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                builderNew = new MultipartBody.Builder().setType(MultipartBody.FORM);
-                Iterator myVeryOwnIterator = apiPostData.keySet().iterator();
+            new AsyncTask<Void, Void, Void>() {
 
-                while (myVeryOwnIterator.hasNext()) {
-                    String key = (String) myVeryOwnIterator.next();
-                    String value = (String) apiPostData.get(key);
-                    Logger.printMessage(key, value);
-                    builderNew.addFormDataPart(key, value);
-                }
+                MultipartBody.Builder builderNew;
+                private String stringResponse = null;
+                private Exception exception = null;
 
-                if (photos != null) {
-                    myVeryOwnIterator = photos.keySet().iterator();
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    builderNew = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                    Iterator myVeryOwnIterator = apiPostData.keySet().iterator();
+
                     while (myVeryOwnIterator.hasNext()) {
                         String key = (String) myVeryOwnIterator.next();
-                        File value = (File) photos.get(key);
-                        {
-                            if (value != null)
-                                builderNew.addFormDataPart("" + key, value.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, value.getName()));
+                        String value = (String) apiPostData.get(key);
+                        Logger.printMessage(key, value);
+                        builderNew.addFormDataPart(key, value);
+                    }
 
+                    if (photos != null) {
+                        myVeryOwnIterator = photos.keySet().iterator();
+                        while (myVeryOwnIterator.hasNext()) {
+                            String key = (String) myVeryOwnIterator.next();
+                            File value = (File) photos.get(key);
+                            {
+                                if (value != null)
+                                    builderNew.addFormDataPart("" + key, value.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, value.getName()));
+
+                            }
                         }
                     }
+
                 }
 
-            }
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                try {
-                    if (!isCancelled()) {
-
-                        MultipartBody requestBody = builderNew.build();
-                        OkHttpClient client = new OkHttpClient.Builder().retryOnConnectionFailure(true).connectTimeout(6000, TimeUnit.MILLISECONDS).build();
-                        Request request = new Request.Builder().url(url).method("POST", RequestBody.create(null, new byte[0]))
-                                .post(requestBody).build();
-                        Response response = client.newCall(request).execute();
-
-                        stringResponse = response.body().string();
-
-                        Logger.printMessage("response", "respose_::" + stringResponse);
-                        Logger.printMessage("response", "respose_ww_message::" + response.message());
-                        Logger.printMessage("response", "respose_ww_headers::" + response.headers());
-                        Logger.printMessage("response", "respose_ww_isRedirect::" + response.isRedirect());
-//                       Logger.printMessage("response", "respose_ww_body::" + response.body().string());
-                    }
-                } catch (Exception e) {
-                    this.exception = e;
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                if (!isCancelled() && exception == null) {
-
+                @Override
+                protected Void doInBackground(Void... voids) {
                     try {
-                        if (new JSONObject(stringResponse).getBoolean("response")) {
-                            customJSONResponse.onSuccess(stringResponse);
-                        } else {
-                            customJSONResponse.onError(new JSONObject(stringResponse).getString("message") + "", stringResponse);
+                        if (!isCancelled()) {
+
+                            MultipartBody requestBody = builderNew.build();
+                            OkHttpClient client = new OkHttpClient.Builder().retryOnConnectionFailure(true).connectTimeout(6000, TimeUnit.MILLISECONDS).build();
+                            Request request = new Request.Builder().url(url).method("POST", RequestBody.create(null, new byte[0]))
+                                    .post(requestBody).build();
+                            Response response = client.newCall(request).execute();
+
+                            stringResponse = response.body().string();
+
+                            Logger.printMessage("response", "respose_::" + stringResponse);
+                            Logger.printMessage("response", "respose_ww_message::" + response.message());
+                            Logger.printMessage("response", "respose_ww_headers::" + response.headers());
+                            Logger.printMessage("response", "respose_ww_isRedirect::" + response.isRedirect());
+//                       Logger.printMessage("response", "respose_ww_body::" + response.body().string());
                         }
                     } catch (Exception e) {
+                        this.exception = e;
                         e.printStackTrace();
                     }
-
-                } else {
-                    customJSONResponse.onError(exception.getMessage() + "");
+                    return null;
                 }
-            }
 
-            @Override
-            protected void onProgressUpdate(Void... values) {
-                super.onProgressUpdate(values);
-            }
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    if (!isCancelled() && exception == null) {
 
-            @Override
-            protected void onCancelled(Void aVoid) {
-                super.onCancelled(aVoid);
-            }
+                        try {
+                            if (new JSONObject(stringResponse).getBoolean("response")) {
+                                customJSONResponse.onSuccess(stringResponse);
+                            } else {
+                                customJSONResponse.onError(new JSONObject(stringResponse).getString("message") + "", stringResponse);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-            @Override
-            protected void onCancelled() {
-                super.onCancelled();
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    } else {
+                        customJSONResponse.onError(exception.getMessage() + "");
+                    }
+                }
+
+                @Override
+                protected void onProgressUpdate(Void... values) {
+                    super.onProgressUpdate(values);
+                }
+
+                @Override
+                protected void onCancelled(Void aVoid) {
+                    super.onCancelled(aVoid);
+                }
+
+                @Override
+                protected void onCancelled() {
+                    super.onCancelled();
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            customJSONResponse.onError("No internet connection found. Please check your internet connection.");
+        }
     }
 
-    public void fireAPIForGetMethod(final String URL, final ArrayList<APIGetData> apiGetData, final CustomJSONResponse customJSONResponse) {
+    public void fireAPIForGetMethod(Context mcontext, final String URL, final ArrayList<APIGetData> apiGetData, final CustomJSONResponse customJSONResponse) {
 
         Logger.printMessage("URLGet", URL);
 
-        new AsyncTask<Void, Void, Void>() {
+        if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
 
-            String PARAMS = "";
-            private String stringResponse = null;
-            private Exception exception = null;
+            new AsyncTask<Void, Void, Void>() {
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                if (apiGetData != null && apiGetData.size() > 0) {
-                    PARAMS = "&";
-                    for (APIGetData data : apiGetData) {
-                        PARAMS = PARAMS + data.getPARAMS() + "=" + data.getValues() + "&";
+                String PARAMS = "";
+                private String stringResponse = null;
+                private Exception exception = null;
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    if (apiGetData != null && apiGetData.size() > 0) {
+                        PARAMS = "&";
+                        for (APIGetData data : apiGetData) {
+                            PARAMS = PARAMS + data.getPARAMS() + "=" + data.getValues() + "&";
+                        }
+
+                        Logger.printMessage("url", "" + URL + PARAMS);
                     }
-
-                    Logger.printMessage("url", "" + URL + PARAMS);
                 }
-            }
 
-            @Override
-            protected Void doInBackground(Void... voids) {
-                try {
-                    if (!isCancelled()) {
-
-                        OkHttpClient client = new OkHttpClient.Builder().retryOnConnectionFailure(true).connectTimeout(6000, TimeUnit.MILLISECONDS).build();
-                        Request request = new Request.Builder().url(URL + PARAMS).build();
-                        Response response = client.newCall(request).execute();
-
-                        stringResponse = response.body().string();
-                        new JSONObject(stringResponse);
-
-                        Logger.printMessage("response", "respose_::" + stringResponse);
-                        Logger.printMessage("response", "respose_ww_message::" + response.message());
-                        Logger.printMessage("response", "respose_ww_headers::" + response.headers());
-                        Logger.printMessage("response", "respose_ww_isRedirect::" + response.isRedirect());
-//                       Logger.printMessage("response", "respose_ww_body::" + response.body().string());
-                    }
-                } catch (Exception e) {
-                    this.exception = e;
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                if (!isCancelled() && exception == null) {
-
-
+                @Override
+                protected Void doInBackground(Void... voids) {
                     try {
-                        if (new JSONObject(stringResponse).getBoolean("response")) {
-                            customJSONResponse.onSuccess(stringResponse);
-                        } else {
-                            customJSONResponse.onError(new JSONObject(stringResponse).getString("message") + "", stringResponse);
+                        if (!isCancelled()) {
+
+                            OkHttpClient client = new OkHttpClient.Builder().retryOnConnectionFailure(true).connectTimeout(6000, TimeUnit.MILLISECONDS).build();
+                            Request request = new Request.Builder().url(URL + PARAMS).build();
+                            Response response = client.newCall(request).execute();
+
+                            stringResponse = response.body().string();
+                            new JSONObject(stringResponse);
+
+                            Logger.printMessage("response", "respose_::" + stringResponse);
+                            Logger.printMessage("response", "respose_ww_message::" + response.message());
+                            Logger.printMessage("response", "respose_ww_headers::" + response.headers());
+                            Logger.printMessage("response", "respose_ww_isRedirect::" + response.isRedirect());
+//                       Logger.printMessage("response", "respose_ww_body::" + response.body().string());
                         }
                     } catch (Exception e) {
+                        this.exception = e;
                         e.printStackTrace();
                     }
-
-
-                } else {
-                    customJSONResponse.onError(exception.getMessage() + "");
+                    return null;
                 }
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    if (!isCancelled() && exception == null) {
+
+
+                        try {
+                            if (new JSONObject(stringResponse).getBoolean("response")) {
+                                customJSONResponse.onSuccess(stringResponse);
+                            } else {
+                                customJSONResponse.onError(new JSONObject(stringResponse).getString("message") + "", stringResponse);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    } else {
+                        customJSONResponse.onError(exception.getMessage() + "");
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            customJSONResponse.onError("No internet connection found. Please check your internet connection.");
+        }
     }
 
 
