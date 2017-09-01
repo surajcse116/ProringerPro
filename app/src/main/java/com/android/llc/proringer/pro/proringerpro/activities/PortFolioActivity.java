@@ -40,10 +40,10 @@ import java.util.ArrayList;
 public class PortFolioActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 5;
     private static final int PICK_IMAGE = 3;
-    RecyclerView rcv_port_folio,rcv_add_port_folio;
+    RecyclerView rcv_port_folio, rcv_add_port_folio;
     RelativeLayout RLAddPortFolio, RLEmpty;
     ProSemiBoldTextView tv_add;
-    AddImageAdapter addImageAdapter=null;
+    AddImageAdapter addImageAdapter = null;
     ArrayList<String> portPolioImageGalleryArrayList = null;
     private String mCurrentPhotoPath = "";
 
@@ -57,18 +57,18 @@ public class PortFolioActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RLAddPortFolio= (RelativeLayout) findViewById(R.id.RLAddPortFolio);
+        RLAddPortFolio = (RelativeLayout) findViewById(R.id.RLAddPortFolio);
         RLEmpty = (RelativeLayout) findViewById(R.id.RLEmpty);
 
-        tv_add= (ProSemiBoldTextView) findViewById(R.id.tv_add);
+        tv_add = (ProSemiBoldTextView) findViewById(R.id.tv_add);
 
         portPolioImageGalleryArrayList = new ArrayList<>();
 
-        rcv_port_folio= (RecyclerView) findViewById(R.id.rcv_port_folio);
+        rcv_port_folio = (RecyclerView) findViewById(R.id.rcv_port_folio);
         rcv_port_folio.setLayoutManager(new LinearLayoutManager(PortFolioActivity.this));
 
-        rcv_add_port_folio= (RecyclerView) findViewById(R.id.rcv_add_port_folio);
-        rcv_add_port_folio.setLayoutManager(new GridLayoutManager(PortFolioActivity.this,5));
+        rcv_add_port_folio = (RecyclerView) findViewById(R.id.rcv_add_port_folio);
+        rcv_add_port_folio.setLayoutManager(new GridLayoutManager(PortFolioActivity.this, 5));
 
         RLAddPortFolio.setVisibility(View.GONE);
         rcv_port_folio.setVisibility(View.GONE);
@@ -79,10 +79,10 @@ public class PortFolioActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                if (RLAddPortFolio.getVisibility()==View.VISIBLE){
+                if (RLAddPortFolio.getVisibility() == View.VISIBLE) {
                     RLAddPortFolio.setVisibility(View.GONE);
                     rcv_port_folio.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     RLAddPortFolio.setVisibility(View.VISIBLE);
                     rcv_port_folio.setVisibility(View.GONE);
                 }
@@ -165,19 +165,15 @@ public class PortFolioActivity extends AppCompatActivity {
 
                 Logger.printMessage("list_size", "" + portPolioImageGalleryArrayList.size());
 
-                if (portPolioImageGalleryArrayList.size() < 10) {
+                portPolioImageGalleryArrayList.add(mCurrentPhotoPath);
 
-                    portPolioImageGalleryArrayList.add(mCurrentPhotoPath);
-
-                    if (addImageAdapter == null) {
-                        addImageAdapter = new AddImageAdapter(PortFolioActivity.this, portPolioImageGalleryArrayList);
-                        rcv_add_port_folio.setAdapter(addImageAdapter);
-                    } else {
-                        addImageAdapter.notifyDataSetChanged();
-                    }
+                if (addImageAdapter == null) {
+                    addImageAdapter = new AddImageAdapter(PortFolioActivity.this, portPolioImageGalleryArrayList);
+                    rcv_add_port_folio.setAdapter(addImageAdapter);
                 } else {
-                    Toast.makeText(PortFolioActivity.this, "You can't select pictures more than 10", Toast.LENGTH_SHORT).show();
+                    addImageAdapter.notifyDataSetChanged();
                 }
+
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -190,27 +186,23 @@ public class PortFolioActivity extends AppCompatActivity {
                     if (data != null) {
                         mCurrentPhotoPath = data.getExtras().get("data").toString();
                         Logger.printMessage("image****", "" + mCurrentPhotoPath);
-
-
-                        if (portPolioImageGalleryArrayList.size() < 10) {
-
-                            portPolioImageGalleryArrayList.add(mCurrentPhotoPath);
-
-                            if (addImageAdapter == null) {
-                                addImageAdapter = new AddImageAdapter(PortFolioActivity.this, portPolioImageGalleryArrayList);
-                                rcv_add_port_folio.setAdapter(addImageAdapter);
-                            } else {
-                                addImageAdapter.notifyDataSetChanged();
-                            }
+                        portPolioImageGalleryArrayList.add(mCurrentPhotoPath);
+                        if (addImageAdapter == null) {
+                            addImageAdapter = new AddImageAdapter(PortFolioActivity.this, portPolioImageGalleryArrayList);
+                            rcv_add_port_folio.setAdapter(addImageAdapter);
                         } else {
-                            Toast.makeText(PortFolioActivity.this, "You can't select pictures more than 10", Toast.LENGTH_SHORT).show();
+                            addImageAdapter.notifyDataSetChanged();
                         }
 
                     }
                 }
             }, 800);
         } else if (requestCode == 200 && resultCode == RESULT_OK) {
-            showImagePickerOption();
+            if (portPolioImageGalleryArrayList.size() < 10) {
+                showImagePickerOption();
+            } else {
+                Toast.makeText(PortFolioActivity.this, "You can't select pictures more than 10", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
