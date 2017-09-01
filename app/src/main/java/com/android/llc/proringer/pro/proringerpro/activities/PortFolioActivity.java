@@ -122,7 +122,7 @@ public class PortFolioActivity extends AppCompatActivity {
 
         RLMain.getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(PortFolioActivity.this)[1]) / 2;
 //        RLMain.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
-        RLMain.getLayoutParams().height = (MethodsUtils.getScreenHeightAndWidth(PortFolioActivity.this)[1]) / 2;
+        RLMain.getLayoutParams().height = (MethodsUtils.getScreenHeightAndWidth(PortFolioActivity.this)[1]) / 3;
 
 
         dialog.findViewById(R.id.img_gallery).setOnClickListener(new View.OnClickListener() {
