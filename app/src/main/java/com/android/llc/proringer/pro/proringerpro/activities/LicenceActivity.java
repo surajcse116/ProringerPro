@@ -232,8 +232,13 @@ public class LicenceActivity extends AppCompatActivity {
                 LLEdit.setVisibility(View.VISIBLE);
 
                 file = new File(ImageFilePath.getPath(getApplicationContext(), selectedImageURI));
-                ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
-                Glide.with(getApplicationContext()).load(file).into(img_licence_file);
+                if (file.getAbsolutePath().contains(".jpeg") || file.getAbsolutePath().contains(".png")
+                        || file.getAbsolutePath().contains(".jpg")) {
+                    ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
+                    Glide.with(getApplicationContext()).load(file).into(img_licence_file);
+                } else {
+                    Toast.makeText(getApplicationContext(), "This is not an image", Toast.LENGTH_SHORT).show();
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
