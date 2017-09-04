@@ -123,8 +123,7 @@
             android:layout_below="@+id/tv_expires"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:text="add image or PDF"
-            app:textAllCaps="true" />
+            android:text="add image or PDF" />
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
             android:id="@+id/tv_add"
