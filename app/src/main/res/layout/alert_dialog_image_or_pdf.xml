@@ -17,7 +17,6 @@
 
 
     <LinearLayout
-        android:id="@+id/LLMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
@@ -33,12 +32,12 @@
 
 
         <ImageView
-            android:id="@+id/img_camera"
+            android:id="@+id/img_pdf"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginLeft="50dp"
-            android:padding="10dp"
-            android:src="@drawable/ic_photo_camera" />
+            android:padding="12dp"
+            android:src="@drawable/ic_pdf" />
 
     </LinearLayout>
 

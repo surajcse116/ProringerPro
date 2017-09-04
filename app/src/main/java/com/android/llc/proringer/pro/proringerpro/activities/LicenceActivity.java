@@ -39,6 +39,7 @@ import java.util.Date;
 public class LicenceActivity extends AppCompatActivity {
 
     private static final int REQUEST_WRITE_PERMISSION1 = 3000;
+    private static final int REQUEST_WRITE_PERMISSION2 = 4000;
     RecyclerView rcv_licence_list;
     RelativeLayout RLAddLicence, RLEmpty;
     LicenceAdapter licenceAdapter;
@@ -74,7 +75,7 @@ public class LicenceActivity extends AppCompatActivity {
 
 
         LLUpload.setVisibility(View.VISIBLE);
-        img_licence_file.setVisibility(View.GONE);
+        LLEdit.setVisibility(View.GONE);
 
 
         findViewById(R.id.img_add_licence).setOnClickListener(new View.OnClickListener() {
@@ -123,7 +124,7 @@ public class LicenceActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
         ImageView img_gallery = (ImageView) dialog.findViewById(R.id.img_gallery);
-        ImageView img_camera = (ImageView) dialog.findViewById(R.id.img_camera);
+        ImageView img_pdf = (ImageView) dialog.findViewById(R.id.img_pdf);
         ProRegularTextView TXTTitle = (ProRegularTextView) dialog.findViewById(R.id.Title);
 
         LinearLayout LLMain = (LinearLayout) dialog.findViewById(R.id.LLMain);
@@ -147,11 +148,15 @@ public class LicenceActivity extends AppCompatActivity {
             }
         });
 
-        img_camera.setOnClickListener(new View.OnClickListener() {
+        img_pdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                dialog.dismiss();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION2);
+                } else {
+                    openPDFGallery();
+                }
             }
         });
         dialog.show();
@@ -161,6 +166,9 @@ public class LicenceActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_WRITE_PERMISSION1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             openImageGallery();
+        }
+        if (requestCode == REQUEST_WRITE_PERMISSION2 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            openPDFGallery();
         }
     }
 
@@ -177,6 +185,10 @@ public class LicenceActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
 
         dialog.dismiss();
+    }
+
+    private void openPDFGallery() {
+
     }
 
     File createImageFile() throws IOException {
@@ -196,7 +208,7 @@ public class LicenceActivity extends AppCompatActivity {
             try {
 
                 LLUpload.setVisibility(View.GONE);
-                img_licence_file.setVisibility(View.VISIBLE);
+                LLEdit.setVisibility(View.VISIBLE);
 
                 photofile = new File(ImageFilePath.getPath(getApplicationContext(), selectedImageURI));
                 Glide.with(getApplicationContext()).load(photofile).into(img_licence_file);
