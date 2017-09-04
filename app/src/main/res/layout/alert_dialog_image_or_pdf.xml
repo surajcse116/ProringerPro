@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LLMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+        android:id="@+id/Title"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="ddfgdfg"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+
+    <LinearLayout
+        android:id="@+id/LLMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/img_gallery"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="50dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_gallery_picture" />
+
+
+        <ImageView
+            android:id="@+id/img_camera"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="50dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_photo_camera" />
+
+    </LinearLayout>
+
+</LinearLayout>
