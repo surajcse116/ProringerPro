@@ -29,4 +29,6 @@
     </string>
     <string name="pro_registration_terms">By singing up with ProRinger you agree with our Terms of Use and Privacy Policy</string>
     <string name="no_internet_error">No internet connection found. Please check your internet connection.</string>
+    <string name="no_internet_connection_found_Please_check_your_internet_connection">No internet connection found. Please check your internet connection.
+    </string>
 </resources>

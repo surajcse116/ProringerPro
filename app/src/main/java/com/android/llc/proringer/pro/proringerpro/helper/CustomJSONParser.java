@@ -63,7 +63,7 @@ public class CustomJSONParser {
                             }
                         }
                     }
-
+                    customJSONResponse.onStart();
                 }
 
                 @Override
@@ -147,14 +147,16 @@ public class CustomJSONParser {
                 @Override
                 protected void onPreExecute() {
                     super.onPreExecute();
+
                     if (apiGetData != null && apiGetData.size() > 0) {
                         PARAMS = "&";
                         for (APIGetData data : apiGetData) {
                             PARAMS = PARAMS + data.getPARAMS() + "=" + data.getValues() + "&";
                         }
-
                         Logger.printMessage("url", "" + URL + PARAMS);
                     }
+
+                    customJSONResponse.onStart();
                 }
 
                 @Override
@@ -186,8 +188,6 @@ public class CustomJSONParser {
                 protected void onPostExecute(Void aVoid) {
                     super.onPostExecute(aVoid);
                     if (!isCancelled() && exception == null) {
-
-
                         try {
                             if (new JSONObject(stringResponse).getBoolean("response")) {
                                 customJSONResponse.onSuccess(stringResponse);
@@ -216,6 +216,7 @@ public class CustomJSONParser {
         void onError(String error, String response);
 
         void onError(String error);
-    }
 
+        void onStart();
+    }
 }
