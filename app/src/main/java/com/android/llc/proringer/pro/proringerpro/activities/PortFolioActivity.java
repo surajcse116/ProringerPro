@@ -28,7 +28,6 @@ import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera
 import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
-import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,7 +41,6 @@ public class PortFolioActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 3;
     RecyclerView rcv_port_folio, rcv_add_port_folio;
     RelativeLayout RLAddPortFolio, RLEmpty;
-    ProSemiBoldTextView tv_add;
     AddImageAdapter addImageAdapter = null;
     ArrayList<String> portPolioImageGalleryArrayList = null;
     private String mCurrentPhotoPath = "";
@@ -59,8 +57,6 @@ public class PortFolioActivity extends AppCompatActivity {
 
         RLAddPortFolio = (RelativeLayout) findViewById(R.id.RLAddPortFolio);
         RLEmpty = (RelativeLayout) findViewById(R.id.RLEmpty);
-
-        tv_add = (ProSemiBoldTextView) findViewById(R.id.tv_add);
 
         portPolioImageGalleryArrayList = new ArrayList<>();
 
@@ -90,7 +86,7 @@ public class PortFolioActivity extends AppCompatActivity {
             }
         });
 
-        tv_add.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PortFolioActivity.this, PermissionController.class);
