@@ -220,7 +220,6 @@ public class NavigationHandler {
         });
 
 
-
         handleViewInput(listener);
     }
 
@@ -391,7 +390,7 @@ public class NavigationHandler {
                 break;
 
             case AVAILABILITY:
-                listener.onClickItem(NOTIFICATION);
+                listener.onClickItem(AVAILABILITY);
 
                 find_local_projects_cont.setBackgroundColor(Color.TRANSPARENT);
                 find_local_projects_img.setBackgroundResource(R.drawable.ic_search_pro);
