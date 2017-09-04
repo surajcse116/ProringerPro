@@ -22,11 +22,12 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MyProjectsFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.WatchListFragment;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.FragmentAvailabilityTimeSlot;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfriend;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.Notifications;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReply;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.RequestReview;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.AvailabilityTimeSlotFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfriendFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.NotificationsFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReplyFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.RequestReviewFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.SocialMediaFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.main_content.ProjectMessagingFragment;
 import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.BottomNav;
@@ -124,7 +125,7 @@ public class LandScreenActivity extends AppCompatActivity {
 
                     case NavigationHandler.SOCIAL_MEDIA:
                         closeDrawer();
-                        startActivity(new Intent(LandScreenActivity.this, SocialMediaActivity.class));
+                        transactSocialMedia();
                         break;
 
                     case NavigationHandler.SHARE_PROFILE:
@@ -252,74 +253,88 @@ public class LandScreenActivity extends AppCompatActivity {
 
     private void transactInviteFriend() {
 
-        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + InviteAfriend.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + InviteAfriend.class.getCanonicalName());
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + InviteAfriendFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + InviteAfriendFragment.class.getCanonicalName());
 
-            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + InviteAfriend.class.getCanonicalName())).commit();
-            fragmentManager.popBackStack("" + InviteAfriend.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + InviteAfriendFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + InviteAfriendFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
-        FragmentTransaction trasaction = fragmentManager.beginTransaction();
-        trasaction.replace(R.id.fragment_container, new InviteAfriend(), "" + InviteAfriend.class.getCanonicalName());
-        trasaction.addToBackStack("" + InviteAfriend.class.getCanonicalName());
-        trasaction.commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new InviteAfriendFragment(), "" + InviteAfriendFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + InviteAfriendFragment.class.getCanonicalName());
+        transaction.commit();
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
     }
 
     private void transactQuickReply() {
-        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + QuickReply.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + QuickReply.class.getCanonicalName());
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + QuickReplyFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + QuickReplyFragment.class.getCanonicalName());
 
-            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + QuickReply.class.getCanonicalName())).commit();
-            fragmentManager.popBackStack("" + QuickReply.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + QuickReplyFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + QuickReplyFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
-        FragmentTransaction trasaction = fragmentManager.beginTransaction();
-        trasaction.replace(R.id.fragment_container, new QuickReply(), "" + QuickReply.class.getCanonicalName());
-        trasaction.addToBackStack("" + QuickReply.class.getCanonicalName());
-        trasaction.commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new QuickReplyFragment(), "" + QuickReplyFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + QuickReplyFragment.class.getCanonicalName());
+        transaction.commit();
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
     }
 
     private void transactRequestReview() {
-        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + RequestReview.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + QuickReply.class.getCanonicalName());
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + RequestReviewFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + QuickReplyFragment.class.getCanonicalName());
 
-            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + RequestReview.class.getCanonicalName())).commit();
-            fragmentManager.popBackStack("" + RequestReview.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + RequestReviewFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + RequestReviewFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
-        FragmentTransaction trasaction = fragmentManager.beginTransaction();
-        trasaction.replace(R.id.fragment_container, new RequestReview(), "" + RequestReview.class.getCanonicalName());
-        trasaction.addToBackStack("" + RequestReview.class.getCanonicalName());
-        trasaction.commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new RequestReviewFragment(), "" + RequestReviewFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + RequestReviewFragment.class.getCanonicalName());
+        transaction.commit();
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
     }
 
     private void transactNotification() {
-        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + Notifications.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + Notifications.class.getCanonicalName());
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + NotificationsFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + NotificationsFragment.class.getCanonicalName());
 
-            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + Notifications.class.getCanonicalName())).commit();
-            fragmentManager.popBackStack("" + Notifications.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + NotificationsFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + NotificationsFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
-        FragmentTransaction trasaction = fragmentManager.beginTransaction();
-        trasaction.replace(R.id.fragment_container, new Notifications(), "" + Notifications.class.getCanonicalName());
-        trasaction.addToBackStack("" + Notifications.class.getCanonicalName());
-        trasaction.commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new NotificationsFragment(), "" + NotificationsFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + NotificationsFragment.class.getCanonicalName());
+        transaction.commit();
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+    }
+
+    private void transactSocialMedia() {
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + SocialMediaFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + SocialMediaFragment.class.getCanonicalName());
+
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + SocialMediaFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + SocialMediaFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new SocialMediaFragment(), "" + SocialMediaFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + SocialMediaFragment.class.getCanonicalName());
+        transaction.commit();
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
     }
 
 
     private void transactTimeAvailability() {
 
-        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + FragmentAvailabilityTimeSlot.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + FragmentAvailabilityTimeSlot.class.getCanonicalName());
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + AvailabilityTimeSlotFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + AvailabilityTimeSlotFragment.class.getCanonicalName());
 
-            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + FragmentAvailabilityTimeSlot.class.getCanonicalName())).commit();
-            fragmentManager.popBackStack("" + FragmentAvailabilityTimeSlot.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + AvailabilityTimeSlotFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + AvailabilityTimeSlotFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
-        FragmentTransaction trasaction = fragmentManager.beginTransaction();
-        trasaction.replace(R.id.fragment_container, new FragmentAvailabilityTimeSlot(), "" + FragmentAvailabilityTimeSlot.class.getCanonicalName());
-        trasaction.addToBackStack("" + FragmentAvailabilityTimeSlot.class.getCanonicalName());
-        trasaction.commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new AvailabilityTimeSlotFragment(), "" + AvailabilityTimeSlotFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + AvailabilityTimeSlotFragment.class.getCanonicalName());
+        transaction.commit();
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
     }
 
@@ -334,10 +349,10 @@ public class LandScreenActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + MessageFragment.class.getCanonicalName())).commit();
             fragmentManager.popBackStack("" + MessageFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
-        FragmentTransaction trasaction = fragmentManager.beginTransaction();
-        trasaction.replace(R.id.fragment_container, new MessageFragment(), "" + MessageFragment.class.getCanonicalName());
-        trasaction.addToBackStack("" + MessageFragment.class.getCanonicalName());
-        trasaction.commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new MessageFragment(), "" + MessageFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + MessageFragment.class.getCanonicalName());
+        transaction.commit();
 
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
 
@@ -380,10 +395,10 @@ public class LandScreenActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + WatchListFragment.class.getCanonicalName())).commit();
             fragmentManager.popBackStack("" + WatchListFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
-        FragmentTransaction trasaction = fragmentManager.beginTransaction();
-        trasaction.replace(R.id.fragment_container, new WatchListFragment(), "" + WatchListFragment.class.getCanonicalName());
-        trasaction.addToBackStack("" + WatchListFragment.class.getCanonicalName());
-        trasaction.commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new WatchListFragment(), "" + WatchListFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + WatchListFragment.class.getCanonicalName());
+        transaction.commit();
 
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
         for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {

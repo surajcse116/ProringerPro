@@ -16,7 +16,7 @@ import com.android.llc.proringer.pro.proringerpro.adapter.AvailabilityRecyclerVi
  * Created by su on 7/26/17.
  */
 
-public class FragmentAvailabilityTimeSlot extends Fragment {
+public class AvailabilityTimeSlotFragment extends Fragment {
     RecyclerView rcv_availability;
     AvailabilityRecyclerViewAdapter availabilityRecyclerViewAdapter;
     @Nullable

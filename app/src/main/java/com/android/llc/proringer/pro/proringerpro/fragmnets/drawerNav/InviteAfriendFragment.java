@@ -1,11 +1,9 @@
 package com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +31,7 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTe
  * limitations under the License.
  */
 
-public class InviteAfriend extends Fragment {
+public class InviteAfriendFragment extends Fragment {
     ProLightEditText first_name, last_name, email, confirm_email;
     ProRegularTextView invited_submit;
     ProgressDialog pgDia;

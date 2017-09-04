@@ -28,7 +28,7 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.SwitchHelper;
  * limitations under the License.
  */
 
-public class Notifications extends Fragment {
+public class NotificationsFragment extends Fragment {
     private SwitchHelper email_newsletter, email_chat_msg, email_tips_artcl, email_prjct_rspnse, mobile_newsletter, mobile_chat_msg, mobile_tips_artcl, mobile_prjct_rspnse;
 
     @Nullable

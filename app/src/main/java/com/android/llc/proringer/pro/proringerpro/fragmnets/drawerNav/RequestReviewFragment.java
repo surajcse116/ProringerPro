@@ -26,10 +26,10 @@ import com.android.llc.proringer.pro.proringerpro.R;
  * limitations under the License.
  */
 
-public class QuickReply extends Fragment {
+public class RequestReviewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_quick_reply,container,false);
+        return inflater.inflate(R.layout.fragment_request_review,container,false);
     }
 }

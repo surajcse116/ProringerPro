@@ -6,30 +6,11 @@
     android:orientation="vertical"
     >
 
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/colorPrimary">
-
-
-        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="SOCIAL MEDIA"
-            android:textColor="@color/colorTextDark"
-            android:textSize="16sp" />
-    </android.support.v7.widget.Toolbar>
-
     <ScrollView
-        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:padding="10dp"
         android:scrollbars="none">
 
         <LinearLayout

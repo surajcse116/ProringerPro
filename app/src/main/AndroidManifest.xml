@@ -81,13 +81,6 @@
 
 
         <activity
-            android:name=".activities.SocialMediaActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-
-
-        <activity
             android:name=".activities.BusinessHourActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
