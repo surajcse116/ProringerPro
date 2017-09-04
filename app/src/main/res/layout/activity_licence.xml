@@ -172,6 +172,12 @@
                             android:layout_height="150dp"
                             android:scaleType="centerCrop" />
 
+                        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                            android:id="@+id/tv_file_name"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
                         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
                             android:id="@+id/tv_edit"
                             android:layout_width="150dp"

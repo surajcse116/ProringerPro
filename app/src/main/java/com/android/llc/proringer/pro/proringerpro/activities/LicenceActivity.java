@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -43,11 +44,12 @@ public class LicenceActivity extends AppCompatActivity {
     RecyclerView rcv_licence_list;
     RelativeLayout RLAddLicence, RLEmpty;
     LicenceAdapter licenceAdapter;
-    File photofile = null;
+    File file = null;
     Dialog dialog = null;
     LinearLayout LLEdit, LLUpload;
     ImageView img_licence_file;
     private int PICK_IMAGE_REQUEST = 100;
+    private int PICK_PDF_REQUEST = 200;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,6 +94,13 @@ public class LicenceActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.tv_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPhotoDialog();
+            }
+        });
+
+        findViewById(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showPhotoDialog();
@@ -174,7 +183,7 @@ public class LicenceActivity extends AppCompatActivity {
 
     private void openImageGallery() {
         try {
-            photofile = createImageFile();
+            file = createImageFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -188,7 +197,18 @@ public class LicenceActivity extends AppCompatActivity {
     }
 
     private void openPDFGallery() {
+        try {
+            file = createImageFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select PDF"), PICK_PDF_REQUEST);
+
+        dialog.dismiss();
     }
 
     File createImageFile() throws IOException {
@@ -203,15 +223,37 @@ public class LicenceActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && photofile != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && file != null) {
             Uri selectedImageURI = data.getData();
             try {
 
                 LLUpload.setVisibility(View.GONE);
                 LLEdit.setVisibility(View.VISIBLE);
 
-                photofile = new File(ImageFilePath.getPath(getApplicationContext(), selectedImageURI));
-                Glide.with(getApplicationContext()).load(photofile).into(img_licence_file);
+                file = new File(ImageFilePath.getPath(getApplicationContext(), selectedImageURI));
+                ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
+                Glide.with(getApplicationContext()).load(file).into(img_licence_file);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && file != null) {
+            Uri selectedDataURI = data.getData();
+            try {
+
+                Log.i("selectedDataURI", "" + selectedDataURI);
+
+                LLUpload.setVisibility(View.GONE);
+                LLEdit.setVisibility(View.VISIBLE);
+
+                file = new File(ImageFilePath.getPath(getApplicationContext(), selectedDataURI));
+                Log.i("path", "" + file.getAbsolutePath());
+                img_licence_file.setImageResource(R.drawable.ic_pdf);
+                ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
+                //GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(img_licence_file);
+                //Glide.with(getApplicationContext()).load(R.drawable.ic_pdf).into(imageViewTarget);
+
+                //Glide.with(getApplicationContext()).load(R.drawable.ic_pdf).into(img_licence_file);
 
             } catch (Exception e) {
                 e.printStackTrace();
