@@ -21,6 +21,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageFilePath;
@@ -248,12 +249,16 @@ public class LicenceActivity extends AppCompatActivity {
 
                 file = new File(ImageFilePath.getPath(getApplicationContext(), selectedDataURI));
                 Log.i("path", "" + file.getAbsolutePath());
-                img_licence_file.setImageResource(R.drawable.ic_pdf);
-                ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
-                //GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(img_licence_file);
-                //Glide.with(getApplicationContext()).load(R.drawable.ic_pdf).into(imageViewTarget);
+                if (file.getAbsolutePath().contains(".pdf")) {
+                    img_licence_file.setImageResource(R.drawable.ic_pdf);
+                    ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
+                    //GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(img_licence_file);
+                    //Glide.with(getApplicationContext()).load(R.drawable.ic_pdf).into(imageViewTarget);
 
-                //Glide.with(getApplicationContext()).load(R.drawable.ic_pdf).into(img_licence_file);
+                    //Glide.with(getApplicationContext()).load(R.drawable.ic_pdf).into(img_licence_file);
+                } else {
+                    Toast.makeText(getApplicationContext(), "This is not a pdf file", Toast.LENGTH_SHORT).show();
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
