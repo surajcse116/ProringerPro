@@ -1,73 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:weightSum="3">
 
 
     <LinearLayout
-        android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:weightSum="2">
 
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
             >
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_marginTop="15dp"
                 android:text="02/20/17"
-                android:textSize="14sp"
-                android:textColor="@color/colorTextDark"/>
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
+                android:layout_gravity="right"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
                 android:text="EDIT"
-                android:layout_gravity="center"
+                android:textColor="@color/colorAccent"
                 android:textSize="14sp"/>
         </LinearLayout>
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:layout_marginTop="15dp"
+            android:text=" - "
             android:textColor="@color/colorTextDark"
-            android:text=" - "/>
+            android:textSize="14sp" />
 
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:text="02/20/17"
-                android:textSize="14sp"
-                android:textColor="@color/colorTextDark"/>
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
                 android:text="DELETE"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"/>
@@ -76,25 +77,25 @@
     </LinearLayout>
 
     <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-        android:layout_marginTop="15dp"
-        android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="2 Days"
+        android:layout_marginTop="15dp"
+        android:layout_weight="1"
         android:gravity="center"
-        android:textSize="14sp"
+        android:text="2 Days"
         android:textColor="@color/colorTextDark"
+        android:textSize="14sp"
         ></com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView>
 
     <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-        android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_marginTop="15dp"
         android:layout_height="wrap_content"
-        android:text="Vacation"
-        android:textSize="14sp"
+        android:layout_marginTop="15dp"
+        android:layout_weight="1"
         android:gravity="right"
+        android:text="Vacation"
         android:textColor="@color/colorTextDark"
+        android:textSize="14sp"
         ></com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView>
 
 </LinearLayout>

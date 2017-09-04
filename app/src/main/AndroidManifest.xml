@@ -88,7 +88,7 @@
 
 
         <activity
-            android:name=".activities.AvailabilityActivity"
+            android:name=".activities.BusinessHourActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />

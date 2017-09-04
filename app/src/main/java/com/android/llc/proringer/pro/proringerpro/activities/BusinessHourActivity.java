@@ -15,14 +15,14 @@ import com.android.llc.proringer.pro.proringerpro.adapter.AvailibilityTimeSlotAd
  * Created by su on 8/12/17.
  */
 
-public class AvailabilityActivity extends AppCompatActivity {
+public class BusinessHourActivity extends AppCompatActivity {
     AvailibilityTimeSlotAdapter availibilityTimeSlotAdapter;
     private RecyclerView rcv_;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_availablity);
+        setContentView(R.layout.activity_business_hour);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -30,9 +30,9 @@ public class AvailabilityActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         rcv_ = (RecyclerView) findViewById(R.id.rcv_);
-        rcv_.setLayoutManager(new LinearLayoutManager(AvailabilityActivity.this));
+        rcv_.setLayoutManager(new LinearLayoutManager(BusinessHourActivity.this));
 
-        availibilityTimeSlotAdapter = new AvailibilityTimeSlotAdapter(AvailabilityActivity.this);
+        availibilityTimeSlotAdapter = new AvailibilityTimeSlotAdapter(BusinessHourActivity.this);
         rcv_.setAdapter(availibilityTimeSlotAdapter);
 
     }
