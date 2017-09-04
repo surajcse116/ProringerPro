@@ -226,7 +226,7 @@ public class LicenceActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && file != null) {
             Uri selectedImageURI = data.getData();
             try {
-
+                img_licence_file.setImageResource(android.R.color.transparent);
                 LLUpload.setVisibility(View.GONE);
                 LLEdit.setVisibility(View.VISIBLE);
 
@@ -240,7 +240,7 @@ public class LicenceActivity extends AppCompatActivity {
         } else if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && file != null) {
             Uri selectedDataURI = data.getData();
             try {
-
+                img_licence_file.setImageResource(android.R.color.transparent);
                 Log.i("selectedDataURI", "" + selectedDataURI);
 
                 LLUpload.setVisibility(View.GONE);
