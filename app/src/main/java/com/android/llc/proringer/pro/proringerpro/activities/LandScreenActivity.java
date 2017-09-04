@@ -19,10 +19,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.FragmentAvailabilityTimeSlot;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MyProjectsFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.WatchListFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.FragmentAvailabilityTimeSlot;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfriend;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.Notifications;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReply;

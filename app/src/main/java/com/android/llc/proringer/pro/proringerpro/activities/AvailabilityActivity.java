@@ -9,36 +9,33 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.adapter.AvailabilityRecyclerViewAdapter;
+import com.android.llc.proringer.pro.proringerpro.adapter.AvailibilityTimeSlotAdapter;
 
 /**
  * Created by su on 8/12/17.
  */
 
 public class AvailabilityActivity extends AppCompatActivity {
-    RecyclerView rcv_availability;
-    AvailabilityRecyclerViewAdapter availabilityRecyclerViewAdapter;
+    AvailibilityTimeSlotAdapter availibilityTimeSlotAdapter;
+    private RecyclerView rcv_;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_availability);
+        setContentView(R.layout.fragment_availablity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        rcv_availability= (RecyclerView) findViewById(R.id.rcv_availability);
-        rcv_availability.setLayoutManager(new LinearLayoutManager(AvailabilityActivity.this));
-        availabilityRecyclerViewAdapter=new AvailabilityRecyclerViewAdapter(AvailabilityActivity.this);
+        rcv_ = (RecyclerView) findViewById(R.id.rcv_);
+        rcv_.setLayoutManager(new LinearLayoutManager(AvailabilityActivity.this));
 
-
-        rcv_availability.setAdapter(availabilityRecyclerViewAdapter);
+        availibilityTimeSlotAdapter = new AvailibilityTimeSlotAdapter(AvailabilityActivity.this);
+        rcv_.setAdapter(availibilityTimeSlotAdapter);
 
     }
-
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
