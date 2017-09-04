@@ -227,12 +227,12 @@ public class LicenceActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && file != null) {
             Uri selectedImageURI = data.getData();
             try {
-                LLUpload.setVisibility(View.GONE);
-                LLEdit.setVisibility(View.VISIBLE);
-
                 file = new File(ImageFilePath.getPath(getApplicationContext(), selectedImageURI));
                 if (file.getAbsolutePath().contains(".jpeg") || file.getAbsolutePath().contains(".png")
                         || file.getAbsolutePath().contains(".jpg")) {
+
+                    LLUpload.setVisibility(View.GONE);
+                    LLEdit.setVisibility(View.VISIBLE);
                     img_licence_file.setImageResource(android.R.color.transparent);
                     ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
                     Glide.with(getApplicationContext()).load(file).into(img_licence_file);
@@ -247,13 +247,12 @@ public class LicenceActivity extends AppCompatActivity {
             Uri selectedDataURI = data.getData();
             try {
                 Log.i("selectedDataURI", "" + selectedDataURI);
-
-                LLUpload.setVisibility(View.GONE);
-                LLEdit.setVisibility(View.VISIBLE);
-
                 file = new File(ImageFilePath.getPath(getApplicationContext(), selectedDataURI));
                 Log.i("path", "" + file.getAbsolutePath());
                 if (file.getAbsolutePath().contains(".pdf")) {
+
+                    LLUpload.setVisibility(View.GONE);
+                    LLEdit.setVisibility(View.VISIBLE);
                     img_licence_file.setImageResource(android.R.color.transparent);
                     img_licence_file.setImageResource(R.drawable.ic_pdf);
                     ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
