@@ -185,9 +185,15 @@ public class LandScreenActivity extends AppCompatActivity {
 
                     case NavigationHandler.TERMS_OF_SERVICE:
                         closeDrawer();
+                        Intent intentTerms = new Intent(LandScreenActivity.this, TermsPrivacyActivity.class);
+                        intentTerms.putExtra("value", "term");
+                        startActivity(intentTerms);
                         break;
                     case NavigationHandler.PRIVACY_POLICY:
                         closeDrawer();
+                        Intent intentPolicy = new Intent(LandScreenActivity.this, TermsPrivacyActivity.class);
+                        intentPolicy.putExtra("value", "policy");
+                        startActivity(intentPolicy);
                         break;
 
 
