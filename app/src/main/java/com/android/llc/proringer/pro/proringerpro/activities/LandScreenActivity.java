@@ -164,6 +164,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         break;
                     case NavigationHandler.FAQ:
                         closeDrawer();
+                        startActivity(new Intent(LandScreenActivity.this, FaqActivity.class));
                         break;
                     case NavigationHandler.PROVIDE_FEEDBACK:
                         closeDrawer();
