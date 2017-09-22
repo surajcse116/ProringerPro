@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.DashBoardFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MyProjectsFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.WatchListFragment;
@@ -75,6 +76,7 @@ public class LandScreenActivity extends AppCompatActivity {
                 switch (selected_tag) {
                     case BottomNav.DASHBOARD:
                         closeDrawer();
+                        transactDashBoard();
                         break;
                     case BottomNav.MY_PROJECTS:
                         toggleProMapSearch(false);
@@ -250,6 +252,26 @@ public class LandScreenActivity extends AppCompatActivity {
             findViewById(R.id.search_local_pro_header).setVisibility(View.GONE);
         }
     }
+
+    /**
+     * \
+     * Fragment transaction of DashBoardFragment
+     */
+    private void transactDashBoard() {
+        toggleToolBar(false);
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + DashBoardFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + DashBoardFragment.class.getCanonicalName());
+
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + DashBoardFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + DashBoardFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new DashBoardFragment(), "" + DashBoardFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + DashBoardFragment.class.getCanonicalName());
+        transaction.commit();
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+    }
+
 
     private void transactInviteFriend() {
 
@@ -476,5 +498,14 @@ public class LandScreenActivity extends AppCompatActivity {
 
         }
     }
+
+    /**
+     * Redirection to Dashboard fragment transaction
+     */
+    public void redirectToDashBoard() {
+        bottomNavInstance.highLightSelected(BottomNav.DASHBOARD);
+        transactDashBoard();
+    }
+
 
 }
