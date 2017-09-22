@@ -198,14 +198,13 @@ public class LandScreenActivity extends AppCompatActivity {
                         intentPolicy.putExtra("value", "policy");
                         startActivity(intentPolicy);
                         break;
-
-
                 }
             }
         });
 
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.nav_toggle_icon, null));
 
+        redirectToDashBoard();
 
     }
 
