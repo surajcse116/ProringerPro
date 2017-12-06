@@ -66,6 +66,8 @@ public class LandScreenActivity extends AppCompatActivity {
     ArrayList<SetGetAPI> arrayList = null;
     public MyLoader myLoader = null;
 
+    NavigationHandler navigationHandler = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +163,10 @@ public class LandScreenActivity extends AppCompatActivity {
         /**
          * Handles view click for drawer layout
          */
-        NavigationHandler.getInstance().init(mDrawer, new NavigationHandler.OnHandleInput() {
+
+        navigationHandler = NavigationHandler.getInstance();
+
+        navigationHandler.init(mDrawer, new NavigationHandler.OnHandleInput() {
             @Override
             public void onClickItem(String tag) {
 
@@ -180,6 +185,7 @@ public class LandScreenActivity extends AppCompatActivity {
                 switch (tag) {
 
                     case NavigationHandler.FIND_LOCAL_PROJECT:
+                        closeDrawer();
                         break;
 
                     case NavigationHandler.ACCOUNT:
@@ -409,6 +415,8 @@ public class LandScreenActivity extends AppCompatActivity {
             public void run() {
                 if (mDrawer != null)
                     mDrawer.closeDrawer(GravityCompat.START);
+
+                navigationHandler.closeAndResetSideMenuDesign();
             }
         });
     }
