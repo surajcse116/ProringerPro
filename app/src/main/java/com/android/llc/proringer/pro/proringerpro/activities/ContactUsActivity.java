@@ -19,9 +19,7 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEdit
 
 public class ContactUsActivity extends AppCompatActivity {
     ProLightEditText first_name, last_name, email, phonenumber;
-    ProgressDialog pgDia;
     EditText contact_info;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

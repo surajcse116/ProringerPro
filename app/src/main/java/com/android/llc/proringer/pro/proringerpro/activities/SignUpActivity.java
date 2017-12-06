@@ -36,7 +36,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.Logger;
  */
 
 public class SignUpActivity extends AppCompatActivity {
-    private InputMethodManager keyboard;
+
     private FragmentManager fragmentManager;
 
     @Override
@@ -49,7 +49,6 @@ public class SignUpActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         fragmentManager = getSupportFragmentManager();
-        keyboard = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         transactRegistrationFragmentOne();
 

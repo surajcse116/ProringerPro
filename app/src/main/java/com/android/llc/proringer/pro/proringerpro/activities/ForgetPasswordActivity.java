@@ -37,7 +37,6 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTe
 public class ForgetPasswordActivity extends AppCompatActivity {
     private ProRegularTextView header_text;
     private ProLightEditText email, request_code, password, confirm_password;
-    private ProgressDialog pgDialog = null;
     ProRegularTextView tv_contact_us;
 
 
