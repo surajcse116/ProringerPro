@@ -3,14 +3,29 @@ package com.android.llc.proringer.pro.proringerpro.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
+import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 
 /**
@@ -35,7 +50,10 @@ public class LogInActivity extends AppCompatActivity {
     private ProSemiBoldTextView sign_up;
     private ProSemiBoldTextView log_in;
     private ProLightEditText email, password;
-    private ProgressDialog pgDialog = null;
+    public MyLoader myload= null;
+    public String a;
+    public String H;
+
 
 
     @Override
@@ -46,8 +64,11 @@ public class LogInActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        String android=a;
 
-
+         final String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        Log.d("DEVICE ID",android_id);
         findViewById(R.id.forget_password).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +79,7 @@ public class LogInActivity extends AppCompatActivity {
         log_in = (ProSemiBoldTextView) findViewById(R.id.log_in);
         email = (ProLightEditText) findViewById(R.id.email);
         password = (ProLightEditText) findViewById(R.id.password);
+        myload=new MyLoader(LogInActivity.this);
         log_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,68 +89,90 @@ public class LogInActivity extends AppCompatActivity {
                 } else if (password.getText().toString().trim().equals("")) {
                     password.setError("Please enter password.");
                 } else {
-//                    HelperClass.getInstance(LogInActivity.this).authenticateUser(
-//                            email.getText().toString().trim(),
-//                            password.getText().toString().trim(),
-//                            new HelperClass.onResponseCallback() {
-//                                @Override
-//                                public void onStart() {
-//                                    pgDialog = new ProgressDialog(LogInActivity.this);
-//                                    pgDialog.setTitle("Log In");
-//                                    pgDialog.setMessage("Logging in. Please wait.");
-//                                    pgDialog.setCancelable(false);
-//                                    pgDialog.show();
-//                                }
-//
-//                                @Override
-//                                public void onComplete(String response) {
-//                                    if (pgDialog != null && pgDialog.isShowing())
-//                                        pgDialog.dismiss();
-//                                }
-//
-//                                @Override
-//                                public void onError(String error) {
-//                                    if (pgDialog != null && pgDialog.isShowing())
-//                                        pgDialog.dismiss();
-//                                    new AlertDialog.Builder(LogInActivity.this)
-//                                            .setTitle("Log In Error")
-//                                            .setMessage("" + error)
-//                                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(DialogInterface dialogInterface, int i) {
-//                                                    dialogInterface.dismiss();
-//                                                }
-//                                            })
-//                                            .show();
-//                                }
-//                            }
-//                    );
-                    setResult(GetStartedActivity.RESULT_OK);
-                    finish();
+
+                    HashMap<String,String> Params=new HashMap<>();
+                    Params.put("email",email.getText().toString().trim());
+                    Params.put("password",password.getText().toString().trim());
+                    Params.put("device_type","a");
+                    Params.put("user_type", "C");
+                    Params.put("device_token",android_id);
+                    Log.d("PARAMS", String.valueOf(Params));
+                    new CustomJSONParser().fireAPIForPostMethod(LogInActivity.this, AppConstant.Login,Params,null, new CustomJSONParser.CustomJSONResponse() {
+                        @Override
+                        public void onSuccess(String result) {
+                            myload.showLoader();
+                            JSONObject mainResponseObj = null;
+                            try {
+                                mainResponseObj = new JSONObject(result);
+                                JSONObject jsonInfo = mainResponseObj.getJSONObject("info_array");
+                                Log.d("infoarray", String.valueOf(jsonInfo));
+
+                                ProApplication.getInstance().setUserPreference(jsonInfo.getString("user_id"), jsonInfo.getString("user_type"), jsonInfo.getString("first_name"), jsonInfo.getString("last_name"));
+                                ProApplication.getInstance().setUserEmail(email.getText().toString().trim());
+                                Intent i= new Intent(LogInActivity.this,LandScreenActivity.class);
+                                startActivity(i);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onError(String error, String response) {
+                            new MYAlert(LogInActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle),error,new MYAlert.OnlyMessage() {
+                                @Override
+                                public void OnOk(boolean res) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            new MYAlert(LogInActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle),error,new MYAlert.OnlyMessage() {
+                                @Override
+                                public void OnOk(boolean res) {
+
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                    });
+
+
 
                 }
-            }
+
+           }
         });
 
-        sign_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LogInActivity.this, SignUpActivity.class));
+                sign_up.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(LogInActivity.this, SignUpActivity.class));
+                    }
+                });
+
             }
-        });
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home)
-            onBackPressed();
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        setResult(GetStartedActivity.RESULT_CANCELED);
-        finish();
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == android.R.id.home)
+//            onBackPressed();
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    @Override
+//    public void onBackPressed() {
+//        setResult(GetStartedActivity.RESULT_CANCELED);
+//        finish();
+//        }
 }
+

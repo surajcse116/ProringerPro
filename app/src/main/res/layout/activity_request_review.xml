@@ -126,12 +126,11 @@
                     android:gravity="top"
                     android:hint="Comment"
                     android:inputType="textAutoCorrect|textMultiLine"
-                    android:maxHeight="300dp"
+                    android:maxHeight="400dp"
                     android:minHeight="200dp"
                     android:padding="10dp"
                     android:textColor="@color/colorTextDark"
                     android:textSize="14sp" />
-
 
             </RelativeLayout>
 

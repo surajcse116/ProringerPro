@@ -1,6 +1,7 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,8 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationOne;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
 import com.android.llc.proringer.pro.proringerpro.utils.Logger;
+
+import org.json.JSONObject;
 
 
 /**
@@ -99,5 +102,10 @@ public class SignUpActivity extends AppCompatActivity {
             setResult(RESULT_CANCELED);
             finish();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

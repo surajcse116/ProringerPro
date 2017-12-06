@@ -2,14 +2,18 @@ package com.android.llc.proringer.pro.proringerpro.helper;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.utils.NetworkUtil;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
@@ -38,6 +42,8 @@ import okhttp3.Response;
 public class HelperClass {
     private static HelperClass instance = null;
     private static Context mcontext = null;
+    private String currentLat = "";
+    private String currentLng = "";
 
     public static HelperClass getInstance(Context context) {
         mcontext = context;
@@ -46,8 +52,24 @@ public class HelperClass {
 
         return instance;
     }
+    private HelperClass() {
+    }
+    public void setCurrentLatLng(String currentLat, String currentLng) {
+        this.currentLat = currentLat;
+        this.currentLng = currentLng;
+    }
+
+    public String[] getCurrentLatLng() {
+        String str[] = {
+                currentLat, currentLng
+        };
+        return str;
+    }
+
 
     private final String LOG_IN_API = "http://esolz.co.in/lab6/proringer_latest/app_pro_login";
+    public static  String notifaction="http://esolz.co.in/lab6/proringer_latest/app_pro_notification";
+    public static  String updateNotificationDetailsAPI="http://esolz.co.in/lab6/proringer_latest/app_pronotification_save";
 
     public void authenticateUser(String username, String password, final onResponseCallback callback) {
         if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
@@ -126,6 +148,322 @@ public class HelperClass {
         }
 
     }
+    public void getSearchCountriesByPlacesFilter(final onSearchPlacesNameCallback callback, String... params) {
+        if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
+            new AsyncTask<String, Void, String>() {
+                String exception = "";
+                ArrayList<String> addressList;
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    callback.onStartFetch();
+                }
+
+                @Override
+                protected String doInBackground(String... params) {
+                    OkHttpClient client = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
+
+                    try {
+                        String searchLocalProject = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + params[0] + "&key=AIzaSyDoLuAdSE7M9SzeIht7-Bm-WrUjnDQBofg&language=en";
+                        Logger.printMessage("searchLocationAPI", "" + searchLocalProject);
+                        Request request = new Request.Builder()
+                                .url(searchLocalProject)
+                                .build();
+
+                        Response response = client.newCall(request).execute();
+                        String responseString = response.body().string();
+
+                        JSONObject mainRes = new JSONObject(responseString);
+
+                        if (mainRes.getString("status").equalsIgnoreCase("OK") &&
+                                mainRes.has("predictions") &&
+                                mainRes.getJSONArray("predictions").length() > 0) {
+
+                            addressList = new ArrayList<String>();
+                            JSONArray predictions = mainRes.getJSONArray("predictions");
+
+                            for (int i = 0; i < predictions.length(); i++) {
+
+                                JSONObject innerIncer = predictions.getJSONObject(i);
+
+                                if (innerIncer.has("terms") &&
+                                        innerIncer.getJSONArray("terms").length() > 0) {
+
+                                    /**
+                                     * loop through address component
+                                     * for country and state
+                                     */
+
+                                    JSONArray terms = innerIncer.getJSONArray("terms");
+
+                                    for (int j = 0; j < terms.length(); j++) {
+                                        if (terms.getJSONObject(j).getString("value").contains("United States") ||
+                                                terms.getJSONObject(j).getString("value").contains("Canada")) {
+                                            Logger.printMessage("description",""+innerIncer.getString("description"));
+                                            addressList.add(innerIncer.getString("description"));
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        return responseString;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        exception = "Some error occured while searching entered zip. Please search again.";
+                        return exception;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    Logger.printMessage("location",s);
+                    if (exception.equals("")) {
+                        if (addressList != null && addressList.size() > 0)
+                            callback.onComplete(addressList);
+                    } else {
+                        callback.onError(exception);
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, params);
+
+        } else {
+            callback.onError(mcontext.getResources().getString(R.string.no_internet_connection_found_Please_check_your_internet_connection));
+        }
+    }
+
+    public void getZipLocationStateAPI(final getApiProcessCallback callback, String... params) {
+
+        if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
+            new AsyncTask<String, Void, String>() {
+                String exception = "";
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    callback.onStart();
+                }
+
+                @Override
+                protected String doInBackground(String... params) {
+                    OkHttpClient client = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
+
+                    try {
+                        String query = URLEncoder.encode(params[0], "utf-8");
+                        String searchLocalProject = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&key=AIzaSyDoLuAdSE7M9SzeIht7-Bm-WrUjnDQBofg&language=en";
+                        Logger.printMessage("searchLocationAPI", "" + searchLocalProject);
+                        Request request = new Request.Builder()
+                                .url(searchLocalProject)
+                                .build();
+
+                        Response response = client.newCall(request).execute();
+                        String responseString = response.body().string();
+
+                        JSONObject mainRes = new JSONObject(responseString);
+
+                        if (mainRes.getString("status").equalsIgnoreCase("OK")) {
+                            return responseString;
+                        } else {
+                            exception = mainRes.getString("status");
+                            return exception;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        exception = "Something error. Please search again.";
+                        return exception;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    if (exception.equals("")) {
+                        callback.onComplete(s);
+                    } else {
+                        callback.onError(exception);
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, params);
+
+        } else {
+            callback.onError(mcontext.getResources().getString(R.string.no_internet_connection_found_Please_check_your_internet_connection));
+        }
+    }
+    /**
+     * get notification status
+     *
+     * @param callback
+     */
+
+    public void getUserNotification(final getApiProcessCallback callback) {
+        if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
+            new AsyncTask<String, Void, String>() {
+                String exception = "";
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    callback.onStart();
+                }
+
+                @Override
+                protected String doInBackground(String... params) {
+                    try {
+                        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
+
+                        String notificationAPI = notifaction + "?user_id=" + com.android.llc.proringer.pro.proringerpro.helper.ProApplication.getInstance().getUserId();
+                        Request request = new Request.Builder()
+                                .get()
+                                .url(notificationAPI)
+                                .build();
+
+                        Logger.printMessage("notificationAPI", notificationAPI);
+
+                        Response response = client.newCall(request).execute();
+                        String responseString = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        if (jsonObject.getBoolean("response")) {
+
+                            JSONObject jsonrespnse = new JSONObject(responseString);
+                            JSONArray infoJsonArr = jsonrespnse.getJSONArray("info_array");
+                            JSONObject innerObject = infoJsonArr.getJSONObject(0);
+                            JSONObject emailObj = innerObject.getJSONObject("Email");
+                            JSONObject mobileObj = innerObject.getJSONObject("Mobile");
+                            com.android.llc.proringer.pro.proringerpro.helper.ProApplication.getInstance().setNotificationPreference(
+                                    emailObj.getString("newsletter"),
+                                    emailObj.getString("chat_msg"),
+                                    emailObj.getString("tips_article"),
+                                    emailObj.getString("job_post"),
+                                    emailObj.getString("new_reviews"),
+                                    emailObj.getString("account_acheive"),
+                                    mobileObj.getString("newsletter"),
+                                    mobileObj.getString("chat_msg"),
+                                    mobileObj.getString("tips_article"),
+                                    mobileObj.getString("job_post"),
+                                    mobileObj.getString("new_reviews"),
+                                    mobileObj.getString("account_acheive"));
+
+                            return jsonObject.getString("message");
+                        } else {
+                            exception = jsonObject.getString("message");
+                            return exception;
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        exception = e.getMessage();
+                        return exception;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    if (exception.equals("")) {
+                        callback.onComplete(s);
+                    } else {
+                        callback.onError(s);
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        } else {
+            callback.onError(mcontext.getResources().getString(R.string.no_internet_connection_found_Please_check_your_internet_connection));
+        }
+    }
+    public void updateUserNotification(final getApiProcessCallback callback, String... params) {
+        if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
+            new AsyncTask<String, Void, String>() {
+                String exception = "";
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    callback.onStart();
+                }
+
+                @Override
+                protected String doInBackground(String... params) {
+                    try {
+                        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
+
+                        RequestBody requestBody = new FormBody.Builder()
+                                .add("user_id", com.android.llc.proringer.pro.proringerpro.helper.ProApplication.getInstance().getUserId())
+                                .add(" email_newsletter", params[0])
+                                .add("email_chat_msg", params[1])
+                                .add("email_tips_article", params[2])
+                                .add("email_job_post", params[3])
+                                .add("email_new_reviews", params[4])
+                                .add("email_acc_achieve", params[5])
+                                .add("mobile_newsletter", params[6])
+                                .add("mobile_chat_msg", params[7])
+                                .add("mobile_article", params[8])
+                                .add("mobile_job_post", params[9])
+                                .add("mobile_new_reviews", params[10])
+                                .add("mobile_acc_achieve", params[11])
+                                .build();
+
+                        Logger.printMessage("user_id", ":-" +com.android.llc.proringer.pro.proringerpro.helper.ProApplication.getInstance().getUserId());
+                        Logger.printMessage("email_newsletter", ":-" + params[0]);
+                        Logger.printMessage("email_chat_msg", ":-" + params[1]);
+                        Logger.printMessage("email_tips_article", ":-" + params[2]);
+                        Logger.printMessage("email_project_replies", ":-" + params[3]);
+                        Logger.printMessage("email_new_reviews", ":-" + params[4]);
+                        Logger.printMessage("email_acc_achieve", ":-" + params[5]);
+                        Logger.printMessage("mobile_newsletter", ":-" + params[6]);
+                        Logger.printMessage("mobile_chat_msg", ":-" + params[7]);
+                        Logger.printMessage("mobile_article", ":-" + params[8]);
+                        Logger.printMessage("mobile_job_post", ":-" + params[9]);
+                        Logger.printMessage("mobile_new_reviews", ":-" + params[10]);
+                        Logger.printMessage("mobile_acc_achieve", ":-" + params[11]);
+                        Logger.printMessage("updateNotificationDetailsAPI", updateNotificationDetailsAPI);
+
+
+                        Request request = new Request.Builder()
+                                .post(requestBody)
+                                .url(updateNotificationDetailsAPI)
+                                .build();
+
+                        Response response = client.newCall(request).execute();
+                        String responseString = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        if (jsonObject.getBoolean("response")) {
+                            return jsonObject.getString("message");
+                        } else {
+                            exception = jsonObject.getString("message");
+                            return exception;
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        exception = e.getMessage();
+                        return exception;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    if (exception.equals("")) {
+                        callback.onComplete(s);
+                    } else {
+                        callback.onError(s);
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, params);
+        } else {
+            callback.onError(mcontext.getResources().getString(R.string.no_internet_connection_found_Please_check_your_internet_connection));
+        }
+
+    }
+    private void setChangeNotification() {
+
+
+    }
+
+
 
     public interface onResponseCallback {
         void onStart();
@@ -134,4 +472,22 @@ public class HelperClass {
 
         void onError(String error);
     }
+
+    public interface onSearchPlacesNameCallback {
+        void onComplete(ArrayList<String> listdata);
+
+        void onError(String error);
+
+        void onStartFetch();
+    }
+    public interface getApiProcessCallback {
+        void onStart();
+
+        void onComplete(String message);
+
+        void onError(String error);
+    }
+
+
+
 }

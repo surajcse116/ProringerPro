@@ -18,6 +18,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:id="@+id/et_fname"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_selecter"
@@ -30,6 +31,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:id="@+id/et_lname"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_selecter"
@@ -42,6 +44,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:id="@+id/et_email"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_selecter"
@@ -54,6 +57,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:id="@+id/et_cemail"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_selecter"
@@ -64,9 +68,9 @@
                 android:textSize="14sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
+                android:id="@+id/et_comment"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_selecter"
@@ -87,6 +91,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
+                android:id="@+id/request"
                 android:background="@color/colorAccent"
                 android:gravity="center"
                 android:text="REQUEST REVIEW"

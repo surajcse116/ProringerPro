@@ -1,20 +1,49 @@
 package com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.activities.Location;
+import com.android.llc.proringer.pro.proringerpro.activities.Signupcomplete;
+import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog;
+import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog_catagory;
+import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.utils.Logger;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProLightTextView;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * Created by Bodhidipta on 24/07/17.
@@ -33,7 +62,18 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProLightText
  * limitations under the License.
  */
 
-public class RegistrationTwo extends Fragment {
+public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
+
+
+    ProLightEditText prolight_businessname,prolight_address,prolight_city,prolight_State,prolight_zip,prolight_phone,prolight_email,prolight_service,prolight_service_area;
+    ProRegularTextView protv_com,tv_service;
+    public MyLoader myload= null;
+    RelativeLayout relative_dropdown;
+    JSONArray catagory;
+    PopupWindow popupWindow;
+   CustomListAdapterDialog_catagory custom = null;
+    String pros_contact_service="";
+    ImageView dropdown;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,11 +83,66 @@ public class RegistrationTwo extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ProLightTextView terms_and_condition=(ProLightTextView)view.findViewById(R.id.terms_and_condition);
+        final ProLightTextView terms_and_condition=(ProLightTextView)view.findViewById(R.id.terms_and_condition);
         String contactTextOne = "By singing up with ProRinger you agree with our  ";
         String contactTextClick = "Terms of Use";
         String contactTextTwo = " and ";
         String privacyPolicies = "Privacy Policy";
+
+        myload= new MyLoader(getActivity());
+
+        protv_com=(ProRegularTextView)view.findViewById(R.id.protv_com);
+        prolight_businessname=(ProLightEditText)view.findViewById(R.id.prolight_businessname);
+        prolight_address=(ProLightEditText)view.findViewById(R.id.prolight_address);
+        prolight_city=(ProLightEditText)view.findViewById(R.id.prolight_city);
+        prolight_State=(ProLightEditText)view.findViewById(R.id.prolight_State);
+        prolight_zip=(ProLightEditText)view.findViewById(R.id.prolight_zip);
+        prolight_phone=(ProLightEditText)view.findViewById(R.id.prolight_phone);
+        prolight_email=(ProLightEditText)view.findViewById(R.id.prolight_email);
+        prolight_service_area=(ProLightEditText)view.findViewById(R.id.prolight_service_area);
+        tv_service=(ProRegularTextView)view.findViewById(R.id.tv_service);
+        dropdown=(ImageView)view.findViewById(R.id.dropdown);
+        relative_dropdown=(RelativeLayout)view.findViewById(R.id.relative_dropdown);
+        prolight_address.setFocusable(false);
+        prolight_address.setClickable(false);
+        prolight_city.setEnabled(false);
+        prolight_city.setClickable(false);
+        prolight_State.setEnabled(false);
+        prolight_State.setClickable(false);
+        prolight_zip.setEnabled(false);
+        prolight_phone.setClickable(true);
+        catagory();
+        dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogServies(view,catagory);
+
+            }
+        });
+        relative_dropdown=(RelativeLayout)view.findViewById(R.id.relative_dropdown);
+        relative_dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                relative_dropdown.setBackgroundResource(R.drawable.background_solidorange_border);
+            }
+        });
+        prolight_zip.setClickable(false);
+        protv_com.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                validation();
+
+            }
+        });
+        prolight_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i= new Intent( getActivity(), Location.class);
+                startActivityForResult(i,1);
+
+            }
+        });
 
         Spannable word1 = new SpannableString(contactTextOne);
 
@@ -101,6 +196,294 @@ public class RegistrationTwo extends Fragment {
         terms_and_condition.append(word4);
 
 
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("data", String.valueOf(data));
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                Bundle extras = data.getBundleExtra("data");
+                if (extras != null) {
+
+                    Logger.printMessage("selectedPlace", "--->" + extras.getString("selectedPlace"));
+                    Logger.printMessage("zip", "--->" + extras.getString("zip"));
+                    Logger.printMessage("city", "--->" + extras.getString("city"));
+                    Logger.printMessage("state", "--->" + extras.getString("state"));
+
+                    if (!extras.getString("selectedPlace").equals("")) {
+                        prolight_address.setText(extras.getString("selectedPlace").substring(0, extras.getString("selectedPlace").indexOf(",")));
+//                        address.setText(extras.getString("selectedPlace").substring(0, extras.getString("selectedPlace").indexOf(",")));
+                    }
+                    prolight_zip.setText(extras.getString("zip"));
+                    prolight_city.setText(extras.getString("city"));
+                    prolight_State.setText(extras.getString("state"));
+                    String servicearea=extras.getString("city")+","+extras.getString("state");
+                    Log.d("serfbd",servicearea);
+                    prolight_service_area.setText(servicearea);
+
+                }
+
+            }
+        }
+    }
+    private void showDialogServies(View v, JSONArray PredictionsJsonArray) {
+
+        popupWindow = new PopupWindow(getActivity());
+        // Closes the popup window when touch outside.
+        popupWindow.setOutsideTouchable(true);
+        // Removes default background.
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        View dailogView = getActivity().getLayoutInflater().inflate(R.layout.dialogcat, null);
+
+        RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
+        rcv_.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        custom = new CustomListAdapterDialog_catagory(getActivity(),PredictionsJsonArray, new onOptionSelected() {
+            @Override
+            public void onItemPassed(int position, JSONObject value) {
+                popupWindow.dismiss();
+                Logger.printMessage("value", "" + value);
+
+                try {
+                    tv_service.setText(value.getString("category_name"));
+                    pros_contact_service = value.getString("id");
+                    Log.d("id",pros_contact_service);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        rcv_.setAdapter(custom);
+        // some other visual settings
+        popupWindow.setFocusable(false);
+        popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+
+        // set the list view as pop up window content
+        popupWindow.setContentView(dailogView);
+        popupWindow.showAsDropDown(v, -5, 0);
+
+    }
+    public interface onOptionSelected {
+        void onItemPassed(int position, JSONObject value);
+    }
+
+    public  void catagory()
+    {
+        new CustomJSONParser().fireAPIForGetMethod(getActivity(), AppConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+               // Log.d("responese",result);
+                try {
+                    JSONObject job= new JSONObject(result);
+                    catagory= job.getJSONArray("info_array");
+                    Log.d("sjhdfkhskhf", String.valueOf(catagory));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(String error, String response) {
+
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+        });
+
+    }
+
+
+    public void validation()
+    {
+        String businessname=prolight_businessname.getText().toString();
+        String address=prolight_address.getText().toString();
+        String city=prolight_city.getText().toString();
+        String state=prolight_State.getText().toString();
+        String zip=prolight_zip.getText().toString();
+        String phonenumber=prolight_phone.getText().toString();
+        String businessemail=prolight_email.getText().toString();
+        String primaryservice=tv_service.getText().toString();
+        String servicearea=prolight_service_area.getText().toString();
+
+
+        if (prolight_businessname.getText().toString().trim().equals(""))
+        {
+            prolight_businessname.setError("Please enter Business name");
+            prolight_businessname.setFocusable(true);
+        }
+        else
+        {
+            if (prolight_address.getText().toString().trim().equals(""))
+            {
+                prolight_address.setError("Please enter Address");
+                prolight_address.setFocusable(true);
+            }
+            else
+            {
+                if (prolight_city.getText().toString().trim().equals(""))
+                {
+                    prolight_city.setError("Please enter City");
+                    prolight_city.setFocusable(true);
+
+                }
+                else
+                {
+                    if (prolight_State.getText().toString().trim().equals(""))
+                    {
+                        prolight_State.setError("Please enter State ");
+                        prolight_State.setFocusable(true);
+
+                    }
+                    else
+                    {
+                        if (prolight_zip.getText().toString().trim().equals(""))
+                        {
+                            prolight_zip.setError("Please enter zip");
+                            prolight_State.setFocusable(true);
+                        }
+                        else
+                        {
+                            if (prolight_phone.getText().toString().trim().equals(""))
+                            {
+                                prolight_phone.setError("please enter Phone number");
+                                prolight_phone.setFocusable(false);
+                            }
+                            else
+                            {
+                                if (prolight_email.getText().toString().trim().equals(""))
+                                {
+                                    prolight_email.setError("Please enter Business email ");
+                                    prolight_email.setFocusable(true);
+                                }
+                                else
+                                {
+                                    if (tv_service.getText().toString().trim().equals(""))
+                                    {
+                                        tv_service.setError("Please enter Primary service");
+                                        tv_service.setFocusable(true);
+                                    }
+                                    else
+                                    {
+                                        if (prolight_service_area.getText().toString().trim().equals(""))
+                                        {
+                                            prolight_service_area.setError("Please enter service area");
+                                            prolight_service_area.setFocusable(true);
+                                        }
+                                        else
+                                        {
+                                            Log.d("fname", Appdata.f_name);
+                                            Log.d("lname",Appdata.l_name);
+                                            Log.d("email",Appdata.email);
+                                            Log.d("phone",Appdata.phone);
+                                            Log.d("password",Appdata.password);
+                                            Log.d("busimessname",businessname);
+                                            Log.d("address",address);
+                                            Log.d("city",city);
+                                            Log.d("state",state);
+                                            Log.d("zip",zip);
+                                            Log.d("businessemail",businessemail);
+                                            Log.d("phonenumber",phonenumber);
+                                            Log.d("primaryservice",primaryservice);
+                                            Log.d("servicearea",servicearea);
+                                            Log.d("latittuted",Appdata.latitude);
+                                            Log.d("Logtitude",Appdata.longtitude);
+                                            Log.d("country",Appdata.Country);
+                                            HashMap<String,String> Params1=new HashMap<>();
+                                            Params1.put("contact_f_name",Appdata.f_name);
+                                            Params1.put("contact_l_name",Appdata.l_name);
+                                            Params1.put("pro_email",Appdata.email);
+                                            Params1.put("pro_phone",Appdata.phone);
+                                            Params1.put("pro_password",Appdata.password);
+                                            Params1.put("com_name",businessname);
+                                            Params1.put("com_address",address);
+                                            Params1.put("city",city);
+                                            Params1.put("state",state);
+                                            Params1.put("zipcode",zip);
+                                            Params1.put("country",Appdata.Country);
+                                            Params1.put("alt_phone",phonenumber);
+                                            Params1.put("com_email",businessemail);
+                                            Params1.put("primary_category",pros_contact_service);
+                                            Params1.put("service_area",servicearea);
+                                            Params1.put("latitude",Appdata.latitude);
+                                            Params1.put("longitude",Appdata.longtitude);
+                                            Params1.put("device_type","A");
+                                            Log.d("PARAMS", String.valueOf(Params1));
+                                            myload.showLoader();
+
+
+                                            new CustomJSONParser().fireAPIForPostMethod(getActivity(),AppConstant.Signup,Params1,null, new CustomJSONParser.CustomJSONResponse() {
+                                               @Override
+                                               public void onSuccess(String result) {
+                                                  myload.dismissLoader();
+                                                   try {
+                                                       JSONObject myob= new JSONObject(result);
+                                                       boolean response= Boolean.parseBoolean(myob.getString("response"));
+                                                       String messsage= myob.getString("message");
+
+                                                           Toast.makeText(getActivity(), ""+messsage,Toast.LENGTH_SHORT).show();
+                                                           Intent i=new Intent(getActivity(), Signupcomplete.class);
+                                                           startActivity(i);
+
+                                                   } catch (JSONException e) {
+                                                       e.printStackTrace();
+                                                   }
+
+
+
+                                               }
+
+                                               @Override
+                                               public void onError(String error, String response) {
+                                                myload.dismissLoader();
+                                                   try {
+                                                       JSONObject job= new JSONObject(response);
+                                                       String resp=job.getString("message");
+                                                       Toast.makeText(getActivity(), ""+resp, Toast.LENGTH_SHORT).show();
+                                                   } catch (JSONException e) {
+                                                       e.printStackTrace();
+                                                   }
+                                               }
+
+                                               @Override
+                                               public void onError(String error) {
+                                                 myload.dismissLoader();
+                                               }
+
+                                               @Override
+                                               public void onStart() {
+
+                                               }
+                                           });
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void callbackForAlert(String result, int i) {
 
     }
 }

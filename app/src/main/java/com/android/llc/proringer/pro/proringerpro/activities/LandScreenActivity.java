@@ -2,9 +2,11 @@ package com.android.llc.proringer.pro.proringerpro.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -13,11 +15,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.DashBoardFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFragment;
@@ -30,9 +37,20 @@ import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReply
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.RequestReviewFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.SocialMediaFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.main_content.ProjectMessagingFragment;
+import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
+import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
+import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
 import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.BottomNav;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.NavigationHandler;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class LandScreenActivity extends AppCompatActivity {
@@ -43,6 +61,13 @@ public class LandScreenActivity extends AppCompatActivity {
     private Toolbar back_toolbar = null;
     private ActionBarDrawerToggle toggle = null;
     private FragmentManager fragmentManager = null;
+    ProRegularTextView tv_title;
+    ImageView iv_pro_logo,search_local_pro_header,img_back;
+    LinearLayout linear_buttombar;
+    private ImageView dashboard_image, my_projects_image, messages_image, fav_pro_image;
+    private ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
+    ArrayList<APIGetData> arrayList=null;
+    public MyLoader myLoader=null;
 
 
     @Override
@@ -60,6 +85,30 @@ public class LandScreenActivity extends AppCompatActivity {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
+        tv_title=(ProRegularTextView)findViewById(R.id.tv_title);
+        tv_title.setVisibility(View.GONE);
+        linear_buttombar=(LinearLayout)findViewById(R.id.linear_buttombar);
+
+        dashboard_image = (ImageView)findViewById(R.id.dashboard_image);
+        my_projects_image = (ImageView)findViewById(R.id.my_projects_image);
+        messages_image = (ImageView)findViewById(R.id.messages_image);
+        fav_pro_image = (ImageView) findViewById(R.id.fav_pro_image);
+        dashboard_text = (ProRegularTextView)findViewById(R.id.dashboard_text);
+        my_projects_text = (ProRegularTextView)findViewById(R.id.my_projects_text);
+        messages_text = (ProRegularTextView)findViewById(R.id.messages_text);
+        fav_pro_text = (ProRegularTextView)findViewById(R.id.fav_pro_text);
+        myLoader=new MyLoader(LandScreenActivity.this);
+        iv_pro_logo=(ImageView)findViewById(R.id.iv_pro_logo);
+
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        search_local_pro_header=(ImageView) findViewById(R.id.search_local_pro_header);
+        search_local_pro_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 Intent i= new Intent( LandScreenActivity.this,Searchnear.class);
+                startActivity(i);
+            }
+        });
         toggle.syncState();
 
 
@@ -73,22 +122,38 @@ public class LandScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(String selected_tag) {
                 Logger.printMessage("Fragment_stack", "" + getSupportFragmentManager().getBackStackEntryCount());
+
                 switch (selected_tag) {
                     case BottomNav.DASHBOARD:
                         closeDrawer();
                         transactDashBoard();
+                        toolbar.setVisibility(View.VISIBLE);
+                        iv_pro_logo.setVisibility(View.VISIBLE);
+                        tv_title.setVisibility(View.GONE);
+
                         break;
                     case BottomNav.MY_PROJECTS:
                         toggleProMapSearch(false);
                         transactMyProjects();
+                        toolbar.setVisibility(View.VISIBLE);
+                        iv_pro_logo.setVisibility(View.VISIBLE);
+                        tv_title.setVisibility(View.GONE);
                         closeDrawer();
                         break;
                     case BottomNav.MESSAGES:
                         transactMessages();
+                        toolbar.setVisibility(View.VISIBLE);
+                        iv_pro_logo.setVisibility(View.VISIBLE);
+                        tv_title.setVisibility(View.GONE);
                         closeDrawer();
                         break;
                     case BottomNav.WATCH_LIST:
                         transactWatchList();
+                        iv_pro_logo.setVisibility(View.VISIBLE);
+                        tv_title.setVisibility(View.GONE);
+
+                        toolbar.setVisibility(View.VISIBLE);
+
                         closeDrawer();
                         break;
                 }
@@ -102,6 +167,19 @@ public class LandScreenActivity extends AppCompatActivity {
         NavigationHandler.getInstance().init(mDrawer, new NavigationHandler.OnHandleInput() {
             @Override
             public void onClickItem(String tag) {
+
+                dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+                my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                messages_image.setBackgroundResource(R.drawable.ic_message);
+                messages_text.setTextColor(Color.parseColor("#505050"));
+
+                fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                fav_pro_text.setTextColor(Color.parseColor("#505050"));
+                linear_buttombar.setVisibility(View.VISIBLE);
                 switch (tag) {
 
                     case NavigationHandler.FIND_LOCAL_PROJECT:
@@ -112,42 +190,142 @@ public class LandScreenActivity extends AppCompatActivity {
 
                     case NavigationHandler.NOTIFICATION:
                         closeDrawer();
+                        iv_pro_logo.setVisibility(View.GONE);
+                        tv_title.setVisibility(View.VISIBLE);
+                        tv_title.setText("Notifications");
                         transactNotification();
+                        linear_buttombar.setVisibility(View.VISIBLE);
                         break;
 
                     case NavigationHandler.QUICK_REPLY:
                         closeDrawer();
-                        transactQuickReply();
+                        iv_pro_logo.setVisibility(View.GONE);
+                        tv_title.setVisibility(View.VISIBLE);
+                        tv_title.setText("QUICK REPLY MESSAGE");
+                       // linear_buttombar.setVisibility(View.GONE);
+                        Intent i= new Intent(LandScreenActivity.this,Quick_reply.class);
+                        startActivity(i);
                         break;
 
                     case NavigationHandler.AVAILABILITY:
                         closeDrawer();
                         transactTimeAvailability();
+                        linear_buttombar.setVisibility(View.VISIBLE);
+                        iv_pro_logo.setVisibility(View.GONE);
+                        tv_title.setVisibility(View.VISIBLE);
+                        tv_title.setText("AVAILABILITY");
                         break;
 
                     case NavigationHandler.SOCIAL_MEDIA:
                         closeDrawer();
                         transactSocialMedia();
+                        linear_buttombar.setVisibility(View.VISIBLE);
+                        iv_pro_logo.setVisibility(View.GONE);
+                        tv_title.setVisibility(View.VISIBLE);
+                        tv_title.setText("SOCIAL MEDIA");
                         break;
 
                     case NavigationHandler.SHARE_PROFILE:
                         closeDrawer();
+                        linear_buttombar.setVisibility(View.VISIBLE);
                         break;
 
                     case NavigationHandler.REQUEST_REVIEW:
                         closeDrawer();
                         transactRequestReview();
+                        linear_buttombar.setVisibility(View.VISIBLE);
+                        iv_pro_logo.setVisibility(View.GONE);
+                        tv_title.setVisibility(View.VISIBLE);
+                        tv_title.setText("REQUEST REVIEW");
                         break;
 
                     case NavigationHandler.INVITE_FRIEND:
                         closeDrawer();
                         transactInviteFriend();
+                        linear_buttombar.setVisibility(View.VISIBLE);
+                        iv_pro_logo.setVisibility(View.GONE);
+                        tv_title.setVisibility(View.VISIBLE);
+                        tv_title.setText("INVITE FRIEND");
                         break;
 
                     case NavigationHandler.LOGOUT:
                         closeDrawer();
-                        startActivity(new Intent(LandScreenActivity.this,GetStartedActivity.class));
-                        finish();
+                        linear_buttombar.setVisibility(View.VISIBLE);
+
+                        LayoutInflater factory = LayoutInflater.from(LandScreenActivity.this);
+                        final View deleteDialogView = factory.inflate(R.layout.dialog, null);
+                        final AlertDialog deleteDialog = new AlertDialog.Builder(LandScreenActivity.this).create();
+                        deleteDialog.setView(deleteDialogView);
+                        deleteDialogView.findViewById(R.id.proSemi_logout).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                myLoader.showLoader();
+                                arrayList=new ArrayList<APIGetData>();
+                                APIGetData apiGetData=new APIGetData();
+                                apiGetData.setPARAMS("user_id");
+                                apiGetData.setValues(ProApplication.getInstance().getUserId());
+                                arrayList.add(apiGetData);
+
+                                apiGetData=new APIGetData();
+                                apiGetData.setPARAMS("anorid_status");
+                                apiGetData.setValues("1");
+                                arrayList.add(apiGetData);
+
+                                apiGetData=new APIGetData();
+                                apiGetData.setPARAMS("ios_status");
+                                apiGetData.setValues("1");
+                                arrayList.add(apiGetData);
+
+                                new CustomJSONParser().fireAPIForGetMethod(LandScreenActivity.this, AppConstant.Logout, arrayList, new CustomJSONParser.CustomJSONResponse() {
+                                    @Override
+                                    public void onSuccess(String result) {
+                                        try {
+                                            JSONObject mainResponseObj =  new JSONObject(result);
+                                            String message=mainResponseObj.getString("message");
+                                            ProApplication.getInstance().logOut();
+                                              startActivity(new Intent(LandScreenActivity.this,GetStartedActivity.class));
+                                             finish();
+                                             deleteDialog.dismiss();
+                                            Toast.makeText(LandScreenActivity.this, "Successfully logout", Toast.LENGTH_SHORT).show();
+
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+
+                                    }
+
+                                    @Override
+                                    public void onError(String error, String response) {
+                                        myLoader.dismissLoader();
+                                        deleteDialog.dismiss();
+                                        Toast.makeText(LandScreenActivity.this, ""+response, Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onError(String error) {
+
+                                        myLoader.dismissLoader();
+                                        Toast.makeText(LandScreenActivity.this, ""+error, Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onStart() {
+                                        deleteDialog.dismiss();
+                                    }
+                                });
+
+                            }
+                        });
+                        deleteDialogView.findViewById(R.id.prosemi_cancle).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                deleteDialog.dismiss();
+                            }
+                        });
+
+                        deleteDialog.show();
                         break;
 
                     case NavigationHandler.SUPPORT:
@@ -287,19 +465,19 @@ public class LandScreenActivity extends AppCompatActivity {
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
     }
 
-    private void transactQuickReply() {
-        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + QuickReplyFragment.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + QuickReplyFragment.class.getCanonicalName());
-
-            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + QuickReplyFragment.class.getCanonicalName())).commit();
-            fragmentManager.popBackStack("" + QuickReplyFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        }
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, new QuickReplyFragment(), "" + QuickReplyFragment.class.getCanonicalName());
-        transaction.addToBackStack("" + QuickReplyFragment.class.getCanonicalName());
-        transaction.commit();
-        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
-    }
+//    private void transactQuickReply() {
+//        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + QuickReplyFragment.class.getCanonicalName()) != null) {
+//            Logger.printMessage("back_stack", "Removed *****" + QuickReplyFragment.class.getCanonicalName());
+//
+//            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + QuickReplyFragment.class.getCanonicalName())).commit();
+//            fragmentManager.popBackStack("" + QuickReplyFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//        }
+//        FragmentTransaction transaction = fragmentManager.beginTransaction();
+//        transaction.replace(R.id.fragment_container, new QuickReplyFragment(), "" + QuickReplyFragment.class.getCanonicalName());
+//        transaction.addToBackStack("" + QuickReplyFragment.class.getCanonicalName());
+//        transaction.commit();
+//        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+//    }
 
     private void transactRequestReview() {
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + RequestReviewFragment.class.getCanonicalName()) != null) {
@@ -504,7 +682,5 @@ public class LandScreenActivity extends AppCompatActivity {
     public void redirectToDashBoard() {
         bottomNavInstance.highLightSelected(BottomNav.DASHBOARD);
         transactDashBoard();
-    }
-
-
+    };
 }

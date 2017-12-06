@@ -13,6 +13,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 
 /**
  * Created by bodhidipta on 09/06/17.
@@ -58,8 +59,13 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreen.this, GetStartedActivity.class));
-                finish();
+                if (ProApplication.getInstance().getUserId().equals("")) {
+                    startActivity(new Intent(SplashScreen.this, GetStartedActivity.class));
+                    finish();
+                } else {
+                    startActivity(new Intent(SplashScreen.this, LandScreenActivity.class));
+                    finish();
+                }
             }
         }, 2700);
     }

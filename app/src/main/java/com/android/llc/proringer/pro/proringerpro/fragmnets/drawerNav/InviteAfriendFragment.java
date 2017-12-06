@@ -1,17 +1,34 @@
 package com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
+import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert_error;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
+import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 /**
@@ -31,10 +48,10 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTe
  * limitations under the License.
  */
 
-public class InviteAfriendFragment extends Fragment {
+public class InviteAfriendFragment extends Fragment implements MyCustomAlertListener {
     ProLightEditText first_name, last_name, email, confirm_email;
     ProRegularTextView invited_submit;
-    ProgressDialog pgDia;
+    MyLoader myload;
 
     @Nullable
     @Override
@@ -50,9 +67,13 @@ public class InviteAfriendFragment extends Fragment {
         email = (ProLightEditText) view.findViewById(R.id.email);
         confirm_email = (ProLightEditText) view.findViewById(R.id.confirm_email);
         invited_submit=(ProRegularTextView)view.findViewById(R.id.invited_submit);
+        myload=new MyLoader(getActivity());
         invited_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 validateInvite();
             }
         });
@@ -60,6 +81,10 @@ public class InviteAfriendFragment extends Fragment {
     }
 
     private void validateInvite() {
+        String fname=first_name.getText().toString().trim();
+        String  lname=last_name.getText().toString().trim();
+        String   mail=email.getText().toString().trim();
+        String   cmail=confirm_email.getText().toString().trim();
         if (first_name.getText().toString().trim().equals("")) {
             first_name.setError("First name can not be blank.");
         } else {
@@ -73,7 +98,48 @@ public class InviteAfriendFragment extends Fragment {
                 } else {
                     if (Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()) {
                         if (email.getText().toString().trim().equals(confirm_email.getText().toString().trim())) {
-                            getSubmitParams();
+
+                            HashMap<String,String> Params=new HashMap<>();
+                            Params.put("user_id", ProApplication.getInstance().getUserId());
+                            Params.put("first_name",fname);
+                            Params.put("last_name",lname);
+                            Params.put("email",mail);
+                            Params.put("conf_emailid",cmail);
+                            Log.d("params", String.valueOf(Params));
+                          new CustomJSONParser() .fireAPIForPostMethod(getActivity(), AppConstant.invitefriend, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                              @Override
+                              public void onSuccess(String result) {
+                                  Log.d("result",result);
+                                  myload.dismissLoader();
+                                  try {
+                                      JSONObject job= new JSONObject(result);
+                                      String message= job.getString("message");
+                                      Toast.makeText(getActivity(), ""+message, Toast.LENGTH_SHORT).show();
+                                  } catch (JSONException e) {
+                                      e.printStackTrace();
+                                  }
+
+                              }
+
+                              @Override
+                              public void onError(String error, String response) {
+                                  myload.dismissLoader();
+                                  Toast.makeText(getActivity(), ""+response, Toast.LENGTH_SHORT).show();
+
+                              }
+
+                              @Override
+                              public void onError(String error) {
+                                  CustomAlert_error customAlert = new CustomAlert_error(getActivity(),"Load Error",""+error,InviteAfriendFragment.this);
+                                  customAlert.getListenerRetryCancelFromNormalAlert("retry","abort",1);
+                              }
+
+                              @Override
+                              public void onStart() {
+                                myload.showLoader();
+                              }
+                          });
+
                         } else {
                             confirm_email.setError("Email and confirm email does not match.");
                             confirm_email.requestFocus();
@@ -87,64 +153,9 @@ public class InviteAfriendFragment extends Fragment {
         }
     }
 
-    private void getSubmitParams() {
-//        ProServiceApiHelper.getInstance(getActivity()).inviteFriends(
-//                new ProServiceApiHelper.getApiProcessCallback() {
-//                    @Override
-//                    public void onStart() {
-//                        pgDia=new ProgressDialog(getActivity());
-//                        pgDia.setTitle("Invite Friend");
-//                        pgDia.setMessage("Inviting friend. Please wait.");
-//                        pgDia.setCancelable(false);
-//                        pgDia.show();
-//                    }
-//
-//                    @Override
-//                    public void onComplete(String message) {
-//                        if (pgDia!=null && pgDia.isShowing())
-//                            pgDia.dismiss();
-//                        new AlertDialog.Builder(getActivity())
-//                                .setTitle("Invite Friend")
-//                                .setMessage("" + message)
-//                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        dialog.dismiss();
-//                                        resetForm();
-//                                    }
-//                                })
-//                                .setCancelable(false)
-//                                .show();
-//                    }
-//
-//                    @Override
-//                    public void onError(String error) {
-//                        if (pgDia!=null && pgDia.isShowing())
-//                            pgDia.dismiss();
-//                        new AlertDialog.Builder(getActivity())
-//                                .setTitle("Invite Friend Error")
-//                                .setMessage("" + error)
-//                                .setPositiveButton("retry", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        dialog.dismiss();
-//                                        validateInvite();
-//                                    }
-//                                })
-//                                .setNegativeButton("abort", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        dialog.dismiss();
-//                                    }
-//                                })
-//                                .show();
-//                    }
-//                },
-//                first_name.getText().toString().trim(),
-//                last_name.getText().toString().trim(),
-//                email.getText().toString().trim(),
-//                confirm_email.getText().toString().trim());
-    }
+
+
+
 
     private void resetForm(){
         first_name.setText("");
@@ -152,4 +163,11 @@ public class InviteAfriendFragment extends Fragment {
         email.setText("");
         confirm_email.setText("");
     }
+
+    @Override
+    public void callbackForAlert(String result, int i) {
+
+    }
+
+
 }

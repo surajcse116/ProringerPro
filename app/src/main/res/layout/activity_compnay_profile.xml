@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:paddingBottom="10dp"
-    android:background="@color/colorBGblueShade"
-   >
+    android:background="@color/colorBGblueShade">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -65,6 +64,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:id="@+id/et_name"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edit_text_selecter"
                 android:inputType="text"
@@ -84,6 +84,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:id="@+id/et_email"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edit_text_selecter"
                 android:inputType="text"
@@ -102,6 +103,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:id="@+id/et_companywesite"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edit_text_selecter"
                 android:inputType="text"
@@ -109,6 +111,23 @@
                 android:textColor="@color/colorTextDark"
                 android:textSize="14sp" />
 
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Company phone number"
+                android:textAllCaps="true" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:id="@+id/et_companyphone"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edit_text_selecter"
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -130,9 +149,10 @@
                         android:text="Types of business"
                         android:textAllCaps="true" />
 
-                    <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
+                        android:id="@+id/et_busineestype"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/edit_text_selecter"
                         android:inputType="text"
@@ -158,6 +178,7 @@
                     <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
+                        android:id="@+id/et_employee"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/edit_text_selecter"
                         android:inputType="text"
@@ -181,6 +202,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:id="@+id/et_address"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edit_text_selecter"
                 android:inputType="text"
@@ -212,6 +234,7 @@
                     <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
+                        android:id="@+id/et_zip"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/edit_text_selecter"
                         android:inputType="text"
@@ -239,6 +262,7 @@
                     <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
+                        android:id="@+id/et_city"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/edit_text_selecter"
                         android:inputType="text"
@@ -265,6 +289,7 @@
                     <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
+                        android:id="@+id/et_state"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/edit_text_selecter"
                         android:inputType="text"
@@ -296,7 +321,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_wifi_disconnect" />
 
-        <com.android.llc.proringer.viewsmod.textview.ProRegularTextView
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
             android:id="@+id/tv_network"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

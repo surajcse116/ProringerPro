@@ -2,7 +2,11 @@ package com.android.llc.proringer.pro.proringerpro.helper;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+
+import com.android.llc.proringer.pro.proringerpro.activities.GetStartedActivity;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.NotificationsFragment;
 
 
 /**
@@ -10,6 +14,9 @@ import android.support.v7.app.AlertDialog;
  */
 
 public class CustomAlert {
+
+
+
 
     public void getEventFromNormalAlert(Context context, String title, String message, String positiveTitle, String negativeTitle, final MyCustomAlertListener ml) {
         new AlertDialog.Builder(context)
@@ -49,6 +56,9 @@ public class CustomAlert {
                 })
                 .create()
                 .show();
+    }
+
+    public void createNormalAlert(String ok, int i) {
     }
 
 

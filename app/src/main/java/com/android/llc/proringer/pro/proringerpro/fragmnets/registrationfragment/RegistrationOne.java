@@ -4,13 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LogInActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.SignUpActivity;
+import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 /**
@@ -32,6 +39,8 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTe
 
 public class RegistrationOne extends Fragment {
     ProRegularTextView next;
+    ProLightEditText proet_fname, proet_lname, proet_email, proet_cemail, proet_phon, proet_password, proet_cpassword;
+
 
     @Nullable
     @Override
@@ -43,11 +52,18 @@ public class RegistrationOne extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         next = (ProRegularTextView) view.findViewById(R.id.next);
+        proet_fname = (ProLightEditText) view.findViewById(R.id.proet_fname);
+        proet_lname = (ProLightEditText) view.findViewById(R.id.proet_lname);
+        proet_email = (ProLightEditText) view.findViewById(R.id.proet_email);
+        proet_cemail = (ProLightEditText) view.findViewById(R.id.proet_cemail);
+        proet_phon = (ProLightEditText) view.findViewById(R.id.proet_phon);
+        proet_password = (ProLightEditText) view.findViewById(R.id.proet_password);
+        proet_cpassword = (ProLightEditText) view.findViewById(R.id.proet_cpassword);
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((SignUpActivity) getActivity()).transactRegistrationFragmentTwo();
+                validation();
             }
         });
         view.findViewById(R.id.tv_login).setOnClickListener(new View.OnClickListener() {
@@ -57,5 +73,106 @@ public class RegistrationOne extends Fragment {
             }
         });
 
+    }
+
+    public void validation()
+
+    {
+         String f_name,l_name,email,phone,password;
+       Appdata.f_name = proet_fname.getText().toString();
+       Appdata.l_name=proet_lname.getText().toString();
+       Appdata.email=proet_cemail.getText().toString();
+      Appdata.phone=proet_phon.getText().toString();
+       Appdata.password=proet_cpassword.getText().toString();
+        password=proet_password.getText().toString();
+
+        Log.d("fname",Appdata.f_name);
+        Log.d("fname",Appdata.l_name);
+        Log.d("fname",Appdata.email);
+        Log.d("fname",Appdata.phone);
+        Log.d("fname",Appdata.password);
+
+        if (proet_fname.getText().toString().trim().equals("")) {
+            proet_fname.setError("Please enter First name.");
+
+            proet_fname.setFocusable(true);
+        } else {
+            if (proet_lname.getText().toString().trim().equals("")) {
+                proet_lname.setError("Please enter Last name.");
+
+                proet_lname.setFocusable(true);
+            } else {
+                if (Patterns.EMAIL_ADDRESS.matcher(proet_email.getText().toString().trim()).matches()) {
+                    if(Patterns.EMAIL_ADDRESS.matcher(proet_cemail.getText().toString().trim()).matches())
+                    {
+                        if (!proet_cemail.getText().toString().trim().equals(proet_email.getText().toString().trim()))
+                        {
+                            proet_cemail.setError("Email id dosenot match");
+                            proet_cemail.setFocusable(true);
+                        }
+                        else
+                        {
+                          if (proet_phon.getText().toString().trim().equals(""))
+                          {
+                              proet_phon.setError("please enter phone number");
+                              proet_phon.setFocusable(true);
+                          }
+                          else
+                          {
+                              if (TextUtils.isEmpty(password)||password.length()<6)
+                              {
+
+                                  proet_password.setError("Please enter password at least 6 character");
+                                  proet_password.setFocusable(true);
+
+                              }
+                              else
+                              {  if (proet_cpassword.getText().toString().trim().equals(""))
+                              {
+
+                               proet_cpassword.setError("Enter confirm password");
+                              }
+                              else
+                              {
+                                  if (proet_password.getText().toString().trim().equals(proet_cpassword.getText().toString().trim()))
+                                  {
+
+                                      ((SignUpActivity) getActivity()).transactRegistrationFragmentTwo();
+
+
+
+                                  }
+                                  else
+                                  {
+
+                                      proet_cpassword.setError("password dosenot match");
+                                      proet_cpassword.setFocusable(true);
+                                  }
+                              }
+
+                              }
+                          }
+                        }
+
+                    }
+                    else
+                    {
+
+                        proet_cemail.setError("please enter valid confirm email");
+                        proet_cemail.setFocusable(true);
+                    }
+
+                }
+                else
+                {
+                    proet_email.setError("Please enter valid email address");
+                    proet_email.setFocusable(true);
+
+                }
+
+            }
+
+
+        }
     }
 }

@@ -26,6 +26,7 @@
             app:textAllCaps="true" />
     </android.support.v7.widget.Toolbar>
 
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
@@ -37,6 +38,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="2dp"
             android:background="@color/colorAccent"
             android:gravity="center"
             android:text="SAVE"

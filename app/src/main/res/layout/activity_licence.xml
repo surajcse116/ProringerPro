@@ -46,9 +46,9 @@
 
     <RelativeLayout
         android:id="@+id/RLAddLicence"
-            android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-            android:padding="10dp"
+        android:padding="10dp"
         android:visibility="visible">
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
@@ -63,6 +63,7 @@
             android:textSize="16sp" />
 
         <ScrollView
+            android:layout_above="@+id/tv_save_licence"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -71,23 +72,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                    android:id="@+id/tv_category"
+
+                <RelativeLayout
+                    android:id="@+id/relative_dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edit_text_selecter"
-                    android:hint="Categort"
-                    android:inputType="text"
-                    android:padding="10dp"
-                    android:textColor="@color/colorTextDark"
-                    android:textSize="14sp" />
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_selecter">
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:id="@+id/tv_service"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:hint="Select catagory"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/dropdown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+                </RelativeLayout>
 
                 <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                     android:id="@+id/tv_issue"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_below="@+id/tv_category"
+                    android:layout_below="@+id/relative_dropdown"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/edit_text_selecter"
                     android:hint="Issue"
@@ -109,7 +126,7 @@
                     android:textColor="@color/colorTextDark"
                     android:textSize="14sp" />
 
-                <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                     android:id="@+id/tv_expires"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -190,7 +207,8 @@
                             android:padding="8dp"
                             android:text="EDIT FILE"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:visibility="visible" />
 
                     </LinearLayout>
 

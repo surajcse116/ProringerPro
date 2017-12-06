@@ -7,10 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 
@@ -20,6 +23,8 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTe
 
 public class ResendConfirmation extends AppCompatActivity {
     ProRegularTextView tv_resend;
+    ProLightEditText email;
+    ProRegularTextView submit_email;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,17 @@ public class ResendConfirmation extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tv_resend= (ProRegularTextView) findViewById(R.id.tv_resend);
+        email=(ProLightEditText)findViewById(R.id.email);
+        submit_email=(ProRegularTextView)findViewById(R.id.submit_email);
+        submit_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            validation();
+
+
+            }
+        });
+
 
         if (Build.VERSION.SDK_INT >= 24)
         {
@@ -54,5 +70,23 @@ public class ResendConfirmation extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+    public void validation()
+    {
+        if (email.getText().toString().trim().equals(""))
+        {
+            email.setError("please enter email");
+        }
+        else
+        {
+            if (Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches())
+            {
+                Toast.makeText(this, "email sent", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                email.setError("please entar valid email");
+            }
+        }
     }
 }

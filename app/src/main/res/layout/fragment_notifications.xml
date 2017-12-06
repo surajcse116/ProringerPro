@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBGblueShade"
     android:fillViewport="true"
+    android:id="@+id/ScrollViewMAin"
     android:padding="10dp"
     android:scrollbars="none">
 
@@ -106,6 +107,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.SwitchHelper
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/email_project_replies"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
@@ -124,6 +126,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.SwitchHelper
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/email_newreviw"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
@@ -143,6 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:id="@+id/account_achivement"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
 
@@ -238,6 +242,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.SwitchHelper
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/mobile_project_replies"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
@@ -256,6 +261,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.SwitchHelper
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/mobilereview"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
@@ -274,6 +280,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.SwitchHelper
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/mobileaccountachivement"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true" />
         </RelativeLayout>

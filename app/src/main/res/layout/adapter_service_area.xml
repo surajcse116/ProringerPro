@@ -9,6 +9,7 @@
         android:id="@+id/tv_city"
         android:layout_width="match_parent"
         android:text="Grove City,OH"
+        android:paddingLeft="10dp"
         android:background="@color/colorDarkGray"
         android:gravity="center_vertical"
         android:layout_height="45dp" />

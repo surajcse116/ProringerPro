@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
@@ -77,6 +79,20 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         findViewById(R.id.submit_email).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (email.getText().toString().trim().equals(""))
+                {
+                    email.setError(" Please enter email");
+                }
+                else
+                {  if (Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches())
+                {
+                    Toast.makeText(ForgetPasswordActivity.this, "Password sent", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    email.setError("Please enter valid email");
+                }
+                }
 //                if (Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()) {
 //                    ProServiceApiHelper.getInstance(ForgetPasswordActivity.this).forgetPassword(email.getText().toString().trim(), new ProServiceApiHelper.getApiProcessCallback() {
 //                        @Override

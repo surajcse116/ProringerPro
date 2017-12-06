@@ -1,20 +1,52 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.GetStartedTutorial;
+import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert1;
+import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
+import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
+import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 
 /**
@@ -35,19 +67,28 @@ import com.bumptech.glide.Glide;
  * -->
  */
 
-public class GetStartedActivity extends AppCompatActivity {
-
+public class GetStartedActivity extends AppCompatActivity implements
+        LocationListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,MyCustomAlertListener {
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private ViewPager get_started_pager;
     private GetStartedTutorial adapter;
     private ImageView pager_dot_one, pager_dot_two, pager_dot_three, pager_dot_four, slide_left, slide_right;
-    private ProRegularTextView
-//            get_started,
-            sign_in;
+    private ProRegularTextView get_started, sign_in;
     public static final int LOG_IN_REQUEST = 1;
     //RelativeLayout RLBottom;
     public static final int SIGN_UP_REQUEST = 2;
-
     ImageView img_background;
+    private static final String TAG = "LocationActivity";
+    private static final long INTERVAL = 1000 * 10;
+    private static final long FASTEST_INTERVAL = 1000 * 1;
+    LocationRequest mLocationRequest;
+    GoogleApiClient mGoogleApiClient;
+    Location mCurrentLocation;
+    String mLastUpdateTime;
+    String updatelocation;
+
 
 
     @Override
@@ -55,10 +96,23 @@ public class GetStartedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_get_started);
+
+        Logger.printMessage(TAG, "onCreate ...............................");
+        if (!isGooglePlayServicesAvailable()) {
+            finish();
+        }
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
 
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -67,7 +121,7 @@ public class GetStartedActivity extends AppCompatActivity {
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
-        img_background= (ImageView) findViewById(R.id.img_background);
+        img_background = (ImageView) findViewById(R.id.img_background);
 
         Glide.with(GetStartedActivity.this).load(R.drawable.welcome_intro_get_started).into(img_background);
 
@@ -97,7 +151,11 @@ public class GetStartedActivity extends AppCompatActivity {
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startActivityForResult(new Intent(GetStartedActivity.this, LogInActivity.class), LOG_IN_REQUEST);
+
+
+
             }
         });
 
@@ -157,21 +215,211 @@ public class GetStartedActivity extends AppCompatActivity {
                 break;
         }
     }
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
 
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+                CustomAlert1 customAlert = new CustomAlert1(GetStartedActivity.this,getResources().getString(R.string.text_location_permission), getResources().getString(R.string.text_location_permission),GetStartedActivity.this);
+                customAlert.createNormalAlert("ok",1);
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SIGN_UP_REQUEST) {
-            if (resultCode == RESULT_OK) {
-//                startActivity(new Intent(GetStartedActivity.this, LogInActivity.class));
-//                finish();
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // location-related task you need to do.
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                        //Request location updates:
+                        ///////////////Here called location /////////////////
+
+                        mGoogleApiClient.connect();
+
+                        if (mGoogleApiClient.isConnected()) {
+                            PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+                            Logger.printMessage(TAG, "Location update started ..............: ");
+                            Logger.printMessage(TAG, "Location update resumed .....................");
+                        }
+                    }
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+
+                }
+                return;
             }
 
-        } else if (requestCode == LOG_IN_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                startActivity(new Intent(GetStartedActivity.this, LandScreenActivity.class));
-                finish();
+        }
+    }
+
+
+
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Logger.printMessage(TAG, "Firing onLocationChanged..............................................");
+        mCurrentLocation = location;
+        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+        updateUI();
+
+    }
+    @Override
+    public void onConnected(Bundle bundle) {
+        Logger.printMessage(TAG, "onConnected - isConnected ...............: " + mGoogleApiClient.isConnected());
+        if (checkLocationPermission()) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+
+                ///////////////Here called location /////////////////
+
+                PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+                Logger.printMessage(TAG, "Location update started ..............: ");
+            }
+        }
+
+    }
+
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.d(TAG, "Connection failed: " + connectionResult.toString());
+    }
+    private boolean isGooglePlayServicesAvailable() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(this);
+        if (result != ConnectionResult.SUCCESS) {
+            if (googleAPI.isUserResolvableError(result)) {
+                googleAPI.getErrorDialog(this, result,
+                        0).show();
+            }
+
+            return false;
+        }
+        return true;
+    }
+    private void updateUI() {
+        Logger.printMessage(TAG, "UI update initiated .............");
+        if (null != mCurrentLocation) {
+            String lat = String.valueOf(mCurrentLocation.getLatitude());
+            String lng = String.valueOf(mCurrentLocation.getLongitude());
+            Appdata.latitude=lat;
+            Appdata.longtitude=lng;
+            Log.d("LATTITUIDE",lat);
+            Log.d("Longtitude",lng);
+
+            HelperClass.getInstance(GetStartedActivity.this).setCurrentLatLng(lat, lng);
+
+            Logger.printMessage("updateUI", "At Time: " + mLastUpdateTime + "\n" +
+                    "Latitude: " + lat + "\n" +
+                    "Longitude: " + lng + "\n" +
+                    "Accuracy: " + mCurrentLocation.getAccuracy() + "\n" +
+                    "Provider: " + mCurrentLocation.getProvider());
+        } else {
+            Logger.printMessage(TAG, "location is null ...............");
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (checkLocationPermission()) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+
+                ///////////////Here called location /////////////////
+                mGoogleApiClient.connect();
             }
         }
     }
-}
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (checkLocationPermission()) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+
+                ///////////////Here called location /////////////////
+                if (mGoogleApiClient.isConnected()) {
+                    PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+                    Logger.printMessage(TAG, "Location update resumed .....................");
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (checkLocationPermission()) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+
+                ///////////////Here called location /////////////////
+                if (mGoogleApiClient.isConnected()) {
+                    LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+                    Logger.printMessage(TAG, "Location update stopped .......................");
+                }
+            }
+        }
+    }
+
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop fired ..............");
+        mGoogleApiClient.disconnect();
+        Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
+    }
+    @Override
+    public void callbackForAlert(String result, int i) {
+        if (result.equalsIgnoreCase("ok") && i==1){
+            ActivityCompat.requestPermissions(GetStartedActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_LOCATION);
+        }
+    }
+    }
+
+
+

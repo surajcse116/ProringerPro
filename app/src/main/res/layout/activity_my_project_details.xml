@@ -34,7 +34,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/colorAccent"
             android:gravity="center"
-            android:text="REQUEST REVIEW"
+            android:text="RESPOND NOW"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
 
@@ -59,7 +59,8 @@
                     android:textSize="16sp" />
 
 
-                <LinearLayout
+
+                <RelativeLayout
                     android:id="@+id/LLImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -72,8 +73,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorDarkGray" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true">
 
-                </LinearLayout>
+                        <ImageView
+                            android:id="@+id/img_likes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="15dp"
+                            android:src="@drawable/ic_favorite" />
+                        </RelativeLayout>
+
+                </RelativeLayout>
 
 
                 <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
@@ -90,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/LLImage"
-                    android:text="posted By:"
+                    android:text="Posted By:"
                     android:textSize="10sp" />
 
                 <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
@@ -142,6 +157,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
+                                android:singleLine="true"
                                 android:text="Installation"
                                 android:textSize="12sp" />
 
@@ -167,6 +183,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
+                                android:singleLine="true"
                                 android:text="Shingles"
                                 android:textSize="12sp" />
 
@@ -193,6 +210,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:text="Installation"
+                                android:singleLine="true"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -217,6 +235,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:text="Installation"
+                                android:singleLine="true"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -225,7 +244,7 @@
 
                     <ImageView
                         android:id="@+id/img_map"
-                        android:layout_width="0dp"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/colorDarkGray" />

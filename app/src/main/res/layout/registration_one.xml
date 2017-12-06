@@ -14,6 +14,7 @@
         <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:id="@+id/proet_fname"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_selecter"
@@ -27,6 +28,7 @@
         <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:id="@+id/proet_lname"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_selecter"
@@ -41,6 +43,7 @@
             android:layout_height="40dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
+            android:id="@+id/proet_email"
             android:background="@drawable/edit_text_selecter"
             android:hint="Email"
             android:inputType="textEmailAddress"
@@ -52,6 +55,7 @@
         <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:id="@+id/proet_cemail"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_selecter"
@@ -65,6 +69,7 @@
         <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:id="@+id/proet_phon"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_selecter"
@@ -80,6 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginBottom="10dp"
+            android:id="@+id/proet_password"
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_selecter"
             android:hint="Password"
@@ -93,6 +99,7 @@
         <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:id="@+id/proet_cpassword"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_selecter"

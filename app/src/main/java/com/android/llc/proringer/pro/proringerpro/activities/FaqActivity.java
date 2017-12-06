@@ -42,7 +42,7 @@ public class FaqActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((ProRegularTextView) findViewById(R.id.tv_title)).setText("Faq");
+        ((ProRegularTextView) findViewById(R.id.tv_title)).setText("FAQ'S");
 
 
         myLoader = new MyLoader(FaqActivity.this);
@@ -89,7 +89,7 @@ public class FaqActivity extends AppCompatActivity {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 tv2.setTextColor(getResources().getColor(R.color.colorTextBlack, null));
                             } else {
-                                tv1.setTextColor(getResources().getColor(R.color.colorTextBlack));
+                                tv2.setTextColor(getResources().getColor(R.color.colorTextBlack));
                             }
 
                             linear_main_container.addView(tv1);

@@ -92,7 +92,7 @@
                             android:id="@+id/tv_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="15dp"
                             android:paddingLeft="5dp"
                             android:text="Grove City,OH43123"
                             android:textColor="@color/colorAccent"
@@ -239,6 +239,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.4"
                         android:padding="5dp"
+                        android:singleLine="true"
                         android:text="PROJECT WATCHLIST"
                         android:textColor="@color/colorTextDark"
                         android:textSize="12sp" />
@@ -293,6 +294,7 @@
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:id="@+id/tv_userinfo"
                 android:gravity="center"
                 android:text="User Information"
                 android:textColor="@color/colorTextDark"
@@ -406,13 +408,45 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="@color/colorLightGray" />
+        <RelativeLayout
+            android:id="@+id/Protofolio"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="PortFolio"
+                android:textColor="@color/colorTextDark"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_right_arrow_orange" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorLightGray" />
+
 
         <RelativeLayout
             android:id="@+id/servicearea"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
                 android:layout_width="wrap_content"
@@ -429,6 +463,14 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_right_arrow_orange" />
         </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorLightGray" />
+
     </LinearLayout>
 
 
