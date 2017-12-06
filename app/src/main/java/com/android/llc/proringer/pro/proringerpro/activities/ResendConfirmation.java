@@ -42,8 +42,6 @@ public class ResendConfirmation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
             validation();
-
-
             }
         });
 

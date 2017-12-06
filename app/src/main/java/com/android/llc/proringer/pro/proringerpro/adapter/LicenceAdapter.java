@@ -1,9 +1,8 @@
-package com.android.llc.proringer.pro.proringerpro.activities;
+package com.android.llc.proringer.pro.proringerpro.adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.activities.LicenceEditActivity;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.pojo.showlicencesetget;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 import com.squareup.picasso.Picasso;
@@ -43,7 +44,7 @@ public class LicenceAdapter extends RecyclerView.Adapter<LicenceAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        Log.d("Position-->",""+position);
+        Logger.printMessage("Position-->",""+position);
         Picasso.with(mContext).load(arrlist.get(position).getImage_info()).into(holder.img);
         holder.tv_name.setText(arrlist.get(position).getCategory_name());
         holder.tv_date.setText(arrlist.get(position).getLicense_issuer());
@@ -53,8 +54,8 @@ public class LicenceAdapter extends RecyclerView.Adapter<LicenceAdapter.MyViewHo
             @Override
             public void onClick(View view) {
                 int pos= position;
-                Log.d("pos", String.valueOf(pos));
-                Intent intent = new Intent(mContext,Licenceedit.class);
+                Logger.printMessage("position-->", String.valueOf(pos));
+                Intent intent = new Intent(mContext,LicenceEditActivity.class);
                 String id= arrlist.get(position).getId();
                 String catgoryname= arrlist.get(position).getCategory_name();
                 String issuer=arrlist.get(position).getLicense_issuer();
@@ -69,10 +70,8 @@ public class LicenceAdapter extends RecyclerView.Adapter<LicenceAdapter.MyViewHo
                 intent.putExtra("id",id);
                 intent.putExtra("photo",photo);
                 intent.putExtra("catid",catid);
-                Log.d("jhdjdhkjd",catgoryname);
+                Logger.printMessage("categoryName",catgoryname);
                  mContext.startActivity(intent);
-
-
             }
         });
     }

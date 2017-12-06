@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.ServiceOfferedAdapter;
-import com.android.llc.proringer.pro.proringerpro.utils.Logger;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 
 import java.util.ArrayList;

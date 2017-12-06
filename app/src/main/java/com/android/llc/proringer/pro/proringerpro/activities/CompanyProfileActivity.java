@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -17,8 +16,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,11 +31,10 @@ import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
-import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
-import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.google.android.gms.common.ConnectionResult;
@@ -58,7 +54,6 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * Created by su on 8/17/17.
@@ -143,7 +138,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         et_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(CompanyProfileActivity.this, Location.class);
+                Intent i = new Intent(CompanyProfileActivity.this, LocationActivity.class);
                 startActivityForResult(i, 1);
             }
         });
@@ -165,7 +160,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("data", String.valueOf(data));
+        Logger.printMessage("data", String.valueOf(data));
 
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
@@ -210,7 +205,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, AppConstant.companyinformation, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-                Log.d("result", result);
+                Logger.printMessage("result", result);
                 myLoader.dismissLoader();
                 try {
                     JSONObject mainResponseObj = new JSONObject(result);
@@ -232,14 +227,11 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                         JSONObject joi = jo.getJSONObject("business_type");
                         et_busineestype.setText(joi.getString("value"));
                         Appdata.id = joi.getString("id");
-                        Log.d("hdsj", Appdata.id);
-
-
+                        Logger.printMessage("AppDataId", Appdata.id);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -303,7 +295,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                     et_busineestype.setText(value.getString("value"));
                     pros_contact_service = value.getString("id");
                     Appdata.id = pros_contact_service;
-                    Log.d("value id", pros_contact_service);
+                    Logger.printMessage("value id", pros_contact_service);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -330,8 +322,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                 try {
                     JSONObject job = new JSONObject(result);
                     btype = job.getJSONArray("business");
-                    Log.d("array", String.valueOf(btype));
-
+                    Logger.printMessage("array", String.valueOf(btype));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -341,14 +332,12 @@ public class CompanyProfileActivity extends AppCompatActivity implements
             @Override
             public void onError(String error, String response) {
                 Toast.makeText(CompanyProfileActivity.this, "No data found" + response, Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
             public void onError(String error) {
 
             }
-
             @Override
             public void onStart() {
 
@@ -418,8 +407,8 @@ public class CompanyProfileActivity extends AppCompatActivity implements
 
                         if (mGoogleApiClient.isConnected()) {
                             PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-                            com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage(TAG, "Location update started ..............: ");
-                            com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage(TAG, "Location update resumed .....................");
+                            com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage(TAG, "LocationActivity update started ..............: ");
+                            com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage(TAG, "LocationActivity update resumed .....................");
                         }
                     }
 
@@ -454,7 +443,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                 ///////////////Here called location /////////////////
 
                 PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-                com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage(TAG, "Location update started ..............: ");
+                com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage(TAG, "LocationActivity update started ..............: ");
             }
         }
 
@@ -468,7 +457,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d(TAG, "Connection failed: " + connectionResult.toString());
+        Logger.printMessage(TAG, "Connection failed: " + connectionResult.toString());
     }
 
     private boolean isGooglePlayServicesAvailable() {
@@ -492,8 +481,8 @@ public class CompanyProfileActivity extends AppCompatActivity implements
             String longttitude = String.valueOf(mCurrentLocation.getLongitude());
             Appdata.latitude = lattitude;
             Appdata.longtitude = longttitude;
-            Log.d("LATTITUIDE", lattitude);
-            Log.d("Longtitude", longttitude);
+            Logger.printMessage("LATTITUIDE", lattitude);
+            Logger.printMessage("Longtitude", longttitude);
 
             HelperClass.getInstance(CompanyProfileActivity.this).setCurrentLatLng(lattitude, longttitude);
 
@@ -533,7 +522,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                 ///////////////Here called location /////////////////
                 if (mGoogleApiClient.isConnected()) {
                     PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-                    com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage(TAG, "Location update resumed .....................");
+                    com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage(TAG, "LocationActivity update resumed .....................");
                 }
             }
         }
@@ -551,7 +540,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                 ///////////////Here called location /////////////////
                 if (mGoogleApiClient.isConnected()) {
                     LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-                    com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage(TAG, "Location update stopped .......................");
+                    com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage(TAG, "LocationActivity update stopped .......................");
                 }
             }
         }
@@ -561,9 +550,9 @@ public class CompanyProfileActivity extends AppCompatActivity implements
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop fired ..............");
+        Logger.printMessage(TAG, "onStop fired ..............");
         mGoogleApiClient.disconnect();
-        Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
+        Logger.printMessage(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
     }
 
     public void submit() {
@@ -614,24 +603,24 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                                             et_state.setFocusable(true);
                                         } else {
                                             final String locale = CompanyProfileActivity.this.getResources().getConfiguration().locale.getCountry();
-                                            Log.d("COUNTRY CODE", locale);
+                                            Logger.printMessage("COUNTRY CODE", locale);
                                             Appdata.country1 = locale;
-                                            Log.d("userid", ProApplication.getInstance().getUserId());
-                                            Log.d("b_desc", businessdata);
-                                            Log.d("comp_name", cname);
-                                            Log.d("comp_email", cmail);
-                                            Log.d("website", cwebsite);
-                                            Log.d("alt_phone", cphone);
-                                            Log.d("bus_type", Appdata.id);
-                                            Log.d("num_emp", employe);
-                                            Log.d("com_address", address);
-                                            Log.d("city", city);
-                                            Log.d("country", locale);
-                                            Log.d("state", state);
-                                            Log.d("zipcode", zip);
-                                            Log.d("acc_name", accname);
-                                            Log.d("lat", Appdata.latitude);
-                                            Log.d("long", Appdata.longtitude);
+                                            Logger.printMessage("userid", ProApplication.getInstance().getUserId());
+                                            Logger.printMessage("b_desc", businessdata);
+                                            Logger.printMessage("comp_name", cname);
+                                            Logger.printMessage("comp_email", cmail);
+                                            Logger.printMessage("website", cwebsite);
+                                            Logger.printMessage("alt_phone", cphone);
+                                            Logger.printMessage("bus_type", Appdata.id);
+                                            Logger.printMessage("num_emp", employe);
+                                            Logger.printMessage("com_address", address);
+                                            Logger.printMessage("city", city);
+                                            Logger.printMessage("country", locale);
+                                            Logger.printMessage("state", state);
+                                            Logger.printMessage("zipcode", zip);
+                                            Logger.printMessage("acc_name", accname);
+                                            Logger.printMessage("lat", Appdata.latitude);
+                                            Logger.printMessage("long", Appdata.longtitude);
                                             LayoutInflater factory = LayoutInflater.from(CompanyProfileActivity.this);
                                             final View deleteDialogView = factory.inflate(R.layout.alertdialog, null);
                                             final AlertDialog deleteDialog = new AlertDialog.Builder(CompanyProfileActivity.this).create();
@@ -657,12 +646,12 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                                                     Params.put("acc_name", accname);
                                                     Params.put("latitude", Appdata.latitude);
                                                     Params.put("longitude", Appdata.longtitude);
-                                                    Log.d("PARAMS", String.valueOf(Params));
+                                                    Logger.printMessage("PARAMS", String.valueOf(Params));
 
                                                     new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, AppConstant.copanyinfosave, Params, null, new CustomJSONParser.CustomJSONResponse() {
                                                         @Override
                                                         public void onSuccess(String result) {
-                                                            Log.d("result", result);
+                                                            Logger.printMessage("result", result);
                                                             deleteDialog.dismiss();
                                                             try {
                                                                 JSONObject job = new JSONObject(result);

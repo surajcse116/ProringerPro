@@ -16,6 +16,7 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LogInActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.SignUpActivity;
 import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -86,11 +87,11 @@ public class RegistrationOne extends Fragment {
        Appdata.password=proet_cpassword.getText().toString();
         password=proet_password.getText().toString();
 
-        Log.d("fname",Appdata.f_name);
-        Log.d("fname",Appdata.l_name);
-        Log.d("fname",Appdata.email);
-        Log.d("fname",Appdata.phone);
-        Log.d("fname",Appdata.password);
+        Logger.printMessage("f_name",Appdata.f_name);
+        Logger.printMessage("l_name",Appdata.l_name);
+        Logger.printMessage("email",Appdata.email);
+        Logger.printMessage("phone",Appdata.phone);
+        Logger.printMessage("password",Appdata.password);
 
         if (proet_fname.getText().toString().trim().equals("")) {
             proet_fname.setError("Please enter First name.");

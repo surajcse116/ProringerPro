@@ -17,6 +17,7 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
@@ -108,13 +109,13 @@ public class RequestReviewFragment extends Fragment {
                                 Params.put("email", email);
                                 Params.put("conf_emailid", cemail);
                                 Params.put("comment", comment);
-                                Log.d("parms", String.valueOf(Params));
+                                Logger.printMessage("parms", String.valueOf(Params));
 
                                 new CustomJSONParser().fireAPIForPostMethod(getActivity(), AppConstant.replyreviw, Params, null, new CustomJSONParser.CustomJSONResponse() {
                                     @Override
                                     public void onSuccess(String result) {
                                         myload.dismissLoader();
-                                        Log.d("result", result);
+                                        Logger.printMessage("result", result);
                                         try {
                                             JSONObject job = new JSONObject(result);
                                             String message = job.getString("message");

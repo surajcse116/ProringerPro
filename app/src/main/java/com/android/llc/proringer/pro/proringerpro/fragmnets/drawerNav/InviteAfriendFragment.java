@@ -18,6 +18,7 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
@@ -106,11 +107,13 @@ public class InviteAfriendFragment extends Fragment{
                             Params.put("last_name",lname);
                             Params.put("email",mail);
                             Params.put("conf_emailid",cmail);
-                            Log.d("params", String.valueOf(Params));
+
+                            Logger.printMessage("params", String.valueOf(Params));
+
                           new CustomJSONParser() .fireAPIForPostMethod(getActivity(), AppConstant.invitefriend, Params, null, new CustomJSONParser.CustomJSONResponse() {
                               @Override
                               public void onSuccess(String result) {
-                                  Log.d("result",result);
+                                  Logger.printMessage("result",result);
                                   myload.dismissLoader();
                                   try {
                                       JSONObject job= new JSONObject(result);

@@ -14,7 +14,6 @@ import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,15 +25,14 @@ import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.activities.Location;
-import com.android.llc.proringer.pro.proringerpro.activities.Signupcomplete;
-import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog;
+import com.android.llc.proringer.pro.proringerpro.activities.LocationActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.SignupCompleteActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog_catagory;
 import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
-import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProLightTextView;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -138,7 +136,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
         prolight_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i= new Intent( getActivity(), Location.class);
+                Intent i= new Intent( getActivity(), LocationActivity.class);
                 startActivityForResult(i,1);
 
             }
@@ -201,7 +199,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("data", String.valueOf(data));
+        Logger.printMessage("data", String.valueOf(data));
 
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
@@ -222,7 +220,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                     prolight_city.setText(extras.getString("city"));
                     prolight_State.setText(extras.getString("state"));
                     String servicearea=extras.getString("city")+","+extras.getString("state");
-                    Log.d("serfbd",servicearea);
+                    Logger.printMessage("ServiceArea-->",servicearea);
                     prolight_service_area.setText(servicearea);
 
                 }
@@ -252,7 +250,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                 try {
                     tv_service.setText(value.getString("category_name"));
                     pros_contact_service = value.getString("id");
-                    Log.d("id",pros_contact_service);
+                    Logger.printMessage("id",pros_contact_service);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -282,7 +280,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                 try {
                     JSONObject job= new JSONObject(result);
                     catagory= job.getJSONArray("info_array");
-                    Log.d("sjhdfkhskhf", String.valueOf(catagory));
+                    Logger.printMessage("categoryArray", String.valueOf(catagory));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -387,23 +385,24 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                         }
                                         else
                                         {
-                                            Log.d("fname", Appdata.f_name);
-                                            Log.d("lname",Appdata.l_name);
-                                            Log.d("email",Appdata.email);
-                                            Log.d("phone",Appdata.phone);
-                                            Log.d("password",Appdata.password);
-                                            Log.d("busimessname",businessname);
-                                            Log.d("address",address);
-                                            Log.d("city",city);
-                                            Log.d("state",state);
-                                            Log.d("zip",zip);
-                                            Log.d("businessemail",businessemail);
-                                            Log.d("phonenumber",phonenumber);
-                                            Log.d("primaryservice",primaryservice);
-                                            Log.d("servicearea",servicearea);
-                                            Log.d("latittuted",Appdata.latitude);
-                                            Log.d("Logtitude",Appdata.longtitude);
-                                            Log.d("country",Appdata.Country);
+                                            Logger.printMessage("fname", Appdata.f_name);
+                                            Logger.printMessage("lname",Appdata.l_name);
+                                            Logger.printMessage("email",Appdata.email);
+                                            Logger.printMessage("phone",Appdata.phone);
+                                            Logger.printMessage("password",Appdata.password);
+                                            Logger.printMessage("busimessname",businessname);
+                                            Logger.printMessage("address",address);
+                                            Logger.printMessage("city",city);
+                                            Logger.printMessage("state",state);
+                                            Logger.printMessage("zip",zip);
+                                            Logger.printMessage("businessemail",businessemail);
+                                            Logger.printMessage("phonenumber",phonenumber);
+                                            Logger.printMessage("primaryservice",primaryservice);
+                                            Logger.printMessage("servicearea",servicearea);
+                                            Logger.printMessage("latittuted",Appdata.latitude);
+                                            Logger.printMessage("Logtitude",Appdata.longtitude);
+                                            Logger.printMessage("country",Appdata.Country);
+
                                             HashMap<String,String> Params1=new HashMap<>();
                                             Params1.put("contact_f_name",Appdata.f_name);
                                             Params1.put("contact_l_name",Appdata.l_name);
@@ -423,7 +422,9 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                             Params1.put("latitude",Appdata.latitude);
                                             Params1.put("longitude",Appdata.longtitude);
                                             Params1.put("device_type","A");
-                                            Log.d("PARAMS", String.valueOf(Params1));
+
+                                            Logger.printMessage("PARAMS", String.valueOf(Params1));
+
                                             myload.showLoader();
 
 
@@ -437,7 +438,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                                        String messsage= myob.getString("message");
 
                                                            Toast.makeText(getActivity(), ""+messsage,Toast.LENGTH_SHORT).show();
-                                                           Intent i=new Intent(getActivity(), Signupcomplete.class);
+                                                           Intent i=new Intent(getActivity(), SignupCompleteActivity.class);
                                                            startActivity(i);
 
                                                    } catch (JSONException e) {

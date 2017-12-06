@@ -2,11 +2,9 @@ package com.android.llc.proringer.pro.proringerpro.helper;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.utils.NetworkUtil;
 
 import org.json.JSONArray;

@@ -15,10 +15,8 @@ import com.android.llc.proringer.pro.proringerpro.activities.AddServicesActivity
 import com.android.llc.proringer.pro.proringerpro.activities.CompanyProfileActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PortFolioActivity;
-import com.android.llc.proringer.pro.proringerpro.activities.Premium;
+import com.android.llc.proringer.pro.proringerpro.activities.PremiumActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.Userinformation;
-import com.android.llc.proringer.pro.proringerpro.pojo.PortFolio;
-import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProSemiBoldEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 
 /**
@@ -48,7 +46,7 @@ public class DashBoardFragment extends Fragment {
         log_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(getActivity(), Premium.class);
+                Intent i=new Intent(getActivity(), PremiumActivity.class);
                 startActivity(i);
             }
         });

@@ -16,6 +16,7 @@ import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
 import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
@@ -114,15 +115,16 @@ public class SocialMediaFragment extends Fragment {
                                         et_sky.setError("Please fill the link");
                                         et_sky.setFocusable(true);
                                     } else {
-                                        Log.d("facebook", face);
-                                        Log.d("twit", twit);
-                                        Log.d("google", google);
-                                        Log.d("ink", ink);
-                                        Log.d("youtube", youtube);
-                                        Log.d("insta", insta);
-                                        Log.d("sky", sky);
-                                        Log.d("print", print);
-                                        Log.d("paypal_link", Appdata.paypal);
+                                        Logger.printMessage("facebook", face);
+                                        Logger.printMessage("twitter", twit);
+                                        Logger.printMessage("google", google);
+                                        Logger.printMessage("ink", ink);
+                                        Logger.printMessage("youtube", youtube);
+                                        Logger.printMessage("instagram", insta);
+                                        Logger.printMessage("sky", sky);
+                                        Logger.printMessage("print", print);
+                                        Logger.printMessage("paypal_link", Appdata.paypal);
+
                                         HashMap<String, String> Params = new HashMap<>();
                                         Params.put("user_id", ProApplication.getInstance().getUserId());
                                         Params.put("fblink", face);
@@ -138,7 +140,7 @@ public class SocialMediaFragment extends Fragment {
                                             @Override
                                             public void onSuccess(String result) {
                                                 myload.dismissLoader();
-                                                Log.d("result", result);
+                                                Logger.printMessage("result", result);
                                                 try {
 
                                                     JSONObject info = new JSONObject(result);
@@ -203,16 +205,16 @@ public class SocialMediaFragment extends Fragment {
         apiGetData.setPARAMS("user_id");
         apiGetData.setValues(ProApplication.getInstance().getUserId());
         arrayList.add(apiGetData);
-        Log.d("hgdgfd", String.valueOf(arrayList));
+        Logger.printMessage("hgdgfd", String.valueOf(arrayList));
         new CustomJSONParser().fireAPIForGetMethod(getActivity(), AppConstant.socialmedia, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();
-                Log.d("result", result);
+                Logger.printMessage("result", result);
                 try {
                     JSONObject info = new JSONObject(result);
                     JSONObject jo = info.getJSONObject("info_array");
-                    Log.d("info", String.valueOf(jo));
+                    Logger.printMessage("info", String.valueOf(jo));
                     et_facebook.setText(jo.getString("fb_link"));
                     et_twit.setText(jo.getString("twt_link"));
                     et_google.setText(jo.getString("gp+_link"));

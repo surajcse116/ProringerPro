@@ -14,9 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationOne;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
-import com.android.llc.proringer.pro.proringerpro.utils.Logger;
-
-import org.json.JSONObject;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 
 
 /**

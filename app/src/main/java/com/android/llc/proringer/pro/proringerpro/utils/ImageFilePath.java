@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 
 /**
  * Created by ltp on 28/10/15.
@@ -31,7 +32,7 @@ public class ImageFilePath {
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
-                Log.d("External_id","-->"+docId);
+                Logger.printMessage("External_id","-->"+docId);
 
                 final String[] split = docId.split(":");
                 final String type = split[0];
@@ -44,7 +45,7 @@ public class ImageFilePath {
             else if (isDownloadsDocument(uri)) {
 
                 final String id = DocumentsContract.getDocumentId(uri);
-                Log.d("Download_id","-->"+id);
+                Logger.printMessage("Download_id","-->"+id);
                 final Uri contentUri = ContentUris.withAppendedId(
                         Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
 
@@ -53,7 +54,7 @@ public class ImageFilePath {
             // MediaProvider
             else if (isMediaDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
-                Log.d("Media_id","-->"+docId);
+                Logger.printMessage("Media_id","-->"+docId);
                 final String[] split = docId.split(":");
                 final String type = split[0];
 

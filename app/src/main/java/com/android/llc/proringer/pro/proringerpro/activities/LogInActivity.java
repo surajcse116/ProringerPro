@@ -62,7 +62,7 @@ public class LogInActivity extends AppCompatActivity {
         myLoader=new MyLoader(LogInActivity.this);
         final String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        Log.d("DEVICE ID", android_id);
+        Logger.printMessage("DEVICE ID", android_id);
         findViewById(R.id.forget_password).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +98,7 @@ public class LogInActivity extends AppCompatActivity {
                             try {
                                 mainResponseObj = new JSONObject(result);
                                 JSONObject jsonInfo = mainResponseObj.getJSONObject("info_array");
-                                Log.d("infoarray", String.valueOf(jsonInfo));
+                                Logger.printMessage("infoArray", String.valueOf(jsonInfo));
 
                                 ProApplication.getInstance().setUserPreference(jsonInfo.getString("user_id"), jsonInfo.getString("user_type"), jsonInfo.getString("first_name"), jsonInfo.getString("last_name"));
                                 ProApplication.getInstance().setUserEmail(email.getText().toString().trim());

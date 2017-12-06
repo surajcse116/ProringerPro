@@ -264,8 +264,8 @@ public class GetStartedActivity extends AppCompatActivity implements
 
                         if (mGoogleApiClient.isConnected()) {
                             PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-                            Logger.printMessage(TAG, "Location update started ..............: ");
-                            Logger.printMessage(TAG, "Location update resumed .....................");
+                            Logger.printMessage(TAG, "LocationActivity update started ..............: ");
+                            Logger.printMessage(TAG, "LocationActivity update resumed .....................");
                         }
                     }
 
@@ -301,7 +301,7 @@ public class GetStartedActivity extends AppCompatActivity implements
                 ///////////////Here called location /////////////////
 
                 PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-                Logger.printMessage(TAG, "Location update started ..............: ");
+                Logger.printMessage(TAG, "LocationActivity update started ..............: ");
             }
         }
 
@@ -315,7 +315,7 @@ public class GetStartedActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d(TAG, "Connection failed: " + connectionResult.toString());
+        Logger.printMessage(TAG, "Connection failed: " + connectionResult.toString());
     }
 
     private boolean isGooglePlayServicesAvailable() {
@@ -339,8 +339,8 @@ public class GetStartedActivity extends AppCompatActivity implements
             String lng = String.valueOf(mCurrentLocation.getLongitude());
             Appdata.latitude = lat;
             Appdata.longtitude = lng;
-            Log.d("LATTITUIDE", lat);
-            Log.d("Longtitude", lng);
+            Logger.printMessage("LATTITUIDE", lat);
+            Logger.printMessage("Longtitude", lng);
 
             HelperClass.getInstance(GetStartedActivity.this).setCurrentLatLng(lat, lng);
 
@@ -380,7 +380,7 @@ public class GetStartedActivity extends AppCompatActivity implements
                 ///////////////Here called location /////////////////
                 if (mGoogleApiClient.isConnected()) {
                     PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-                    Logger.printMessage(TAG, "Location update resumed .....................");
+                    Logger.printMessage(TAG, "LocationActivity update resumed .....................");
                 }
             }
         }
@@ -398,7 +398,7 @@ public class GetStartedActivity extends AppCompatActivity implements
                 ///////////////Here called location /////////////////
                 if (mGoogleApiClient.isConnected()) {
                     LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-                    Logger.printMessage(TAG, "Location update stopped .......................");
+                    Logger.printMessage(TAG, "LocationActivity update stopped .......................");
                 }
             }
         }
@@ -408,9 +408,9 @@ public class GetStartedActivity extends AppCompatActivity implements
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop fired ..............");
+        Logger.printMessage(TAG, "onStop fired ..............");
         mGoogleApiClient.disconnect();
-        Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
+        Logger.printMessage(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
     }
 }
 

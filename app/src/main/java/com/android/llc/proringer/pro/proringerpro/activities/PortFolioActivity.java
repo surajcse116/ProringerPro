@@ -1,6 +1,5 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,7 +15,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -30,13 +28,12 @@ import com.android.llc.proringer.pro.proringerpro.adapter.PortFolioAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
-import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
 import com.android.llc.proringer.pro.proringerpro.pojo.Showportfoliosetget;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
-import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
 
@@ -235,7 +232,7 @@ public class PortFolioActivity extends AppCompatActivity{
        new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, AppConstant.portfoliolist, arrayList, new CustomJSONParser.CustomJSONResponse() {
            @Override
            public void onSuccess(String result) {
-               Log.d("result",result);
+               Logger.printMessage("result",result);
                myLoader.dismissLoader();
                try {
                    JSONObject info= new JSONObject(result);
@@ -251,13 +248,13 @@ public class PortFolioActivity extends AppCompatActivity{
                        show.setProject_year(jo.getString("project_year"));
                        show.setCount_images(jo.getString("count_images"));
                        multipleimage=jo.getJSONArray("multiple_gallery_image");
-                       Log.d("size", String.valueOf(multipleimage));
+                       Logger.printMessage("size", String.valueOf(multipleimage));
                        JSONObject cat= jo.getJSONObject("category");
                        show.setCategory_id(cat.getString("category_id"));
                        show.setCategory_name(cat.getString("category_name"));
                        arrayList1.add(show);
                    }
-                   Log.d("arrlist", String.valueOf(arrayList1.size()));
+                   Logger.printMessage("arrlist", String.valueOf(arrayList1.size()));
                    if (portfolio==null)
                    {
                        RLEmpty.setVisibility(View.VISIBLE);

@@ -1,6 +1,5 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
-import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -33,16 +32,17 @@ import android.widget.Toast;
 import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog_catagory;
+import com.android.llc.proringer.pro.proringerpro.adapter.LicenceAdapter;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.pojo.showlicencesetget;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageFilePath;
-import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -82,7 +82,7 @@ public class LicenceActivity extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 100;
     private int PICK_PDF_REQUEST = 200;
     ArrayList<APIGetData> arrayList = null;
-    ArrayList<showlicencesetget> arrayList1;
+    ArrayList<showlicencesetget> showlicencesetgetArrayList;
     int arrlistsize;
     String mycurrentphotopath = "";
     String pros_contact_service = "";
@@ -134,7 +134,7 @@ public class LicenceActivity extends AppCompatActivity {
         apiGetData.setPARAMS("user_id");
         apiGetData.setValues(ProApplication.getInstance().getUserId());
         arrayList.add(apiGetData);
-        arrayList1 = new ArrayList<>();
+        showlicencesetgetArrayList = new ArrayList<>();
         showData();
         rcv_licence_list = (RecyclerView) findViewById(R.id.rcv_licence_list);
         rcv_licence_list.setLayoutManager(new LinearLayoutManager(LicenceActivity.this));
@@ -147,13 +147,13 @@ public class LicenceActivity extends AppCompatActivity {
         LLEdit = (LinearLayout) findViewById(R.id.LLEdit);
         img_licence_file = (ImageView) findViewById(R.id.img_licence_file);
 
-        licenceAdapter = new LicenceAdapter(LicenceActivity.this, arrayList1);
+        licenceAdapter = new LicenceAdapter(LicenceActivity.this, showlicencesetgetArrayList);
         rcv_licence_list.setAdapter(licenceAdapter);
         LLUpload.setVisibility(View.VISIBLE);
         LLEdit.setVisibility(View.GONE);
-        Log.d("bdvfjdhgfjdgfjsgfhgsj", mycurrentphotopath);
+        Logger.printMessage("photoPath", mycurrentphotopath);
         catagory();
-        Log.d("ksjhddhfjkdhfjkdhjfhs", String.valueOf(arrayList1.size()));
+        Logger.printMessage("arrayLicenseSize", String.valueOf(showlicencesetgetArrayList.size()));
 
         img_add_licence.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,7 +199,7 @@ public class LicenceActivity extends AppCompatActivity {
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
-                Log.d("year--------->", "" + mYear);
+                Logger.printMessage("year--------->", "" + mYear);
 
 
                 if (!check) {
@@ -220,14 +220,14 @@ public class LicenceActivity extends AppCompatActivity {
 
                         int selectedDate = datePicker.getDayOfMonth();
 
-                        Log.d("selectedDate", "" + selectedDate);
+                        Logger.printMessage("selectedDate", "" + selectedDate);
                         // datePicker.setMinDate(System.currentTimeMillis() - 1000);
-                        Log.d("onDateSet", "onDateSet");
+                        Logger.printMessage("onDateSet", "onDateSet");
                         String date1 = "";
                         year = i;
                         month = i1;
                         date = i2;
-                        Log.d("year", "" + year);
+                        Logger.printMessage("year", "" + year);
                         String s = i + "-" + month + "-" + i2;
                         Calendar calendar = Calendar.getInstance();
                         calendar.set(year, month, date);
@@ -241,7 +241,7 @@ public class LicenceActivity extends AppCompatActivity {
                 datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("Cancel", "Cancel");
+                        Logger.printMessage("Cancel", "Cancel");
                         check = false;
                     }
                 });
@@ -367,7 +367,7 @@ public class LicenceActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && file != null) {
             Uri selectedImageURI = data.getData();
-            Log.d("mukdjfhfdl", mycurrentphotopath);
+            Logger.printMessage("photoPath", mycurrentphotopath);
             try {
                 file = new File(ImageFilePath.getPath(getApplicationContext(), selectedImageURI));
 
@@ -376,7 +376,7 @@ public class LicenceActivity extends AppCompatActivity {
                         || file.getAbsolutePath().contains(".jpg")) {
                     mycurrentphotopath = file.getAbsolutePath();
 
-                    Log.d("my important path", mycurrentphotopath);
+                    Logger.printMessage("my important path", mycurrentphotopath);
                     LLUpload.setVisibility(View.GONE);
                     LLEdit.setVisibility(View.VISIBLE);
                     img_licence_file.setImageResource(android.R.color.transparent);
@@ -421,12 +421,12 @@ public class LicenceActivity extends AppCompatActivity {
         new CustomJSONParser().fireAPIForGetMethod(LicenceActivity.this, AppConstant.liencelist, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-                Log.d("result", result);
+                Logger.printMessage("result", result);
                 myLoader.dismissLoader();
                 try {
                     JSONObject job = new JSONObject(result);
                     JSONArray info_arry = job.getJSONArray("info_array");
-                    Log.d("infoo", String.valueOf(info_arry));
+                    Logger.printMessage("info_array", String.valueOf(info_arry));
                     for (int i = 0; i < info_arry.length(); i++) {
                         JSONObject jo = info_arry.getJSONObject(i);
                         showlicencesetget show = new showlicencesetget();
@@ -440,38 +440,33 @@ public class LicenceActivity extends AppCompatActivity {
                         JSONObject catagory = jo.getJSONObject("category");
                         show.setCategory_id(catagory.getString("id"));
                         show.setCategory_name(catagory.getString("name"));
-                        arrayList1.add(show);
+                        showlicencesetgetArrayList.add(show);
 
                     }
                     if (licenceAdapter == null) {
                         RLEmpty.setVisibility(View.VISIBLE);
                         rcv_licence_list.setVisibility(View.GONE);
                     } else {
-                        licenceAdapter = new LicenceAdapter(LicenceActivity.this, arrayList1);
+                        licenceAdapter = new LicenceAdapter(LicenceActivity.this, showlicencesetgetArrayList);
                         rcv_licence_list.setAdapter(licenceAdapter);
                         RLEmpty.setVisibility(View.GONE);
                         rcv_licence_list.setVisibility(View.VISIBLE);
                     }
-                    arrlistsize = arrayList1.size();
-                    if (arrayList1.size() == 2) {
+                    arrlistsize = showlicencesetgetArrayList.size();
+                    if (showlicencesetgetArrayList.size() == 2) {
                         img_add_licence.setVisibility(View.GONE);
                     } else {
                         img_add_licence.setVisibility(View.VISIBLE);
                     }
-
-                    Log.d("size", String.valueOf(arrayList1.size()));
-
+                    Logger.printMessage("LicenseSize", String.valueOf(showlicencesetgetArrayList.size()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
             public void onError(String error, String response) {
                 myLoader.dismissLoader();
-
             }
 
             @Override
@@ -506,12 +501,11 @@ public class LicenceActivity extends AppCompatActivity {
                 try {
                     JSONObject job = new JSONObject(result);
                     catagory = job.getJSONArray("info_array");
-                    Log.d("sjhdfkhskhf", String.valueOf(catagory));
+                    Logger.printMessage("CategoryArray", String.valueOf(catagory));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -554,7 +548,7 @@ public class LicenceActivity extends AppCompatActivity {
                 try {
                     tv_service.setText(value.getString("category_name"));
                     pros_contact_service = value.getString("id");
-                    Log.d("id", pros_contact_service);
+                    Logger.printMessage("id", pros_contact_service);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -594,12 +588,12 @@ public class LicenceActivity extends AppCompatActivity {
                         Toast.makeText(LicenceActivity.this, "Select Expires date", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Log.d("my save path", String.valueOf(file));
-                        Log.d("uid", uid);
-                        Log.d("catid", pros_contact_service);
-                        Log.d("issuer", issuere);
-                        Log.d("license", license);
-                        Log.d("expire", expire);
+                        Logger.printMessage("my save path", String.valueOf(file));
+                        Logger.printMessage("uid", uid);
+                        Logger.printMessage("catid", pros_contact_service);
+                        Logger.printMessage("issuer", issuere);
+                        Logger.printMessage("license", license);
+                        Logger.printMessage("expire", expire);
 
                         ArrayList<SetGetAPIPostData> arrayListPostParamsValues = new ArrayList<>();
 
@@ -639,7 +633,7 @@ public class LicenceActivity extends AppCompatActivity {
                         new CustomJSONParser().APIForWithPhotoPostMethod(LicenceActivity.this, AppConstant.licenseadd, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
                             @Override
                             public void onSuccess(String result) {
-                                Log.d("result", result);
+                                Logger.printMessage("result", result);
                                 myLoader.dismissLoader();
                                 try {
                                     JSONObject jo = new JSONObject(result);
@@ -647,7 +641,7 @@ public class LicenceActivity extends AppCompatActivity {
                                     Toast.makeText(LicenceActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
                                     RLAddLicence.setVisibility(View.GONE);
                                     rcv_licence_list.setVisibility(View.VISIBLE);
-                                    arrayList1.clear();
+                                    showlicencesetgetArrayList.clear();
                                     showData();
 
                                 } catch (JSONException e) {
@@ -680,9 +674,9 @@ public class LicenceActivity extends AppCompatActivity {
 
     }
 
-    private void setDate(String date1) {
-        Log.d("setDate", "setDate");
+    private void setDate(String date) {
+        Logger.printMessage("setDate", ""+date);
         flag = false;
-        tv_expires.setText(date1);
+        tv_expires.setText(date);
     }
 }

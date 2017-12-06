@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -21,7 +20,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
@@ -37,12 +35,11 @@ import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReply
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.RequestReviewFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.SocialMediaFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.main_content.ProjectMessagingFragment;
-import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
-import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.BottomNav;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.NavigationHandler;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -105,7 +102,7 @@ public class LandScreenActivity extends AppCompatActivity {
         search_local_pro_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 Intent i= new Intent( LandScreenActivity.this,Searchnear.class);
+                 Intent i= new Intent( LandScreenActivity.this,SearchNearActivity.class);
                 startActivity(i);
             }
         });
@@ -203,7 +200,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("QUICK REPLY MESSAGE");
                        // linear_buttombar.setVisibility(View.GONE);
-                        Intent i= new Intent(LandScreenActivity.this,Quick_reply.class);
+                        Intent i= new Intent(LandScreenActivity.this,QuickReplyActivity.class);
                         startActivity(i);
                         break;
 
