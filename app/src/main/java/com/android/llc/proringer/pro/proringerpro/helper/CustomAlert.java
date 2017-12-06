@@ -15,8 +15,9 @@ import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.Notificati
 
 public class CustomAlert {
 
+    public CustomAlert() {
 
-
+    }
 
     public void getEventFromNormalAlert(Context context, String title, String message, String positiveTitle, String negativeTitle, final MyCustomAlertListener ml) {
         new AlertDialog.Builder(context)
@@ -56,9 +57,6 @@ public class CustomAlert {
                 })
                 .create()
                 .show();
-    }
-
-    public void createNormalAlert(String ok, int i) {
     }
 
 

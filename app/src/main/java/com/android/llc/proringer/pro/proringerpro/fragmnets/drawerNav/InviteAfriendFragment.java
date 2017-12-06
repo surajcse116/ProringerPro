@@ -15,7 +15,8 @@ import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert_error;
+import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
@@ -48,7 +49,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * limitations under the License.
  */
 
-public class InviteAfriendFragment extends Fragment implements MyCustomAlertListener {
+public class InviteAfriendFragment extends Fragment{
     ProLightEditText first_name, last_name, email, confirm_email;
     ProRegularTextView invited_submit;
     MyLoader myload;
@@ -118,9 +119,7 @@ public class InviteAfriendFragment extends Fragment implements MyCustomAlertList
                                   } catch (JSONException e) {
                                       e.printStackTrace();
                                   }
-
                               }
-
                               @Override
                               public void onError(String error, String response) {
                                   myload.dismissLoader();
@@ -130,10 +129,20 @@ public class InviteAfriendFragment extends Fragment implements MyCustomAlertList
 
                               @Override
                               public void onError(String error) {
-                                  CustomAlert_error customAlert = new CustomAlert_error(getActivity(),"Load Error",""+error,InviteAfriendFragment.this);
-                                  customAlert.getListenerRetryCancelFromNormalAlert("retry","abort",1);
-                              }
 
+                                  CustomAlert customAlert = new CustomAlert();
+                                  customAlert.getEventFromNormalAlert(getActivity(), "Load Error", "" + error, "Ok", "Cancel", new CustomAlert.MyCustomAlertListener() {
+                                      @Override
+                                      public void callBackOk() {
+
+                                      }
+
+                                      @Override
+                                      public void callBackCancel() {
+
+                                      }
+                                  });
+                              }
                               @Override
                               public void onStart() {
                                 myload.showLoader();
@@ -154,20 +163,11 @@ public class InviteAfriendFragment extends Fragment implements MyCustomAlertList
     }
 
 
-
-
-
     private void resetForm(){
         first_name.setText("");
         last_name.setText("");
         email.setText("");
         confirm_email.setText("");
     }
-
-    @Override
-    public void callbackForAlert(String result, int i) {
-
-    }
-
 
 }

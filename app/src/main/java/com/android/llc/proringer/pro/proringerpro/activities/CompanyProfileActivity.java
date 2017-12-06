@@ -32,8 +32,6 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog;
 import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
-import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert1;
-import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert_error;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
@@ -68,21 +66,21 @@ import java.util.Locale;
 
 public class CompanyProfileActivity extends AppCompatActivity implements
         LocationListener,
-                GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,MyCustomAlertListener {
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
-    ProLightEditText et_name,et_email,et_companywesite,et_companyphone,et_employee,et_address,et_zip,et_city,et_state;
+    ProLightEditText et_name, et_email, et_companywesite, et_companyphone, et_employee, et_address, et_zip, et_city, et_state;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    String   pros_contact_service;
-    ProRegularTextView et_busineestype,tv_save;
+    String pros_contact_service;
+    ProRegularTextView et_busineestype, tv_save;
     ScrollView ScrollViewMAin;
     MyLoader myLoader;
-    ArrayList<APIGetData> arrayList=null;
+    ArrayList<APIGetData> arrayList = null;
     CustomListAdapterDialog customListAdapterDialog = null;
     PopupWindow popupWindow;
     JSONArray btype;
-    int height,width;
-    String businessdata,accname,lattitude,longttitude;
+    int height, width;
+    String businessdata, accname;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
     android.location.Location mCurrentLocation;
@@ -117,19 +115,18 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                 .build();
 
 
-
-        ScrollViewMAin=(ScrollView)findViewById(R.id.ScrollViewMAin);
-        et_name=(ProLightEditText)findViewById(R.id.et_name);
-        et_email=(ProLightEditText)findViewById(R.id.et_email);
-        et_companywesite=(ProLightEditText)findViewById(R.id.et_companywesite);
-        et_companyphone=(ProLightEditText)findViewById(R.id.et_companyphone);
-        et_busineestype=(ProRegularTextView)findViewById(R.id.et_busineestype);
-        et_employee=(ProLightEditText)findViewById(R.id.et_employee);
-        et_address=(ProLightEditText)findViewById(R.id.et_address);
-        et_zip=(ProLightEditText)findViewById(R.id.et_zip);
-        et_city=(ProLightEditText)findViewById(R.id.et_city);
-        et_state=(ProLightEditText)findViewById(R.id.et_state);
-        tv_save=(ProRegularTextView)findViewById(R.id.tv_save);
+        ScrollViewMAin = (ScrollView) findViewById(R.id.ScrollViewMAin);
+        et_name = (ProLightEditText) findViewById(R.id.et_name);
+        et_email = (ProLightEditText) findViewById(R.id.et_email);
+        et_companywesite = (ProLightEditText) findViewById(R.id.et_companywesite);
+        et_companyphone = (ProLightEditText) findViewById(R.id.et_companyphone);
+        et_busineestype = (ProRegularTextView) findViewById(R.id.et_busineestype);
+        et_employee = (ProLightEditText) findViewById(R.id.et_employee);
+        et_address = (ProLightEditText) findViewById(R.id.et_address);
+        et_zip = (ProLightEditText) findViewById(R.id.et_zip);
+        et_city = (ProLightEditText) findViewById(R.id.et_city);
+        et_state = (ProLightEditText) findViewById(R.id.et_state);
+        tv_save = (ProRegularTextView) findViewById(R.id.tv_save);
         et_address.setFocusable(false);
         et_address.setClickable(false);
         et_zip.setFocusable(false);
@@ -138,24 +135,22 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         et_city.setClickable(false);
         et_state.setFocusable(false);
         et_state.setClickable(false);
-        myLoader= new MyLoader(CompanyProfileActivity.this);
+        myLoader = new MyLoader(CompanyProfileActivity.this);
         data();
         dropdwondata();
 
 
-
-
-       et_address.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               Intent i= new Intent(CompanyProfileActivity.this,Location.class);
-               startActivityForResult(i,1);
-           }
-       });
+        et_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CompanyProfileActivity.this, Location.class);
+                startActivityForResult(i, 1);
+            }
+        });
         et_busineestype.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogServies(view,btype);
+                showDialogServies(view, btype);
             }
         });
         tv_save.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +161,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         });
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -203,28 +199,26 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         }
         return super.onOptionsItemSelected(item);
     }
-    public void data()
 
-    {
+    public void data() {
         myLoader.showLoader();
-        arrayList=new ArrayList<APIGetData>();
-        APIGetData apiGetData=new APIGetData();
+        arrayList = new ArrayList<APIGetData>();
+        APIGetData apiGetData = new APIGetData();
         apiGetData.setPARAMS("user_id");
         apiGetData.setValues(ProApplication.getInstance().getUserId());
         arrayList.add(apiGetData);
-        new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, AppConstant.companyinformation,arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, AppConstant.companyinformation, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-                Log.d("result",result);
+                Log.d("result", result);
                 myLoader.dismissLoader();
                 try {
-                    JSONObject mainResponseObj =  new JSONObject(result);
-                    JSONArray job=mainResponseObj.getJSONArray("info_array");
-                    for (int i=0;i<job.length();i++)
-                    {
-                        JSONObject jo= job.getJSONObject(i);
-                        businessdata=jo.getString("business_desc");
-                        accname=jo.getString("acc_name");
+                    JSONObject mainResponseObj = new JSONObject(result);
+                    JSONArray job = mainResponseObj.getJSONArray("info_array");
+                    for (int i = 0; i < job.length(); i++) {
+                        JSONObject jo = job.getJSONObject(i);
+                        businessdata = jo.getString("business_desc");
+                        accname = jo.getString("acc_name");
                         et_name.setText(jo.getString("company_name"));
                         et_email.setText(jo.getString("contact_email"));
                         et_companywesite.setText(jo.getString("company_website"));
@@ -235,11 +229,10 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                         et_state.setText(jo.getString("state"));
 
                         et_employee.setText(jo.getString("#employees"));
-                        JSONObject joi=jo.getJSONObject("business_type");
+                        JSONObject joi = jo.getJSONObject("business_type");
                         et_busineestype.setText(joi.getString("value"));
-                        Appdata.id=joi.getString("id");
-                        Log.d("hdsj",Appdata.id);
-
+                        Appdata.id = joi.getString("id");
+                        Log.d("hdsj", Appdata.id);
 
 
                     }
@@ -252,16 +245,25 @@ public class CompanyProfileActivity extends AppCompatActivity implements
             @Override
             public void onError(String error, String response) {
                 myLoader.dismissLoader();
-                Toast.makeText(CompanyProfileActivity.this, ""+response, Toast.LENGTH_SHORT).show();
+                Toast.makeText(CompanyProfileActivity.this, "" + response, Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onError(String error) {
                 myLoader.dismissLoader();
-                CustomAlert_error customAlert = new CustomAlert_error(CompanyProfileActivity.this,"Load Error",""+error, (MyCustomAlertListener) CompanyProfileActivity.this);
-                customAlert.getListenerRetryCancelFromNormalAlert("retry","abort",1);
+                CustomAlert customAlert = new CustomAlert();
+                customAlert.getEventFromNormalAlert(CompanyProfileActivity.this, "Load Error", "" + error, "retry", "abort", new CustomAlert.MyCustomAlertListener() {
+                    @Override
+                    public void callBackOk() {
 
+                    }
+
+                    @Override
+                    public void callBackCancel() {
+
+                    }
+                });
             }
 
             @Override
@@ -273,19 +275,15 @@ public class CompanyProfileActivity extends AppCompatActivity implements
     }
 
 
-
-
-
     public interface onOptionSelected {
         void onItemPassed(int position, JSONObject value);
     }
 
-    public void showDialogServies(View v, JSONArray PredictionsJsonArray)
-    {
+    public void showDialogServies(View v, JSONArray PredictionsJsonArray) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        height = displayMetrics.heightPixels/2 ;
-        width = displayMetrics.widthPixels/2;
+        height = displayMetrics.heightPixels / 2;
+        width = displayMetrics.widthPixels / 2;
         popupWindow = new PopupWindow(CompanyProfileActivity.this);
         // Closes the popup window when touch outside.
         popupWindow.setOutsideTouchable(true);
@@ -303,9 +301,9 @@ public class CompanyProfileActivity extends AppCompatActivity implements
 
                 try {
                     et_busineestype.setText(value.getString("value"));
-                    pros_contact_service=value.getString("id");
-                    Appdata.id=pros_contact_service;
-                    Log.d("value id",pros_contact_service);
+                    pros_contact_service = value.getString("id");
+                    Appdata.id = pros_contact_service;
+                    Log.d("value id", pros_contact_service);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -323,41 +321,42 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         popupWindow.showAsDropDown(v, -5, 0);
 
     }
-    public void dropdwondata()
-    {
-       new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this,AppConstant.companybusinessoptionapi,null, new CustomJSONParser.CustomJSONResponse() {
-           @Override
-           public void onSuccess(String result) {
-               //Log.d("business",result);
-               try {
-                   JSONObject job= new JSONObject(result);
-                   btype=job.getJSONArray("business");
-                   Log.d("array", String.valueOf(btype));
+
+    public void dropdwondata() {
+        new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, AppConstant.companybusinessoptionapi, null, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                //Log.d("business",result);
+                try {
+                    JSONObject job = new JSONObject(result);
+                    btype = job.getJSONArray("business");
+                    Log.d("array", String.valueOf(btype));
 
 
-               } catch (JSONException e) {
-                   e.printStackTrace();
-               }
-           }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-           @Override
-           public void onError(String error, String response) {
-               Toast.makeText(CompanyProfileActivity.this, "No data found"+response, Toast.LENGTH_SHORT).show();
+            @Override
+            public void onError(String error, String response) {
+                Toast.makeText(CompanyProfileActivity.this, "No data found" + response, Toast.LENGTH_SHORT).show();
 
-           }
+            }
 
-           @Override
-           public void onError(String error) {
+            @Override
+            public void onError(String error) {
 
-           }
+            }
 
-           @Override
-           public void onStart() {
+            @Override
+            public void onStart() {
 
-           }
-       });
+            }
+        });
 
     }
+
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -371,8 +370,20 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
 
-                CustomAlert1 customAlert = new CustomAlert1(CompanyProfileActivity.this,getResources().getString(R.string.text_location_permission), getResources().getString(R.string.text_location_permission),CompanyProfileActivity.this);
-                customAlert.createNormalAlert("ok",1);
+                CustomAlert customAlert = new CustomAlert();
+                customAlert.getEventFromNormalAlert(CompanyProfileActivity.this, getResources().getString(R.string.text_location_permission), "" + getResources().getString(R.string.text_location_permission), "Ok", "Cancel", new CustomAlert.MyCustomAlertListener() {
+                    @Override
+                    public void callBackOk() {
+                        ActivityCompat.requestPermissions(CompanyProfileActivity.this,
+                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                MY_PERMISSIONS_REQUEST_LOCATION);
+                    }
+
+                    @Override
+                    public void callBackCancel() {
+
+                    }
+                });
 
             } else {
                 // No explanation needed, we can request the permission.
@@ -385,6 +396,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
             return true;
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -430,6 +442,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         updateUI();
 
     }
+
     @Override
     public void onConnected(Bundle bundle) {
         com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage(TAG, "onConnected - isConnected ...............: " + mGoogleApiClient.isConnected());
@@ -457,6 +470,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d(TAG, "Connection failed: " + connectionResult.toString());
     }
+
     private boolean isGooglePlayServicesAvailable() {
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
         int result = googleAPI.isGooglePlayServicesAvailable(this);
@@ -470,15 +484,16 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         }
         return true;
     }
+
     private void updateUI() {
         com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage(TAG, "UI update initiated .............");
         if (null != mCurrentLocation) {
             String lattitude = String.valueOf(mCurrentLocation.getLatitude());
             String longttitude = String.valueOf(mCurrentLocation.getLongitude());
-            Appdata.latitude=lattitude;
-            Appdata.longtitude=longttitude;
-            Log.d("LATTITUIDE",lattitude);
-            Log.d("Longtitude",longttitude);
+            Appdata.latitude = lattitude;
+            Appdata.longtitude = longttitude;
+            Log.d("LATTITUIDE", lattitude);
+            Log.d("Longtitude", longttitude);
 
             HelperClass.getInstance(CompanyProfileActivity.this).setCurrentLatLng(lattitude, longttitude);
 
@@ -505,6 +520,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
             }
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -542,7 +558,6 @@ public class CompanyProfileActivity extends AppCompatActivity implements
     }
 
 
-
     @Override
     public void onStop() {
         super.onStop();
@@ -550,194 +565,159 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         mGoogleApiClient.disconnect();
         Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
     }
-    @Override
-    public void callbackForAlert(String result, int i) {
-        if (result.equalsIgnoreCase("ok") && i==1){
-            ActivityCompat.requestPermissions(CompanyProfileActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_LOCATION);
-        }
-    }
-    public void submit()
-    {
-       final String cname=et_name.getText().toString().trim();
-        final String cmail=et_email.getText().toString().trim();
-        final String cwebsite=et_companywesite.getText().toString().trim();
-        final String cphone=et_companyphone.getText().toString().trim();
-        final String employe=et_employee.getText().toString().trim();
-        final String address=et_address.getText().toString().trim();
-        final String zip=et_zip.getText().toString().trim();
-        final String city=et_city.getText().toString().trim();
-        final String state=et_state.getText().toString().trim();
-        if (cname.equals(""))
-        {
+
+    public void submit() {
+        final String cname = et_name.getText().toString().trim();
+        final String cmail = et_email.getText().toString().trim();
+        final String cwebsite = et_companywesite.getText().toString().trim();
+        final String cphone = et_companyphone.getText().toString().trim();
+        final String employe = et_employee.getText().toString().trim();
+        final String address = et_address.getText().toString().trim();
+        final String zip = et_zip.getText().toString().trim();
+        final String city = et_city.getText().toString().trim();
+        final String state = et_state.getText().toString().trim();
+        if (cname.equals("")) {
             et_name.setError("Please enter company name");
             et_name.setFocusable(true);
-        }
-        else
-        {
-            if (cmail.equals(""))
-            {
+        } else {
+            if (cmail.equals("")) {
                 et_email.setError("Please enter correct email");
                 et_email.setFocusable(true);
 
-            }
-            else
-            {
-                if (cwebsite.equals(""))
-                {
+            } else {
+                if (cwebsite.equals("")) {
                     et_companywesite.setError("Please enter company  website");
                     et_companywesite.setFocusable(true);
-                }
-                else
-                {
-                    if (cphone.equals(""))
-                    {
+                } else {
+                    if (cphone.equals("")) {
                         et_companyphone.setError("Enter company phone number");
                         et_companyphone.setFocusable(true);
-                    }
-                    else
-                    {
-                        if (employe.equals(""))
-                        {
+                    } else {
+                        if (employe.equals("")) {
                             et_employee.setError("Enter employee value");
                             et_employee.setFocusable(true);
-                        }
-                        else
-                        {
-                         if (address.equals(""))
-                         {
-                             et_address.setError("Select your street address");
-                             et_address.setFocusable(true);
-                         }
-                         else
-                         {
-                             if (zip.equals(""))
-                             {
-                                 et_zip.setError("Select your zipcode");
-                                 et_zip.setFocusable(true);
-                             }
-                             else
-                             {
-                                 if (city.equals(""))
-                                 {
-                                     et_city.setError("Select your city");
-                                     et_city.setFocusable(true);
-                                 }
-                                 else
-                                 {
-                                     if (state.equals(""))
-                                     {
-                                         et_state.setError("select your state");
-                                         et_state.setFocusable(true);
-                                     }
-                                     else
-                                     {
-                                         final String locale = CompanyProfileActivity.this.getResources().getConfiguration().locale.getCountry();
-                                         Log.d("COUNTRY CODE",locale);
-                                         Appdata.country1=locale;
-                                         Log.d("userid",ProApplication.getInstance().getUserId());
-                                         Log.d("b_desc",businessdata);
-                                         Log.d("comp_name",cname);
-                                         Log.d("comp_email",cmail);
-                                         Log.d("website",cwebsite);
-                                         Log.d("alt_phone",cphone);
-                                         Log.d("bus_type",Appdata.id);
-                                         Log.d("num_emp",employe);
-                                         Log.d("com_address",address);
-                                         Log.d("city",city);
-                                         Log.d("country",locale);
-                                         Log.d("state",state);
-                                         Log.d("zipcode",zip);
-                                         Log.d("acc_name",accname);
-                                         Log.d("lat",Appdata.latitude);
-                                         Log.d("long",Appdata.longtitude);
-                                         LayoutInflater factory = LayoutInflater.from(CompanyProfileActivity.this);
-                                         final View deleteDialogView = factory.inflate(R.layout.alertdialog, null);
-                                         final AlertDialog deleteDialog = new AlertDialog.Builder(CompanyProfileActivity.this).create();
-                                         deleteDialog.setView(deleteDialogView);
-                                         deleteDialogView.findViewById(R.id.Yes).setOnClickListener(new View.OnClickListener() {
-                                             @Override
-                                             public void onClick(View view) {
+                        } else {
+                            if (address.equals("")) {
+                                et_address.setError("Select your street address");
+                                et_address.setFocusable(true);
+                            } else {
+                                if (zip.equals("")) {
+                                    et_zip.setError("Select your zipcode");
+                                    et_zip.setFocusable(true);
+                                } else {
+                                    if (city.equals("")) {
+                                        et_city.setError("Select your city");
+                                        et_city.setFocusable(true);
+                                    } else {
+                                        if (state.equals("")) {
+                                            et_state.setError("select your state");
+                                            et_state.setFocusable(true);
+                                        } else {
+                                            final String locale = CompanyProfileActivity.this.getResources().getConfiguration().locale.getCountry();
+                                            Log.d("COUNTRY CODE", locale);
+                                            Appdata.country1 = locale;
+                                            Log.d("userid", ProApplication.getInstance().getUserId());
+                                            Log.d("b_desc", businessdata);
+                                            Log.d("comp_name", cname);
+                                            Log.d("comp_email", cmail);
+                                            Log.d("website", cwebsite);
+                                            Log.d("alt_phone", cphone);
+                                            Log.d("bus_type", Appdata.id);
+                                            Log.d("num_emp", employe);
+                                            Log.d("com_address", address);
+                                            Log.d("city", city);
+                                            Log.d("country", locale);
+                                            Log.d("state", state);
+                                            Log.d("zipcode", zip);
+                                            Log.d("acc_name", accname);
+                                            Log.d("lat", Appdata.latitude);
+                                            Log.d("long", Appdata.longtitude);
+                                            LayoutInflater factory = LayoutInflater.from(CompanyProfileActivity.this);
+                                            final View deleteDialogView = factory.inflate(R.layout.alertdialog, null);
+                                            final AlertDialog deleteDialog = new AlertDialog.Builder(CompanyProfileActivity.this).create();
+                                            deleteDialog.setView(deleteDialogView);
+                                            deleteDialogView.findViewById(R.id.Yes).setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
 
-                                                 HashMap<String,String> Params=new HashMap<>();
-                                                 Params.put("user_id",ProApplication.getInstance().getUserId());
-                                                 Params.put("desc",businessdata);
-                                                 Params.put("comp_name",cname);
-                                                 Params.put("comp_email",cmail);
-                                                 Params.put("website",cwebsite);
-                                                 Params.put("alt_phone",cphone);
-                                                 Params.put("bus_type",Appdata.id);
-                                                 Params.put("num_emp",employe);
-                                                 Params.put("com_address",address);
-                                                 Params.put("city",city);
-                                                 Params.put("country",locale);
-                                                 Params.put("state",state);
-                                                 Params.put("zipcode",zip);
-                                                 Params.put("acc_name",accname);
-                                                 Params.put("latitude",Appdata.latitude);
-                                                 Params.put("longitude",Appdata.longtitude);
-                                                 Log.d("PARAMS", String.valueOf(Params));
+                                                    HashMap<String, String> Params = new HashMap<>();
+                                                    Params.put("user_id", ProApplication.getInstance().getUserId());
+                                                    Params.put("desc", businessdata);
+                                                    Params.put("comp_name", cname);
+                                                    Params.put("comp_email", cmail);
+                                                    Params.put("website", cwebsite);
+                                                    Params.put("alt_phone", cphone);
+                                                    Params.put("bus_type", Appdata.id);
+                                                    Params.put("num_emp", employe);
+                                                    Params.put("com_address", address);
+                                                    Params.put("city", city);
+                                                    Params.put("country", locale);
+                                                    Params.put("state", state);
+                                                    Params.put("zipcode", zip);
+                                                    Params.put("acc_name", accname);
+                                                    Params.put("latitude", Appdata.latitude);
+                                                    Params.put("longitude", Appdata.longtitude);
+                                                    Log.d("PARAMS", String.valueOf(Params));
 
-                                                 new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, AppConstant.copanyinfosave, Params, null, new CustomJSONParser.CustomJSONResponse() {
-                                                     @Override
-                                                     public void onSuccess(String result) {
-                                                         Log.d("result",result);
-                                                         deleteDialog.dismiss();
-                                                         try {
-                                                             JSONObject job = new JSONObject(result);
-                                                             String msg= job.getString("message");
-                                                             data();
+                                                    new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, AppConstant.copanyinfosave, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                                        @Override
+                                                        public void onSuccess(String result) {
+                                                            Log.d("result", result);
+                                                            deleteDialog.dismiss();
+                                                            try {
+                                                                JSONObject job = new JSONObject(result);
+                                                                String msg = job.getString("message");
+                                                                data();
 
-                                                             Toast.makeText(CompanyProfileActivity.this, ""+msg, Toast.LENGTH_SHORT).show();
-                                                         } catch (JSONException e) {
-                                                             e.printStackTrace();
-                                                         }
+                                                                Toast.makeText(CompanyProfileActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            }
 
 
-                                                     }
+                                                        }
 
-                                                     @Override
-                                                     public void onError(String error, String response) {
-                                                         try {
-                                                             deleteDialog.dismiss();
-                                                             JSONObject job= new JSONObject(response);
-                                                             String message=job.getString("message");
-                                                             Toast.makeText(CompanyProfileActivity.this, ""+message, Toast.LENGTH_SHORT).show();
-                                                         } catch (JSONException e) {
-                                                             e.printStackTrace();
-                                                         }
+                                                        @Override
+                                                        public void onError(String error, String response) {
+                                                            try {
+                                                                deleteDialog.dismiss();
+                                                                JSONObject job = new JSONObject(response);
+                                                                String message = job.getString("message");
+                                                                Toast.makeText(CompanyProfileActivity.this, "" + message, Toast.LENGTH_SHORT).show();
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            }
 
 
-                                                     }
+                                                        }
 
-                                                     @Override
-                                                     public void onError(String error) {
+                                                        @Override
+                                                        public void onError(String error) {
 
-                                                     }
+                                                        }
 
-                                                     @Override
-                                                     public void onStart() {
+                                                        @Override
+                                                        public void onStart() {
 
-                                                     }
-                                                 });
+                                                        }
+                                                    });
 
-                                             }
-                                         });
-                                         deleteDialogView.findViewById(R.id.NO).setOnClickListener(new View.OnClickListener() {
-                                             @Override
-                                             public void onClick(View v) {
-                                                 deleteDialog.dismiss();
-                                             }
-                                         });
+                                                }
+                                            });
+                                            deleteDialogView.findViewById(R.id.NO).setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    deleteDialog.dismiss();
+                                                }
+                                            });
 
-                                         deleteDialog.show();
+                                            deleteDialog.show();
 
-                                     }
+                                        }
 
-                                 }
-                             }
-                         }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

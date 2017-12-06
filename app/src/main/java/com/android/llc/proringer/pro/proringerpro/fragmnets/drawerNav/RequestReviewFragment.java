@@ -14,7 +14,8 @@ import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert_error;
+import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
@@ -44,25 +45,27 @@ import java.util.HashMap;
  * limitations under the License.
  */
 
-public class RequestReviewFragment extends Fragment implements MyCustomAlertListener {
-    ProLightEditText et_fname,et_lname,et_email,et_cemail,et_comment;
+public class RequestReviewFragment extends Fragment {
+    ProLightEditText et_fname, et_lname, et_email, et_cemail, et_comment;
     ProRegularTextView request;
     MyLoader myload;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_request_review,container,false);
+        return inflater.inflate(R.layout.fragment_request_review, container, false);
     }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        et_fname=(ProLightEditText)view.findViewById(R.id.et_fname);
-        et_lname=(ProLightEditText)view.findViewById(R.id.et_lname);
-        et_email=(ProLightEditText)view.findViewById(R.id.et_email);
-        et_cemail=(ProLightEditText)view.findViewById(R.id.et_cemail);
-        et_comment=(ProLightEditText)view.findViewById(R.id.et_comment);
-        request=(ProRegularTextView)view.findViewById(R.id.request);
-        myload= new MyLoader(getActivity());
+        et_fname = (ProLightEditText) view.findViewById(R.id.et_fname);
+        et_lname = (ProLightEditText) view.findViewById(R.id.et_lname);
+        et_email = (ProLightEditText) view.findViewById(R.id.et_email);
+        et_cemail = (ProLightEditText) view.findViewById(R.id.et_cemail);
+        et_comment = (ProLightEditText) view.findViewById(R.id.et_comment);
+        request = (ProRegularTextView) view.findViewById(R.id.request);
+        myload = new MyLoader(getActivity());
         request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,116 +76,104 @@ public class RequestReviewFragment extends Fragment implements MyCustomAlertList
         });
 
     }
-    public  void validation()
-    {
-        String fname=et_fname.getText().toString().trim();
-        String lname=et_lname.getText().toString().trim();
-        String  email=et_email.getText().toString().trim();
-        String  cemail=et_cemail.getText().toString().trim();
-        String  comment=et_comment.getText().toString().trim();
-        if (fname.equals(""))
-        {
+
+    public void validation() {
+        String fname = et_fname.getText().toString().trim();
+        String lname = et_lname.getText().toString().trim();
+        String email = et_email.getText().toString().trim();
+        String cemail = et_cemail.getText().toString().trim();
+        String comment = et_comment.getText().toString().trim();
+        if (fname.equals("")) {
             et_fname.setError("Please enter the first name");
             et_fname.setFocusable(true);
-        }
-        else
-        {
-            if (lname.equals(""))
-            {
+        } else {
+            if (lname.equals("")) {
                 et_lname.setError("Please enter the last name");
                 et_lname.setFocusable(true);
-            }
-            else
-            {
-                    if (Patterns.EMAIL_ADDRESS.matcher(et_email.getText().toString()).matches())
-                    {
-                        if (Patterns.EMAIL_ADDRESS.matcher((et_cemail.getText().toString())).matches())
-                        {
-                            if (!et_cemail.getText().toString().trim().equals(et_email.getText().toString().trim()))
-                            {
-                                et_cemail.setError("Email id dose not match!");
-                                et_cemail.setFocusable(true);
-                            }
-                            else
-                            {
-                                if (comment.equals(""))
-                                {
-                                    et_comment.setError("Please enter  comment");
-                                    et_comment.setFocusable(true);
-                                }
-                                else
-                                {
-                                    HashMap<String,String> Params=new HashMap<>();
-                                    Params.put("user_id", ProApplication.getInstance().getUserId());
-                                    Params.put("first_name",fname);
-                                    Params.put("last_name",lname);
-                                    Params.put("email",email);
-                                    Params.put("conf_emailid",cemail);
-                                    Params.put("comment",comment);
-                                    Log.d("parms", String.valueOf(Params));
+            } else {
+                if (Patterns.EMAIL_ADDRESS.matcher(et_email.getText().toString()).matches()) {
+                    if (Patterns.EMAIL_ADDRESS.matcher((et_cemail.getText().toString())).matches()) {
+                        if (!et_cemail.getText().toString().trim().equals(et_email.getText().toString().trim())) {
+                            et_cemail.setError("Email id dose not match!");
+                            et_cemail.setFocusable(true);
+                        } else {
+                            if (comment.equals("")) {
+                                et_comment.setError("Please enter  comment");
+                                et_comment.setFocusable(true);
+                            } else {
+                                HashMap<String, String> Params = new HashMap<>();
+                                Params.put("user_id", ProApplication.getInstance().getUserId());
+                                Params.put("first_name", fname);
+                                Params.put("last_name", lname);
+                                Params.put("email", email);
+                                Params.put("conf_emailid", cemail);
+                                Params.put("comment", comment);
+                                Log.d("parms", String.valueOf(Params));
 
-                                    new CustomJSONParser().fireAPIForPostMethod(getActivity(), AppConstant.replyreviw, Params, null, new CustomJSONParser.CustomJSONResponse() {
-                                        @Override
-                                        public void onSuccess(String result) {
-                                            myload.dismissLoader();
-                                            Log.d("result",result);
-                                            try {
-                                                JSONObject job= new JSONObject(result);
-                                                String message= job.getString("message");
-                                                Toast.makeText(getActivity(), ""+message, Toast.LENGTH_SHORT).show();
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
+                                new CustomJSONParser().fireAPIForPostMethod(getActivity(), AppConstant.replyreviw, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                    @Override
+                                    public void onSuccess(String result) {
+                                        myload.dismissLoader();
+                                        Log.d("result", result);
+                                        try {
+                                            JSONObject job = new JSONObject(result);
+                                            String message = job.getString("message");
+                                            Toast.makeText(getActivity(), "" + message, Toast.LENGTH_SHORT).show();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onError(String error, String response) {
+                                        myload.dismissLoader();
+                                        Toast.makeText(getActivity(), "" + response, Toast.LENGTH_SHORT).show();
+
+
+                                    }
+
+                                    @Override
+                                    public void onError(String error) {
+                                        myload.dismissLoader();
+
+
+                                        CustomAlert customAlert = new CustomAlert();
+                                        customAlert.getEventFromNormalAlert(getActivity(), "Load Error", "" + error, "Ok", "Cancel", new CustomAlert.MyCustomAlertListener() {
+                                            @Override
+                                            public void callBackOk() {
+
                                             }
 
-                                        }
+                                            @Override
+                                            public void callBackCancel() {
 
-                                        @Override
-                                        public void onError(String error, String response) {
-                                            myload.dismissLoader();
-                                            Toast.makeText(getActivity(), ""+response, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
 
+                                    @Override
+                                    public void onStart() {
+                                        myload.showLoader();
 
-                                        }
-
-                                        @Override
-                                        public void onError(String error) {
-                                            myload.dismissLoader();
-                                            CustomAlert_error customAlert = new CustomAlert_error(getActivity(),"Load Error",""+error,RequestReviewFragment.this);
-                                            customAlert.getListenerRetryCancelFromNormalAlert("retry","abort",1);
-
-                                        }
-
-                                        @Override
-                                        public void onStart() {
-                                            myload.showLoader();
-
-                                        }
-                                    });
-
-                                }
+                                    }
+                                });
 
                             }
 
                         }
-                        else
-                        {
-                            et_cemail.setError("Please enter valid confirm email");
-                            et_cemail.setFocusable(true);
-                        }
 
+                    } else {
+                        et_cemail.setError("Please enter valid confirm email");
+                        et_cemail.setFocusable(true);
                     }
-                    else
-                    {
-                        et_email.setError("Please enter valid email");
-                        et_email.setFocusable(true);
-                    }
+
+                } else {
+                    et_email.setError("Please enter valid email");
+                    et_email.setFocusable(true);
                 }
             }
-
-    }
-
-    @Override
-    public void callbackForAlert(String result, int i) {
+        }
 
     }
 }

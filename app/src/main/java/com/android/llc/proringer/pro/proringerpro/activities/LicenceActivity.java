@@ -1,20 +1,18 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,10 +34,8 @@ import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog_catagory;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
-import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
-import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert_error;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
-import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
@@ -49,10 +45,8 @@ import com.android.llc.proringer.pro.proringerpro.utils.ImageFilePath;
 import com.android.llc.proringer.pro.proringerpro.utils.Logger;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
-import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.HighRegularTextView;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,22 +58,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * Created by su on 8/18/17.
  */
 
-public class LicenceActivity extends AppCompatActivity implements MyCustomAlertListener {
+public class LicenceActivity extends AppCompatActivity {
 
     private static final int REQUEST_WRITE_PERMISSION1 = 3000;
     private static final int REQUEST_WRITE_PERMISSION2 = 4000;
     RecyclerView rcv_licence_list;
-    RelativeLayout RLAddLicence, RLEmpty,relative_dropdown;
+    RelativeLayout RLAddLicence, RLEmpty, relative_dropdown;
     LicenceAdapter licenceAdapter;
 
-    ProRegularTextView protv_com,tv_service,tv_save_licence;
-    ProLightEditText tv_issue,tv_licence_number;
+    ProRegularTextView protv_com, tv_service, tv_save_licence;
+    ProLightEditText tv_issue, tv_licence_number;
     ProRegularTextView tv_expires;
     File file = null;
     Dialog dialog = null;
@@ -89,18 +82,18 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
     private int PICK_IMAGE_REQUEST = 100;
     private int PICK_PDF_REQUEST = 200;
     ArrayList<APIGetData> arrayList = null;
-    ArrayList<showlicencesetget>arrayList1;
+    ArrayList<showlicencesetget> arrayList1;
     int arrlistsize;
-    String mycurrentphotopath="";
-    String pros_contact_service="";
+    String mycurrentphotopath = "";
+    String pros_contact_service = "";
     CustomListAdapterDialog_catagory custom = null;
     PopupWindow popupWindow;
-    ImageView img_add_licence,dropdown;
+    ImageView img_add_licence, dropdown;
     JSONArray catagory;
-    private int mYear=0, mMonth=0, mDay=0, mHour, mMinute;
-    boolean flag=true;
+    private int mYear = 0, mMonth = 0, mDay = 0, mHour, mMinute;
+    boolean flag = true;
     int year;
-    int month,date;
+    int month, date;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,9 +107,9 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
 
         RLAddLicence = (RelativeLayout) findViewById(R.id.RLAddLicence);
         RLEmpty = (RelativeLayout) findViewById(R.id.RLEmpty);
-        tv_save_licence=(ProRegularTextView)findViewById(R.id.tv_save_licence);
+        tv_save_licence = (ProRegularTextView) findViewById(R.id.tv_save_licence);
 
-        relative_dropdown=(RelativeLayout)findViewById(R.id.relative_dropdown);
+        relative_dropdown = (RelativeLayout) findViewById(R.id.relative_dropdown);
         relative_dropdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,19 +122,19 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
                 savedata();
             }
         });
-        myLoader= new MyLoader(LicenceActivity.this);
-        img_add_licence=(ImageView)findViewById(R.id.img_add_licence);
-        tv_service=(ProRegularTextView)findViewById(R.id.tv_service);
-        tv_issue=(ProLightEditText)findViewById(R.id.tv_issue);
-        tv_licence_number=(ProLightEditText)findViewById(R.id.tv_licence_number);
-        tv_expires=(ProRegularTextView)findViewById(R.id.tv_expires);
-        dropdown=(ImageView)findViewById(R.id.dropdown);
+        myLoader = new MyLoader(LicenceActivity.this);
+        img_add_licence = (ImageView) findViewById(R.id.img_add_licence);
+        tv_service = (ProRegularTextView) findViewById(R.id.tv_service);
+        tv_issue = (ProLightEditText) findViewById(R.id.tv_issue);
+        tv_licence_number = (ProLightEditText) findViewById(R.id.tv_licence_number);
+        tv_expires = (ProRegularTextView) findViewById(R.id.tv_expires);
+        dropdown = (ImageView) findViewById(R.id.dropdown);
         arrayList = new ArrayList<APIGetData>();
         APIGetData apiGetData = new APIGetData();
         apiGetData.setPARAMS("user_id");
         apiGetData.setValues(ProApplication.getInstance().getUserId());
         arrayList.add(apiGetData);
-        arrayList1= new ArrayList<>();
+        arrayList1 = new ArrayList<>();
         showData();
         rcv_licence_list = (RecyclerView) findViewById(R.id.rcv_licence_list);
         rcv_licence_list.setLayoutManager(new LinearLayoutManager(LicenceActivity.this));
@@ -154,15 +147,15 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
         LLEdit = (LinearLayout) findViewById(R.id.LLEdit);
         img_licence_file = (ImageView) findViewById(R.id.img_licence_file);
 
-        licenceAdapter = new LicenceAdapter(LicenceActivity.this,arrayList1);
+        licenceAdapter = new LicenceAdapter(LicenceActivity.this, arrayList1);
         rcv_licence_list.setAdapter(licenceAdapter);
         LLUpload.setVisibility(View.VISIBLE);
         LLEdit.setVisibility(View.GONE);
-        Log.d("bdvfjdhgfjdgfjsgfhgsj",mycurrentphotopath);
+        Log.d("bdvfjdhgfjdgfjsgfhgsj", mycurrentphotopath);
         catagory();
         Log.d("ksjhddhfjkdhfjkdhjfhs", String.valueOf(arrayList1.size()));
 
-            img_add_licence.setOnClickListener(new View.OnClickListener() {
+        img_add_licence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (RLAddLicence.getVisibility() == View.VISIBLE) {
@@ -192,11 +185,12 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
         dropdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogCategory(view,catagory);
+                showDialogCategory(view, catagory);
             }
         });
         tv_expires.setOnClickListener(new View.OnClickListener() {
-            boolean check= true;
+            boolean check = true;
+
             @Override
             public void onClick(View view) {
                 tv_expires.setBackgroundResource(R.drawable.background_solidorange_border);
@@ -208,49 +202,47 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
                 Log.d("year--------->", "" + mYear);
 
 
-                if (!check)
-                {
+                if (!check) {
                     mYear = c.get(Calendar.YEAR);
                     mMonth = c.get(Calendar.MONTH);
                     mDay = c.get(Calendar.DAY_OF_MONTH);
                 }
-                if (!flag)
-                {
-                    mYear=year;
-                    mMonth=month;
-                    mDay=date;
+                if (!flag) {
+                    mYear = year;
+                    mMonth = month;
+                    mDay = date;
                 }
-                DatePickerDialog datePickerDialog=new DatePickerDialog(LicenceActivity.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(LicenceActivity.this, new DatePickerDialog.OnDateSetListener() {
 
 
                     @Override
                     public void onDateSet(DatePicker datePicker, final int i, final int i1, final int i2) {
 
-                        int selectedDate=datePicker.getDayOfMonth();
+                        int selectedDate = datePicker.getDayOfMonth();
 
-                        Log.d("selectedDate",""+selectedDate);
+                        Log.d("selectedDate", "" + selectedDate);
                         // datePicker.setMinDate(System.currentTimeMillis() - 1000);
-                        Log.d("onDateSet","onDateSet");
-                        String date1="";
-                        year=i;
-                        month=i1;
-                        date=i2;
-                        Log.d("year",""+year);
-                        String s=i+"-"+month+"-"+i2;
-                        Calendar calendar=Calendar.getInstance();
-                        calendar.set(year,month,date);
-                        Date date2=calendar.getTime();
+                        Log.d("onDateSet", "onDateSet");
+                        String date1 = "";
+                        year = i;
+                        month = i1;
+                        date = i2;
+                        Log.d("year", "" + year);
+                        String s = i + "-" + month + "-" + i2;
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(year, month, date);
+                        Date date2 = calendar.getTime();
                         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
                         date1 = format.format(date2);
                         setDate(date1);
                     }
-                },mYear,mMonth,mDay);
+                }, mYear, mMonth, mDay);
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-                datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"Cancel", new DialogInterface.OnClickListener() {
+                datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("Cancel","Cancel");
-                        check=false;
+                        Log.d("Cancel", "Cancel");
+                        check = false;
                     }
                 });
                 datePickerDialog.show();
@@ -279,8 +271,8 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-       int height = displayMetrics.heightPixels/2 ;
-       int width = displayMetrics.widthPixels/2;
+        int height = displayMetrics.heightPixels / 2;
+        int width = displayMetrics.widthPixels / 2;
 
         ImageView img_gallery = (ImageView) dialog.findViewById(R.id.img_gallery);
         ImageView img_pdf = (ImageView) dialog.findViewById(R.id.img_pdf);
@@ -288,7 +280,7 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
 
         LinearLayout LLMain = (LinearLayout) dialog.findViewById(R.id.LLMain);
 
-       // LLMain.getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(LicenceActivity.this)[1]) /2;
+        // LLMain.getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(LicenceActivity.this)[1]) /2;
 //        RLMain.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
         LLMain.setMinimumWidth(height);
         LLMain.getLayoutParams().height = (MethodsUtils.getScreenHeightAndWidth(LicenceActivity.this)[1]) / 2;
@@ -375,16 +367,16 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && file != null) {
             Uri selectedImageURI = data.getData();
-               Log.d("mukdjfhfdl",mycurrentphotopath);
+            Log.d("mukdjfhfdl", mycurrentphotopath);
             try {
                 file = new File(ImageFilePath.getPath(getApplicationContext(), selectedImageURI));
 
 
                 if (file.getAbsolutePath().contains(".jpeg") || file.getAbsolutePath().contains(".png")
                         || file.getAbsolutePath().contains(".jpg")) {
-                    mycurrentphotopath=file.getAbsolutePath();
+                    mycurrentphotopath = file.getAbsolutePath();
 
-                    Log.d("my important path",mycurrentphotopath);
+                    Log.d("my important path", mycurrentphotopath);
                     LLUpload.setVisibility(View.GONE);
                     LLEdit.setVisibility(View.VISIBLE);
                     img_licence_file.setImageResource(android.R.color.transparent);
@@ -404,7 +396,7 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
                 file = new File(ImageFilePath.getPath(getApplicationContext(), selectedDataURI));
                 Log.i("path", "" + file.getAbsolutePath());
                 if (file.getAbsolutePath().contains(".pdf")) {
-                    mycurrentphotopath=file.getAbsolutePath();
+                    mycurrentphotopath = file.getAbsolutePath();
                     LLUpload.setVisibility(View.GONE);
                     LLEdit.setVisibility(View.VISIBLE);
                     img_licence_file.setImageResource(android.R.color.transparent);
@@ -425,101 +417,95 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
     }
 
 
+    public void showData() {
+        new CustomJSONParser().fireAPIForGetMethod(LicenceActivity.this, AppConstant.liencelist, arrayList, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("result", result);
+                myLoader.dismissLoader();
+                try {
+                    JSONObject job = new JSONObject(result);
+                    JSONArray info_arry = job.getJSONArray("info_array");
+                    Log.d("infoo", String.valueOf(info_arry));
+                    for (int i = 0; i < info_arry.length(); i++) {
+                        JSONObject jo = info_arry.getJSONObject(i);
+                        showlicencesetget show = new showlicencesetget();
+                        show.setId(jo.getString("id"));
+                        show.setPros_id(jo.getString("pros_id"));
+                        show.setImage_info(jo.getString("image_info"));
+                        show.setLicense_issuer(jo.getString("license_issuer"));
+                        show.setLicenses_no(jo.getString("licenses_no"));
+                        show.setDate_expire(jo.getString("date_expire"));
+                        show.setDate_upload(jo.getString("date_upload"));
+                        JSONObject catagory = jo.getJSONObject("category");
+                        show.setCategory_id(catagory.getString("id"));
+                        show.setCategory_name(catagory.getString("name"));
+                        arrayList1.add(show);
 
-    public void showData()
-    {
-     new CustomJSONParser().fireAPIForGetMethod(LicenceActivity.this, AppConstant.liencelist, arrayList, new CustomJSONParser.CustomJSONResponse() {
-         @Override
-         public void onSuccess(String result) {
-             Log.d("result",result);
-             myLoader.dismissLoader();
-             try {
-                 JSONObject job= new JSONObject(result);
-                 JSONArray info_arry=job.getJSONArray("info_array");
-                 Log.d("infoo", String.valueOf(info_arry));
-                 for (int i=0;i<info_arry.length();i++)
-                 {
-                     JSONObject jo= info_arry.getJSONObject(i);
-                     showlicencesetget show= new showlicencesetget();
-                     show.setId(jo.getString("id"));
-                     show.setPros_id(jo.getString("pros_id"));
-                     show.setImage_info(jo.getString("image_info"));
-                     show.setLicense_issuer(jo.getString("license_issuer"));
-                     show.setLicenses_no(jo.getString("licenses_no"));
-                     show.setDate_expire(jo.getString("date_expire"));
-                     show.setDate_upload(jo.getString("date_upload"));
-                     JSONObject catagory= jo.getJSONObject("category");
-                     show.setCategory_id(catagory.getString("id"));
-                     show.setCategory_name(catagory.getString("name"));
-                     arrayList1.add(show);
+                    }
+                    if (licenceAdapter == null) {
+                        RLEmpty.setVisibility(View.VISIBLE);
+                        rcv_licence_list.setVisibility(View.GONE);
+                    } else {
+                        licenceAdapter = new LicenceAdapter(LicenceActivity.this, arrayList1);
+                        rcv_licence_list.setAdapter(licenceAdapter);
+                        RLEmpty.setVisibility(View.GONE);
+                        rcv_licence_list.setVisibility(View.VISIBLE);
+                    }
+                    arrlistsize = arrayList1.size();
+                    if (arrayList1.size() == 2) {
+                        img_add_licence.setVisibility(View.GONE);
+                    } else {
+                        img_add_licence.setVisibility(View.VISIBLE);
+                    }
 
-                 }
-                 if (licenceAdapter==null)
-                 {
-                     RLEmpty.setVisibility(View.VISIBLE);
-                     rcv_licence_list.setVisibility(View.GONE);
-                 }
-                 else
-                 {
-                     licenceAdapter = new LicenceAdapter(LicenceActivity.this,arrayList1);
-                     rcv_licence_list.setAdapter(licenceAdapter);
-                     RLEmpty.setVisibility(View.GONE);
-                     rcv_licence_list.setVisibility(View.VISIBLE);
-                 }
-                  arrlistsize=arrayList1.size();
-                 if (arrayList1.size()==2)
-                 {
-                     img_add_licence.setVisibility(View.GONE);
-                 }
-                 else
-                 {
-                     img_add_licence.setVisibility(View.VISIBLE);
+                    Log.d("size", String.valueOf(arrayList1.size()));
 
-                 }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
 
+            }
 
+            @Override
+            public void onError(String error, String response) {
+                myLoader.dismissLoader();
 
+            }
 
-                 Log.d("size", String.valueOf(arrayList1.size()));
+            @Override
+            public void onError(String error) {
+                myLoader.dismissLoader();
+                CustomAlert customAlert = new CustomAlert();
+                customAlert.getEventFromNormalAlert(LicenceActivity.this, "Load Error", "" + error, "Ok", "Cancel", new CustomAlert.MyCustomAlertListener() {
+                    @Override
+                    public void callBackOk() {
 
-             } catch (JSONException e) {
-                 e.printStackTrace();
-             }
+                    }
 
+                    @Override
+                    public void callBackCancel() {
 
-         }
+                    }
+                });
+            }
 
-         @Override
-         public void onError(String error, String response) {
-             myLoader.dismissLoader();
-
-         }
-
-         @Override
-         public void onError(String error) {
-             myLoader.dismissLoader();
-             CustomAlert_error customAlert = new CustomAlert_error(LicenceActivity.this,"Load Error",""+error, (MyCustomAlertListener) LicenceActivity.this);
-             customAlert.getListenerRetryCancelFromNormalAlert("retry","abort",1);
-
-         }
-
-         @Override
-         public void onStart() {
-           myLoader.showLoader();
-
-         }
-     });
+            @Override
+            public void onStart() {
+                myLoader.showLoader();
+            }
+        });
     }
-    public  void catagory()
-    {
+
+    public void catagory() {
         new CustomJSONParser().fireAPIForGetMethod(LicenceActivity.this, AppConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 // Log.d("responese",result);
                 try {
-                    JSONObject job= new JSONObject(result);
-                    catagory= job.getJSONArray("info_array");
+                    JSONObject job = new JSONObject(result);
+                    catagory = job.getJSONArray("info_array");
                     Log.d("sjhdfkhskhf", String.valueOf(catagory));
 
                 } catch (JSONException e) {
@@ -545,6 +531,7 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
         });
 
     }
+
     private void showDialogCategory(View v, JSONArray PredictionsJsonArray) {
 
         popupWindow = new PopupWindow(LicenceActivity.this);
@@ -553,12 +540,12 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
         // Removes default background.
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        View dailogView =   LicenceActivity.this.getLayoutInflater().inflate(R.layout.dialogcat, null);
+        View dailogView = LicenceActivity.this.getLayoutInflater().inflate(R.layout.dialogcat, null);
 
         RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
         rcv_.setLayoutManager(new LinearLayoutManager(LicenceActivity.this));
 
-        custom = new CustomListAdapterDialog_catagory(LicenceActivity.this,PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
+        custom = new CustomListAdapterDialog_catagory(LicenceActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
             @Override
             public void onItemPassed(int position, JSONObject value) {
                 popupWindow.dismiss();
@@ -567,7 +554,7 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
                 try {
                     tv_service.setText(value.getString("category_name"));
                     pros_contact_service = value.getString("id");
-                    Log.d("id",pros_contact_service);
+                    Log.d("id", pros_contact_service);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -585,92 +572,79 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
 
     }
 
-    public void savedata()
-    {
-       String uid=ProApplication.getInstance().getUserId();
-       String issuere=tv_issue.getText().toString().trim();
-       String license=tv_licence_number.getText().toString().trim();
-       String expire=tv_expires.getText().toString().trim();
+    public void savedata() {
+        String uid = ProApplication.getInstance().getUserId();
+        String issuere = tv_issue.getText().toString().trim();
+        String license = tv_licence_number.getText().toString().trim();
+        String expire = tv_expires.getText().toString().trim();
 
-        if (tv_service.getText().toString().trim().equals(""))
-        {
+        if (tv_service.getText().toString().trim().equals("")) {
             Toast.makeText(LicenceActivity.this, "Select Category", Toast.LENGTH_SHORT).show();
 
-        }
-        else
-        {
-            if (issuere.equals(""))
-            {
+        } else {
+            if (issuere.equals("")) {
                 tv_issue.setError("Enter issuer name");
                 tv_issue.setFocusable(true);
-            }
-            else
-            {
-                if (license.equals(""))
-                {
+            } else {
+                if (license.equals("")) {
                     tv_licence_number.setError("Enter licence number");
                     tv_licence_number.setFocusable(true);
-                }
-                else
-                {
-                    if (expire.equals(""))
-                    {
+                } else {
+                    if (expire.equals("")) {
                         Toast.makeText(LicenceActivity.this, "Select Expires date", Toast.LENGTH_SHORT).show();
 
-                    }
-                    else
-                    {
+                    } else {
                         Log.d("my save path", String.valueOf(file));
-                        Log.d("uid",uid);
-                        Log.d("catid",pros_contact_service);
-                        Log.d("issuer",issuere);
-                        Log.d("license",license);
-                        Log.d("expire",expire);
+                        Log.d("uid", uid);
+                        Log.d("catid", pros_contact_service);
+                        Log.d("issuer", issuere);
+                        Log.d("license", license);
+                        Log.d("expire", expire);
 
-                        ArrayList<SetGetAPIPostData> arrayListPostParamsValues=new ArrayList<>();
+                        ArrayList<SetGetAPIPostData> arrayListPostParamsValues = new ArrayList<>();
 
 
-                        SetGetAPIPostData setGetAPIPostData=new SetGetAPIPostData();
+                        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
                         setGetAPIPostData.setPARAMS("user_id");
                         setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
                         arrayListPostParamsValues.add(setGetAPIPostData);
 
-                        setGetAPIPostData=new SetGetAPIPostData();
+                        setGetAPIPostData = new SetGetAPIPostData();
                         setGetAPIPostData.setPARAMS("cat_id");
                         setGetAPIPostData.setValues(pros_contact_service);
                         arrayListPostParamsValues.add(setGetAPIPostData);
 
-                        setGetAPIPostData=new SetGetAPIPostData();
+                        setGetAPIPostData = new SetGetAPIPostData();
                         setGetAPIPostData.setPARAMS("license_issuer");
                         setGetAPIPostData.setValues(issuere);
                         arrayListPostParamsValues.add(setGetAPIPostData);
 
-                        setGetAPIPostData=new SetGetAPIPostData();
+                        setGetAPIPostData = new SetGetAPIPostData();
                         setGetAPIPostData.setPARAMS("licenses_no");
                         setGetAPIPostData.setValues(license);
                         arrayListPostParamsValues.add(setGetAPIPostData);
 
-                        setGetAPIPostData=new SetGetAPIPostData();
+                        setGetAPIPostData = new SetGetAPIPostData();
                         setGetAPIPostData.setPARAMS("date_expire");
                         setGetAPIPostData.setValues(expire);
                         arrayListPostParamsValues.add(setGetAPIPostData);
 
-                        ArrayList<File> filesImages=new ArrayList<>();
+                        ArrayList<File> filesImages = new ArrayList<>();
                         filesImages.add(file);
 
 
-                        CustomJSONParser.ImageParam="image_info";
+                        CustomJSONParser.ImageParam = "image_info";
 
 
                         new CustomJSONParser().APIForWithPhotoPostMethod(LicenceActivity.this, AppConstant.licenseadd, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
                             @Override
                             public void onSuccess(String result) {
-                                Log.d("result",result);
+                                Log.d("result", result);
                                 myLoader.dismissLoader();
                                 try {
-                                    JSONObject jo= new JSONObject(result);
-                                    String msg= jo.getString("message");
-                                    Toast.makeText(LicenceActivity.this, ""+msg, Toast.LENGTH_SHORT).show();
+                                    JSONObject jo = new JSONObject(result);
+                                    String msg = jo.getString("message");
+                                    Toast.makeText(LicenceActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
                                     RLAddLicence.setVisibility(View.GONE);
                                     rcv_licence_list.setVisibility(View.VISIBLE);
                                     arrayList1.clear();
@@ -696,7 +670,7 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
 
                             @Override
                             public void onStart() {
-                             myLoader.showLoader();
+                                myLoader.showLoader();
                             }
                         });
                     }
@@ -705,14 +679,10 @@ public class LicenceActivity extends AppCompatActivity implements MyCustomAlertL
         }
 
     }
+
     private void setDate(String date1) {
-        Log.d("setDate","setDate");
-        flag=false;
+        Log.d("setDate", "setDate");
+        flag = false;
         tv_expires.setText(date1);
-    }
-
-    @Override
-    public void callbackForAlert(String result, int i) {
-
     }
 }

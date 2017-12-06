@@ -1,5 +1,6 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,13 +28,12 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.AddImageAdapter;
 import com.android.llc.proringer.pro.proringerpro.adapter.PortFolioAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
-import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert_error;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
-import com.android.llc.proringer.pro.proringerpro.pojo.PortFolio;
 import com.android.llc.proringer.pro.proringerpro.pojo.Showportfoliosetget;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
 import com.android.llc.proringer.pro.proringerpro.utils.Logger;
@@ -51,7 +51,7 @@ import java.util.ArrayList;
  * Created by su on 8/17/17.
  */
 
-public class PortFolioActivity extends AppCompatActivity implements MyCustomAlertListener {
+public class PortFolioActivity extends AppCompatActivity{
     private static final int REQUEST_IMAGE_CAPTURE = 5;
     private static final int PICK_IMAGE = 3;
     RecyclerView rcv_port_folio, rcv_add_port_folio;
@@ -285,9 +285,20 @@ public class PortFolioActivity extends AppCompatActivity implements MyCustomAler
            @Override
            public void onError(String error) {
                myLoader.dismissLoader();
-               CustomAlert_error customAlert = new CustomAlert_error(PortFolioActivity.this,"Load Error",""+error, (MyCustomAlertListener) PortFolioActivity.this);
-               customAlert.getListenerRetryCancelFromNormalAlert("retry","abort",1);
 
+
+               CustomAlert customAlert = new CustomAlert();
+               customAlert.getEventFromNormalAlert(PortFolioActivity.this, getResources().getString(R.string.text_location_permission),getResources().getString(R.string.text_location_permission), "Retry", "Abort", new CustomAlert.MyCustomAlertListener() {
+                   @Override
+                   public void callBackOk() {
+
+                   }
+
+                   @Override
+                   public void callBackCancel() {
+
+                   }
+               });
            }
 
            @Override
@@ -309,10 +320,5 @@ public class PortFolioActivity extends AppCompatActivity implements MyCustomAler
             int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
             return cursor.getString(idx);
         }
-    }
-
-    @Override
-    public void callbackForAlert(String result, int i) {
-
     }
 }

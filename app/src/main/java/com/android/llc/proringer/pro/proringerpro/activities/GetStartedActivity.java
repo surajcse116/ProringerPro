@@ -1,15 +1,10 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -20,24 +15,19 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.GetStartedTutorial;
 import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
-import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert1;
 import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
-import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Status;
@@ -70,7 +60,7 @@ import java.util.Date;
 public class GetStartedActivity extends AppCompatActivity implements
         LocationListener,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,MyCustomAlertListener {
+        GoogleApiClient.OnConnectionFailedListener {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private ViewPager get_started_pager;
     private GetStartedTutorial adapter;
@@ -88,7 +78,6 @@ public class GetStartedActivity extends AppCompatActivity implements
     Location mCurrentLocation;
     String mLastUpdateTime;
     String updatelocation;
-
 
 
     @Override
@@ -155,7 +144,6 @@ public class GetStartedActivity extends AppCompatActivity implements
                 startActivityForResult(new Intent(GetStartedActivity.this, LogInActivity.class), LOG_IN_REQUEST);
 
 
-
             }
         });
 
@@ -215,6 +203,7 @@ public class GetStartedActivity extends AppCompatActivity implements
                 break;
         }
     }
+
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -227,9 +216,20 @@ public class GetStartedActivity extends AppCompatActivity implements
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
+                CustomAlert customAlert = new CustomAlert();
+                customAlert.getOkEventFromNormalAlert(GetStartedActivity.this, getResources().getString(R.string.text_location_permission), getResources().getString(R.string.text_location_permission), new CustomAlert.MyCustomAlertListener() {
+                    @Override
+                    public void callBackOk() {
+                        ActivityCompat.requestPermissions(GetStartedActivity.this,
+                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                MY_PERMISSIONS_REQUEST_LOCATION);
+                    }
 
-                CustomAlert1 customAlert = new CustomAlert1(GetStartedActivity.this,getResources().getString(R.string.text_location_permission), getResources().getString(R.string.text_location_permission),GetStartedActivity.this);
-                customAlert.createNormalAlert("ok",1);
+                    @Override
+                    public void callBackCancel() {
+
+                    }
+                });
 
             } else {
                 // No explanation needed, we can request the permission.
@@ -242,6 +242,7 @@ public class GetStartedActivity extends AppCompatActivity implements
             return true;
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -280,9 +281,6 @@ public class GetStartedActivity extends AppCompatActivity implements
     }
 
 
-
-
-
     @Override
     public void onLocationChanged(Location location) {
         Logger.printMessage(TAG, "Firing onLocationChanged..............................................");
@@ -291,6 +289,7 @@ public class GetStartedActivity extends AppCompatActivity implements
         updateUI();
 
     }
+
     @Override
     public void onConnected(Bundle bundle) {
         Logger.printMessage(TAG, "onConnected - isConnected ...............: " + mGoogleApiClient.isConnected());
@@ -318,6 +317,7 @@ public class GetStartedActivity extends AppCompatActivity implements
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d(TAG, "Connection failed: " + connectionResult.toString());
     }
+
     private boolean isGooglePlayServicesAvailable() {
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
         int result = googleAPI.isGooglePlayServicesAvailable(this);
@@ -331,15 +331,16 @@ public class GetStartedActivity extends AppCompatActivity implements
         }
         return true;
     }
+
     private void updateUI() {
         Logger.printMessage(TAG, "UI update initiated .............");
         if (null != mCurrentLocation) {
             String lat = String.valueOf(mCurrentLocation.getLatitude());
             String lng = String.valueOf(mCurrentLocation.getLongitude());
-            Appdata.latitude=lat;
-            Appdata.longtitude=lng;
-            Log.d("LATTITUIDE",lat);
-            Log.d("Longtitude",lng);
+            Appdata.latitude = lat;
+            Appdata.longtitude = lng;
+            Log.d("LATTITUIDE", lat);
+            Log.d("Longtitude", lng);
 
             HelperClass.getInstance(GetStartedActivity.this).setCurrentLatLng(lat, lng);
 
@@ -366,6 +367,7 @@ public class GetStartedActivity extends AppCompatActivity implements
             }
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -403,7 +405,6 @@ public class GetStartedActivity extends AppCompatActivity implements
     }
 
 
-
     @Override
     public void onStop() {
         super.onStop();
@@ -411,15 +412,7 @@ public class GetStartedActivity extends AppCompatActivity implements
         mGoogleApiClient.disconnect();
         Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
     }
-    @Override
-    public void callbackForAlert(String result, int i) {
-        if (result.equalsIgnoreCase("ok") && i==1){
-            ActivityCompat.requestPermissions(GetStartedActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_LOCATION);
-        }
-    }
-    }
+}
 
 
 

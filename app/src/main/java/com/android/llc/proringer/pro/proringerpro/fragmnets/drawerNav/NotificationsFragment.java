@@ -3,20 +3,14 @@ package com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
-import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
-import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert_error;
-import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
@@ -25,14 +19,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.SwitchHelper;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-
-import static android.R.id.message;
-
 
 /**
  * Created by bodhidipta on 22/06/17.
@@ -51,7 +38,7 @@ import static android.R.id.message;
  * limitations under the License.
  */
 
-public class NotificationsFragment extends Fragment implements MyCustomAlertListener {
+public class NotificationsFragment extends Fragment{
     private SwitchHelper email_newsletter, email_chat_msg, email_tips_artcl, email_project_replies, mobile_newsletter, email_newreviw, account_achivement, mobile_chat_msg, mobile_tips_artcl, mobile_project_replies, mobileaccountachivement, mobilereview;
     ArrayList<APIGetData> arrayList = null;
     String  set_email_newsletter, set_email_chat_msg,set_email_tips_artcl, set_email_prjct_rspnse, set_mobile_newsletter, set_email_newreviw, set_account_achivement, set_mobile_chat_msg, set_mobile_tips_artcl, set_mobile_prjct_rspnse, set_mobileaccountachivement, set_mobilereview;
@@ -82,10 +69,13 @@ public class NotificationsFragment extends Fragment implements MyCustomAlertList
         mobileaccountachivement = (SwitchHelper) view.findViewById(R.id.mobileaccountachivement);
         mobilereview = (SwitchHelper) view.findViewById(R.id.mobilereview);
         arrayList = new ArrayList<APIGetData>();
+
         APIGetData apiGetData = new APIGetData();
         apiGetData.setPARAMS("user_id");
         apiGetData.setValues(ProApplication.getInstance().getUserId());
         arrayList.add(apiGetData);
+
+
         myLoader=new MyLoader(getActivity());
         email_newsletter.setState(ProApplication.getInstance().getUserNotification().isEmail_newsletter());
         email_chat_msg.setState(ProApplication.getInstance().getUserNotification().isEmail_chat_msg());
@@ -223,9 +213,19 @@ public class NotificationsFragment extends Fragment implements MyCustomAlertList
             @Override
             public void onError(String error) {
                 myLoader.dismissLoader();
-                CustomAlert_error customAlert = new CustomAlert_error(getActivity(),"Load Error",""+error,NotificationsFragment.this);
-                customAlert.getListenerRetryCancelFromNormalAlert("retry","abort",1);
 
+                CustomAlert customAlert = new CustomAlert();
+                customAlert.getEventFromNormalAlert(getActivity(), "Load Error", "" + error, "Retry", "Abort", new CustomAlert.MyCustomAlertListener() {
+                    @Override
+                    public void callBackOk() {
+                        getNotificationState();
+                    }
+
+                    @Override
+                    public void callBackCancel() {
+
+                    }
+                });
             }
         });
 
@@ -262,12 +262,5 @@ public class NotificationsFragment extends Fragment implements MyCustomAlertList
                 mobileaccountachivement.getState()
         );
 
-    }
-
-    @Override
-    public void callbackForAlert(String result, int i) {
-        if (result.equalsIgnoreCase("retry") && i==1){
-            getNotificationState();
-        }
     }
 }
