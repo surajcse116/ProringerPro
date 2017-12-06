@@ -15,7 +15,7 @@ import com.android.llc.proringer.pro.proringerpro.activities.IndividualMessageAc
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProjectDetailedMessageAdapter;
 import com.android.llc.proringer.pro.proringerpro.helper.onItemClick;
-import com.android.llc.proringer.pro.proringerpro.pojo.ProjectMessageDetails;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetProjectMessageDetails;
 import java.util.ArrayList;
 
 /**
@@ -38,7 +38,7 @@ import java.util.ArrayList;
 public class ProjectMessagingFragment extends Fragment {
     RelativeLayout detailed_project_search;
     RecyclerView message_list;
-    ArrayList<ProjectMessageDetails> projectMessageDetailsArrayList;
+    ArrayList<SetGetProjectMessageDetails> setGetProjectMessageDetailsArrayList;
     ProjectDetailedMessageAdapter projectDetailedMessageAdapter;
 
     @Nullable
@@ -51,20 +51,20 @@ public class ProjectMessagingFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        projectMessageDetailsArrayList=new ArrayList<>();
+        setGetProjectMessageDetailsArrayList =new ArrayList<>();
 
         for (int i=0;i<15;i++){
-            ProjectMessageDetails projectMessageDetails=new ProjectMessageDetails();
-            projectMessageDetails.setIsOpen(false);
-            projectMessageDetails.setTagName("view "+i);
-            projectMessageDetailsArrayList.add(projectMessageDetails);
+            SetGetProjectMessageDetails setGetProjectMessageDetails =new SetGetProjectMessageDetails();
+            setGetProjectMessageDetails.setIsOpen(false);
+            setGetProjectMessageDetails.setTagName("view "+i);
+            setGetProjectMessageDetailsArrayList.add(setGetProjectMessageDetails);
         }
 
         detailed_project_search = (RelativeLayout) view.findViewById(R.id.detailed_project_search);
 
         message_list = (RecyclerView) view.findViewById(R.id.message_list);
         message_list.setLayoutManager(new LinearLayoutManager((LandScreenActivity)getActivity()));
-        projectDetailedMessageAdapter=new ProjectDetailedMessageAdapter((LandScreenActivity)getActivity(),projectMessageDetailsArrayList, new onItemClick() {
+        projectDetailedMessageAdapter=new ProjectDetailedMessageAdapter((LandScreenActivity)getActivity(), setGetProjectMessageDetailsArrayList, new onItemClick() {
             @Override
             public void onItemClick(int position) {
                 startActivity(new Intent((LandScreenActivity)getActivity(), IndividualMessageActivity.class));

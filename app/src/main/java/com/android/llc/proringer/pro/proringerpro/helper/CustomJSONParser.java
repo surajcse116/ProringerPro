@@ -1,11 +1,10 @@
 package com.android.llc.proringer.pro.proringerpro.helper;
 
 import android.content.Context;
-import android.graphics.pdf.PdfDocument;
 import android.os.AsyncTask;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 
 import org.json.JSONObject;
@@ -138,7 +137,7 @@ public class CustomJSONParser {
         }
     }
 
-    public void fireAPIForGetMethod(Context mcontext, final String URL, final ArrayList<APIGetData> apiGetData, final CustomJSONResponse customJSONResponse) {
+    public void fireAPIForGetMethod(Context mcontext, final String URL, final ArrayList<SetGetAPI> setGetData, final CustomJSONResponse customJSONResponse) {
 
         Logger.printMessage("URLGet", URL);
 
@@ -154,9 +153,9 @@ public class CustomJSONParser {
                 protected void onPreExecute() {
                     super.onPreExecute();
 
-                    if (apiGetData != null && apiGetData.size() > 0) {
+                    if (setGetData != null && setGetData.size() > 0) {
 //                        PARAMS = "&";
-                        for (APIGetData data : apiGetData) {
+                        for (SetGetAPI data : setGetData) {
                             PARAMS = PARAMS + data.getPARAMS() + "=" + data.getValues() + "&";
                         }
                         Logger.printMessage("url", "" + URL + PARAMS);

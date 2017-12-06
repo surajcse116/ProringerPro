@@ -13,13 +13,11 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
-import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
@@ -110,7 +108,7 @@ public class InviteAfriendFragment extends Fragment{
 
                             Logger.printMessage("params", String.valueOf(Params));
 
-                          new CustomJSONParser() .fireAPIForPostMethod(getActivity(), AppConstant.invitefriend, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                          new CustomJSONParser() .fireAPIForPostMethod(getActivity(), ProConstant.invitefriend, Params, null, new CustomJSONParser.CustomJSONResponse() {
                               @Override
                               public void onSuccess(String result) {
                                   Logger.printMessage("result",result);

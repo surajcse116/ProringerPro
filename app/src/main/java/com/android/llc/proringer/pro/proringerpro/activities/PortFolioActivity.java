@@ -21,7 +21,6 @@ import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.AddImageAdapter;
 import com.android.llc.proringer.pro.proringerpro.adapter.PortFolioAdapter;
@@ -31,8 +30,8 @@ import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
-import com.android.llc.proringer.pro.proringerpro.pojo.Showportfoliosetget;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetShowPortFolio;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
@@ -57,8 +56,8 @@ public class PortFolioActivity extends AppCompatActivity{
     MyLoader myLoader;
     PortFolioAdapter portfolio;
     ArrayList<String> portPolioImageGalleryArrayList = null;
-    ArrayList<APIGetData> arrayList = null;
-    ArrayList<Showportfoliosetget>arrayList1=null;
+    ArrayList<SetGetAPI> arrayList = null;
+    ArrayList<SetGetShowPortFolio>arrayList1=null;
     private String mCurrentPhotoPath = "";
     JSONArray multipleimage;
 
@@ -75,11 +74,11 @@ public class PortFolioActivity extends AppCompatActivity{
         RLAddPortFolio = (RelativeLayout) findViewById(R.id.RLAddPortFolio);
         RLEmpty = (RelativeLayout) findViewById(R.id.RLEmpty);
         myLoader= new MyLoader(PortFolioActivity.this);
-        arrayList = new ArrayList<APIGetData>();
-        APIGetData apiGetData = new APIGetData();
-        apiGetData.setValues(ProApplication.getInstance().getUserId());
-        apiGetData.setPARAMS("user_id");
-        arrayList.add(apiGetData);
+        arrayList = new ArrayList<SetGetAPI>();
+        SetGetAPI setGetAPI = new SetGetAPI();
+        setGetAPI.setValues(ProApplication.getInstance().getUserId());
+        setGetAPI.setPARAMS("user_id");
+        arrayList.add(setGetAPI);
         arrayList1= new ArrayList<>();
         portPolioImageGalleryArrayList = new ArrayList<>();
         showdata();
@@ -229,7 +228,7 @@ public class PortFolioActivity extends AppCompatActivity{
 
     {
 
-       new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, AppConstant.portfoliolist, arrayList, new CustomJSONParser.CustomJSONResponse() {
+       new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, ProConstant.portfoliolist, arrayList, new CustomJSONParser.CustomJSONResponse() {
            @Override
            public void onSuccess(String result) {
                Logger.printMessage("result",result);
@@ -240,7 +239,7 @@ public class PortFolioActivity extends AppCompatActivity{
                    for (int i=0;i<infoarray.length();i++)
                    {
                        JSONObject jo= infoarray.getJSONObject(i);
-                       Showportfoliosetget show= new Showportfoliosetget();
+                       SetGetShowPortFolio show= new SetGetShowPortFolio();
                        show.setId(jo.getString("id"));
                        show.setPros_id(jo.getString("pros_id"));
                        show.setGallery_images(jo.getString("gallery_images"));

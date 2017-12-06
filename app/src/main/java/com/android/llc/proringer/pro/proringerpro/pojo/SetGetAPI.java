@@ -4,7 +4,7 @@ package com.android.llc.proringer.pro.proringerpro.pojo;
  * Created by su on 9/1/17.
  */
 
-public class APIGetData {
+public class SetGetAPI {
     String PARAMS;
     String Values;
 

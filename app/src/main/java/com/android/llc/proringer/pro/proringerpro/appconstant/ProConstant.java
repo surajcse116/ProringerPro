@@ -20,4 +20,27 @@ package com.android.llc.proringer.pro.proringerpro.appconstant;
 
 public class ProConstant {
     public static boolean cameraRequested = false;
+
+    public static String BASEURL="http://esolz.co.in/lab6/proringer_latest/";
+
+    public static String Login=BASEURL+"app_pro_login";
+    public static String Logout=BASEURL+"app_logout?";
+    public static String Signup=BASEURL+"app_pro_signup";
+    public static  String showuserinformation=BASEURL+"app_prouserinfo_list?";
+    public static  String updateuserinfo=BASEURL+"app_prouserinfo_save";
+    public static  String companyinformation=BASEURL+"app_procompany_info?";
+    public static  String companybusinessoptionapi=BASEURL+"app_probusiness_option";
+    public static  String copanyinfosave=BASEURL+"app_procompany_info_save";
+    public static  String catagory=BASEURL+"app_categorylist?";
+    public static  String autoquickreply=BASEURL+"app_pro_quickreply?";
+    public static  String quicksave=BASEURL+"app_pro_quickreply_save";
+    public static  String socialmedia=BASEURL+"app_pro_socialmedia?";
+    public static  String save=BASEURL+"app_pro_socialmedia_save";
+    public static  String replyreviw=BASEURL+"app_pro_request_review";
+    public static  String invitefriend=BASEURL+"app_pro_invite_friend";
+    public static  String liencelist=BASEURL+"app_prolicense_list?";
+    public static  String portfoliolist=BASEURL+"app_pro_portfolio?";
+    public static  String licenseadd=BASEURL+"app_prolicense_add";
+    public static  String licenseedit=BASEURL+"app_prolicense_edit";
+    public static  String deletelicense=BASEURL+"app_prolicense_delete";
 }

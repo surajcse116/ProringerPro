@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.helper.onItemClick;
-import com.android.llc.proringer.pro.proringerpro.pojo.ProjectMessageDetails;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetProjectMessageDetails;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 
@@ -37,18 +37,18 @@ import java.util.ArrayList;
 public class ProjectDetailedMessageAdapter extends RecyclerView.Adapter<ProjectDetailedMessageAdapter.ViewHolder> {
     Context mcontext = null;
     private onItemClick listener;
-    ArrayList<ProjectMessageDetails> projectMessageDetailsArrayList;
+    ArrayList<SetGetProjectMessageDetails> setGetProjectMessageDetailsArrayList;
     private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 
-    public ProjectDetailedMessageAdapter(Context mcontext, ArrayList<ProjectMessageDetails> projectMessageDetailsArrayList, onItemClick callback) {
+    public ProjectDetailedMessageAdapter(Context mcontext, ArrayList<SetGetProjectMessageDetails> setGetProjectMessageDetailsArrayList, onItemClick callback) {
         this.mcontext = mcontext;
-        this.projectMessageDetailsArrayList=projectMessageDetailsArrayList;
+        this.setGetProjectMessageDetailsArrayList = setGetProjectMessageDetailsArrayList;
         listener = callback;
     }
 
     @Override
     public int getItemCount() {
-        return projectMessageDetailsArrayList.size();
+        return setGetProjectMessageDetailsArrayList.size();
     }
 
     @Override
@@ -59,8 +59,8 @@ public class ProjectDetailedMessageAdapter extends RecyclerView.Adapter<ProjectD
     @Override
     public void onBindViewHolder(ProjectDetailedMessageAdapter.ViewHolder holder, final int position) {
 
-        if (projectMessageDetailsArrayList != null && 0 <= position && position < projectMessageDetailsArrayList.size()) {
-            final String data = projectMessageDetailsArrayList.get(position).getTagName();
+        if (setGetProjectMessageDetailsArrayList != null && 0 <= position && position < setGetProjectMessageDetailsArrayList.size()) {
+            final String data = setGetProjectMessageDetailsArrayList.get(position).getTagName();
 
             // Use ViewBindHelper to restore and save the open/close state of the SwipeRevealView
             // put an unique string id as value, can be any string which uniquely define the data
@@ -106,7 +106,7 @@ public class ProjectDetailedMessageAdapter extends RecyclerView.Adapter<ProjectD
             LLDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    projectMessageDetailsArrayList.remove(getAdapterPosition());
+                    setGetProjectMessageDetailsArrayList.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                 }
             });

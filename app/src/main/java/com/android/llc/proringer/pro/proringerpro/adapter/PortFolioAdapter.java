@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.pojo.PortFolio;
-import com.android.llc.proringer.pro.proringerpro.pojo.Showportfoliosetget;
-import com.android.llc.proringer.pro.proringerpro.pojo.showlicencesetget;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetShowPortFolio;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 import com.squareup.picasso.Picasso;
 
@@ -22,8 +20,8 @@ import java.util.ArrayList;
 
 public class PortFolioAdapter extends RecyclerView.Adapter<PortFolioAdapter.MyViewHolder> {
     Context mContext;
-    private ArrayList<Showportfoliosetget> arrlist;
-    public PortFolioAdapter(Context mContext,ArrayList<Showportfoliosetget> arrlist){
+    private ArrayList<SetGetShowPortFolio> arrlist;
+    public PortFolioAdapter(Context mContext,ArrayList<SetGetShowPortFolio> arrlist){
         this.mContext=mContext;
         this.arrlist=arrlist;
     }

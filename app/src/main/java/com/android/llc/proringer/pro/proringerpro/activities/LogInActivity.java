@@ -9,8 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
@@ -89,7 +89,7 @@ public class LogInActivity extends AppCompatActivity {
                     Params.put("user_type", "C");
                     Params.put("device_token", android_id);
                     Logger.printMessage("PARAMS", String.valueOf(Params));
-                    new CustomJSONParser().fireAPIForPostMethod(LogInActivity.this, AppConstant.Login, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                    new CustomJSONParser().fireAPIForPostMethod(LogInActivity.this, ProConstant.Login, Params, null, new CustomJSONParser.CustomJSONResponse() {
                         @Override
                         public void onSuccess(String result) {
                             myLoader.dismissLoader();

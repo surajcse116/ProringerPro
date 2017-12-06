@@ -44,8 +44,5 @@ public class ProApplication extends Application {
                 .putString("last_name", params[2])
                 .apply();
     }
-
-
-
 }
 

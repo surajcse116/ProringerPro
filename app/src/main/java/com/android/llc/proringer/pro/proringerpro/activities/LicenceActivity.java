@@ -29,19 +29,19 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog_catagory;
 import com.android.llc.proringer.pro.proringerpro.adapter.LicenceAdapter;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
-import com.android.llc.proringer.pro.proringerpro.pojo.showlicencesetget;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetShowLicence;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageFilePath;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
@@ -81,8 +81,8 @@ public class LicenceActivity extends AppCompatActivity {
     ImageView img_licence_file;
     private int PICK_IMAGE_REQUEST = 100;
     private int PICK_PDF_REQUEST = 200;
-    ArrayList<APIGetData> arrayList = null;
-    ArrayList<showlicencesetget> showlicencesetgetArrayList;
+    ArrayList<SetGetAPI> arrayList = null;
+    ArrayList<SetGetShowLicence> setGetShowLicenceArrayList;
     int arrlistsize;
     String mycurrentphotopath = "";
     String pros_contact_service = "";
@@ -129,12 +129,12 @@ public class LicenceActivity extends AppCompatActivity {
         tv_licence_number = (ProLightEditText) findViewById(R.id.tv_licence_number);
         tv_expires = (ProRegularTextView) findViewById(R.id.tv_expires);
         dropdown = (ImageView) findViewById(R.id.dropdown);
-        arrayList = new ArrayList<APIGetData>();
-        APIGetData apiGetData = new APIGetData();
-        apiGetData.setPARAMS("user_id");
-        apiGetData.setValues(ProApplication.getInstance().getUserId());
-        arrayList.add(apiGetData);
-        showlicencesetgetArrayList = new ArrayList<>();
+        arrayList = new ArrayList<SetGetAPI>();
+        SetGetAPI setGetAPI = new SetGetAPI();
+        setGetAPI.setPARAMS("user_id");
+        setGetAPI.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPI);
+        setGetShowLicenceArrayList = new ArrayList<>();
         showData();
         rcv_licence_list = (RecyclerView) findViewById(R.id.rcv_licence_list);
         rcv_licence_list.setLayoutManager(new LinearLayoutManager(LicenceActivity.this));
@@ -147,13 +147,13 @@ public class LicenceActivity extends AppCompatActivity {
         LLEdit = (LinearLayout) findViewById(R.id.LLEdit);
         img_licence_file = (ImageView) findViewById(R.id.img_licence_file);
 
-        licenceAdapter = new LicenceAdapter(LicenceActivity.this, showlicencesetgetArrayList);
+        licenceAdapter = new LicenceAdapter(LicenceActivity.this, setGetShowLicenceArrayList);
         rcv_licence_list.setAdapter(licenceAdapter);
         LLUpload.setVisibility(View.VISIBLE);
         LLEdit.setVisibility(View.GONE);
         Logger.printMessage("photoPath", mycurrentphotopath);
         catagory();
-        Logger.printMessage("arrayLicenseSize", String.valueOf(showlicencesetgetArrayList.size()));
+        Logger.printMessage("arrayLicenseSize", String.valueOf(setGetShowLicenceArrayList.size()));
 
         img_add_licence.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -418,7 +418,7 @@ public class LicenceActivity extends AppCompatActivity {
 
 
     public void showData() {
-        new CustomJSONParser().fireAPIForGetMethod(LicenceActivity.this, AppConstant.liencelist, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(LicenceActivity.this, ProConstant.liencelist, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 Logger.printMessage("result", result);
@@ -429,7 +429,7 @@ public class LicenceActivity extends AppCompatActivity {
                     Logger.printMessage("info_array", String.valueOf(info_arry));
                     for (int i = 0; i < info_arry.length(); i++) {
                         JSONObject jo = info_arry.getJSONObject(i);
-                        showlicencesetget show = new showlicencesetget();
+                        SetGetShowLicence show = new SetGetShowLicence();
                         show.setId(jo.getString("id"));
                         show.setPros_id(jo.getString("pros_id"));
                         show.setImage_info(jo.getString("image_info"));
@@ -440,25 +440,25 @@ public class LicenceActivity extends AppCompatActivity {
                         JSONObject catagory = jo.getJSONObject("category");
                         show.setCategory_id(catagory.getString("id"));
                         show.setCategory_name(catagory.getString("name"));
-                        showlicencesetgetArrayList.add(show);
+                        setGetShowLicenceArrayList.add(show);
 
                     }
                     if (licenceAdapter == null) {
                         RLEmpty.setVisibility(View.VISIBLE);
                         rcv_licence_list.setVisibility(View.GONE);
                     } else {
-                        licenceAdapter = new LicenceAdapter(LicenceActivity.this, showlicencesetgetArrayList);
+                        licenceAdapter = new LicenceAdapter(LicenceActivity.this, setGetShowLicenceArrayList);
                         rcv_licence_list.setAdapter(licenceAdapter);
                         RLEmpty.setVisibility(View.GONE);
                         rcv_licence_list.setVisibility(View.VISIBLE);
                     }
-                    arrlistsize = showlicencesetgetArrayList.size();
-                    if (showlicencesetgetArrayList.size() == 2) {
+                    arrlistsize = setGetShowLicenceArrayList.size();
+                    if (setGetShowLicenceArrayList.size() == 2) {
                         img_add_licence.setVisibility(View.GONE);
                     } else {
                         img_add_licence.setVisibility(View.VISIBLE);
                     }
-                    Logger.printMessage("LicenseSize", String.valueOf(showlicencesetgetArrayList.size()));
+                    Logger.printMessage("LicenseSize", String.valueOf(setGetShowLicenceArrayList.size()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -494,7 +494,7 @@ public class LicenceActivity extends AppCompatActivity {
     }
 
     public void catagory() {
-        new CustomJSONParser().fireAPIForGetMethod(LicenceActivity.this, AppConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(LicenceActivity.this, ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 // Log.d("responese",result);
@@ -630,7 +630,7 @@ public class LicenceActivity extends AppCompatActivity {
                         CustomJSONParser.ImageParam = "image_info";
 
 
-                        new CustomJSONParser().APIForWithPhotoPostMethod(LicenceActivity.this, AppConstant.licenseadd, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
+                        new CustomJSONParser().APIForWithPhotoPostMethod(LicenceActivity.this, ProConstant.licenseadd, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
                             @Override
                             public void onSuccess(String result) {
                                 Logger.printMessage("result", result);
@@ -641,7 +641,7 @@ public class LicenceActivity extends AppCompatActivity {
                                     Toast.makeText(LicenceActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
                                     RLAddLicence.setVisibility(View.GONE);
                                     rcv_licence_list.setVisibility(View.VISIBLE);
-                                    showlicencesetgetArrayList.clear();
+                                    setGetShowLicenceArrayList.clear();
                                     showData();
 
                                 } catch (JSONException e) {

@@ -9,13 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
-import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 import org.json.JSONArray;
@@ -49,7 +49,7 @@ public class FaqActivity extends AppCompatActivity {
 
         linear_main_container = (LinearLayout) findViewById(R.id.linear_main_container);
 
-        new CustomJSONParser().fireAPIForGetMethod(FaqActivity.this, AppConstant.BASEURL + "app_faq", new ArrayList<APIGetData>(), new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(FaqActivity.this, ProConstant.BASEURL + "app_faq", new ArrayList<SetGetAPI>(), new CustomJSONParser.CustomJSONResponse() {
 
             @Override
             public void onSuccess(String result) {

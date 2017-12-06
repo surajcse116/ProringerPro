@@ -22,8 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.DashBoardFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MyProjectsFragment;
@@ -39,7 +39,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.BottomNav;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.NavigationHandler;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -63,7 +63,7 @@ public class LandScreenActivity extends AppCompatActivity {
     LinearLayout linear_buttombar;
     private ImageView dashboard_image, my_projects_image, messages_image, fav_pro_image;
     private ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
-    ArrayList<APIGetData> arrayList=null;
+    ArrayList<SetGetAPI> arrayList=null;
     public MyLoader myLoader=null;
 
 
@@ -257,23 +257,23 @@ public class LandScreenActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 myLoader.showLoader();
-                                arrayList=new ArrayList<APIGetData>();
-                                APIGetData apiGetData=new APIGetData();
-                                apiGetData.setPARAMS("user_id");
-                                apiGetData.setValues(ProApplication.getInstance().getUserId());
-                                arrayList.add(apiGetData);
+                                arrayList=new ArrayList<SetGetAPI>();
+                                SetGetAPI setGetAPI =new SetGetAPI();
+                                setGetAPI.setPARAMS("user_id");
+                                setGetAPI.setValues(ProApplication.getInstance().getUserId());
+                                arrayList.add(setGetAPI);
 
-                                apiGetData=new APIGetData();
-                                apiGetData.setPARAMS("anorid_status");
-                                apiGetData.setValues("1");
-                                arrayList.add(apiGetData);
+                                setGetAPI =new SetGetAPI();
+                                setGetAPI.setPARAMS("anorid_status");
+                                setGetAPI.setValues("1");
+                                arrayList.add(setGetAPI);
 
-                                apiGetData=new APIGetData();
-                                apiGetData.setPARAMS("ios_status");
-                                apiGetData.setValues("1");
-                                arrayList.add(apiGetData);
+                                setGetAPI =new SetGetAPI();
+                                setGetAPI.setPARAMS("ios_status");
+                                setGetAPI.setValues("1");
+                                arrayList.add(setGetAPI);
 
-                                new CustomJSONParser().fireAPIForGetMethod(LandScreenActivity.this, AppConstant.Logout, arrayList, new CustomJSONParser.CustomJSONResponse() {
+                                new CustomJSONParser().fireAPIForGetMethod(LandScreenActivity.this, ProConstant.Logout, arrayList, new CustomJSONParser.CustomJSONResponse() {
                                     @Override
                                     public void onSuccess(String result) {
                                         try {

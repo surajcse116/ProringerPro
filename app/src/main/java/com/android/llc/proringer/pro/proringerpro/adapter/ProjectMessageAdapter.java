@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.helper.onItemClick;
-import com.android.llc.proringer.pro.proringerpro.pojo.ProjectMessage;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetProjectMessage;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 
@@ -38,13 +38,13 @@ import java.util.ArrayList;
 public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAdapter.ViewHolder> {
     private Context mcontext;
     private onItemClick listener;
-    ArrayList<ProjectMessage> projectMessageArrayList;
+    ArrayList<SetGetProjectMessage> setGetProjectMessageArrayList;
     private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 
-    public ProjectMessageAdapter(Context mcontext, ArrayList<ProjectMessage> projectMessageArrayList, onItemClick calback) {
+    public ProjectMessageAdapter(Context mcontext, ArrayList<SetGetProjectMessage> setGetProjectMessageArrayList, onItemClick calback) {
         this.mcontext = mcontext;
         listener = calback;
-        this.projectMessageArrayList = projectMessageArrayList;
+        this.setGetProjectMessageArrayList = setGetProjectMessageArrayList;
     }
 
     @Override
@@ -55,8 +55,8 @@ public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAd
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
-        if (projectMessageArrayList != null && 0 <= position && position < projectMessageArrayList.size()) {
-            final String data = projectMessageArrayList.get(position).getTagName();
+        if (setGetProjectMessageArrayList != null && 0 <= position && position < setGetProjectMessageArrayList.size()) {
+            final String data = setGetProjectMessageArrayList.get(position).getTagName();
 
             // Use ViewBindHelper to restore and save the open/close state of the SwipeRevealView
             // put an unique string id as value, can be any string which uniquely define the data
@@ -83,10 +83,10 @@ public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAd
 
     @Override
     public int getItemCount() {
-        if (projectMessageArrayList == null) {
+        if (setGetProjectMessageArrayList == null) {
             return 0;
         } else {
-            return projectMessageArrayList.size();
+            return setGetProjectMessageArrayList.size();
         }
     }
 
@@ -109,7 +109,7 @@ public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAd
             delete_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    projectMessageArrayList.remove(getAdapterPosition());
+                    setGetProjectMessageArrayList.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                 }
             });

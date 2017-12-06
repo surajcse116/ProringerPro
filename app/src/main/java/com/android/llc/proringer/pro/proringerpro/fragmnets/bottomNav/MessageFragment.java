@@ -12,7 +12,7 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProjectMessageAdapter;
 import com.android.llc.proringer.pro.proringerpro.helper.onItemClick;
-import com.android.llc.proringer.pro.proringerpro.pojo.ProjectMessage;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetProjectMessage;
 import java.util.ArrayList;
 
 
@@ -36,7 +36,7 @@ import java.util.ArrayList;
 public class MessageFragment extends Fragment {
     private RecyclerView project_message_list;
     private ProjectMessageAdapter adapter;
-    ArrayList<ProjectMessage> projectMessageArrayList;
+    ArrayList<SetGetProjectMessage> setGetProjectMessageArrayList;
 
     @Nullable
     @Override
@@ -47,21 +47,21 @@ public class MessageFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        projectMessageArrayList=new ArrayList<>();
+        setGetProjectMessageArrayList =new ArrayList<>();
 
 
         for (int i=0;i<15;i++){
-            ProjectMessage projectMessage=new ProjectMessage();
-            projectMessage.setIsOpen(false);
-            projectMessage.setTagName("view "+i);
-            projectMessageArrayList.add(projectMessage);
+            SetGetProjectMessage setGetProjectMessage =new SetGetProjectMessage();
+            setGetProjectMessage.setIsOpen(false);
+            setGetProjectMessage.setTagName("view "+i);
+            setGetProjectMessageArrayList.add(setGetProjectMessage);
         }
 
         project_message_list = (RecyclerView) view.findViewById(R.id.message_list);
         project_message_list.setLayoutManager(new LinearLayoutManager((LandScreenActivity)getActivity()));
 
 
-        adapter = new ProjectMessageAdapter((LandScreenActivity)getActivity(),projectMessageArrayList, new onItemClick() {
+        adapter = new ProjectMessageAdapter((LandScreenActivity)getActivity(), setGetProjectMessageArrayList, new onItemClick() {
             @Override
             public void onItemClick(int pos) {
                 //((LandScreenActivity) getActivity()).toggleToolBar(true);

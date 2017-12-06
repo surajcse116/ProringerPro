@@ -24,9 +24,9 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
@@ -34,7 +34,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.google.android.gms.common.ConnectionResult;
@@ -70,7 +70,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
     ProRegularTextView et_busineestype, tv_save;
     ScrollView ScrollViewMAin;
     MyLoader myLoader;
-    ArrayList<APIGetData> arrayList = null;
+    ArrayList<SetGetAPI> arrayList = null;
     CustomListAdapterDialog customListAdapterDialog = null;
     PopupWindow popupWindow;
     JSONArray btype;
@@ -197,12 +197,12 @@ public class CompanyProfileActivity extends AppCompatActivity implements
 
     public void data() {
         myLoader.showLoader();
-        arrayList = new ArrayList<APIGetData>();
-        APIGetData apiGetData = new APIGetData();
-        apiGetData.setPARAMS("user_id");
-        apiGetData.setValues(ProApplication.getInstance().getUserId());
-        arrayList.add(apiGetData);
-        new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, AppConstant.companyinformation, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        arrayList = new ArrayList<SetGetAPI>();
+        SetGetAPI setGetAPI = new SetGetAPI();
+        setGetAPI.setPARAMS("user_id");
+        setGetAPI.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPI);
+        new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, ProConstant.companyinformation, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 Logger.printMessage("result", result);
@@ -315,7 +315,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
     }
 
     public void dropdwondata() {
-        new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, AppConstant.companybusinessoptionapi, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, ProConstant.companybusinessoptionapi, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 //Log.d("business",result);
@@ -648,7 +648,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                                                     Params.put("longitude", Appdata.longtitude);
                                                     Logger.printMessage("PARAMS", String.valueOf(Params));
 
-                                                    new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, AppConstant.copanyinfosave, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                                    new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, ProConstant.copanyinfosave, Params, null, new CustomJSONParser.CustomJSONResponse() {
                                                         @Override
                                                         public void onSuccess(String result) {
                                                             Logger.printMessage("result", result);

@@ -1,11 +1,10 @@
 package com.android.llc.proringer.pro.proringerpro.pojo;
 
 /**
- * Created by su on 8/8/17.
+ * Created by su on 7/29/17.
  */
 
-public class ProjectMessageDetails {
-
+public class SetGetProjectMessage {
     String tagName="";
 
     public String getTagName() {
@@ -15,7 +14,6 @@ public class ProjectMessageDetails {
     public void setTagName(String tagName) {
         this.tagName = tagName;
     }
-
 
     boolean isOpen;
 

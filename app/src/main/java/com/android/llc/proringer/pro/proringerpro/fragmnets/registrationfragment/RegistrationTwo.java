@@ -23,11 +23,11 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LocationActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.SignupCompleteActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog_catagory;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
@@ -273,7 +273,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
 
     public  void catagory()
     {
-        new CustomJSONParser().fireAPIForGetMethod(getActivity(), AppConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                // Log.d("responese",result);
@@ -428,7 +428,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                             myload.showLoader();
 
 
-                                            new CustomJSONParser().fireAPIForPostMethod(getActivity(),AppConstant.Signup,Params1,null, new CustomJSONParser.CustomJSONResponse() {
+                                            new CustomJSONParser().fireAPIForPostMethod(getActivity(),ProConstant.Signup,Params1,null, new CustomJSONParser.CustomJSONResponse() {
                                                @Override
                                                public void onSuccess(String result) {
                                                   myload.dismissLoader();

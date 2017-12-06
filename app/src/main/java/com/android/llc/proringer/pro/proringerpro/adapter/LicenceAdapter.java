@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LicenceEditActivity;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
-import com.android.llc.proringer.pro.proringerpro.pojo.showlicencesetget;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetShowLicence;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 import com.squareup.picasso.Picasso;
 
@@ -26,9 +26,9 @@ public class LicenceAdapter extends RecyclerView.Adapter<LicenceAdapter.MyViewHo
     //    ArrayList<PortFolio> portFolioArrayList;
     Context mContext;
 
-    private ArrayList<showlicencesetget> arrlist;
+    private ArrayList<SetGetShowLicence> arrlist;
 
-    public LicenceAdapter(Context mContext,ArrayList<showlicencesetget> arrlist) {
+    public LicenceAdapter(Context mContext,ArrayList<SetGetShowLicence> arrlist) {
         this.mContext = mContext;
         this.arrlist=arrlist;
         //this.portFolioArrayList=portFolioArrayList;

@@ -12,13 +12,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
-import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 import org.json.JSONException;
@@ -73,7 +73,7 @@ public class TermsPrivacyActivity extends AppCompatActivity {
 
     public void loadDataTermsOfUse() {
 
-        new CustomJSONParser().fireAPIForGetMethod(TermsPrivacyActivity.this, AppConstant.BASEURL + "app_term", new ArrayList<APIGetData>(), new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(TermsPrivacyActivity.this, ProConstant.BASEURL + "app_term", new ArrayList<SetGetAPI>(), new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 if (myLoader != null && myLoader.isMyLoaderShowing())
@@ -137,7 +137,7 @@ public class TermsPrivacyActivity extends AppCompatActivity {
 
     public void loadPrivacyPolicy() {
 
-        new CustomJSONParser().fireAPIForGetMethod(TermsPrivacyActivity.this, AppConstant.BASEURL + "app_privacy_policy", new ArrayList<APIGetData>(), new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(TermsPrivacyActivity.this, ProConstant.BASEURL + "app_privacy_policy", new ArrayList<SetGetAPI>(), new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 if (myLoader != null && myLoader.isMyLoaderShowing())

@@ -3,24 +3,20 @@ package com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
-import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
@@ -39,7 +35,7 @@ public class SocialMediaFragment extends Fragment {
 
     ProLightEditText et_facebook, et_twit, et_google, et_in, et_youtube, et_insta, et_sky, et_prin;
     ProRegularTextView save;
-    ArrayList<APIGetData> arrayList = null;
+    ArrayList<SetGetAPI> arrayList = null;
     MyLoader myload;
     String paypal = "";
 
@@ -136,7 +132,7 @@ public class SocialMediaFragment extends Fragment {
                                         Params.put("instagramlink", insta);
                                         Params.put("skypelink", sky);
                                         Params.put("paypallink", Appdata.paypal);
-                                        new CustomJSONParser().fireAPIForPostMethod(getActivity(), AppConstant.save, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                        new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.save, Params, null, new CustomJSONParser.CustomJSONResponse() {
                                             @Override
                                             public void onSuccess(String result) {
                                                 myload.dismissLoader();
@@ -200,13 +196,13 @@ public class SocialMediaFragment extends Fragment {
 
     {
 
-        arrayList = new ArrayList<APIGetData>();
-        APIGetData apiGetData = new APIGetData();
-        apiGetData.setPARAMS("user_id");
-        apiGetData.setValues(ProApplication.getInstance().getUserId());
-        arrayList.add(apiGetData);
+        arrayList = new ArrayList<SetGetAPI>();
+        SetGetAPI setGetAPI = new SetGetAPI();
+        setGetAPI.setPARAMS("user_id");
+        setGetAPI.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPI);
         Logger.printMessage("hgdgfd", String.valueOf(arrayList));
-        new CustomJSONParser().fireAPIForGetMethod(getActivity(), AppConstant.socialmedia, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.socialmedia, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();

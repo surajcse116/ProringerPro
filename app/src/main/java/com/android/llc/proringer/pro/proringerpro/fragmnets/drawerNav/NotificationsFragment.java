@@ -9,14 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
-import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.APIGetData;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.SwitchHelper;
 
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ import java.util.ArrayList;
 
 public class NotificationsFragment extends Fragment{
     private SwitchHelper email_newsletter, email_chat_msg, email_tips_artcl, email_project_replies, mobile_newsletter, email_newreviw, account_achivement, mobile_chat_msg, mobile_tips_artcl, mobile_project_replies, mobileaccountachivement, mobilereview;
-    ArrayList<APIGetData> arrayList = null;
+    ArrayList<SetGetAPI> arrayList = null;
     String  set_email_newsletter, set_email_chat_msg,set_email_tips_artcl, set_email_prjct_rspnse, set_mobile_newsletter, set_email_newreviw, set_account_achivement, set_mobile_chat_msg, set_mobile_tips_artcl, set_mobile_prjct_rspnse, set_mobileaccountachivement, set_mobilereview;
     MyLoader myLoader;
     ScrollView ScrollViewMAin;
@@ -68,12 +66,12 @@ public class NotificationsFragment extends Fragment{
         mobile_project_replies = (SwitchHelper) view.findViewById(R.id.mobile_project_replies);
         mobileaccountachivement = (SwitchHelper) view.findViewById(R.id.mobileaccountachivement);
         mobilereview = (SwitchHelper) view.findViewById(R.id.mobilereview);
-        arrayList = new ArrayList<APIGetData>();
+        arrayList = new ArrayList<SetGetAPI>();
 
-        APIGetData apiGetData = new APIGetData();
-        apiGetData.setPARAMS("user_id");
-        apiGetData.setValues(ProApplication.getInstance().getUserId());
-        arrayList.add(apiGetData);
+        SetGetAPI setGetAPI = new SetGetAPI();
+        setGetAPI.setPARAMS("user_id");
+        setGetAPI.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPI);
 
 
         myLoader=new MyLoader(getActivity());

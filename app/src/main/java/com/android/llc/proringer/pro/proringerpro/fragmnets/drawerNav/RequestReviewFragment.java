@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.android.llc.proringer.pro.proringerpro.Constant.AppConstant;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
@@ -111,7 +111,7 @@ public class RequestReviewFragment extends Fragment {
                                 Params.put("comment", comment);
                                 Logger.printMessage("parms", String.valueOf(Params));
 
-                                new CustomJSONParser().fireAPIForPostMethod(getActivity(), AppConstant.replyreviw, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.replyreviw, Params, null, new CustomJSONParser.CustomJSONResponse() {
                                     @Override
                                     public void onSuccess(String result) {
                                         myload.dismissLoader();

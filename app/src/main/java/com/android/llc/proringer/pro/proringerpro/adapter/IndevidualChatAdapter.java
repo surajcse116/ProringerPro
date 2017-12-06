@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.pojo.ChatPojo;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetChatPojo;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
 import java.text.SimpleDateFormat;
@@ -35,9 +35,9 @@ import java.util.LinkedList;
 
 public class IndevidualChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mcontext;
-    private LinkedList<ChatPojo> dataList;
+    private LinkedList<SetGetChatPojo> dataList;
 
-    public IndevidualChatAdapter(Context mcontext, LinkedList<ChatPojo> list) {
+    public IndevidualChatAdapter(Context mcontext, LinkedList<SetGetChatPojo> list) {
         this.mcontext = mcontext;
         dataList = list;
     }
