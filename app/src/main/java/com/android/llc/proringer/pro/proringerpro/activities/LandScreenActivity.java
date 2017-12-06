@@ -59,12 +59,12 @@ public class LandScreenActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle = null;
     private FragmentManager fragmentManager = null;
     ProRegularTextView tv_title;
-    ImageView iv_pro_logo,search_local_pro_header,img_back;
+    ImageView iv_pro_logo, search_local_pro_header, img_back;
     LinearLayout linear_buttombar;
     private ImageView dashboard_image, my_projects_image, messages_image, fav_pro_image;
     private ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
-    ArrayList<SetGetAPI> arrayList=null;
-    public MyLoader myLoader=null;
+    ArrayList<SetGetAPI> arrayList = null;
+    public MyLoader myLoader = null;
 
 
     @Override
@@ -82,27 +82,27 @@ public class LandScreenActivity extends AppCompatActivity {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
-        tv_title=(ProRegularTextView)findViewById(R.id.tv_title);
+        tv_title = (ProRegularTextView) findViewById(R.id.tv_title);
         tv_title.setVisibility(View.GONE);
-        linear_buttombar=(LinearLayout)findViewById(R.id.linear_buttombar);
+        linear_buttombar = (LinearLayout) findViewById(R.id.linear_buttombar);
 
-        dashboard_image = (ImageView)findViewById(R.id.dashboard_image);
-        my_projects_image = (ImageView)findViewById(R.id.my_projects_image);
-        messages_image = (ImageView)findViewById(R.id.messages_image);
+        dashboard_image = (ImageView) findViewById(R.id.dashboard_image);
+        my_projects_image = (ImageView) findViewById(R.id.my_projects_image);
+        messages_image = (ImageView) findViewById(R.id.messages_image);
         fav_pro_image = (ImageView) findViewById(R.id.fav_pro_image);
-        dashboard_text = (ProRegularTextView)findViewById(R.id.dashboard_text);
-        my_projects_text = (ProRegularTextView)findViewById(R.id.my_projects_text);
-        messages_text = (ProRegularTextView)findViewById(R.id.messages_text);
-        fav_pro_text = (ProRegularTextView)findViewById(R.id.fav_pro_text);
-        myLoader=new MyLoader(LandScreenActivity.this);
-        iv_pro_logo=(ImageView)findViewById(R.id.iv_pro_logo);
+        dashboard_text = (ProRegularTextView) findViewById(R.id.dashboard_text);
+        my_projects_text = (ProRegularTextView) findViewById(R.id.my_projects_text);
+        messages_text = (ProRegularTextView) findViewById(R.id.messages_text);
+        fav_pro_text = (ProRegularTextView) findViewById(R.id.fav_pro_text);
+        myLoader = new MyLoader(LandScreenActivity.this);
+        iv_pro_logo = (ImageView) findViewById(R.id.iv_pro_logo);
 
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
-        search_local_pro_header=(ImageView) findViewById(R.id.search_local_pro_header);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        search_local_pro_header = (ImageView) findViewById(R.id.search_local_pro_header);
         search_local_pro_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 Intent i= new Intent( LandScreenActivity.this,SearchNearActivity.class);
+                Intent i = new Intent(LandScreenActivity.this, SearchNearActivity.class);
                 startActivity(i);
             }
         });
@@ -199,8 +199,8 @@ public class LandScreenActivity extends AppCompatActivity {
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("QUICK REPLY MESSAGE");
-                       // linear_buttombar.setVisibility(View.GONE);
-                        Intent i= new Intent(LandScreenActivity.this,QuickReplyActivity.class);
+                        // linear_buttombar.setVisibility(View.GONE);
+                        Intent i = new Intent(LandScreenActivity.this, QuickReplyActivity.class);
                         startActivity(i);
                         break;
 
@@ -257,18 +257,18 @@ public class LandScreenActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 myLoader.showLoader();
-                                arrayList=new ArrayList<SetGetAPI>();
-                                SetGetAPI setGetAPI =new SetGetAPI();
+                                arrayList = new ArrayList<SetGetAPI>();
+                                SetGetAPI setGetAPI = new SetGetAPI();
                                 setGetAPI.setPARAMS("user_id");
                                 setGetAPI.setValues(ProApplication.getInstance().getUserId());
                                 arrayList.add(setGetAPI);
 
-                                setGetAPI =new SetGetAPI();
+                                setGetAPI = new SetGetAPI();
                                 setGetAPI.setPARAMS("anorid_status");
                                 setGetAPI.setValues("1");
                                 arrayList.add(setGetAPI);
 
-                                setGetAPI =new SetGetAPI();
+                                setGetAPI = new SetGetAPI();
                                 setGetAPI.setPARAMS("ios_status");
                                 setGetAPI.setValues("1");
                                 arrayList.add(setGetAPI);
@@ -277,34 +277,31 @@ public class LandScreenActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(String result) {
                                         try {
-                                            JSONObject mainResponseObj =  new JSONObject(result);
-                                            String message=mainResponseObj.getString("message");
+                                            JSONObject mainResponseObj = new JSONObject(result);
+                                            String message = mainResponseObj.getString("message");
                                             ProApplication.getInstance().logOut();
-                                              startActivity(new Intent(LandScreenActivity.this,GetStartedActivity.class));
-                                             finish();
-                                             deleteDialog.dismiss();
+                                            startActivity(new Intent(LandScreenActivity.this, GetStartedActivity.class));
+                                            finish();
+                                            deleteDialog.dismiss();
                                             Toast.makeText(LandScreenActivity.this, "Successfully logout", Toast.LENGTH_SHORT).show();
-
 
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
-
-
                                     }
 
                                     @Override
                                     public void onError(String error, String response) {
                                         myLoader.dismissLoader();
                                         deleteDialog.dismiss();
-                                        Toast.makeText(LandScreenActivity.this, ""+response, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LandScreenActivity.this, "" + response, Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
                                     public void onError(String error) {
 
                                         myLoader.dismissLoader();
-                                        Toast.makeText(LandScreenActivity.this, ""+error, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LandScreenActivity.this, "" + error, Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -603,7 +600,6 @@ public class LandScreenActivity extends AppCompatActivity {
     }
 
 
-
     /**
      * Fragment transaction for MyProject
      */
@@ -627,10 +623,6 @@ public class LandScreenActivity extends AppCompatActivity {
             Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
         }
     }
-
-
-
-
 
 
     @Override
@@ -679,5 +671,7 @@ public class LandScreenActivity extends AppCompatActivity {
     public void redirectToDashBoard() {
         bottomNavInstance.highLightSelected(BottomNav.DASHBOARD);
         transactDashBoard();
-    };
+    }
+
+    ;
 }

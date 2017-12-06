@@ -48,147 +48,197 @@
 
         <activity
             android:name=".activities.GetStartedActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.SignUpActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
+
         <activity
             android:name=".activities.LogInActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.LandScreenActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.IndividualMessageActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.ForgetPasswordActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.BusinessHourActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.CompanyProfileActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.LicenceActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.AddServiceAreaActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.PortFolioActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.RequestReviewActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.ContactUsActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.ResendConfirmation"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.MyProjectDetailsActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.ProsReportAbuseActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.AddServicesActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.FaqActivity"
             android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.TermsPrivacyActivity"
             android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".utils.PermissionController"
             android:configChanges="orientation|screenLayout|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" />
+
         <activity
             android:name=".utils.ImageTakerActivityCamera"
             android:configChanges="orientation|screenLayout|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activities.QuickReplyActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity
             android:name=".activities.ReportAbuseActivity"
             android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:screenOrientation="portrait" />
+
+
         <activity
             android:name=".activities.SignupCompleteActivity"
             android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.SearchNearActivity"
             android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.Userinformation"
             android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.LoginSettingActivity"
             android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.GetVerifiedActivity"
             android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.PremiumActivity"
             android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:screenOrientation="portrait" />
+
         <activity android:name=".activities.PremiumAnnualActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity android:name=".activities.LocationActivity" />
+
+        <activity android:name=".activities.LocationActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            />
+
         <activity android:name=".activities.LicenceEditActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" ></activity>
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
     </application>
 
 </manifest>
