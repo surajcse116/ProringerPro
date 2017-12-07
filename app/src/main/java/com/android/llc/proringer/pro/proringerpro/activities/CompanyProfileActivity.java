@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.google.android.gms.common.ConnectionResult;
@@ -53,6 +55,8 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by su on 8/17/17.
@@ -337,6 +341,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
             public void onError(String error) {
 
             }
+
             @Override
             public void onStart() {
 
@@ -555,159 +560,162 @@ public class CompanyProfileActivity extends AppCompatActivity implements
     }
 
     public void submit() {
-        final String cname = et_name.getText().toString().trim();
-        final String cmail = et_email.getText().toString().trim();
-        final String cwebsite = et_companywesite.getText().toString().trim();
-        final String cphone = et_companyphone.getText().toString().trim();
-        final String employe = et_employee.getText().toString().trim();
-        final String address = et_address.getText().toString().trim();
-        final String zip = et_zip.getText().toString().trim();
-        final String city = et_city.getText().toString().trim();
-        final String state = et_state.getText().toString().trim();
-        if (cname.equals("")) {
+
+        if (et_name.getText().toString().trim().equals("")) {
             et_name.setError("Please enter company name");
             et_name.setFocusable(true);
         } else {
-            if (cmail.equals("")) {
-                et_email.setError("Please enter correct email");
+            if (et_email.getText().toString().trim().equals("")) {
+                et_email.setError("Please enter email");
                 et_email.setFocusable(true);
-
             } else {
-                if (cwebsite.equals("")) {
-                    et_companywesite.setError("Please enter company  website");
-                    et_companywesite.setFocusable(true);
-                } else {
-                    if (cphone.equals("")) {
-                        et_companyphone.setError("Enter company phone number");
-                        et_companyphone.setFocusable(true);
+                if (MethodsUtils.isValidEmail(et_email.getText().toString())) {
+                    if (et_companywesite.getText().toString().trim().equals("")) {
+                        et_companywesite.setError("Please enter company  website");
+                        et_companywesite.setFocusable(true);
                     } else {
-                        if (employe.equals("")) {
-                            et_employee.setError("Enter employee value");
-                            et_employee.setFocusable(true);
-                        } else {
-                            if (address.equals("")) {
-                                et_address.setError("Select your street address");
-                                et_address.setFocusable(true);
+                        if (MethodsUtils.isValidUrl(et_companywesite.getText().toString())) {
+                            if (et_companyphone.getText().toString().trim().equals("")) {
+                                et_companyphone.setError("Enter company phone number");
+                                et_companyphone.setFocusable(true);
                             } else {
-                                if (zip.equals("")) {
-                                    et_zip.setError("Select your zipcode");
-                                    et_zip.setFocusable(true);
+                                if (et_employee.getText().toString().trim().equals("")) {
+                                    et_employee.setError("Enter employee value");
+                                    et_employee.setFocusable(true);
                                 } else {
-                                    if (city.equals("")) {
-                                        et_city.setError("Select your city");
-                                        et_city.setFocusable(true);
+                                    if (et_address.getText().toString().trim().equals("")) {
+                                        et_address.setError("Select your street address");
+                                        et_address.setFocusable(true);
                                     } else {
-                                        if (state.equals("")) {
-                                            et_state.setError("select your state");
-                                            et_state.setFocusable(true);
+                                        if (et_zip.getText().toString().trim().equals("")) {
+                                            et_zip.setError("Select your zipcode");
+                                            et_zip.setFocusable(true);
                                         } else {
-                                            final String locale = CompanyProfileActivity.this.getResources().getConfiguration().locale.getCountry();
-                                            Logger.printMessage("COUNTRY CODE", locale);
-                                            ProConstant.country1 = locale;
-                                            Logger.printMessage("userid", ProApplication.getInstance().getUserId());
-                                            Logger.printMessage("b_desc", businessdata);
-                                            Logger.printMessage("comp_name", cname);
-                                            Logger.printMessage("comp_email", cmail);
-                                            Logger.printMessage("website", cwebsite);
-                                            Logger.printMessage("alt_phone", cphone);
-                                            Logger.printMessage("bus_type", ProConstant.id);
-                                            Logger.printMessage("num_emp", employe);
-                                            Logger.printMessage("com_address", address);
-                                            Logger.printMessage("city", city);
-                                            Logger.printMessage("country", locale);
-                                            Logger.printMessage("state", state);
-                                            Logger.printMessage("zipcode", zip);
-                                            Logger.printMessage("acc_name", accname);
-                                            Logger.printMessage("lat", ProConstant.latitude);
-                                            Logger.printMessage("long", ProConstant.longtitude);
-                                            LayoutInflater factory = LayoutInflater.from(CompanyProfileActivity.this);
-                                            final View deleteDialogView = factory.inflate(R.layout.alertdialog, null);
-                                            final AlertDialog deleteDialog = new AlertDialog.Builder(CompanyProfileActivity.this).create();
-                                            deleteDialog.setView(deleteDialogView);
-                                            deleteDialogView.findViewById(R.id.Yes).setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
+                                            if (et_city.getText().toString().trim().equals("")) {
+                                                et_city.setError("Select your city");
+                                                et_city.setFocusable(true);
+                                            } else {
+                                                if (et_state.getText().toString().trim().equals("")) {
+                                                    et_state.setError("select your state");
+                                                    et_state.setFocusable(true);
+                                                } else {
+                                                    final String locale = CompanyProfileActivity.this.getResources().getConfiguration().locale.getCountry();
+                                                    ProConstant.country1 = locale;
 
-                                                    HashMap<String, String> Params = new HashMap<>();
-                                                    Params.put("user_id", ProApplication.getInstance().getUserId());
-                                                    Params.put("desc", businessdata);
-                                                    Params.put("comp_name", cname);
-                                                    Params.put("comp_email", cmail);
-                                                    Params.put("website", cwebsite);
-                                                    Params.put("alt_phone", cphone);
-                                                    Params.put("bus_type", ProConstant.id);
-                                                    Params.put("num_emp", employe);
-                                                    Params.put("com_address", address);
-                                                    Params.put("city", city);
-                                                    Params.put("country", locale);
-                                                    Params.put("state", state);
-                                                    Params.put("zipcode", zip);
-                                                    Params.put("acc_name", accname);
-                                                    Params.put("latitude", ProConstant.latitude);
-                                                    Params.put("longitude", ProConstant.longtitude);
-                                                    Logger.printMessage("PARAMS", String.valueOf(Params));
+                                                    Logger.printMessage("COUNTRY CODE", ProConstant.country1);
+                                                    Logger.printMessage("userid", ProApplication.getInstance().getUserId());
+                                                    Logger.printMessage("b_desc", businessdata);
+                                                    Logger.printMessage("comp_name", et_name.getText().toString().trim());
+                                                    Logger.printMessage("comp_email", et_email.getText().toString().trim());
+                                                    Logger.printMessage("website", et_companywesite.getText().toString().trim());
+                                                    Logger.printMessage("alt_phone", et_companyphone.getText().toString().trim());
+                                                    Logger.printMessage("bus_type", ProConstant.id);
+                                                    Logger.printMessage("num_emp", et_employee.getText().toString().trim());
+                                                    Logger.printMessage("com_address", et_address.getText().toString().trim());
+                                                    Logger.printMessage("city", et_city.getText().toString().trim());
+                                                    Logger.printMessage("country", locale);
+                                                    Logger.printMessage("state", et_state.getText().toString().trim());
+                                                    Logger.printMessage("zipcode", et_zip.getText().toString().trim());
+                                                    Logger.printMessage("acc_name", accname);
+                                                    Logger.printMessage("lat", ProConstant.latitude);
+                                                    Logger.printMessage("long", ProConstant.longtitude);
 
-                                                    new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, ProConstant.copanyinfosave, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                                    LayoutInflater factory = LayoutInflater.from(CompanyProfileActivity.this);
+                                                    final View deleteDialogView = factory.inflate(R.layout.alertdialog, null);
+                                                    final AlertDialog deleteDialog = new AlertDialog.Builder(CompanyProfileActivity.this).create();
+                                                    deleteDialog.setView(deleteDialogView);
+                                                    deleteDialogView.findViewById(R.id.Yes).setOnClickListener(new View.OnClickListener() {
                                                         @Override
-                                                        public void onSuccess(String result) {
-                                                            Logger.printMessage("result", result);
-                                                            deleteDialog.dismiss();
-                                                            try {
-                                                                JSONObject job = new JSONObject(result);
-                                                                String msg = job.getString("message");
-                                                                data();
+                                                        public void onClick(View view) {
 
-                                                                Toast.makeText(CompanyProfileActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
+                                                            HashMap<String, String> Params = new HashMap<>();
+                                                            Params.put("user_id", ProApplication.getInstance().getUserId());
+                                                            Params.put("desc", businessdata);
+                                                            Params.put("comp_name", et_name.getText().toString().trim());
+                                                            Params.put("comp_email", et_email.getText().toString().trim());
+                                                            Params.put("website", et_companywesite.getText().toString().trim());
+                                                            Params.put("alt_phone", et_companyphone.getText().toString().trim());
+                                                            Params.put("bus_type", ProConstant.id);
+                                                            Params.put("num_emp", et_employee.getText().toString().trim());
+                                                            Params.put("com_address", et_address.getText().toString().trim());
+                                                            Params.put("city", et_city.getText().toString().trim());
+                                                            Params.put("country", locale);
+                                                            Params.put("state", et_state.getText().toString().trim());
+                                                            Params.put("zipcode", et_zip.getText().toString().trim());
+                                                            Params.put("acc_name", accname);
+                                                            Params.put("latitude", ProConstant.latitude);
+                                                            Params.put("longitude", ProConstant.longtitude);
+                                                            Logger.printMessage("PARAMS", String.valueOf(Params));
+
+                                                            new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, ProConstant.copanyinfosave, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                                                @Override
+                                                                public void onSuccess(String result) {
+                                                                    Logger.printMessage("result", result);
+                                                                    deleteDialog.dismiss();
+                                                                    try {
+                                                                        JSONObject job = new JSONObject(result);
+                                                                        String msg = job.getString("message");
+                                                                        data();
+
+                                                                        Toast.makeText(CompanyProfileActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
+                                                                    } catch (JSONException e) {
+                                                                        e.printStackTrace();
+                                                                    }
 
 
-                                                        }
+                                                                }
 
-                                                        @Override
-                                                        public void onError(String error, String response) {
-                                                            try {
-                                                                deleteDialog.dismiss();
-                                                                JSONObject job = new JSONObject(response);
-                                                                String message = job.getString("message");
-                                                                Toast.makeText(CompanyProfileActivity.this, "" + message, Toast.LENGTH_SHORT).show();
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
+                                                                @Override
+                                                                public void onError(String error, String response) {
+                                                                    try {
+                                                                        deleteDialog.dismiss();
+                                                                        JSONObject job = new JSONObject(response);
+                                                                        String message = job.getString("message");
+                                                                        Toast.makeText(CompanyProfileActivity.this, "" + message, Toast.LENGTH_SHORT).show();
+                                                                    } catch (JSONException e) {
+                                                                        e.printStackTrace();
+                                                                    }
 
 
-                                                        }
+                                                                }
 
-                                                        @Override
-                                                        public void onError(String error) {
+                                                                @Override
+                                                                public void onError(String error) {
 
-                                                        }
+                                                                }
 
-                                                        @Override
-                                                        public void onStart() {
+                                                                @Override
+                                                                public void onStart() {
+
+                                                                }
+                                                            });
 
                                                         }
                                                     });
+                                                    deleteDialogView.findViewById(R.id.NO).setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            deleteDialog.dismiss();
+                                                        }
+                                                    });
+
+                                                    deleteDialog.show();
 
                                                 }
-                                            });
-                                            deleteDialogView.findViewById(R.id.NO).setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    deleteDialog.dismiss();
-                                                }
-                                            });
 
-                                            deleteDialog.show();
-
+                                            }
                                         }
-
                                     }
                                 }
                             }
+                        } else {
+                            et_companywesite.setError("Please enter correct website");
+                            et_companywesite.setFocusable(true);
                         }
                     }
+                } else {
+                    et_email.setError("Please enter valid email");
+                    et_email.setFocusable(true);
                 }
             }
         }
