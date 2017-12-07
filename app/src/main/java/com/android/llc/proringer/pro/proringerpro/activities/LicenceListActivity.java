@@ -62,7 +62,7 @@ import java.util.Date;
  * Created by su on 8/18/17.
  */
 
-public class LicenceActivity extends AppCompatActivity {
+public class LicenceListActivity extends AppCompatActivity {
 
     private static final int REQUEST_WRITE_PERMISSION1 = 3000;
     private static final int REQUEST_WRITE_PERMISSION2 = 4000;
@@ -121,7 +121,7 @@ public class LicenceActivity extends AppCompatActivity {
                 saveData();
             }
         });
-        myLoader = new MyLoader(LicenceActivity.this);
+        myLoader = new MyLoader(LicenceListActivity.this);
         img_add_licence = (ImageView) findViewById(R.id.img_add_licence);
         tv_service = (ProRegularTextView) findViewById(R.id.tv_service);
         tv_issue = (ProLightEditText) findViewById(R.id.tv_issue);
@@ -138,7 +138,7 @@ public class LicenceActivity extends AppCompatActivity {
         setGetShowLicenceArrayList = new ArrayList<>();
 
         rcv_licence_list = (RecyclerView) findViewById(R.id.rcv_licence_list);
-        rcv_licence_list.setLayoutManager(new LinearLayoutManager(LicenceActivity.this));
+        rcv_licence_list.setLayoutManager(new LinearLayoutManager(LicenceListActivity.this));
 
         RLAddLicence.setVisibility(View.GONE);
         rcv_licence_list.setVisibility(View.GONE);
@@ -148,7 +148,7 @@ public class LicenceActivity extends AppCompatActivity {
         LLEdit = (LinearLayout) findViewById(R.id.LLEdit);
         img_licence_file = (ImageView) findViewById(R.id.img_licence_file);
 
-        licenceAdapter = new LicenceAdapter(LicenceActivity.this, setGetShowLicenceArrayList);
+        licenceAdapter = new LicenceAdapter(LicenceListActivity.this, setGetShowLicenceArrayList);
         rcv_licence_list.setAdapter(licenceAdapter);
         LLUpload.setVisibility(View.VISIBLE);
         LLEdit.setVisibility(View.GONE);
@@ -215,7 +215,7 @@ public class LicenceActivity extends AppCompatActivity {
                     mMonth = month;
                     mDay = date;
                 }
-                DatePickerDialog datePickerDialog = new DatePickerDialog(LicenceActivity.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(LicenceListActivity.this, new DatePickerDialog.OnDateSetListener() {
 
 
                     @Override
@@ -266,7 +266,7 @@ public class LicenceActivity extends AppCompatActivity {
     }
 
     private void showPhotoDialog() {
-        dialog = new Dialog(LicenceActivity.this);
+        dialog = new Dialog(LicenceListActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 //                    dialog.setCancelable(false);
         dialog.setContentView(R.layout.alert_dialog_image_or_pdf);
@@ -283,10 +283,10 @@ public class LicenceActivity extends AppCompatActivity {
 
         LinearLayout LLMain = (LinearLayout) dialog.findViewById(R.id.LLMain);
 
-        // LLMain.getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(LicenceActivity.this)[1]) /2;
+        // LLMain.getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(LicenceListActivity.this)[1]) /2;
 //        RLMain.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
         LLMain.setMinimumWidth(height);
-        LLMain.getLayoutParams().height = (MethodsUtils.getScreenHeightAndWidth(LicenceActivity.this)[1]) / 2;
+        LLMain.getLayoutParams().height = (MethodsUtils.getScreenHeightAndWidth(LicenceListActivity.this)[1]) / 2;
 
         TXTTitle.setText("Licence");
 
@@ -421,7 +421,7 @@ public class LicenceActivity extends AppCompatActivity {
 
 
     public void showData() {
-        new CustomJSONParser().fireAPIForGetMethod(LicenceActivity.this, ProConstant.liencelist, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(LicenceListActivity.this, ProConstant.liencelist, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 Logger.printMessage("result", result);
@@ -450,7 +450,7 @@ public class LicenceActivity extends AppCompatActivity {
                         RLEmpty.setVisibility(View.VISIBLE);
                         rcv_licence_list.setVisibility(View.GONE);
                     } else {
-                        licenceAdapter = new LicenceAdapter(LicenceActivity.this, setGetShowLicenceArrayList);
+                        licenceAdapter = new LicenceAdapter(LicenceListActivity.this, setGetShowLicenceArrayList);
                         rcv_licence_list.setAdapter(licenceAdapter);
                         RLEmpty.setVisibility(View.GONE);
                         rcv_licence_list.setVisibility(View.VISIBLE);
@@ -476,7 +476,7 @@ public class LicenceActivity extends AppCompatActivity {
             public void onError(String error) {
                 myLoader.dismissLoader();
                 CustomAlert customAlert = new CustomAlert();
-                customAlert.getEventFromNormalAlert(LicenceActivity.this, "Load Error", "" + error, "Ok", "Cancel", new CustomAlert.MyCustomAlertListener() {
+                customAlert.getEventFromNormalAlert(LicenceListActivity.this, "Load Error", "" + error, "Ok", "Cancel", new CustomAlert.MyCustomAlertListener() {
                     @Override
                     public void callBackOk() {
 
@@ -497,7 +497,7 @@ public class LicenceActivity extends AppCompatActivity {
     }
 
     public void category() {
-        new CustomJSONParser().fireAPIForGetMethod(LicenceActivity.this, ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(LicenceListActivity.this, ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 // Log.d("responese",result);
@@ -534,18 +534,18 @@ public class LicenceActivity extends AppCompatActivity {
 
     private void showDialogCategory(View v, JSONArray PredictionsJsonArray) {
 
-        popupWindow = new PopupWindow(LicenceActivity.this);
+        popupWindow = new PopupWindow(LicenceListActivity.this);
         // Closes the popup window when touch outside.
         popupWindow.setOutsideTouchable(true);
         // Removes default background.
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        View dailogView = LicenceActivity.this.getLayoutInflater().inflate(R.layout.dialogcat, null);
+        View dailogView = LicenceListActivity.this.getLayoutInflater().inflate(R.layout.dialogcat, null);
 
         RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
-        rcv_.setLayoutManager(new LinearLayoutManager(LicenceActivity.this));
+        rcv_.setLayoutManager(new LinearLayoutManager(LicenceListActivity.this));
 
-        custom = new CustomListAdapterDialog_catagory(LicenceActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
+        custom = new CustomListAdapterDialog_catagory(LicenceListActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
             @Override
             public void onItemPassed(int position, JSONObject value) {
                 popupWindow.dismiss();
@@ -579,7 +579,7 @@ public class LicenceActivity extends AppCompatActivity {
         String expire = tv_expires.getText().toString().trim();
 
         if (tv_service.getText().toString().trim().equals("")) {
-            Toast.makeText(LicenceActivity.this, "Select Category", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LicenceListActivity.this, "Select Category", Toast.LENGTH_SHORT).show();
 
         } else {
             if (issuere.equals("")) {
@@ -591,7 +591,7 @@ public class LicenceActivity extends AppCompatActivity {
                     tv_licence_number.setFocusable(true);
                 } else {
                     if (expire.equals("")) {
-                        Toast.makeText(LicenceActivity.this, "Select Expires date", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LicenceListActivity.this, "Select Expires date", Toast.LENGTH_SHORT).show();
 
                     } else {
                         Logger.printMessage("my save path", String.valueOf(file));
@@ -635,7 +635,7 @@ public class LicenceActivity extends AppCompatActivity {
 
                         CustomJSONParser.ImageParam = "image_info";
 
-                        new CustomJSONParser().APIForWithPhotoPostMethod(LicenceActivity.this, ProConstant.licenseadd, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
+                        new CustomJSONParser().APIForWithPhotoPostMethod(LicenceListActivity.this, ProConstant.licenseadd, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
                             @Override
                             public void onSuccess(String result) {
                                 Logger.printMessage("result", result);
@@ -643,7 +643,7 @@ public class LicenceActivity extends AppCompatActivity {
                                 try {
                                     JSONObject jo = new JSONObject(result);
                                     String msg = jo.getString("message");
-                                    Toast.makeText(LicenceActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LicenceListActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
                                     RLAddLicence.setVisibility(View.GONE);
                                     rcv_licence_list.setVisibility(View.VISIBLE);
                                     setGetShowLicenceArrayList.clear();

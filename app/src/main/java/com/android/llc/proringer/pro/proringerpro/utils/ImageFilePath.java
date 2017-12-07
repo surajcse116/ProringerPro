@@ -9,9 +9,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.util.Log;
 
-import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 
 /**

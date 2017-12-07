@@ -13,7 +13,7 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.AddServiceAreaActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.AddServicesActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.CompanyProfileActivity;
-import com.android.llc.proringer.pro.proringerpro.activities.LicenceActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.LicenceListActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PortFolioActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PremiumActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.UserinformationActivity;
@@ -77,7 +77,7 @@ public class DashBoardFragment extends Fragment {
         licence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), LicenceActivity.class);
+                Intent i = new Intent(getActivity(), LicenceListActivity.class);
                 startActivity(i);
             }
         });

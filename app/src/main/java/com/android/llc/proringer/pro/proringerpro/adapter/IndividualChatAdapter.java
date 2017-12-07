@@ -53,7 +53,6 @@ public class IndividualChatAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else {
             return new ViewHolderSender(LayoutInflater.from(mcontext).inflate(R.layout.indevidual_list_row_sender, parent, false));
         }
-
     }
 
     @Override

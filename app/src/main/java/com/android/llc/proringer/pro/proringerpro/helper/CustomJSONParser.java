@@ -45,6 +45,9 @@ public class CustomJSONParser {
                 @Override
                 protected void onPreExecute() {
                     super.onPreExecute();
+
+                    customJSONResponse.onStart();
+
                     builderNew = new MultipartBody.Builder().setType(MultipartBody.FORM);
                     Iterator myVeryOwnIterator = apiPostData.keySet().iterator();
 
@@ -67,7 +70,6 @@ public class CustomJSONParser {
                             }
                         }
                     }
-                    customJSONResponse.onStart();
                 }
 
                 @Override
@@ -153,6 +155,8 @@ public class CustomJSONParser {
                 protected void onPreExecute() {
                     super.onPreExecute();
 
+                    customJSONResponse.onStart();
+
                     if (setGetData != null && setGetData.size() > 0) {
 //                        PARAMS = "&";
                         for (SetGetAPI data : setGetData) {
@@ -160,8 +164,6 @@ public class CustomJSONParser {
                         }
                         Logger.printMessage("url", "" + URL + PARAMS);
                     }
-
-                    customJSONResponse.onStart();
                 }
 
                 @Override
@@ -214,7 +216,6 @@ public class CustomJSONParser {
         }
     }
 
-
     public void APIForWithPhotoPostMethod(Context context, final String URL, final ArrayList<SetGetAPIPostData> apiPostDataArrayList, final ArrayList<File> Photos, final CustomJSONResponse customJSONResponse) {
         if (NetworkUtil.getInstance().isNetworkAvailable(context)) {
             final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
@@ -229,6 +230,8 @@ public class CustomJSONParser {
                 protected void onPreExecute() {
                     super.onPreExecute();
 
+                    customJSONResponse.onStart();
+
                     Logger.printMessage("@@ POST URL- ", URL);
 
                     builderNew = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -241,10 +244,7 @@ public class CustomJSONParser {
                         if (file != null) {
                             builderNew.addFormDataPart("" + ImageParam, file.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, file));
                         }
-
                     }
-
-
                 }
 
                 @Override
