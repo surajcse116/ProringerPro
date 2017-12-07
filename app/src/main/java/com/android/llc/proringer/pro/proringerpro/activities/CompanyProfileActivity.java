@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.URLUtil;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.Toast;

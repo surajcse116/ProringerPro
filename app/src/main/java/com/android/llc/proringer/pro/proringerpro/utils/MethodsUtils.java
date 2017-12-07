@@ -37,9 +37,11 @@ public class MethodsUtils {
      * @return true if url is valid, false otherwise.
      */
     public static boolean isValidUrl(String url) {
-        Pattern p = Patterns.WEB_URL;
-        Matcher m = p.matcher(url.toLowerCase());
-        return m.matches();
+        if (url == null) {
+            return false;
+        } else {
+            return android.util.Patterns.WEB_URL.matcher(url).matches();
+        }
     }
 
 }
