@@ -251,7 +251,6 @@ public class CompanyProfileActivity extends AppCompatActivity implements
             @Override
             public void onSuccess(String result) {
                 Logger.printMessage("result", result);
-                myLoader.dismissLoader();
                 try {
                     JSONObject mainResponseObj = new JSONObject(result);
                     JSONArray job = mainResponseObj.getJSONArray("info_array");
@@ -278,6 +277,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                myLoader.dismissLoader();
             }
 
             @Override
@@ -306,7 +306,6 @@ public class CompanyProfileActivity extends AppCompatActivity implements
 
             @Override
             public void onStart() {
-                myLoader.dismissLoader();
             }
         });
 
