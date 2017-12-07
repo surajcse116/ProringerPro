@@ -17,7 +17,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -119,7 +118,7 @@ public class LicenceActivity extends AppCompatActivity {
         tv_save_licence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                savedata();
+                saveData();
             }
         });
         myLoader = new MyLoader(LicenceActivity.this);
@@ -129,13 +128,15 @@ public class LicenceActivity extends AppCompatActivity {
         tv_licence_number = (ProLightEditText) findViewById(R.id.tv_licence_number);
         tv_expires = (ProRegularTextView) findViewById(R.id.tv_expires);
         dropdown = (ImageView) findViewById(R.id.dropdown);
+
         arrayList = new ArrayList<SetGetAPI>();
         SetGetAPI setGetAPI = new SetGetAPI();
         setGetAPI.setPARAMS("user_id");
         setGetAPI.setValues(ProApplication.getInstance().getUserId());
         arrayList.add(setGetAPI);
+
         setGetShowLicenceArrayList = new ArrayList<>();
-        showData();
+
         rcv_licence_list = (RecyclerView) findViewById(R.id.rcv_licence_list);
         rcv_licence_list.setLayoutManager(new LinearLayoutManager(LicenceActivity.this));
 
@@ -152,7 +153,9 @@ public class LicenceActivity extends AppCompatActivity {
         LLUpload.setVisibility(View.VISIBLE);
         LLEdit.setVisibility(View.GONE);
         Logger.printMessage("photoPath", mycurrentphotopath);
-        catagory();
+
+        category();
+
         Logger.printMessage("arrayLicenseSize", String.valueOf(setGetShowLicenceArrayList.size()));
 
         img_add_licence.setOnClickListener(new View.OnClickListener() {
@@ -488,12 +491,12 @@ public class LicenceActivity extends AppCompatActivity {
 
             @Override
             public void onStart() {
-                myLoader.showLoader();
+
             }
         });
     }
 
-    public void catagory() {
+    public void category() {
         new CustomJSONParser().fireAPIForGetMethod(LicenceActivity.this, ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
@@ -503,24 +506,27 @@ public class LicenceActivity extends AppCompatActivity {
                     catagory = job.getJSONArray("info_array");
                     Logger.printMessage("CategoryArray", String.valueOf(catagory));
 
+                    showData();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    myLoader.dismissLoader();
                 }
             }
 
             @Override
             public void onError(String error, String response) {
-
+                myLoader.dismissLoader();
             }
 
             @Override
             public void onError(String error) {
-
+                myLoader.dismissLoader();
             }
 
             @Override
             public void onStart() {
-
+                myLoader.showLoader();
             }
         });
 
@@ -566,7 +572,7 @@ public class LicenceActivity extends AppCompatActivity {
 
     }
 
-    public void savedata() {
+    public void saveData() {
         String uid = ProApplication.getInstance().getUserId();
         String issuere = tv_issue.getText().toString().trim();
         String license = tv_licence_number.getText().toString().trim();
@@ -629,7 +635,6 @@ public class LicenceActivity extends AppCompatActivity {
 
                         CustomJSONParser.ImageParam = "image_info";
 
-
                         new CustomJSONParser().APIForWithPhotoPostMethod(LicenceActivity.this, ProConstant.licenseadd, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
                             @Override
                             public void onSuccess(String result) {
@@ -647,19 +652,16 @@ public class LicenceActivity extends AppCompatActivity {
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
                             }
 
                             @Override
                             public void onError(String error, String response) {
                                 myLoader.dismissLoader();
-
                             }
 
                             @Override
                             public void onError(String error) {
                                 myLoader.dismissLoader();
-
                             }
 
                             @Override
