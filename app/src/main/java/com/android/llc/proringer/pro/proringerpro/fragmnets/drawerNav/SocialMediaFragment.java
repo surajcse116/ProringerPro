@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
-import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
@@ -119,7 +118,7 @@ public class SocialMediaFragment extends Fragment {
                                         Logger.printMessage("instagram", insta);
                                         Logger.printMessage("sky", sky);
                                         Logger.printMessage("print", print);
-                                        Logger.printMessage("paypal_link", Appdata.paypal);
+                                        Logger.printMessage("paypal_link", ProConstant.paypal);
 
                                         HashMap<String, String> Params = new HashMap<>();
                                         Params.put("user_id", ProApplication.getInstance().getUserId());
@@ -131,7 +130,7 @@ public class SocialMediaFragment extends Fragment {
                                         Params.put("pinterestlink", print);
                                         Params.put("instagramlink", insta);
                                         Params.put("skypelink", sky);
-                                        Params.put("paypallink", Appdata.paypal);
+                                        Params.put("paypallink", ProConstant.paypal);
                                         new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.save, Params, null, new CustomJSONParser.CustomJSONResponse() {
                                             @Override
                                             public void onSuccess(String result) {
@@ -219,7 +218,7 @@ public class SocialMediaFragment extends Fragment {
                     et_prin.setText(jo.getString("pintrst_link"));
                     et_insta.setText(jo.getString("instgm_link"));
                     et_sky.setText(jo.getString("skype_link"));
-                    Appdata.paypal = jo.getString("paypal_link");
+                    ProConstant.paypal = jo.getString("paypal_link");
 
                 } catch (JSONException e) {
                     e.printStackTrace();

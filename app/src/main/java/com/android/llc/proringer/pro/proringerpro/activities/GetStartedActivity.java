@@ -19,11 +19,10 @@ import android.widget.ImageView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.GetStartedTutorial;
-import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
-import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
@@ -337,8 +336,8 @@ public class GetStartedActivity extends AppCompatActivity implements
         if (null != mCurrentLocation) {
             String lat = String.valueOf(mCurrentLocation.getLatitude());
             String lng = String.valueOf(mCurrentLocation.getLongitude());
-            Appdata.latitude = lat;
-            Appdata.longtitude = lng;
+            ProConstant.latitude = lat;
+            ProConstant.longtitude = lng;
             Logger.printMessage("LATTITUIDE", lat);
             Logger.printMessage("Longtitude", lng);
 

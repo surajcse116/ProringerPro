@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.appconstant.ProApplication;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.utils.NetworkUtil;
 
 import org.json.JSONArray;
@@ -57,95 +57,7 @@ public class HelperClass {
         this.currentLng = currentLng;
     }
 
-    public String[] getCurrentLatLng() {
-        String str[] = {
-                currentLat, currentLng
-        };
-        return str;
-    }
 
-
-    private final String LOG_IN_API = "http://esolz.co.in/lab6/proringer_latest/app_pro_login";
-    public static  String notifaction="http://esolz.co.in/lab6/proringer_latest/app_pro_notification";
-    public static  String updateNotificationDetailsAPI="http://esolz.co.in/lab6/proringer_latest/app_pronotification_save";
-
-    public void authenticateUser(String username, String password, final onResponseCallback callback) {
-        if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
-            new AsyncTask<String, Void, String>() {
-                String exception = "";
-
-                @Override
-                protected void onPreExecute() {
-                    super.onPreExecute();
-                    callback.onStart();
-                }
-
-                @Override
-                protected String doInBackground(String... strings) {
-                    try {
-                        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(5000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
-
-                        RequestBody body = new FormBody.Builder()
-                                .add("email", strings[0])
-                                .add("password", strings[1])
-                                .add("device_type", "a")
-                                .add("user_type", "C")
-                                .build();
-                        Request request = new Request.Builder()
-                                .post(body)
-                                .url(LOG_IN_API)
-                                .build();
-                        Response response = client.newCall(request).execute();
-
-                        Logger.printMessage("LogInActivity", "" + response);
-
-                        /*{
-                            info_array:
-                            {
-                                user_id:"206",
-                                user_type:"C",
-                                first_name:"Radhika",
-                                last_name:"Gupta"
-                            },
-                            response:true,
-                            message:"User logs in successfully",
-                            execution_time:"0.0298"
-                        }
-                        */
-                        String responseString = response.body().string();
-                        response.close();
-
-                        JSONObject jsonObject = new JSONObject(responseString);
-                        if (jsonObject.getBoolean("response")) {
-                            ProApplication.getInstance().setLoginPrefernce(jsonObject.getJSONObject("info_array").getString("user_id"), jsonObject.getJSONObject("info_array").getString("first_name"), jsonObject.getJSONObject("info_array").getString("last_name"));
-                            return responseString;
-                        } else {
-                            exception = jsonObject.getString("message");
-                            return exception;
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        exception = e.getMessage();
-                        return null;
-                    }
-                }
-
-                @Override
-                protected void onPostExecute(String s) {
-                    super.onPostExecute(s);
-                    if (exception.equals("")) {
-                        callback.onComplete(s);
-                    } else {
-                        callback.onError(s);
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, username, password);
-        } else {
-            callback.onError(mcontext.getResources().getString(R.string.no_internet_error));
-        }
-
-    }
     public void getSearchCountriesByPlacesFilter(final onSearchPlacesNameCallback callback, String... params) {
         if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
             new AsyncTask<String, Void, String>() {
@@ -312,7 +224,9 @@ public class HelperClass {
                     try {
                         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
 
-                        String notificationAPI = notifaction + "?user_id=" + com.android.llc.proringer.pro.proringerpro.helper.ProApplication.getInstance().getUserId();
+                        String notificationAPI = ProConstant.notification + "?user_id=" + com.android.llc.proringer.pro.proringerpro.helper.ProApplication.getInstance().getUserId();
+                        Logger.printMessage("notificationAPI", notificationAPI);
+
                         Request request = new Request.Builder()
                                 .get()
                                 .url(notificationAPI)
@@ -330,7 +244,8 @@ public class HelperClass {
                             JSONObject innerObject = infoJsonArr.getJSONObject(0);
                             JSONObject emailObj = innerObject.getJSONObject("Email");
                             JSONObject mobileObj = innerObject.getJSONObject("Mobile");
-                            com.android.llc.proringer.pro.proringerpro.helper.ProApplication.getInstance().setNotificationPreference(
+
+                            ProApplication.getInstance().setNotificationPreference(
                                     emailObj.getString("newsletter"),
                                     emailObj.getString("chat_msg"),
                                     emailObj.getString("tips_article"),
@@ -416,12 +331,12 @@ public class HelperClass {
                         Logger.printMessage("mobile_job_post", ":-" + params[9]);
                         Logger.printMessage("mobile_new_reviews", ":-" + params[10]);
                         Logger.printMessage("mobile_acc_achieve", ":-" + params[11]);
-                        Logger.printMessage("updateNotificationDetailsAPI", updateNotificationDetailsAPI);
+                        Logger.printMessage("updateNotificationDetailsAPI", ProConstant.updateNotificationDetailsAPI);
 
 
                         Request request = new Request.Builder()
                                 .post(requestBody)
-                                .url(updateNotificationDetailsAPI)
+                                .url(ProConstant.updateNotificationDetailsAPI)
                                 .build();
 
                         Response response = client.newCall(request).execute();
@@ -456,20 +371,7 @@ public class HelperClass {
         }
 
     }
-    private void setChangeNotification() {
 
-
-    }
-
-
-
-    public interface onResponseCallback {
-        void onStart();
-
-        void onComplete(String response);
-
-        void onError(String error);
-    }
 
     public interface onSearchPlacesNameCallback {
         void onComplete(ArrayList<String> listdata);
@@ -485,7 +387,4 @@ public class HelperClass {
 
         void onError(String error);
     }
-
-
-
 }

@@ -5,20 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LogInActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.SignUpActivity;
-import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
-import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 /**
@@ -79,19 +76,19 @@ public class RegistrationOne extends Fragment {
     public void validation()
 
     {
-         String f_name,l_name,email,phone,password;
-       Appdata.f_name = proet_fname.getText().toString();
-       Appdata.l_name=proet_lname.getText().toString();
-       Appdata.email=proet_cemail.getText().toString();
-      Appdata.phone=proet_phon.getText().toString();
-       Appdata.password=proet_cpassword.getText().toString();
-        password=proet_password.getText().toString();
+        String f_name, l_name, email, phone, password;
+        ProConstant.f_name = proet_fname.getText().toString();
+        ProConstant.l_name = proet_lname.getText().toString();
+        ProConstant.email = proet_cemail.getText().toString();
+        ProConstant.phone = proet_phon.getText().toString();
+        ProConstant.password = proet_cpassword.getText().toString();
+        password = proet_password.getText().toString();
 
-        Logger.printMessage("f_name",Appdata.f_name);
-        Logger.printMessage("l_name",Appdata.l_name);
-        Logger.printMessage("email",Appdata.email);
-        Logger.printMessage("phone",Appdata.phone);
-        Logger.printMessage("password",Appdata.password);
+        Logger.printMessage("f_name", ProConstant.f_name);
+        Logger.printMessage("l_name", ProConstant.l_name);
+        Logger.printMessage("email", ProConstant.email);
+        Logger.printMessage("phone", ProConstant.phone);
+        Logger.printMessage("password", ProConstant.password);
 
         if (proet_fname.getText().toString().trim().equals("")) {
             proet_fname.setError("Please enter First name.");
@@ -104,68 +101,48 @@ public class RegistrationOne extends Fragment {
                 proet_lname.setFocusable(true);
             } else {
                 if (Patterns.EMAIL_ADDRESS.matcher(proet_email.getText().toString().trim()).matches()) {
-                    if(Patterns.EMAIL_ADDRESS.matcher(proet_cemail.getText().toString().trim()).matches())
-                    {
-                        if (!proet_cemail.getText().toString().trim().equals(proet_email.getText().toString().trim()))
-                        {
+                    if (Patterns.EMAIL_ADDRESS.matcher(proet_cemail.getText().toString().trim()).matches()) {
+                        if (!proet_cemail.getText().toString().trim().equals(proet_email.getText().toString().trim())) {
                             proet_cemail.setError("Email id dosenot match");
                             proet_cemail.setFocusable(true);
-                        }
-                        else
-                        {
-                          if (proet_phon.getText().toString().trim().equals(""))
-                          {
-                              proet_phon.setError("please enter phone number");
-                              proet_phon.setFocusable(true);
-                          }
-                          else
-                          {
-                              if (TextUtils.isEmpty(password)||password.length()<6)
-                              {
+                        } else {
+                            if (proet_phon.getText().toString().trim().equals("")) {
+                                proet_phon.setError("please enter phone number");
+                                proet_phon.setFocusable(true);
+                            } else {
+                                if (TextUtils.isEmpty(password) || password.length() < 6) {
 
-                                  proet_password.setError("Please enter password at least 6 character");
-                                  proet_password.setFocusable(true);
+                                    proet_password.setError("Please enter password at least 6 character");
+                                    proet_password.setFocusable(true);
 
-                              }
-                              else
-                              {  if (proet_cpassword.getText().toString().trim().equals(""))
-                              {
+                                } else {
+                                    if (proet_cpassword.getText().toString().trim().equals("")) {
 
-                               proet_cpassword.setError("Enter confirm password");
-                              }
-                              else
-                              {
-                                  if (proet_password.getText().toString().trim().equals(proet_cpassword.getText().toString().trim()))
-                                  {
+                                        proet_cpassword.setError("Enter confirm password");
+                                    } else {
+                                        if (proet_password.getText().toString().trim().equals(proet_cpassword.getText().toString().trim())) {
 
-                                      ((SignUpActivity) getActivity()).transactRegistrationFragmentTwo();
+                                            ((SignUpActivity) getActivity()).transactRegistrationFragmentTwo();
 
 
+                                        } else {
 
-                                  }
-                                  else
-                                  {
+                                            proet_cpassword.setError("password dosenot match");
+                                            proet_cpassword.setFocusable(true);
+                                        }
+                                    }
 
-                                      proet_cpassword.setError("password dosenot match");
-                                      proet_cpassword.setFocusable(true);
-                                  }
-                              }
-
-                              }
-                          }
+                                }
+                            }
                         }
 
-                    }
-                    else
-                    {
+                    } else {
 
                         proet_cemail.setError("please enter valid confirm email");
                         proet_cemail.setFocusable(true);
                     }
 
-                }
-                else
-                {
+                } else {
                     proet_email.setError("Please enter valid email address");
                     proet_email.setFocusable(true);
 

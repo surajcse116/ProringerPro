@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.android.llc.proringer.pro.proringerpro.BuildConfig;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
@@ -125,7 +126,7 @@ public class ImageTakerActivityCamera extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        Log.i("image Taker", "requestCode : " + requestCode + " resultCode " + resultCode);
+        Logger.printMessage("image Taker", "requestCode : " + requestCode + " resultCode " + resultCode);
 
         if (REQUEST_IMAGE_CAPTURE == requestCode && resultCode == RESULT_OK) {
             if (finalFile != null) {
@@ -143,7 +144,7 @@ public class ImageTakerActivityCamera extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         if (finalFile != null) {
             outState.putString(BITMAP_STORAGE_URL, finalFile.getAbsolutePath());
-            Log.i("image Taker", "onSaveInstanceState : " + finalFile.getAbsolutePath());
+            Logger.printMessage("image Taker", "onSaveInstanceState : " + finalFile.getAbsolutePath());
         }
     }
 
@@ -156,14 +157,14 @@ public class ImageTakerActivityCamera extends AppCompatActivity {
             finalFile = new File(savedInstanceState.getString(BITMAP_STORAGE_URL));
             Glide.with(getApplicationContext()).load(finalFile).fitCenter().centerCrop().into(profileimage);
         }
-        Log.i("image Taker", "onRestoreInstanceState : " + finalFile.getAbsolutePath().toString());
+        Logger.printMessage("image Taker", "onRestoreInstanceState : " + finalFile.getAbsolutePath().toString());
     }
 
 
     @Override
     public void onBackPressed() {
         if (finalFile != null) {
-            Log.i("image Taker", "selected : " + SELECTED);
+            Logger.printMessage("image Taker", "selected : " + SELECTED);
 
             if (SELECTED) {
                 Intent i = new Intent();

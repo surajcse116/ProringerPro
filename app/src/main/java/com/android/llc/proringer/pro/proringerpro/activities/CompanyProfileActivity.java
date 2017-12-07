@@ -27,7 +27,6 @@ import android.widget.Toast;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
-import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
@@ -226,8 +225,8 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                         et_employee.setText(jo.getString("#employees"));
                         JSONObject joi = jo.getJSONObject("business_type");
                         et_busineestype.setText(joi.getString("value"));
-                        Appdata.id = joi.getString("id");
-                        Logger.printMessage("AppDataId", Appdata.id);
+                        ProConstant.id = joi.getString("id");
+                        Logger.printMessage("AppDataId", ProConstant.id);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -294,7 +293,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                 try {
                     et_busineestype.setText(value.getString("value"));
                     pros_contact_service = value.getString("id");
-                    Appdata.id = pros_contact_service;
+                    ProConstant.id = pros_contact_service;
                     Logger.printMessage("value id", pros_contact_service);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -479,8 +478,8 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         if (null != mCurrentLocation) {
             String lattitude = String.valueOf(mCurrentLocation.getLatitude());
             String longttitude = String.valueOf(mCurrentLocation.getLongitude());
-            Appdata.latitude = lattitude;
-            Appdata.longtitude = longttitude;
+            ProConstant.latitude = lattitude;
+            ProConstant.longtitude = longttitude;
             Logger.printMessage("LATTITUIDE", lattitude);
             Logger.printMessage("Longtitude", longttitude);
 
@@ -604,14 +603,14 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                                         } else {
                                             final String locale = CompanyProfileActivity.this.getResources().getConfiguration().locale.getCountry();
                                             Logger.printMessage("COUNTRY CODE", locale);
-                                            Appdata.country1 = locale;
+                                            ProConstant.country1 = locale;
                                             Logger.printMessage("userid", ProApplication.getInstance().getUserId());
                                             Logger.printMessage("b_desc", businessdata);
                                             Logger.printMessage("comp_name", cname);
                                             Logger.printMessage("comp_email", cmail);
                                             Logger.printMessage("website", cwebsite);
                                             Logger.printMessage("alt_phone", cphone);
-                                            Logger.printMessage("bus_type", Appdata.id);
+                                            Logger.printMessage("bus_type", ProConstant.id);
                                             Logger.printMessage("num_emp", employe);
                                             Logger.printMessage("com_address", address);
                                             Logger.printMessage("city", city);
@@ -619,8 +618,8 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                                             Logger.printMessage("state", state);
                                             Logger.printMessage("zipcode", zip);
                                             Logger.printMessage("acc_name", accname);
-                                            Logger.printMessage("lat", Appdata.latitude);
-                                            Logger.printMessage("long", Appdata.longtitude);
+                                            Logger.printMessage("lat", ProConstant.latitude);
+                                            Logger.printMessage("long", ProConstant.longtitude);
                                             LayoutInflater factory = LayoutInflater.from(CompanyProfileActivity.this);
                                             final View deleteDialogView = factory.inflate(R.layout.alertdialog, null);
                                             final AlertDialog deleteDialog = new AlertDialog.Builder(CompanyProfileActivity.this).create();
@@ -636,7 +635,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                                                     Params.put("comp_email", cmail);
                                                     Params.put("website", cwebsite);
                                                     Params.put("alt_phone", cphone);
-                                                    Params.put("bus_type", Appdata.id);
+                                                    Params.put("bus_type", ProConstant.id);
                                                     Params.put("num_emp", employe);
                                                     Params.put("com_address", address);
                                                     Params.put("city", city);
@@ -644,8 +643,8 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                                                     Params.put("state", state);
                                                     Params.put("zipcode", zip);
                                                     Params.put("acc_name", accname);
-                                                    Params.put("latitude", Appdata.latitude);
-                                                    Params.put("longitude", Appdata.longtitude);
+                                                    Params.put("latitude", ProConstant.latitude);
+                                                    Params.put("longitude", ProConstant.longtitude);
                                                     Logger.printMessage("PARAMS", String.valueOf(Params));
 
                                                     new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, ProConstant.copanyinfosave, Params, null, new CustomJSONParser.CustomJSONResponse() {

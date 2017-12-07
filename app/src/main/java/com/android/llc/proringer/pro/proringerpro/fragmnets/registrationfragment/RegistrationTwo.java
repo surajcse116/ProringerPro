@@ -28,7 +28,6 @@ import com.android.llc.proringer.pro.proringerpro.activities.LocationActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.SignupCompleteActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog_catagory;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
-import com.android.llc.proringer.pro.proringerpro.helper.Appdata;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
@@ -385,11 +384,11 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                         }
                                         else
                                         {
-                                            Logger.printMessage("fname", Appdata.f_name);
-                                            Logger.printMessage("lname",Appdata.l_name);
-                                            Logger.printMessage("email",Appdata.email);
-                                            Logger.printMessage("phone",Appdata.phone);
-                                            Logger.printMessage("password",Appdata.password);
+                                            Logger.printMessage("fname", ProConstant.f_name);
+                                            Logger.printMessage("lname",ProConstant.l_name);
+                                            Logger.printMessage("email",ProConstant.email);
+                                            Logger.printMessage("phone",ProConstant.phone);
+                                            Logger.printMessage("password",ProConstant.password);
                                             Logger.printMessage("busimessname",businessname);
                                             Logger.printMessage("address",address);
                                             Logger.printMessage("city",city);
@@ -399,28 +398,28 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                             Logger.printMessage("phonenumber",phonenumber);
                                             Logger.printMessage("primaryservice",primaryservice);
                                             Logger.printMessage("servicearea",servicearea);
-                                            Logger.printMessage("latittuted",Appdata.latitude);
-                                            Logger.printMessage("Logtitude",Appdata.longtitude);
-                                            Logger.printMessage("country",Appdata.Country);
+                                            Logger.printMessage("latittuted",ProConstant.latitude);
+                                            Logger.printMessage("Logtitude",ProConstant.longtitude);
+                                            Logger.printMessage("country",ProConstant.Country);
 
                                             HashMap<String,String> Params1=new HashMap<>();
-                                            Params1.put("contact_f_name",Appdata.f_name);
-                                            Params1.put("contact_l_name",Appdata.l_name);
-                                            Params1.put("pro_email",Appdata.email);
-                                            Params1.put("pro_phone",Appdata.phone);
-                                            Params1.put("pro_password",Appdata.password);
+                                            Params1.put("contact_f_name",ProConstant.f_name);
+                                            Params1.put("contact_l_name",ProConstant.l_name);
+                                            Params1.put("pro_email",ProConstant.email);
+                                            Params1.put("pro_phone",ProConstant.phone);
+                                            Params1.put("pro_password",ProConstant.password);
                                             Params1.put("com_name",businessname);
                                             Params1.put("com_address",address);
                                             Params1.put("city",city);
                                             Params1.put("state",state);
                                             Params1.put("zipcode",zip);
-                                            Params1.put("country",Appdata.Country);
+                                            Params1.put("country",ProConstant.Country);
                                             Params1.put("alt_phone",phonenumber);
                                             Params1.put("com_email",businessemail);
                                             Params1.put("primary_category",pros_contact_service);
                                             Params1.put("service_area",servicearea);
-                                            Params1.put("latitude",Appdata.latitude);
-                                            Params1.put("longitude",Appdata.longtitude);
+                                            Params1.put("latitude",ProConstant.latitude);
+                                            Params1.put("longitude",ProConstant.longtitude);
                                             Params1.put("device_type","A");
 
                                             Logger.printMessage("PARAMS", String.valueOf(Params1));

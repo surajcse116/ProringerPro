@@ -122,7 +122,7 @@ public class AddServicesActivity extends AppCompatActivity {
                 checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        Log.i("isCheckChild", "" + b);
+                        Logger.printMessage("isCheckChild", "" + b);
                         if (b) {
                             checkRefineHeader.setChecked(true);
                         } else {
@@ -164,7 +164,7 @@ public class AddServicesActivity extends AppCompatActivity {
             checkRefineHeader.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    Log.i("isCheck", "" + b);
+                    Logger.printMessage("isCheck", "" + b);
                 }
             });
 

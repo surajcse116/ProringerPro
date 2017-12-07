@@ -392,9 +392,9 @@ public class LicenceActivity extends AppCompatActivity {
         } else if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && file != null) {
             Uri selectedDataURI = data.getData();
             try {
-                Log.i("selectedDataURI", "" + selectedDataURI);
+                Logger.printMessage("selectedDataURI", "" + selectedDataURI);
                 file = new File(ImageFilePath.getPath(getApplicationContext(), selectedDataURI));
-                Log.i("path", "" + file.getAbsolutePath());
+                Logger.printMessage("path", "" + file.getAbsolutePath());
                 if (file.getAbsolutePath().contains(".pdf")) {
                     mycurrentphotopath = file.getAbsolutePath();
                     LLUpload.setVisibility(View.GONE);
