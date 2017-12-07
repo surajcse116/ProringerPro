@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProLightTextView;
 
@@ -16,8 +17,8 @@ public class AvailibilityTimeSlotAdapter extends RecyclerView.Adapter<Availibili
 
     Context context;
 
-    public AvailibilityTimeSlotAdapter(Context context){
-        this.context=context;
+    public AvailibilityTimeSlotAdapter(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -29,20 +30,19 @@ public class AvailibilityTimeSlotAdapter extends RecyclerView.Adapter<Availibili
 
     @Override
     public void onBindViewHolder(AvailibilityTimeSlotAdapter.MyViewHolder holder, int position) {
-        if (position==0) {
+        if (position == 0) {
             holder.days_week.setText("Mon");
-        }
-        else if(position==1){
+        } else if (position == 1) {
             holder.days_week.setText("Tue");
-        }else if(position==2){
+        } else if (position == 2) {
             holder.days_week.setText("Wed");
-        }else if(position==3){
+        } else if (position == 3) {
             holder.days_week.setText("Thu");
-        }else if(position==4){
+        } else if (position == 4) {
             holder.days_week.setText("Fri");
-        }else if(position==5){
+        } else if (position == 5) {
             holder.days_week.setText("Sat");
-        }else if(position==6){
+        } else if (position == 6) {
             holder.days_week.setText("Sun");
         }
     }
@@ -54,9 +54,10 @@ public class AvailibilityTimeSlotAdapter extends RecyclerView.Adapter<Availibili
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ProLightTextView days_week;
+
         public MyViewHolder(View itemView) {
             super(itemView);
-            days_week=(ProLightTextView)itemView.findViewById(R.id.days_week);
+            days_week = (ProLightTextView) itemView.findViewById(R.id.days_week);
         }
     }
 }

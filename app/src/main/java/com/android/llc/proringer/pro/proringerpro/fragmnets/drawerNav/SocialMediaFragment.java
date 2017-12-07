@@ -146,8 +146,6 @@ public class SocialMediaFragment extends Fragment {
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
-
-
                                             }
 
                                             @Override

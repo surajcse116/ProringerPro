@@ -48,7 +48,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * limitations under the License.
  */
 
-public class InviteAfriendFragment extends Fragment{
+public class InviteAfriendFragment extends Fragment {
     ProLightEditText first_name, last_name, email, confirm_email;
     ProRegularTextView invited_submit;
     MyLoader myload;
@@ -66,8 +66,8 @@ public class InviteAfriendFragment extends Fragment{
         last_name = (ProLightEditText) view.findViewById(R.id.last_name);
         email = (ProLightEditText) view.findViewById(R.id.email);
         confirm_email = (ProLightEditText) view.findViewById(R.id.confirm_email);
-        invited_submit=(ProRegularTextView)view.findViewById(R.id.invited_submit);
-        myload=new MyLoader(getActivity());
+        invited_submit = (ProRegularTextView) view.findViewById(R.id.invited_submit);
+        myload = new MyLoader(getActivity());
         invited_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,10 +81,10 @@ public class InviteAfriendFragment extends Fragment{
     }
 
     private void validateInvite() {
-        String fname=first_name.getText().toString().trim();
-        String  lname=last_name.getText().toString().trim();
-        String   mail=email.getText().toString().trim();
-        String   cmail=confirm_email.getText().toString().trim();
+        String fname = first_name.getText().toString().trim();
+        String lname = last_name.getText().toString().trim();
+        String mail = email.getText().toString().trim();
+        String cmail = confirm_email.getText().toString().trim();
         if (first_name.getText().toString().trim().equals("")) {
             first_name.setError("First name can not be blank.");
         } else {
@@ -99,56 +99,58 @@ public class InviteAfriendFragment extends Fragment{
                     if (Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()) {
                         if (email.getText().toString().trim().equals(confirm_email.getText().toString().trim())) {
 
-                            HashMap<String,String> Params=new HashMap<>();
+                            HashMap<String, String> Params = new HashMap<>();
                             Params.put("user_id", ProApplication.getInstance().getUserId());
-                            Params.put("first_name",fname);
-                            Params.put("last_name",lname);
-                            Params.put("email",mail);
-                            Params.put("conf_emailid",cmail);
+                            Params.put("first_name", fname);
+                            Params.put("last_name", lname);
+                            Params.put("email", mail);
+                            Params.put("conf_emailid", cmail);
 
                             Logger.printMessage("params", String.valueOf(Params));
 
-                          new CustomJSONParser() .fireAPIForPostMethod(getActivity(), ProConstant.invitefriend, Params, null, new CustomJSONParser.CustomJSONResponse() {
-                              @Override
-                              public void onSuccess(String result) {
-                                  Logger.printMessage("result",result);
-                                  myload.dismissLoader();
-                                  try {
-                                      JSONObject job= new JSONObject(result);
-                                      String message= job.getString("message");
-                                      Toast.makeText(getActivity(), ""+message, Toast.LENGTH_SHORT).show();
-                                  } catch (JSONException e) {
-                                      e.printStackTrace();
-                                  }
-                              }
-                              @Override
-                              public void onError(String error, String response) {
-                                  myload.dismissLoader();
-                                  Toast.makeText(getActivity(), ""+response, Toast.LENGTH_SHORT).show();
+                            new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.invitefriend, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                @Override
+                                public void onSuccess(String result) {
+                                    Logger.printMessage("result", result);
+                                    myload.dismissLoader();
+                                    try {
+                                        JSONObject job = new JSONObject(result);
+                                        String message = job.getString("message");
+                                        Toast.makeText(getActivity(), "" + message, Toast.LENGTH_SHORT).show();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
 
-                              }
+                                @Override
+                                public void onError(String error, String response) {
+                                    myload.dismissLoader();
+                                    Toast.makeText(getActivity(), "" + response, Toast.LENGTH_SHORT).show();
 
-                              @Override
-                              public void onError(String error) {
+                                }
 
-                                  CustomAlert customAlert = new CustomAlert();
-                                  customAlert.getEventFromNormalAlert(getActivity(), "Load Error", "" + error, "Ok", "Cancel", new CustomAlert.MyCustomAlertListener() {
-                                      @Override
-                                      public void callBackOk() {
+                                @Override
+                                public void onError(String error) {
 
-                                      }
+                                    CustomAlert customAlert = new CustomAlert();
+                                    customAlert.getEventFromNormalAlert(getActivity(), "Load Error", "" + error, "Ok", "Cancel", new CustomAlert.MyCustomAlertListener() {
+                                        @Override
+                                        public void callBackOk() {
 
-                                      @Override
-                                      public void callBackCancel() {
+                                        }
 
-                                      }
-                                  });
-                              }
-                              @Override
-                              public void onStart() {
-                                myload.showLoader();
-                              }
-                          });
+                                        @Override
+                                        public void callBackCancel() {
+
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onStart() {
+                                    myload.showLoader();
+                                }
+                            });
 
                         } else {
                             confirm_email.setError("Email and confirm email does not match.");
@@ -164,7 +166,7 @@ public class InviteAfriendFragment extends Fragment{
     }
 
 
-    private void resetForm(){
+    private void resetForm() {
         first_name.setText("");
         last_name.setText("");
         email.setText("");

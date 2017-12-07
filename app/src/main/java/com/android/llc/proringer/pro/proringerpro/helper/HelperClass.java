@@ -50,8 +50,10 @@ public class HelperClass {
 
         return instance;
     }
+
     private HelperClass() {
     }
+
     public void setCurrentLatLng(String currentLat, String currentLng) {
         this.currentLat = currentLat;
         this.currentLng = currentLng;
@@ -110,7 +112,7 @@ public class HelperClass {
                                     for (int j = 0; j < terms.length(); j++) {
                                         if (terms.getJSONObject(j).getString("value").contains("United States") ||
                                                 terms.getJSONObject(j).getString("value").contains("Canada")) {
-                                            Logger.printMessage("description",""+innerIncer.getString("description"));
+                                            Logger.printMessage("description", "" + innerIncer.getString("description"));
                                             addressList.add(innerIncer.getString("description"));
                                             break;
                                         }
@@ -130,7 +132,7 @@ public class HelperClass {
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
-                    Logger.printMessage("location",s);
+                    Logger.printMessage("location", s);
                     if (exception.equals("")) {
                         if (addressList != null && addressList.size() > 0)
                             callback.onComplete(addressList);
@@ -202,6 +204,7 @@ public class HelperClass {
             callback.onError(mcontext.getResources().getString(R.string.no_internet_connection_found_Please_check_your_internet_connection));
         }
     }
+
     /**
      * get notification status
      *
@@ -286,6 +289,7 @@ public class HelperClass {
             callback.onError(mcontext.getResources().getString(R.string.no_internet_connection_found_Please_check_your_internet_connection));
         }
     }
+
     public void updateUserNotification(final getApiProcessCallback callback, String... params) {
         if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
             new AsyncTask<String, Void, String>() {
@@ -318,7 +322,7 @@ public class HelperClass {
                                 .add("mobile_acc_achieve", params[11])
                                 .build();
 
-                        Logger.printMessage("user_id", ":-" +com.android.llc.proringer.pro.proringerpro.helper.ProApplication.getInstance().getUserId());
+                        Logger.printMessage("user_id", ":-" + com.android.llc.proringer.pro.proringerpro.helper.ProApplication.getInstance().getUserId());
                         Logger.printMessage("email_newsletter", ":-" + params[0]);
                         Logger.printMessage("email_chat_msg", ":-" + params[1]);
                         Logger.printMessage("email_tips_article", ":-" + params[2]);
@@ -380,6 +384,7 @@ public class HelperClass {
 
         void onStartFetch();
     }
+
     public interface getApiProcessCallback {
         void onStart();
 

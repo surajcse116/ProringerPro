@@ -8,11 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProjectMessageAdapter;
 import com.android.llc.proringer.pro.proringerpro.helper.onItemClick;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetProjectMessage;
+
 import java.util.ArrayList;
 
 
@@ -47,21 +49,21 @@ public class MessageFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setGetProjectMessageArrayList =new ArrayList<>();
+        setGetProjectMessageArrayList = new ArrayList<>();
 
 
-        for (int i=0;i<15;i++){
-            SetGetProjectMessage setGetProjectMessage =new SetGetProjectMessage();
+        for (int i = 0; i < 15; i++) {
+            SetGetProjectMessage setGetProjectMessage = new SetGetProjectMessage();
             setGetProjectMessage.setIsOpen(false);
-            setGetProjectMessage.setTagName("view "+i);
+            setGetProjectMessage.setTagName("view " + i);
             setGetProjectMessageArrayList.add(setGetProjectMessage);
         }
 
         project_message_list = (RecyclerView) view.findViewById(R.id.message_list);
-        project_message_list.setLayoutManager(new LinearLayoutManager((LandScreenActivity)getActivity()));
+        project_message_list.setLayoutManager(new LinearLayoutManager((LandScreenActivity) getActivity()));
 
 
-        adapter = new ProjectMessageAdapter((LandScreenActivity)getActivity(), setGetProjectMessageArrayList, new onItemClick() {
+        adapter = new ProjectMessageAdapter((LandScreenActivity) getActivity(), setGetProjectMessageArrayList, new onItemClick() {
             @Override
             public void onItemClick(int pos) {
                 //((LandScreenActivity) getActivity()).toggleToolBar(true);

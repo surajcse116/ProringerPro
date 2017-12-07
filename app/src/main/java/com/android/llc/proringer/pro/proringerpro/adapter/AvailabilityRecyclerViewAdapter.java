@@ -14,12 +14,14 @@ import com.android.llc.proringer.pro.proringerpro.R;
 
 public class AvailabilityRecyclerViewAdapter extends RecyclerView.Adapter<AvailabilityRecyclerViewAdapter.MyViewHolder> {
     Context context;
-    public AvailabilityRecyclerViewAdapter(Context context){
-        this.context=context;
+
+    public AvailabilityRecyclerViewAdapter(Context context) {
+        this.context = context;
     }
+
     @Override
     public AvailabilityRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_avilability,parent,false));
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_avilability, parent, false));
     }
 
     @Override

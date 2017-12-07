@@ -36,10 +36,10 @@ import java.util.ArrayList;
  * limitations under the License.
  */
 
-public class NotificationsFragment extends Fragment{
+public class NotificationsFragment extends Fragment {
     private SwitchHelper email_newsletter, email_chat_msg, email_tips_artcl, email_project_replies, mobile_newsletter, email_newreviw, account_achivement, mobile_chat_msg, mobile_tips_artcl, mobile_project_replies, mobileaccountachivement, mobilereview;
     ArrayList<SetGetAPI> arrayList = null;
-    String  set_email_newsletter, set_email_chat_msg,set_email_tips_artcl, set_email_prjct_rspnse, set_mobile_newsletter, set_email_newreviw, set_account_achivement, set_mobile_chat_msg, set_mobile_tips_artcl, set_mobile_prjct_rspnse, set_mobileaccountachivement, set_mobilereview;
+    String set_email_newsletter, set_email_chat_msg, set_email_tips_artcl, set_email_prjct_rspnse, set_mobile_newsletter, set_email_newreviw, set_account_achivement, set_mobile_chat_msg, set_mobile_tips_artcl, set_mobile_prjct_rspnse, set_mobileaccountachivement, set_mobilereview;
     MyLoader myLoader;
     ScrollView ScrollViewMAin;
 
@@ -74,7 +74,7 @@ public class NotificationsFragment extends Fragment{
         arrayList.add(setGetAPI);
 
 
-        myLoader=new MyLoader(getActivity());
+        myLoader = new MyLoader(getActivity());
         email_newsletter.setState(ProApplication.getInstance().getUserNotification().isEmail_newsletter());
         email_chat_msg.setState(ProApplication.getInstance().getUserNotification().isEmail_chat_msg());
         email_tips_artcl.setState(ProApplication.getInstance().getUserNotification().isEmail_tips_article());
@@ -229,24 +229,25 @@ public class NotificationsFragment extends Fragment{
 
 
     }
+
     private void setChangeNotification() {
         HelperClass.getInstance(getActivity()).updateUserNotification(new HelperClass.getApiProcessCallback() {
-            @Override
-            public void onStart() {
+                                                                          @Override
+                                                                          public void onStart() {
 
 
-            }
+                                                                          }
 
-            @Override
-            public void onComplete(String message) {
+                                                                          @Override
+                                                                          public void onComplete(String message) {
 
-            }
+                                                                          }
 
-            @Override
-            public void onError(String error) {
+                                                                          @Override
+                                                                          public void onError(String error) {
 
-            }
-        },email_newsletter.getState(),
+                                                                          }
+                                                                      }, email_newsletter.getState(),
                 email_chat_msg.getState(),
                 email_tips_artcl.getState(),
                 email_project_replies.getState(),

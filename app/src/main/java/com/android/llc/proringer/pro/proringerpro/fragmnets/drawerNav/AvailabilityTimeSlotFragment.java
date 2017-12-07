@@ -19,6 +19,7 @@ import com.android.llc.proringer.pro.proringerpro.adapter.AvailabilityRecyclerVi
 public class AvailabilityTimeSlotFragment extends Fragment {
     RecyclerView rcv_availability;
     AvailabilityRecyclerViewAdapter availabilityRecyclerViewAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

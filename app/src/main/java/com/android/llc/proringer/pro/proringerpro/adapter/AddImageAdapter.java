@@ -29,15 +29,16 @@ public class AddImageAdapter extends RecyclerView.Adapter<AddImageAdapter.MyView
     int screenWidth;
 
     public AddImageAdapter(Context mContext, ArrayList<String> portPolioImageGalleryArrayList) {
-        this.mContext=mContext;
+        this.mContext = mContext;
         this.portPolioImageGalleryArrayList = portPolioImageGalleryArrayList;
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
-        ((PortFolioActivity)mContext).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        ((PortFolioActivity) mContext).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 
         screenHeight = displaymetrics.heightPixels;
         screenWidth = displaymetrics.widthPixels;
     }
+
     @Override
     public AddImageAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.adapter_add_image, parent, false));
@@ -47,8 +48,8 @@ public class AddImageAdapter extends RecyclerView.Adapter<AddImageAdapter.MyView
     @Override
     public void onBindViewHolder(AddImageAdapter.MyViewHolder holder, int position) {
 
-        holder.img.getLayoutParams().width=screenWidth/5;
-        holder.img.getLayoutParams().height=screenWidth/5;
+        holder.img.getLayoutParams().width = screenWidth / 5;
+        holder.img.getLayoutParams().height = screenWidth / 5;
 
         Glide.with(mContext).load("file://" + portPolioImageGalleryArrayList.get(position)).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
             /**
@@ -74,9 +75,10 @@ public class AddImageAdapter extends RecyclerView.Adapter<AddImageAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
+
         public MyViewHolder(View itemView) {
             super(itemView);
-            img=(ImageView) itemView.findViewById(R.id.img);
+            img = (ImageView) itemView.findViewById(R.id.img);
         }
     }
 }

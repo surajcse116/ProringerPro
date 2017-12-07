@@ -25,8 +25,9 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldT
 
 public class DashBoardFragment extends Fragment {
 
-    ProSemiBoldTextView tv_userinfo,log_in;
-    RelativeLayout userInformation,servicearea,service_setting,licence,login_settings,Protofolio;
+    ProSemiBoldTextView tv_userinfo, log_in;
+    RelativeLayout userInformation, servicearea, service_setting, licence, login_settings, Protofolio;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,17 +37,17 @@ public class DashBoardFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userInformation=(RelativeLayout)view.findViewById(R.id.userInformation);
-        servicearea=(RelativeLayout)view.findViewById(R.id.servicearea);
-        service_setting=(RelativeLayout)view.findViewById(R.id.service_setting);
-        licence=(RelativeLayout)view.findViewById(R.id.licence);
-        login_settings=(RelativeLayout)view.findViewById(R.id.login_settings);
-        Protofolio=(RelativeLayout)view.findViewById(R.id.Protofolio);
-        log_in=(ProSemiBoldTextView)view.findViewById(R.id.log_in);
+        userInformation = (RelativeLayout) view.findViewById(R.id.userInformation);
+        servicearea = (RelativeLayout) view.findViewById(R.id.servicearea);
+        service_setting = (RelativeLayout) view.findViewById(R.id.service_setting);
+        licence = (RelativeLayout) view.findViewById(R.id.licence);
+        login_settings = (RelativeLayout) view.findViewById(R.id.login_settings);
+        Protofolio = (RelativeLayout) view.findViewById(R.id.Protofolio);
+        log_in = (ProSemiBoldTextView) view.findViewById(R.id.log_in);
         log_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(getActivity(), PremiumActivity.class);
+                Intent i = new Intent(getActivity(), PremiumActivity.class);
                 startActivity(i);
             }
         });
@@ -54,21 +55,21 @@ public class DashBoardFragment extends Fragment {
         userInformation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i= new Intent(getActivity(), UserinformationActivity.class);
+                Intent i = new Intent(getActivity(), UserinformationActivity.class);
                 startActivity(i);
             }
         });
         servicearea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i= new Intent(getActivity(), AddServiceAreaActivity.class);
+                Intent i = new Intent(getActivity(), AddServiceAreaActivity.class);
                 startActivity(i);
             }
         });
         service_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i= new Intent(getActivity(), AddServicesActivity.class);
+                Intent i = new Intent(getActivity(), AddServicesActivity.class);
                 startActivity(i);
             }
         });
@@ -76,21 +77,21 @@ public class DashBoardFragment extends Fragment {
         licence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(getActivity(),LicenceActivity.class);
+                Intent i = new Intent(getActivity(), LicenceActivity.class);
                 startActivity(i);
             }
         });
         login_settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i= new Intent(getActivity(), CompanyProfileActivity.class);
+                Intent i = new Intent(getActivity(), CompanyProfileActivity.class);
                 startActivity(i);
             }
         });
         Protofolio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i= new Intent(getActivity(), PortFolioActivity.class);
+                Intent i = new Intent(getActivity(), PortFolioActivity.class);
                 startActivity(i);
             }
         });

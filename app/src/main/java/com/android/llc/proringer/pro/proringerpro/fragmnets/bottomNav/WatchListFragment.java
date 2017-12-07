@@ -35,6 +35,7 @@ import com.android.llc.proringer.pro.proringerpro.adapter.WatchListAdapter;
 public class WatchListFragment extends Fragment {
     private RecyclerView rcv_watch_list;
     WatchListAdapter watchListAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,9 +47,9 @@ public class WatchListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rcv_watch_list = (RecyclerView) view.findViewById(R.id.rcv_watch_list);
-        rcv_watch_list.setLayoutManager(new LinearLayoutManager((LandScreenActivity)getActivity()));
+        rcv_watch_list.setLayoutManager(new LinearLayoutManager((LandScreenActivity) getActivity()));
 
-        watchListAdapter=new WatchListAdapter(getActivity(), new onOptionSelected() {
+        watchListAdapter = new WatchListAdapter(getActivity(), new onOptionSelected() {
             @Override
             public void onItemPassed(int position, String value) {
 
@@ -59,6 +60,7 @@ public class WatchListFragment extends Fragment {
         rcv_watch_list.setAdapter(watchListAdapter);
 
     }
+
     public interface onOptionSelected {
         void onItemPassed(int position, String value);
     }

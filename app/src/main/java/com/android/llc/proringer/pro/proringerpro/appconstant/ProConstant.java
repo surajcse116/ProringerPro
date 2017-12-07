@@ -48,21 +48,17 @@ public class ProConstant {
     public static  String updateNotificationDetailsAPI=BASEURL+"app_pronotification_save";
 
 
-    public static String updatelocation = "";
     public static String latitude = "";
     public static String longtitude = "";
-    public static String userid = "";
     public static String f_name = "";
     public static String l_name = "";
     public static String email = "";
     public static String phone = "";
     public static String password = "";
     public static String Country = "";
-    public static String zip_code = "";
     public static String city = "";
     public static String state = "";
     public static String country1 = "";
     public static String id = "";
     public static String paypal = "";
-    public static String PATH = "";
 }

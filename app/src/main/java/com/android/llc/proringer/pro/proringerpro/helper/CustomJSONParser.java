@@ -215,8 +215,6 @@ public class CustomJSONParser {
     }
 
 
-
-
     public void APIForWithPhotoPostMethod(Context context, final String URL, final ArrayList<SetGetAPIPostData> apiPostDataArrayList, final ArrayList<File> Photos, final CustomJSONResponse customJSONResponse) {
         if (NetworkUtil.getInstance().isNetworkAvailable(context)) {
             final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
@@ -240,8 +238,7 @@ public class CustomJSONParser {
                     }
 
                     for (File file : Photos) {
-                        if (file != null)
-                        {
+                        if (file != null) {
                             builderNew.addFormDataPart("" + ImageParam, file.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, file));
                         }
 
@@ -302,12 +299,6 @@ public class CustomJSONParser {
             customJSONResponse.onError(context.getResources().getString(R.string.please_check_your_internet_connection));
         }
     }
-
-
-
-
-
-
 
 
     public interface CustomJSONResponse {
