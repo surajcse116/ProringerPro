@@ -64,35 +64,16 @@ import java.util.Date;
 
 public class LicenceListActivity extends AppCompatActivity {
 
-    private static final int REQUEST_WRITE_PERMISSION1 = 3000;
-    private static final int REQUEST_WRITE_PERMISSION2 = 4000;
     RecyclerView rcv_licence_list;
-    RelativeLayout RLAddLicence, RLEmpty, relative_dropdown;
+    RelativeLayout RLEmpty;
     LicenceAdapter licenceAdapter;
-
-    ProRegularTextView protv_com, tv_service, tv_save_licence;
-    ProLightEditText tv_issue, tv_licence_number;
-    ProRegularTextView tv_expires;
-    File file = null;
-    Dialog dialog = null;
     MyLoader myLoader;
-    LinearLayout LLEdit, LLUpload;
-    ImageView img_licence_file;
-    private int PICK_IMAGE_REQUEST = 100;
-    private int PICK_PDF_REQUEST = 200;
+
     ArrayList<SetGetAPI> arrayList = null;
     ArrayList<SetGetShowLicence> setGetShowLicenceArrayList;
-    int arrlistsize;
-    String mycurrentphotopath = "";
-    String pros_contact_service = "";
-    CustomListAdapterDialog_catagory custom = null;
-    PopupWindow popupWindow;
-    ImageView img_add_licence, dropdown;
-    JSONArray catagory;
-    private int mYear = 0, mMonth = 0, mDay = 0, mHour, mMinute;
-    boolean flag = true;
-    int year;
-    int month, date;
+    ImageView img_add_licence;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,30 +85,10 @@ public class LicenceListActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RLAddLicence = (RelativeLayout) findViewById(R.id.RLAddLicence);
         RLEmpty = (RelativeLayout) findViewById(R.id.RLEmpty);
-        tv_save_licence = (ProRegularTextView) findViewById(R.id.tv_save_licence);
-
-        relative_dropdown = (RelativeLayout) findViewById(R.id.relative_dropdown);
-        relative_dropdown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                relative_dropdown.setBackgroundResource(R.drawable.background_solidorange_border);
-            }
-        });
-        tv_save_licence.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveData();
-            }
-        });
-        myLoader = new MyLoader(LicenceListActivity.this);
         img_add_licence = (ImageView) findViewById(R.id.img_add_licence);
-        tv_service = (ProRegularTextView) findViewById(R.id.tv_service);
-        tv_issue = (ProLightEditText) findViewById(R.id.tv_issue);
-        tv_licence_number = (ProLightEditText) findViewById(R.id.tv_licence_number);
-        tv_expires = (ProRegularTextView) findViewById(R.id.tv_expires);
-        dropdown = (ImageView) findViewById(R.id.dropdown);
+
+        myLoader = new MyLoader(LicenceListActivity.this);
 
         arrayList = new ArrayList<SetGetAPI>();
         SetGetAPI setGetAPI = new SetGetAPI();
@@ -140,120 +101,19 @@ public class LicenceListActivity extends AppCompatActivity {
         rcv_licence_list = (RecyclerView) findViewById(R.id.rcv_licence_list);
         rcv_licence_list.setLayoutManager(new LinearLayoutManager(LicenceListActivity.this));
 
-        RLAddLicence.setVisibility(View.GONE);
-        rcv_licence_list.setVisibility(View.GONE);
 //        RLEmpty.setVisibility(View.VISIBLE);
-
-        LLUpload = (LinearLayout) findViewById(R.id.LLUpload);
-        LLEdit = (LinearLayout) findViewById(R.id.LLEdit);
-        img_licence_file = (ImageView) findViewById(R.id.img_licence_file);
-
-        licenceAdapter = new LicenceAdapter(LicenceListActivity.this, setGetShowLicenceArrayList);
-        rcv_licence_list.setAdapter(licenceAdapter);
-        LLUpload.setVisibility(View.VISIBLE);
-        LLEdit.setVisibility(View.GONE);
-        Logger.printMessage("photoPath", mycurrentphotopath);
-
-        category();
 
         Logger.printMessage("arrayLicenseSize", String.valueOf(setGetShowLicenceArrayList.size()));
 
         img_add_licence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (RLAddLicence.getVisibility() == View.VISIBLE) {
-                    RLAddLicence.setVisibility(View.GONE);
-                    rcv_licence_list.setVisibility(View.VISIBLE);
-                } else {
-                    RLAddLicence.setVisibility(View.VISIBLE);
-                    rcv_licence_list.setVisibility(View.GONE);
-                    img_add_licence.setVisibility(View.GONE);
-                }
+              Intent intent=new Intent(LicenceListActivity.this,LicenceAddActivity.class);
+              startActivityForResult(intent,100);
             }
         });
 
-        findViewById(R.id.tv_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPhotoDialog();
-            }
-        });
-
-        findViewById(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPhotoDialog();
-            }
-        });
-        dropdown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogCategory(view, catagory);
-            }
-        });
-        tv_expires.setOnClickListener(new View.OnClickListener() {
-            boolean check = true;
-
-            @Override
-            public void onClick(View view) {
-                tv_expires.setBackgroundResource(R.drawable.background_solidorange_border);
-                final Calendar c = Calendar.getInstance();
-
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
-                Logger.printMessage("year--------->", "" + mYear);
-
-
-                if (!check) {
-                    mYear = c.get(Calendar.YEAR);
-                    mMonth = c.get(Calendar.MONTH);
-                    mDay = c.get(Calendar.DAY_OF_MONTH);
-                }
-                if (!flag) {
-                    mYear = year;
-                    mMonth = month;
-                    mDay = date;
-                }
-                DatePickerDialog datePickerDialog = new DatePickerDialog(LicenceListActivity.this, new DatePickerDialog.OnDateSetListener() {
-
-
-                    @Override
-                    public void onDateSet(DatePicker datePicker, final int i, final int i1, final int i2) {
-
-                        int selectedDate = datePicker.getDayOfMonth();
-
-                        Logger.printMessage("selectedDate", "" + selectedDate);
-                        // datePicker.setMinDate(System.currentTimeMillis() - 1000);
-                        Logger.printMessage("onDateSet", "onDateSet");
-                        String date1 = "";
-                        year = i;
-                        month = i1;
-                        date = i2;
-                        Logger.printMessage("year", "" + year);
-                        String s = i + "-" + month + "-" + i2;
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.set(year, month, date);
-                        Date date2 = calendar.getTime();
-                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-                        date1 = format.format(date2);
-                        setDate(date1);
-                    }
-                }, mYear, mMonth, mDay);
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-                datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Logger.printMessage("Cancel", "Cancel");
-                        check = false;
-                    }
-                });
-                datePickerDialog.show();
-
-            }
-        });
-        onSaveInstanceState(new Bundle());
-
+        showData();
     }
 
 
@@ -265,162 +125,8 @@ public class LicenceListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void showPhotoDialog() {
-        dialog = new Dialog(LicenceListActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                    dialog.setCancelable(false);
-        dialog.setContentView(R.layout.alert_dialog_image_or_pdf);
-        //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels / 2;
-        int width = displayMetrics.widthPixels / 2;
-
-        ImageView img_gallery = (ImageView) dialog.findViewById(R.id.img_gallery);
-        ImageView img_pdf = (ImageView) dialog.findViewById(R.id.img_pdf);
-        ProRegularTextView TXTTitle = (ProRegularTextView) dialog.findViewById(R.id.Title);
-
-        LinearLayout LLMain = (LinearLayout) dialog.findViewById(R.id.LLMain);
-
-        // LLMain.getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(LicenceListActivity.this)[1]) /2;
-//        RLMain.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
-        LLMain.setMinimumWidth(height);
-        LLMain.getLayoutParams().height = (MethodsUtils.getScreenHeightAndWidth(LicenceListActivity.this)[1]) / 2;
-
-        TXTTitle.setText("Licence");
-
-        img_gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION1);
-                } else {
-                    openImageGallery();
-                }
-            }
-        });
-
-        img_pdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION2);
-                } else {
-                    openPDFGallery();
-                }
-            }
-        });
-        dialog.show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == REQUEST_WRITE_PERMISSION1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            openImageGallery();
-        }
-        if (requestCode == REQUEST_WRITE_PERMISSION2 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            openPDFGallery();
-        }
-    }
-
-    private void openImageGallery() {
-        try {
-            file = createImageFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-
-        dialog.dismiss();
-    }
-
-    private void openPDFGallery() {
-        try {
-            file = createImageFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF"), PICK_PDF_REQUEST);
-
-        dialog.dismiss();
-    }
-
-    File createImageFile() throws IOException {
-
-        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());///new approach
-        String imagefilename = "IMAGE_" + timestamp + "_";///new approach
-        File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imagefilename, ".jpg", storageDirectory);/////new approach
-        return image;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && file != null) {
-            Uri selectedImageURI = data.getData();
-            Logger.printMessage("photoPath", mycurrentphotopath);
-            try {
-                file = new File(ImageFilePath.getPath(getApplicationContext(), selectedImageURI));
-
-
-                if (file.getAbsolutePath().contains(".jpeg") || file.getAbsolutePath().contains(".png")
-                        || file.getAbsolutePath().contains(".jpg")) {
-                    mycurrentphotopath = file.getAbsolutePath();
-
-                    Logger.printMessage("my important path", mycurrentphotopath);
-                    LLUpload.setVisibility(View.GONE);
-                    LLEdit.setVisibility(View.VISIBLE);
-                    img_licence_file.setImageResource(android.R.color.transparent);
-                    ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
-                    Glide.with(getApplicationContext()).load(file).into(img_licence_file);
-                } else {
-                    Toast.makeText(getApplicationContext(), "This is not an image", Toast.LENGTH_SHORT).show();
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && file != null) {
-            Uri selectedDataURI = data.getData();
-            try {
-                Logger.printMessage("selectedDataURI", "" + selectedDataURI);
-                file = new File(ImageFilePath.getPath(getApplicationContext(), selectedDataURI));
-                Logger.printMessage("path", "" + file.getAbsolutePath());
-                if (file.getAbsolutePath().contains(".pdf")) {
-                    mycurrentphotopath = file.getAbsolutePath();
-                    LLUpload.setVisibility(View.GONE);
-                    LLEdit.setVisibility(View.VISIBLE);
-                    img_licence_file.setImageResource(android.R.color.transparent);
-                    img_licence_file.setImageResource(R.drawable.ic_pdf);
-                    ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
-//                    GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(img_licence_file);
-//                    Glide.with(getApplicationContext()).load(R.drawable.ic_pdf).into(imageViewTarget);
-//
-//                    Glide.with(getApplicationContext()).load(R.drawable.ic_pdf).into(img_licence_file);
-                } else {
-                    Toast.makeText(getApplicationContext(), "This is not a pdf file", Toast.LENGTH_SHORT).show();
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
     public void showData() {
+
         new CustomJSONParser().fireAPIForGetMethod(LicenceListActivity.this, ProConstant.liencelist, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
@@ -446,21 +152,22 @@ public class LicenceListActivity extends AppCompatActivity {
                         setGetShowLicenceArrayList.add(show);
 
                     }
-                    if (licenceAdapter == null) {
+                    if (setGetShowLicenceArrayList.size()==0) {
                         RLEmpty.setVisibility(View.VISIBLE);
                         rcv_licence_list.setVisibility(View.GONE);
                     } else {
-                        licenceAdapter = new LicenceAdapter(LicenceListActivity.this, setGetShowLicenceArrayList);
-                        rcv_licence_list.setAdapter(licenceAdapter);
                         RLEmpty.setVisibility(View.GONE);
                         rcv_licence_list.setVisibility(View.VISIBLE);
+                        licenceAdapter = new LicenceAdapter(LicenceListActivity.this, setGetShowLicenceArrayList);
+
+                        if (setGetShowLicenceArrayList.size() >= 2) {
+                            img_add_licence.setVisibility(View.GONE);
+                        } else {
+                            img_add_licence.setVisibility(View.VISIBLE);
+                        }
+                        rcv_licence_list.setAdapter(licenceAdapter);
                     }
-                    arrlistsize = setGetShowLicenceArrayList.size();
-                    if (setGetShowLicenceArrayList.size() == 2) {
-                        img_add_licence.setVisibility(View.GONE);
-                    } else {
-                        img_add_licence.setVisibility(View.VISIBLE);
-                    }
+
                     Logger.printMessage("LicenseSize", String.valueOf(setGetShowLicenceArrayList.size()));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -491,194 +198,23 @@ public class LicenceListActivity extends AppCompatActivity {
 
             @Override
             public void onStart() {
-
-            }
-        });
-    }
-
-    public void category() {
-        new CustomJSONParser().fireAPIForGetMethod(LicenceListActivity.this, ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
-            @Override
-            public void onSuccess(String result) {
-                // Log.d("responese",result);
-                try {
-                    JSONObject job = new JSONObject(result);
-                    catagory = job.getJSONArray("info_array");
-                    Logger.printMessage("CategoryArray", String.valueOf(catagory));
-
-                    showData();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    myLoader.dismissLoader();
-                }
-            }
-
-            @Override
-            public void onError(String error, String response) {
-                myLoader.dismissLoader();
-            }
-
-            @Override
-            public void onError(String error) {
-                myLoader.dismissLoader();
-            }
-
-            @Override
-            public void onStart() {
                 myLoader.showLoader();
             }
         });
-
     }
 
-    private void showDialogCategory(View v, JSONArray PredictionsJsonArray) {
-
-        popupWindow = new PopupWindow(LicenceListActivity.this);
-        // Closes the popup window when touch outside.
-        popupWindow.setOutsideTouchable(true);
-        // Removes default background.
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        View dailogView = LicenceListActivity.this.getLayoutInflater().inflate(R.layout.dialogcat, null);
-
-        RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
-        rcv_.setLayoutManager(new LinearLayoutManager(LicenceListActivity.this));
-
-        custom = new CustomListAdapterDialog_catagory(LicenceListActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
-            @Override
-            public void onItemPassed(int position, JSONObject value) {
-                popupWindow.dismiss();
-                Logger.printMessage("value", "" + value);
-
-                try {
-                    tv_service.setText(value.getString("category_name"));
-                    pros_contact_service = value.getString("id");
-                    Logger.printMessage("id", pros_contact_service);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        rcv_.setAdapter(custom);
-        // some other visual settings
-        popupWindow.setFocusable(false);
-        popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-
-        // set the list view as pop up window content
-        popupWindow.setContentView(dailogView);
-        popupWindow.showAsDropDown(v, -5, 0);
-
-    }
-
-    public void saveData() {
-        String uid = ProApplication.getInstance().getUserId();
-        String issuere = tv_issue.getText().toString().trim();
-        String license = tv_licence_number.getText().toString().trim();
-        String expire = tv_expires.getText().toString().trim();
-
-        if (tv_service.getText().toString().trim().equals("")) {
-            Toast.makeText(LicenceListActivity.this, "Select Category", Toast.LENGTH_SHORT).show();
-
-        } else {
-            if (issuere.equals("")) {
-                tv_issue.setError("Enter issuer name");
-                tv_issue.setFocusable(true);
-            } else {
-                if (license.equals("")) {
-                    tv_licence_number.setError("Enter licence number");
-                    tv_licence_number.setFocusable(true);
-                } else {
-                    if (expire.equals("")) {
-                        Toast.makeText(LicenceListActivity.this, "Select Expires date", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Logger.printMessage("my save path", String.valueOf(file));
-                        Logger.printMessage("uid", uid);
-                        Logger.printMessage("catid", pros_contact_service);
-                        Logger.printMessage("issuer", issuere);
-                        Logger.printMessage("license", license);
-                        Logger.printMessage("expire", expire);
-
-                        ArrayList<SetGetAPIPostData> arrayListPostParamsValues = new ArrayList<>();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
 
-                        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
-                        setGetAPIPostData.setPARAMS("user_id");
-                        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
-                        arrayListPostParamsValues.add(setGetAPIPostData);
-
-                        setGetAPIPostData = new SetGetAPIPostData();
-                        setGetAPIPostData.setPARAMS("cat_id");
-                        setGetAPIPostData.setValues(pros_contact_service);
-                        arrayListPostParamsValues.add(setGetAPIPostData);
-
-                        setGetAPIPostData = new SetGetAPIPostData();
-                        setGetAPIPostData.setPARAMS("license_issuer");
-                        setGetAPIPostData.setValues(issuere);
-                        arrayListPostParamsValues.add(setGetAPIPostData);
-
-                        setGetAPIPostData = new SetGetAPIPostData();
-                        setGetAPIPostData.setPARAMS("licenses_no");
-                        setGetAPIPostData.setValues(license);
-                        arrayListPostParamsValues.add(setGetAPIPostData);
-
-                        setGetAPIPostData = new SetGetAPIPostData();
-                        setGetAPIPostData.setPARAMS("date_expire");
-                        setGetAPIPostData.setValues(expire);
-                        arrayListPostParamsValues.add(setGetAPIPostData);
-
-                        ArrayList<File> filesImages = new ArrayList<>();
-                        filesImages.add(file);
-
-
-                        CustomJSONParser.ImageParam = "image_info";
-
-                        new CustomJSONParser().APIForWithPhotoPostMethod(LicenceListActivity.this, ProConstant.licenseadd, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
-                            @Override
-                            public void onSuccess(String result) {
-                                Logger.printMessage("result", result);
-                                myLoader.dismissLoader();
-                                try {
-                                    JSONObject jo = new JSONObject(result);
-                                    String msg = jo.getString("message");
-                                    Toast.makeText(LicenceListActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
-                                    RLAddLicence.setVisibility(View.GONE);
-                                    rcv_licence_list.setVisibility(View.VISIBLE);
-                                    setGetShowLicenceArrayList.clear();
-                                    showData();
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            @Override
-                            public void onError(String error, String response) {
-                                myLoader.dismissLoader();
-                            }
-
-                            @Override
-                            public void onError(String error) {
-                                myLoader.dismissLoader();
-                            }
-
-                            @Override
-                            public void onStart() {
-                                myLoader.showLoader();
-                            }
-                        });
-                    }
-                }
+        if (requestCode==100){
+            if(resultCode == RESULT_OK) {
+//                String strEditText = data.getStringExtra("TextValue");
+                setGetShowLicenceArrayList.clear();
+                showData();
             }
         }
 
-    }
-
-    private void setDate(String date) {
-        Logger.printMessage("setDate", ""+date);
-        flag = false;
-        tv_expires.setText(date);
     }
 }
