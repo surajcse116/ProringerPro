@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.adapter.IndevidualChatAdapter;
+import com.android.llc.proringer.pro.proringerpro.adapter.IndividualChatAdapter;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetChatPojo;
 import com.bumptech.glide.Glide;
 
@@ -134,7 +134,7 @@ public class IndividualMessageActivity extends AppCompatActivity {
         chatList.add(pojo8);
 
         Collections.reverse(chatList);
-        chat_list.setAdapter(new IndevidualChatAdapter(this, chatList));
+        chat_list.setAdapter(new IndividualChatAdapter(this, chatList));
     }
 
     @Override

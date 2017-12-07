@@ -34,11 +34,11 @@ import java.util.LinkedList;
  * limitations under the License.
  */
 
-public class IndevidualChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class IndividualChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mcontext;
     private LinkedList<SetGetChatPojo> dataList;
 
-    public IndevidualChatAdapter(Context mcontext, LinkedList<SetGetChatPojo> list) {
+    public IndividualChatAdapter(Context mcontext, LinkedList<SetGetChatPojo> list) {
         this.mcontext = mcontext;
         dataList = list;
     }
