@@ -124,8 +124,11 @@
                 android:id="@+id/et_companyphone"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edit_text_selecter"
-                android:inputType="text"
                 android:padding="10dp"
+                android:singleLine="true"
+                android:lines="1"
+                android:inputType="phone"
+                android:maxLength="14"
                 android:textColor="@color/colorTextDark"
                 android:textSize="14sp" />
 

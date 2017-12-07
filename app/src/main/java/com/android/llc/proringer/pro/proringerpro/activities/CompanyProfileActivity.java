@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -86,8 +88,8 @@ public class CompanyProfileActivity extends AppCompatActivity implements
     private static final long FASTEST_INTERVAL = 1000 * 1;
     private static final String TAG = "LocationActivity";
     String mLastUpdateTime;
+    int textLength = 0;
 
-    JSONObject infoArrayJsonObject = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,9 +136,50 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         et_state.setFocusable(false);
         et_state.setClickable(false);
         myLoader = new MyLoader(CompanyProfileActivity.this);
-        data();
-        dropdwondata();
 
+
+
+
+        et_companyphone.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String text = et_companyphone.getText().toString();
+                textLength = et_companyphone.getText().length();
+
+                if (text.endsWith("-") || text.endsWith(" ") || text.endsWith(" "))
+                    return;
+
+                if (textLength == 1) {
+                    if (!text.contains("(")) {
+                        et_companyphone.setText(new StringBuilder(text).insert(text.length() - 1, "(").toString());
+                        et_companyphone.setSelection(et_companyphone.getText().length());
+                    }
+
+                } else if (textLength == 5) {
+
+                    if (!text.contains(")")) {
+                        et_companyphone.setText(new StringBuilder(text).insert(text.length() - 1, ")").toString());
+                        et_companyphone.setSelection(et_companyphone.getText().length());
+                    }
+
+                } else if (textLength == 6) {
+                    et_companyphone.setText(new StringBuilder(text).insert(text.length() - 1, " ").toString());
+                    et_companyphone.setSelection(et_companyphone.getText().length());
+
+                } else if (textLength == 10) {
+                    if (!text.contains("-")) {
+                        et_companyphone.setText(new StringBuilder(text).insert(text.length() - 1, "-").toString());
+                        et_companyphone.setSelection(et_companyphone.getText().length());
+                    }
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
         et_address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +200,8 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                 submit();
             }
         });
+
+        dropDownData();
 
     }
 
@@ -183,9 +228,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                     et_zip.setText(extras.getString("zip"));
                     et_city.setText(extras.getString("city"));
                     et_state.setText(extras.getString("state"));
-
                 }
-
             }
         }
     }
@@ -198,8 +241,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    public void data() {
-        myLoader.showLoader();
+    public void getData() {
         arrayList = new ArrayList<SetGetAPI>();
         SetGetAPI setGetAPI = new SetGetAPI();
         setGetAPI.setPARAMS("user_id");
@@ -231,6 +273,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                         et_busineestype.setText(joi.getString("value"));
                         ProConstant.id = joi.getString("id");
                         Logger.printMessage("AppDataId", ProConstant.id);
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -263,7 +306,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
 
             @Override
             public void onStart() {
-
+                myLoader.dismissLoader();
             }
         });
 
@@ -317,7 +360,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
 
     }
 
-    public void dropdwondata() {
+    public void dropDownData() {
         new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, ProConstant.companybusinessoptionapi, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
@@ -330,21 +373,23 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                getData();
             }
 
             @Override
             public void onError(String error, String response) {
                 Toast.makeText(CompanyProfileActivity.this, "No data found" + response, Toast.LENGTH_SHORT).show();
+                myLoader.dismissLoader();
             }
 
             @Override
             public void onError(String error) {
-
+                myLoader.dismissLoader();
             }
 
             @Override
             public void onStart() {
-
+                myLoader.showLoader();
             }
         });
 
@@ -650,46 +695,43 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                                                             new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, ProConstant.copanyinfosave, Params, null, new CustomJSONParser.CustomJSONResponse() {
                                                                 @Override
                                                                 public void onSuccess(String result) {
+                                                                    myLoader.dismissLoader();
                                                                     Logger.printMessage("result", result);
-                                                                    deleteDialog.dismiss();
                                                                     try {
                                                                         JSONObject job = new JSONObject(result);
                                                                         String msg = job.getString("message");
-                                                                        data();
+
+                                                                        getData();
 
                                                                         Toast.makeText(CompanyProfileActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
                                                                     } catch (JSONException e) {
                                                                         e.printStackTrace();
                                                                     }
-
-
                                                                 }
 
                                                                 @Override
                                                                 public void onError(String error, String response) {
+                                                                    myLoader.dismissLoader();
                                                                     try {
-                                                                        deleteDialog.dismiss();
                                                                         JSONObject job = new JSONObject(response);
                                                                         String message = job.getString("message");
                                                                         Toast.makeText(CompanyProfileActivity.this, "" + message, Toast.LENGTH_SHORT).show();
                                                                     } catch (JSONException e) {
                                                                         e.printStackTrace();
                                                                     }
-
-
                                                                 }
 
                                                                 @Override
                                                                 public void onError(String error) {
-
+                                                                    myLoader.dismissLoader();
                                                                 }
 
                                                                 @Override
                                                                 public void onStart() {
-
+                                                                    myLoader.showLoader();
                                                                 }
                                                             });
-
+                                                            deleteDialog.dismiss();
                                                         }
                                                     });
                                                     deleteDialogView.findViewById(R.id.NO).setOnClickListener(new View.OnClickListener() {
