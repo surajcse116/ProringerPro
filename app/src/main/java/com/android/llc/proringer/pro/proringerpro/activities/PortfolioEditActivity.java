@@ -15,13 +15,20 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogCategory;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogMonthYear;
 import com.android.llc.proringer.pro.proringerpro.adapter.PortfolioEditImageAdapter;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
+import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
+import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 import org.json.JSONArray;
@@ -30,15 +37,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 /**
  * Created by su on 12/8/17.
  */
 
 public class PortfolioEditActivity extends AppCompatActivity {
-    String port_id="",catid="",month="",year="",category_name="",monthDigit = "", monthName = "", yearName = "", yearDigit = "";
+    String port_id = "", catid = "", month = "", year = "", category_name = "", monthDigit = "", monthName = "", yearName = "", yearDigit = "";
 
-    JSONArray multiple_gallery_image,categoryJsonArray;
+    JSONArray multiple_gallery_image, categoryJsonArray;
     ProRegularTextView tv_category, tv_month, tv_year;
     RelativeLayout relative_category_dropdown, relative_month_dropdown, relative_year_dropdown;
     PopupWindow popupWindow;
@@ -46,9 +54,11 @@ public class PortfolioEditActivity extends AppCompatActivity {
     CustomListAdapterDialogCategory customListAdapterDialogCategory = null;
     ArrayList<String> portPolioImageGalleryArrayList = null;
 
-    PortfolioEditImageAdapter portfolioEditImageAdapter  = null;
+    PortfolioEditImageAdapter portfolioEditImageAdapter = null;
 
-    RecyclerView  rcv_add_port_folio;
+    RecyclerView rcv_add_port_folio;
+
+    MyLoader myLoader;
 
 
     @Override
@@ -61,6 +71,8 @@ public class PortfolioEditActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        myLoader=new MyLoader(this);
+
         rcv_add_port_folio = (RecyclerView) findViewById(R.id.rcv_add_port_folio);
         rcv_add_port_folio.setLayoutManager(new GridLayoutManager(this, 5));
 
@@ -72,19 +84,19 @@ public class PortfolioEditActivity extends AppCompatActivity {
         tv_month = (ProRegularTextView) findViewById(R.id.tv_month);
         tv_year = (ProRegularTextView) findViewById(R.id.tv_year);
 
-        port_id=getIntent().getExtras().getString("id");
-        catid=getIntent().getExtras().getString("cat_id");
-        month=getIntent().getExtras().getString("month");
-        year=getIntent().getExtras().getString("year");
-        category_name=getIntent().getExtras().getString("category_name");
+        port_id = getIntent().getExtras().getString("id");
+        catid = getIntent().getExtras().getString("cat_id");
+        month = getIntent().getExtras().getString("month");
+        year = getIntent().getExtras().getString("year");
+        category_name = getIntent().getExtras().getString("category_name");
 
-        portPolioImageGalleryArrayList=new ArrayList<>();
+        portPolioImageGalleryArrayList = new ArrayList<>();
 
         try {
-            multiple_gallery_image=new JSONArray(getIntent().getExtras().getString("multiple_gallery_image"));
-            categoryJsonArray=new JSONArray(getIntent().getExtras().getString("categoryJsonArray"));
+            multiple_gallery_image = new JSONArray(getIntent().getExtras().getString("multiple_gallery_image"));
+            categoryJsonArray = new JSONArray(getIntent().getExtras().getString("categoryJsonArray"));
 
-            for (int i=0;i<multiple_gallery_image.length();i++){
+            for (int i = 0; i < multiple_gallery_image.length(); i++) {
                 portPolioImageGalleryArrayList.add(multiple_gallery_image.getString(i));
             }
 
@@ -216,8 +228,25 @@ public class PortfolioEditActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.img_delete_port_folio).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                CustomAlert customAlert=new CustomAlert();
+                customAlert.getEventFromNormalAlert(PortfolioEditActivity.this, "Delete", "Are you sure to delete "+category_name+" gallery", "YES,DELETE IT", "CANCEL", new CustomAlert.MyCustomAlertListener() {
+                    @Override
+                    public void callBackOk() {
+                        deletePortFolio();
+                    }
 
+                    @Override
+                    public void callBackCancel() {
+
+                    }
+                });
+
+            }
+        });
     }
 
     @Override
@@ -348,7 +377,61 @@ public class PortfolioEditActivity extends AppCompatActivity {
         // set the list view as pop up window content
         popupWindow.setContentView(dailogView);
         popupWindow.showAsDropDown(v, -5, 0);
+    }
 
+    public void deletePortFolio(){
+        HashMap<String, String> Params = new HashMap<>();
+        Params.put("user_id", ProApplication.getInstance().getUserId());
+        Params.put("portfolio_id", port_id);
+        Logger.printMessage("PARAMS", String.valueOf(Params));
+        new CustomJSONParser().fireAPIForPostMethod(PortfolioEditActivity.this, ProConstant.deleteportfolio, Params, null, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                myLoader.dismissLoader();
+                JSONObject mainResponseObj = null;
+                try {
+                    mainResponseObj = new JSONObject(result);
+                    Logger.printMessage("message", mainResponseObj.getString("message"));
+                    Toast.makeText(PortfolioEditActivity.this,mainResponseObj.getString("message"),Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent();
+//                                    intent.putExtra("editTextValue", "value_here")
+                    setResult(RESULT_OK, intent);
+                    finish();
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String error, String response) {
+                myLoader.dismissLoader();
+                new MYAlert(PortfolioEditActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                    @Override
+                    public void OnOk(boolean res) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+                myLoader.dismissLoader();
+                new MYAlert(PortfolioEditActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                    @Override
+                    public void OnOk(boolean res) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onStart() {
+                myLoader.showLoader();
+            }
+        });
     }
 
 }

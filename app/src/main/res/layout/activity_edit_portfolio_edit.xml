@@ -25,7 +25,7 @@
             app:textAllCaps="true" />
 
         <ImageView
-            android:id="@+id/img_delet_port_folio"
+            android:id="@+id/img_delete_port_folio"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical|right"

@@ -380,6 +380,13 @@ public class PortFolioActivity extends AppCompatActivity {
                 Toast.makeText(PortFolioActivity.this, "You can't select pictures more than 10", Toast.LENGTH_SHORT).show();
             }
         }
+        else if (requestCode==111){
+            if(resultCode == RESULT_OK) {
+//                String strEditText = data.getStringExtra("TextValue");
+                showPortFolioArrayList.clear();
+                showData();
+            }
+        }
     }
 
 
@@ -588,7 +595,6 @@ public class PortFolioActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 myLoader.dismissLoader();
-
 
                 CustomAlert customAlert = new CustomAlert();
                 customAlert.getEventFromNormalAlert(PortFolioActivity.this, getResources().getString(R.string.text_location_permission), getResources().getString(R.string.text_location_permission), "Retry", "Abort", new CustomAlert.MyCustomAlertListener() {
