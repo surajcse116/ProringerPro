@@ -29,8 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog_catagory;
-import com.android.llc.proringer.pro.proringerpro.adapter.LicenceAdapter;
+import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogCategory;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
@@ -88,7 +87,7 @@ public class LicenceAddActivity extends AppCompatActivity {
     MyLoader myLoader;
     JSONArray categoryJsonArray;
     PopupWindow popupWindow;
-    CustomListAdapterDialog_catagory custom = null;
+    CustomListAdapterDialogCategory custom = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -384,7 +383,7 @@ public class LicenceAddActivity extends AppCompatActivity {
         RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
         rcv_.setLayoutManager(new LinearLayoutManager(LicenceAddActivity.this));
 
-        custom = new CustomListAdapterDialog_catagory(LicenceAddActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
+        custom = new CustomListAdapterDialogCategory(LicenceAddActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
             @Override
             public void onItemPassed(int position, JSONObject value) {
                 popupWindow.dismiss();

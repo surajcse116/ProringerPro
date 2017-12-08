@@ -25,7 +25,8 @@ import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.AddImageAdapter;
-import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog_catagory;
+import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogCategory;
+import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogMonthYear;
 import com.android.llc.proringer.pro.proringerpro.adapter.PortFolioAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
@@ -47,6 +48,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by su on 8/17/17.
@@ -55,15 +57,16 @@ import java.util.ArrayList;
 public class PortFolioActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 5;
     private static final int PICK_IMAGE = 3;
-    ProRegularTextView tv_category;
+    ProRegularTextView tv_category,tv_month,tv_year;
     RecyclerView rcv_port_folio, rcv_add_port_folio;
     RelativeLayout RLAddPortFolio, RLEmpty;
     AddImageAdapter addImageAdapter = null;
     MyLoader myLoader;
-    String catid = "";
+    String catid = "",monthDigit="",monthName="",yearName="",yearDigit="";
     JSONArray categoryJsonArray;
     PopupWindow popupWindow;
-    CustomListAdapterDialog_catagory custom = null;
+    CustomListAdapterDialogCategory customListAdapterDialogCategory = null;
+    CustomListAdapterDialogMonthYear customListAdapterDialogMonthYear = null;
     PortFolioAdapter portfolio;
     ArrayList<String> portPolioImageGalleryArrayList = null;
     ArrayList<SetGetAPI> arrayList = null;
@@ -84,10 +87,14 @@ public class PortFolioActivity extends AppCompatActivity {
 
         RLAddPortFolio = (RelativeLayout) findViewById(R.id.RLAddPortFolio);
         RLEmpty = (RelativeLayout) findViewById(R.id.RLEmpty);
+
         relative_category_dropdown= (RelativeLayout) findViewById(R.id.relative_category_dropdown);
         relative_month_dropdown= (RelativeLayout) findViewById(R.id.relative_month_dropdown);
         relative_year_dropdown= (RelativeLayout) findViewById(R.id.relative_year_dropdown);
+
         tv_category= (ProRegularTextView) findViewById(R.id.tv_category);
+        tv_month= (ProRegularTextView) findViewById(R.id.tv_month);
+        tv_year= (ProRegularTextView) findViewById(R.id.tv_year);
 
         myLoader = new MyLoader(PortFolioActivity.this);
         arrayList = new ArrayList<SetGetAPI>();
@@ -133,11 +140,118 @@ public class PortFolioActivity extends AppCompatActivity {
             }
         });
 
+        relative_month_dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                relative_category_dropdown.setBackgroundResource(R.drawable.edit_text_selecter);
+                relative_month_dropdown.setBackgroundResource(R.drawable.background_solidorange_border);
+                relative_year_dropdown.setBackgroundResource(R.drawable.edit_text_selecter);
+
+                JSONArray jsonArray = new JSONArray();
+                JSONObject question = new JSONObject();
+                try {
+                    question.put("name", "January");
+                    question.put("digit", "1");
+                    jsonArray.put(question);
+
+                    question = new JSONObject();
+                    question.put("name", "February");
+                    question.put("digit", "2");
+                    jsonArray.put(question);
+
+                    question = new JSONObject();
+                    question.put("name", "March");
+                    question.put("digit", "3");
+                    jsonArray.put(question);
+
+                    question = new JSONObject();
+                    question.put("name", "April");
+                    question.put("digit", "4");
+                    jsonArray.put(question);
+
+                    question = new JSONObject();
+                    question.put("name", "May");
+                    question.put("digit", "5");
+                    jsonArray.put(question);
+
+                    question = new JSONObject();
+                    question.put("name", "June");
+                    question.put("digit", "6");
+                    jsonArray.put(question);
+
+                    question = new JSONObject();
+                    question.put("name", "July");
+                    question.put("digit", "7");
+                    jsonArray.put(question);
+
+                    question = new JSONObject();
+                    question.put("name", "August");
+                    question.put("digit", "8");
+                    jsonArray.put(question);
+
+                    question = new JSONObject();
+                    question.put("name", "September");
+                    question.put("digit", "9");
+                    jsonArray.put(question);
+
+                    question = new JSONObject();
+                    question.put("name", "October");
+                    question.put("digit", "10");
+                    jsonArray.put(question);
+
+                    question = new JSONObject();
+                    question.put("name", "November");
+                    question.put("digit", "11");
+                    jsonArray.put(question);
+
+                    question = new JSONObject();
+                    question.put("name", "December");
+                    question.put("digit", "12");
+                    jsonArray.put(question);
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                showMonthDialog(view, jsonArray);
+            }
+        });
+
         relative_category_dropdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 relative_category_dropdown.setBackgroundResource(R.drawable.background_solidorange_border);
+                relative_month_dropdown.setBackgroundResource(R.drawable.edit_text_selecter);
+                relative_year_dropdown.setBackgroundResource(R.drawable.edit_text_selecter);
                 showDialogCategory(view, categoryJsonArray);
+            }
+        });
+
+        relative_year_dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                relative_category_dropdown.setBackgroundResource(R.drawable.edit_text_selecter);
+                relative_month_dropdown.setBackgroundResource(R.drawable.edit_text_selecter);
+                relative_year_dropdown.setBackgroundResource(R.drawable.background_solidorange_border);
+
+                int year=Calendar.getInstance().get(Calendar.YEAR);
+
+                JSONArray jsonArray = new JSONArray();
+
+                for (int i=0;i<50;i++){
+                    try {
+                        JSONObject question = new JSONObject();
+                        question.put("name", ""+year);
+                        question.put("digit", ""+year);
+                        jsonArray.put(question);
+
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    year=year-1;
+                }
+                showYearDialog(view, jsonArray);
             }
         });
 
@@ -297,6 +411,82 @@ public class PortFolioActivity extends AppCompatActivity {
 
     }
 
+    public void showMonthDialog(View v, JSONArray PredictionsJsonArray) {
+        popupWindow = new PopupWindow(PortFolioActivity.this);
+        // Closes the popup window when touch outside.
+        popupWindow.setOutsideTouchable(true);
+        // Removes default background.
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        View dailogView = PortFolioActivity.this.getLayoutInflater().inflate(R.layout.dialogcat, null);
+
+        RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
+        rcv_.setLayoutManager(new LinearLayoutManager(PortFolioActivity.this));
+
+        customListAdapterDialogMonthYear = new CustomListAdapterDialogMonthYear(PortFolioActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
+            @Override
+            public void onItemPassed(int position, JSONObject value) {
+                popupWindow.dismiss();
+                Logger.printMessage("value", "" + value);
+
+                try {
+                    tv_month.setText(value.getString("name"));
+                    monthDigit = value.getString("digit");
+                    Logger.printMessage("monthDigit-->", monthDigit);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        rcv_.setAdapter(customListAdapterDialogMonthYear);
+        // some other visual settings
+        popupWindow.setFocusable(false);
+        popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+
+        // set the list view as pop up window content
+        popupWindow.setContentView(dailogView);
+        popupWindow.showAsDropDown(v, -5, 0);
+    }
+
+    public void showYearDialog(View v, JSONArray PredictionsJsonArray) {
+        popupWindow = new PopupWindow(PortFolioActivity.this);
+        // Closes the popup window when touch outside.
+        popupWindow.setOutsideTouchable(true);
+        // Removes default background.
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        View dailogView = PortFolioActivity.this.getLayoutInflater().inflate(R.layout.dialogcat, null);
+
+        RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
+        rcv_.setLayoutManager(new LinearLayoutManager(PortFolioActivity.this));
+
+        customListAdapterDialogMonthYear = new CustomListAdapterDialogMonthYear(PortFolioActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
+            @Override
+            public void onItemPassed(int position, JSONObject value) {
+                popupWindow.dismiss();
+                Logger.printMessage("value", "" + value);
+
+                try {
+                    tv_year.setText(value.getString("name"));
+                    yearDigit = value.getString("digit");
+                    Logger.printMessage("yearDigit-->", yearDigit);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        rcv_.setAdapter(customListAdapterDialogMonthYear);
+        // some other visual settings
+        popupWindow.setFocusable(false);
+        popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+
+        // set the list view as pop up window content
+        popupWindow.setContentView(dailogView);
+        popupWindow.showAsDropDown(v, -5, 0);
+    }
+
     private void showDialogCategory(View v, JSONArray PredictionsJsonArray) {
 
         popupWindow = new PopupWindow(PortFolioActivity.this);
@@ -310,7 +500,7 @@ public class PortFolioActivity extends AppCompatActivity {
         RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
         rcv_.setLayoutManager(new LinearLayoutManager(PortFolioActivity.this));
 
-        custom = new CustomListAdapterDialog_catagory(PortFolioActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
+        customListAdapterDialogCategory = new CustomListAdapterDialogCategory(PortFolioActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
             @Override
             public void onItemPassed(int position, JSONObject value) {
                 popupWindow.dismiss();
@@ -325,7 +515,7 @@ public class PortFolioActivity extends AppCompatActivity {
                 }
             }
         });
-        rcv_.setAdapter(custom);
+        rcv_.setAdapter(customListAdapterDialogCategory);
         // some other visual settings
         popupWindow.setFocusable(false);
         popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
@@ -336,8 +526,6 @@ public class PortFolioActivity extends AppCompatActivity {
         popupWindow.showAsDropDown(v, -5, 0);
 
     }
-
-
 
     public void showData() {
         new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, ProConstant.portfoliolist, arrayList, new CustomJSONParser.CustomJSONResponse() {
@@ -415,7 +603,6 @@ public class PortFolioActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public String getRealPathFromURI(Uri contentURI) {
         Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);

@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LocationActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.SignupCompleteActivity;
-import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog_catagory;
+import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogCategory;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
@@ -68,7 +68,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
     RelativeLayout relative_dropdown;
     JSONArray catagory;
     PopupWindow popupWindow;
-   CustomListAdapterDialog_catagory custom = null;
+   CustomListAdapterDialogCategory custom = null;
     String pros_contact_service="";
     ImageView dropdown;
     @Nullable
@@ -240,7 +240,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
         RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
         rcv_.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        custom = new CustomListAdapterDialog_catagory(getActivity(),PredictionsJsonArray, new onOptionSelected() {
+        custom = new CustomListAdapterDialogCategory(getActivity(),PredictionsJsonArray, new onOptionSelected() {
             @Override
             public void onItemPassed(int position, JSONObject value) {
                 popupWindow.dismiss();
