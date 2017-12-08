@@ -66,16 +66,15 @@
 
                     <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                         android:id="@+id/tv_service"
-                        android:layout_width="220dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:hint="Select catagory"
+                        android:hint="Select Category"
                         android:paddingLeft="10dp"
                         android:textColor="@color/colorTextDark"
                         android:textSize="14sp" />
 
                     <ImageView
-                        android:id="@+id/dropdown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"

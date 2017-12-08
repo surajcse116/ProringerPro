@@ -80,7 +80,6 @@ public class LicenceAddActivity extends AppCompatActivity {
     ProRegularTextView tv_service, tv_save_licence;
     ProLightEditText tv_issue, tv_licence_number;
     ProRegularTextView tv_expires;
-    ImageView  dropdown;
 
     private int mYear = 0, mMonth = 0, mDay = 0, mHour, mMinute;
     int year;
@@ -107,7 +106,6 @@ public class LicenceAddActivity extends AppCompatActivity {
         tv_issue = (ProLightEditText) findViewById(R.id.tv_issue);
         tv_licence_number = (ProLightEditText) findViewById(R.id.tv_licence_number);
         tv_expires = (ProRegularTextView) findViewById(R.id.tv_expires);
-        dropdown = (ImageView) findViewById(R.id.dropdown);
         img_licence_file = (ImageView) findViewById(R.id.img_licence_file);
         LLUpload = (LinearLayout) findViewById(R.id.LLUpload);
         LLEdit = (LinearLayout) findViewById(R.id.LLEdit);
@@ -139,19 +137,14 @@ public class LicenceAddActivity extends AppCompatActivity {
             }
         });
 
-
-        dropdown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogCategory(view, categoryJsonArray);
-            }
-        });
-
         relative_dropdown = (RelativeLayout) findViewById(R.id.relative_dropdown);
+
+
         relative_dropdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 relative_dropdown.setBackgroundResource(R.drawable.background_solidorange_border);
+                showDialogCategory(view, categoryJsonArray);
             }
         });
 

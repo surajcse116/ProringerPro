@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
             android:id="@+id/tv_save_port_folio"
@@ -61,51 +61,100 @@
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
 
-        <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-            android:id="@+id/tv_category"
+        <RelativeLayout
+            android:id="@+id/relative_category_dropdown"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/edit_text_selecter"
-            android:hint="Categort"
-            android:inputType="text"
-            android:padding="10dp"
-            android:textColor="@color/colorTextDark"
-            android:textSize="14sp" />
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_selecter">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:hint="Select Category"
+                android:paddingLeft="10dp"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+        </RelativeLayout>
 
 
-        <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-            android:id="@+id/tv_month"
+        <RelativeLayout
+            android:id="@+id/relative_month_dropdown"
+            android:layout_below="@+id/relative_category_dropdown"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_below="@+id/tv_category"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_selecter"
-            android:hint="Month"
-            android:inputType="text"
-            android:padding="10dp"
-            android:textColor="@color/colorTextDark"
-            android:textSize="14sp" />
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_selecter">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:hint="Month"
+                android:paddingLeft="10dp"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+        </RelativeLayout>
 
 
-        <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-            android:id="@+id/tv_year"
+
+        <RelativeLayout
+            android:id="@+id/relative_year_dropdown"
+            android:layout_below="@+id/relative_month_dropdown"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_below="@+id/tv_month"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_selecter"
-            android:hint="Year"
-            android:inputType="text"
-            android:padding="10dp"
-            android:textColor="@color/colorTextDark"
-            android:textSize="14sp" />
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_selecter">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:hint="Year"
+                android:paddingLeft="10dp"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+        </RelativeLayout>
+
+
+
+
+
+
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
             android:id="@+id/tv_upload_limit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_year"
+            android:layout_below="@+id/relative_year_dropdown"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:text="add up to 10 photos"
@@ -142,7 +191,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
 
         <ImageView

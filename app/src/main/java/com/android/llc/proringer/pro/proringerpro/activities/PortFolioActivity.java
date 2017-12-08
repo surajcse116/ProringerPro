@@ -18,13 +18,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.AddImageAdapter;
+import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialog_catagory;
 import com.android.llc.proringer.pro.proringerpro.adapter.PortFolioAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
@@ -35,6 +39,7 @@ import com.android.llc.proringer.pro.proringerpro.pojo.SetGetShowPortFolio;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,19 +52,25 @@ import java.util.ArrayList;
  * Created by su on 8/17/17.
  */
 
-public class PortFolioActivity extends AppCompatActivity{
+public class PortFolioActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 5;
     private static final int PICK_IMAGE = 3;
+    ProRegularTextView tv_category;
     RecyclerView rcv_port_folio, rcv_add_port_folio;
     RelativeLayout RLAddPortFolio, RLEmpty;
     AddImageAdapter addImageAdapter = null;
     MyLoader myLoader;
+    String catid = "";
+    JSONArray categoryJsonArray;
+    PopupWindow popupWindow;
+    CustomListAdapterDialog_catagory custom = null;
     PortFolioAdapter portfolio;
     ArrayList<String> portPolioImageGalleryArrayList = null;
     ArrayList<SetGetAPI> arrayList = null;
-    ArrayList<SetGetShowPortFolio>arrayList1=null;
+    ArrayList<SetGetShowPortFolio> showPortFolioArrayList = null;
     private String mCurrentPhotoPath = "";
     JSONArray multipleimage;
+    RelativeLayout relative_category_dropdown,relative_month_dropdown,relative_year_dropdown;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,19 +84,22 @@ public class PortFolioActivity extends AppCompatActivity{
 
         RLAddPortFolio = (RelativeLayout) findViewById(R.id.RLAddPortFolio);
         RLEmpty = (RelativeLayout) findViewById(R.id.RLEmpty);
-        myLoader= new MyLoader(PortFolioActivity.this);
+        relative_category_dropdown= (RelativeLayout) findViewById(R.id.relative_category_dropdown);
+        relative_month_dropdown= (RelativeLayout) findViewById(R.id.relative_month_dropdown);
+        relative_year_dropdown= (RelativeLayout) findViewById(R.id.relative_year_dropdown);
+        tv_category= (ProRegularTextView) findViewById(R.id.tv_category);
+
+        myLoader = new MyLoader(PortFolioActivity.this);
         arrayList = new ArrayList<SetGetAPI>();
         SetGetAPI setGetAPI = new SetGetAPI();
         setGetAPI.setValues(ProApplication.getInstance().getUserId());
         setGetAPI.setPARAMS("user_id");
         arrayList.add(setGetAPI);
-        arrayList1= new ArrayList<>();
+        showPortFolioArrayList = new ArrayList<>();
         portPolioImageGalleryArrayList = new ArrayList<>();
-        showdata();
+
         rcv_port_folio = (RecyclerView) findViewById(R.id.rcv_port_folio);
         rcv_port_folio.setLayoutManager(new LinearLayoutManager(PortFolioActivity.this));
-        portfolio = new PortFolioAdapter(this,arrayList1);
-        rcv_port_folio.setAdapter(portfolio);
         rcv_add_port_folio = (RecyclerView) findViewById(R.id.rcv_add_port_folio);
         rcv_add_port_folio.setLayoutManager(new GridLayoutManager(PortFolioActivity.this, 5));
 
@@ -97,13 +111,14 @@ public class PortFolioActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
 
-
                 if (RLAddPortFolio.getVisibility() == View.VISIBLE) {
                     RLAddPortFolio.setVisibility(View.GONE);
                     rcv_port_folio.setVisibility(View.VISIBLE);
+                    findViewById(R.id.img_add_port_folio).setVisibility(View.VISIBLE);
                 } else {
                     RLAddPortFolio.setVisibility(View.VISIBLE);
                     rcv_port_folio.setVisibility(View.GONE);
+                    findViewById(R.id.img_add_port_folio).setVisibility(View.GONE);
                 }
 
             }
@@ -117,13 +132,35 @@ public class PortFolioActivity extends AppCompatActivity{
                 startActivityForResult(intent, 200);
             }
         });
+
+        relative_category_dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                relative_category_dropdown.setBackgroundResource(R.drawable.background_solidorange_border);
+                showDialogCategory(view, categoryJsonArray);
+            }
+        });
+
+        category();
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            if (RLAddPortFolio.getVisibility() == View.VISIBLE) {
+                RLAddPortFolio.setVisibility(View.GONE);
+                rcv_port_folio.setVisibility(View.VISIBLE);
+                findViewById(R.id.img_add_port_folio).setVisibility(View.VISIBLE);
+
+                if (showPortFolioArrayList.size()>0){
+                    showPortFolioArrayList.clear();
+                }
+                showData();
+
+            } else {
+                finish();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -139,9 +176,9 @@ public class PortFolioActivity extends AppCompatActivity{
 
         RelativeLayout RLMain = (RelativeLayout) dialog.findViewById(R.id.RLMain);
 
-        RLMain.getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(PortFolioActivity.this)[1]) / 2;
+        RLMain.getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(PortFolioActivity.this)[1]);
 //        RLMain.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
-        RLMain.getLayoutParams().height = (MethodsUtils.getScreenHeightAndWidth(PortFolioActivity.this)[1]) / 3;
+        RLMain.getLayoutParams().height = (MethodsUtils.getScreenHeightAndWidth(PortFolioActivity.this)[1]) / 2;
 
 
         dialog.findViewById(R.id.img_gallery).setOnClickListener(new View.OnClickListener() {
@@ -224,85 +261,159 @@ public class PortFolioActivity extends AppCompatActivity{
             }
         }
     }
-    public void showdata()
-
-    {
-
-       new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, ProConstant.portfoliolist, arrayList, new CustomJSONParser.CustomJSONResponse() {
-           @Override
-           public void onSuccess(String result) {
-               Logger.printMessage("result",result);
-               myLoader.dismissLoader();
-               try {
-                   JSONObject info= new JSONObject(result);
-                   JSONArray infoarray= info.getJSONArray("info_array");
-                   for (int i=0;i<infoarray.length();i++)
-                   {
-                       JSONObject jo= infoarray.getJSONObject(i);
-                       SetGetShowPortFolio show= new SetGetShowPortFolio();
-                       show.setId(jo.getString("id"));
-                       show.setPros_id(jo.getString("pros_id"));
-                       show.setGallery_images(jo.getString("gallery_images"));
-                       show.setProject_month(jo.getString("project_month"));
-                       show.setProject_year(jo.getString("project_year"));
-                       show.setCount_images(jo.getString("count_images"));
-                       multipleimage=jo.getJSONArray("multiple_gallery_image");
-                       Logger.printMessage("size", String.valueOf(multipleimage));
-                       JSONObject cat= jo.getJSONObject("category");
-                       show.setCategory_id(cat.getString("category_id"));
-                       show.setCategory_name(cat.getString("category_name"));
-                       arrayList1.add(show);
-                   }
-                   Logger.printMessage("arrlist", String.valueOf(arrayList1.size()));
-                   if (portfolio==null)
-                   {
-                       RLEmpty.setVisibility(View.VISIBLE);
-                       rcv_port_folio.setVisibility(View.GONE);
-                   }
-                   else
-                   {
-                       rcv_port_folio.setAdapter(portfolio);
-                       RLEmpty.setVisibility(View.GONE);
-                       rcv_port_folio.setVisibility(View.VISIBLE);
-
-                   }
-
-               } catch (JSONException e) {
-                   e.printStackTrace();
-               }
-           }
-
-           @Override
-           public void onError(String error, String response) {
-               myLoader.dismissLoader();
-
-           }
-
-           @Override
-           public void onError(String error) {
-               myLoader.dismissLoader();
 
 
-               CustomAlert customAlert = new CustomAlert();
-               customAlert.getEventFromNormalAlert(PortFolioActivity.this, getResources().getString(R.string.text_location_permission),getResources().getString(R.string.text_location_permission), "Retry", "Abort", new CustomAlert.MyCustomAlertListener() {
-                   @Override
-                   public void callBackOk() {
+    public void category() {
+        new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                // Log.d("responese",result);
+                myLoader.dismissLoader();
+                try {
+                    JSONObject job = new JSONObject(result);
+                    categoryJsonArray = job.getJSONArray("info_array");
+                    Logger.printMessage("CategoryArray", String.valueOf(categoryJsonArray));
+                    showData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-                   }
+            @Override
+            public void onError(String error, String response) {
+                myLoader.dismissLoader();
+            }
 
-                   @Override
-                   public void callBackCancel() {
+            @Override
+            public void onError(String error) {
+                myLoader.dismissLoader();
+            }
 
-                   }
-               });
-           }
+            @Override
+            public void onStart() {
+                myLoader.showLoader();
+            }
+        });
 
-           @Override
-           public void onStart() {
-               myLoader.showLoader();
+    }
 
-           }
-       });
+    private void showDialogCategory(View v, JSONArray PredictionsJsonArray) {
+
+        popupWindow = new PopupWindow(PortFolioActivity.this);
+        // Closes the popup window when touch outside.
+        popupWindow.setOutsideTouchable(true);
+        // Removes default background.
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        View dailogView = PortFolioActivity.this.getLayoutInflater().inflate(R.layout.dialogcat, null);
+
+        RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
+        rcv_.setLayoutManager(new LinearLayoutManager(PortFolioActivity.this));
+
+        custom = new CustomListAdapterDialog_catagory(PortFolioActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
+            @Override
+            public void onItemPassed(int position, JSONObject value) {
+                popupWindow.dismiss();
+                Logger.printMessage("value", "" + value);
+
+                try {
+                    tv_category.setText(value.getString("category_name"));
+                    catid = value.getString("id");
+                    Logger.printMessage("catid-->", catid);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        rcv_.setAdapter(custom);
+        // some other visual settings
+        popupWindow.setFocusable(false);
+        popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+
+        // set the list view as pop up window content
+        popupWindow.setContentView(dailogView);
+        popupWindow.showAsDropDown(v, -5, 0);
+
+    }
+
+
+
+    public void showData() {
+        new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, ProConstant.portfoliolist, arrayList, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                Logger.printMessage("result", result);
+                try {
+                    JSONObject info = new JSONObject(result);
+                    JSONArray infoarray = info.getJSONArray("info_array");
+                    for (int i = 0; i < infoarray.length(); i++) {
+                        JSONObject jo = infoarray.getJSONObject(i);
+                        SetGetShowPortFolio show = new SetGetShowPortFolio();
+                        show.setId(jo.getString("id"));
+                        show.setPros_id(jo.getString("pros_id"));
+                        show.setGallery_images(jo.getString("gallery_images"));
+                        show.setProject_month(jo.getString("project_month"));
+                        show.setProject_year(jo.getString("project_year"));
+                        show.setCount_images(jo.getString("count_images"));
+                        multipleimage = jo.getJSONArray("multiple_gallery_image");
+                        Logger.printMessage("size", String.valueOf(multipleimage));
+                        JSONObject cat = jo.getJSONObject("category");
+                        show.setCategory_id(cat.getString("category_id"));
+                        show.setCategory_name(cat.getString("category_name"));
+                        showPortFolioArrayList.add(show);
+                    }
+                    Logger.printMessage("arrlist", String.valueOf(showPortFolioArrayList.size()));
+                    if (showPortFolioArrayList.size() == 0) {
+                        RLEmpty.setVisibility(View.VISIBLE);
+                        rcv_port_folio.setVisibility(View.GONE);
+                    } else {
+                        RLEmpty.setVisibility(View.GONE);
+                        rcv_port_folio.setVisibility(View.VISIBLE);
+
+                        if (portfolio == null) {
+                            portfolio = new PortFolioAdapter(PortFolioActivity.this, showPortFolioArrayList);
+                            rcv_port_folio.setAdapter(portfolio);
+                        } else {
+                            portfolio.notifyDataSetChanged();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                myLoader.dismissLoader();
+            }
+
+            @Override
+            public void onError(String error, String response) {
+                myLoader.dismissLoader();
+
+            }
+
+            @Override
+            public void onError(String error) {
+                myLoader.dismissLoader();
+
+
+                CustomAlert customAlert = new CustomAlert();
+                customAlert.getEventFromNormalAlert(PortFolioActivity.this, getResources().getString(R.string.text_location_permission), getResources().getString(R.string.text_location_permission), "Retry", "Abort", new CustomAlert.MyCustomAlertListener() {
+                    @Override
+                    public void callBackOk() {
+
+                    }
+
+                    @Override
+                    public void callBackCancel() {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+        });
     }
 
 
