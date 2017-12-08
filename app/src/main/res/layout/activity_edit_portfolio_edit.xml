@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBGblueShade"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="PortFolio"
+            android:textColor="@color/colorTextDark"
+            android:textSize="16sp"
+            app:textAllCaps="true" />
+
+        <ImageView
+            android:id="@+id/img_delet_port_folio"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="15dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_recycling_bin" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/RLAddPortFolio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:visibility="visible">
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:id="@+id/tv_save_port_folio"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="SAVE"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:id="@+id/relative_category_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_selecter">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:hint="Select Category"
+                android:paddingLeft="10dp"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relative_month_dropdown"
+            android:layout_below="@+id/relative_category_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_selecter">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:hint="Month"
+                android:paddingLeft="10dp"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/relative_year_dropdown"
+            android:layout_below="@+id/relative_month_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_selecter">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:hint="Year"
+                android:paddingLeft="10dp"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+        </RelativeLayout>
+
+
+
+
+
+
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:id="@+id/tv_upload_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relative_year_dropdown"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="add up to 10 photos"
+            app:textAllCaps="true" />
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+            android:id="@+id/tv_add"
+            android:layout_width="150dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_below="@+id/tv_upload_limit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="Add Photos"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcv_add_port_folio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/tv_save_port_folio"
+            android:layout_below="@+id/tv_add"
+            android:layout_marginTop="30dp"></android.support.v7.widget.RecyclerView>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

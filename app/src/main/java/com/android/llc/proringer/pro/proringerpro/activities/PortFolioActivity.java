@@ -24,7 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.adapter.AddImageAdapter;
+import com.android.llc.proringer.pro.proringerpro.adapter.PortFolioAddImageAdapter;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogCategory;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogMonthYear;
 import com.android.llc.proringer.pro.proringerpro.adapter.PortFolioAdapter;
@@ -36,6 +36,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetShowPortFolio;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
@@ -57,13 +58,13 @@ import java.util.Calendar;
 public class PortFolioActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 5;
     private static final int PICK_IMAGE = 3;
-    ProRegularTextView tv_category,tv_month,tv_year;
+    ProRegularTextView tv_category, tv_month, tv_year;
     RecyclerView rcv_port_folio, rcv_add_port_folio;
     RelativeLayout RLAddPortFolio, RLEmpty;
-    AddImageAdapter addImageAdapter = null;
+    PortFolioAddImageAdapter portFolioAddImageAdapter = null;
     MyLoader myLoader;
-    String catid = "",monthDigit="",monthName="",yearName="",yearDigit="";
-    JSONArray categoryJsonArray;
+    String catid = "", monthDigit = "", monthName = "", yearName = "", yearDigit = "";
+    public JSONArray categoryJsonArray;
     PopupWindow popupWindow;
     CustomListAdapterDialogCategory customListAdapterDialogCategory = null;
     CustomListAdapterDialogMonthYear customListAdapterDialogMonthYear = null;
@@ -72,8 +73,8 @@ public class PortFolioActivity extends AppCompatActivity {
     ArrayList<SetGetAPI> arrayList = null;
     ArrayList<SetGetShowPortFolio> showPortFolioArrayList = null;
     private String mCurrentPhotoPath = "";
-    JSONArray multipleimage;
-    RelativeLayout relative_category_dropdown,relative_month_dropdown,relative_year_dropdown;
+    RelativeLayout relative_category_dropdown, relative_month_dropdown, relative_year_dropdown;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,13 +89,13 @@ public class PortFolioActivity extends AppCompatActivity {
         RLAddPortFolio = (RelativeLayout) findViewById(R.id.RLAddPortFolio);
         RLEmpty = (RelativeLayout) findViewById(R.id.RLEmpty);
 
-        relative_category_dropdown= (RelativeLayout) findViewById(R.id.relative_category_dropdown);
-        relative_month_dropdown= (RelativeLayout) findViewById(R.id.relative_month_dropdown);
-        relative_year_dropdown= (RelativeLayout) findViewById(R.id.relative_year_dropdown);
+        relative_category_dropdown = (RelativeLayout) findViewById(R.id.relative_category_dropdown);
+        relative_month_dropdown = (RelativeLayout) findViewById(R.id.relative_month_dropdown);
+        relative_year_dropdown = (RelativeLayout) findViewById(R.id.relative_year_dropdown);
 
-        tv_category= (ProRegularTextView) findViewById(R.id.tv_category);
-        tv_month= (ProRegularTextView) findViewById(R.id.tv_month);
-        tv_year= (ProRegularTextView) findViewById(R.id.tv_year);
+        tv_category = (ProRegularTextView) findViewById(R.id.tv_category);
+        tv_month = (ProRegularTextView) findViewById(R.id.tv_month);
+        tv_year = (ProRegularTextView) findViewById(R.id.tv_year);
 
         myLoader = new MyLoader(PortFolioActivity.this);
         arrayList = new ArrayList<SetGetAPI>();
@@ -234,28 +235,35 @@ public class PortFolioActivity extends AppCompatActivity {
                 relative_month_dropdown.setBackgroundResource(R.drawable.edit_text_selecter);
                 relative_year_dropdown.setBackgroundResource(R.drawable.background_solidorange_border);
 
-                int year=Calendar.getInstance().get(Calendar.YEAR);
+                int year = Calendar.getInstance().get(Calendar.YEAR);
 
                 JSONArray jsonArray = new JSONArray();
 
-                for (int i=0;i<50;i++){
+                for (int i = 0; i < 50; i++) {
                     try {
                         JSONObject question = new JSONObject();
-                        question.put("name", ""+year);
-                        question.put("digit", ""+year);
+                        question.put("name", "" + year);
+                        question.put("digit", "" + year);
                         jsonArray.put(question);
 
                     } catch (JSONException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
-                    year=year-1;
+                    year = year - 1;
                 }
                 showYearDialog(view, jsonArray);
             }
         });
 
         category();
+
+        findViewById(R.id.tv_save_port_folio).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validationForPortFolio();
+            }
+        });
     }
 
 
@@ -266,12 +274,6 @@ public class PortFolioActivity extends AppCompatActivity {
                 RLAddPortFolio.setVisibility(View.GONE);
                 rcv_port_folio.setVisibility(View.VISIBLE);
                 findViewById(R.id.img_add_port_folio).setVisibility(View.VISIBLE);
-
-                if (showPortFolioArrayList.size()>0){
-                    showPortFolioArrayList.clear();
-                }
-                showData();
-
             } else {
                 finish();
             }
@@ -337,11 +339,11 @@ public class PortFolioActivity extends AppCompatActivity {
 
                 portPolioImageGalleryArrayList.add(mCurrentPhotoPath);
 
-                if (addImageAdapter == null) {
-                    addImageAdapter = new AddImageAdapter(PortFolioActivity.this, portPolioImageGalleryArrayList);
-                    rcv_add_port_folio.setAdapter(addImageAdapter);
+                if (portFolioAddImageAdapter == null) {
+                    portFolioAddImageAdapter = new PortFolioAddImageAdapter(PortFolioActivity.this, portPolioImageGalleryArrayList);
+                    rcv_add_port_folio.setAdapter(portFolioAddImageAdapter);
                 } else {
-                    addImageAdapter.notifyDataSetChanged();
+                    portFolioAddImageAdapter.notifyDataSetChanged();
                 }
 
 
@@ -355,13 +357,17 @@ public class PortFolioActivity extends AppCompatActivity {
                 public void run() {
                     if (data != null) {
                         mCurrentPhotoPath = data.getExtras().get("data").toString();
+
+                        Uri selectedDataURI = data.getData();
+                        Logger.printMessage("selectedDataURI", "" + selectedDataURI);
+
                         Logger.printMessage("image****", "" + mCurrentPhotoPath);
                         portPolioImageGalleryArrayList.add(mCurrentPhotoPath);
-                        if (addImageAdapter == null) {
-                            addImageAdapter = new AddImageAdapter(PortFolioActivity.this, portPolioImageGalleryArrayList);
-                            rcv_add_port_folio.setAdapter(addImageAdapter);
+                        if (portFolioAddImageAdapter == null) {
+                            portFolioAddImageAdapter = new PortFolioAddImageAdapter(PortFolioActivity.this, portPolioImageGalleryArrayList);
+                            rcv_add_port_folio.setAdapter(portFolioAddImageAdapter);
                         } else {
-                            addImageAdapter.notifyDataSetChanged();
+                            portFolioAddImageAdapter.notifyDataSetChanged();
                         }
 
                     }
@@ -431,6 +437,7 @@ public class PortFolioActivity extends AppCompatActivity {
 
                 try {
                     tv_month.setText(value.getString("name"));
+                    monthName = value.getString("name");
                     monthDigit = value.getString("digit");
                     Logger.printMessage("monthDigit-->", monthDigit);
                 } catch (JSONException e) {
@@ -469,6 +476,7 @@ public class PortFolioActivity extends AppCompatActivity {
 
                 try {
                     tv_year.setText(value.getString("name"));
+                    yearName = value.getString("name");
                     yearDigit = value.getString("digit");
                     Logger.printMessage("yearDigit-->", yearDigit);
                 } catch (JSONException e) {
@@ -540,12 +548,11 @@ public class PortFolioActivity extends AppCompatActivity {
                         SetGetShowPortFolio show = new SetGetShowPortFolio();
                         show.setId(jo.getString("id"));
                         show.setPros_id(jo.getString("pros_id"));
-                        show.setGallery_images(jo.getString("gallery_images"));
+                        show.setGallery_image(jo.getString("gallery_images"));
                         show.setProject_month(jo.getString("project_month"));
                         show.setProject_year(jo.getString("project_year"));
                         show.setCount_images(jo.getString("count_images"));
-                        multipleimage = jo.getJSONArray("multiple_gallery_image");
-                        Logger.printMessage("size", String.valueOf(multipleimage));
+                        show.setMultiple_gallery_image(jo.getJSONArray("multiple_gallery_image"));
                         JSONObject cat = jo.getJSONObject("category");
                         show.setCategory_id(cat.getString("category_id"));
                         show.setCategory_name(cat.getString("category_name"));
@@ -615,4 +622,120 @@ public class PortFolioActivity extends AppCompatActivity {
             return cursor.getString(idx);
         }
     }
+
+    public void validationForPortFolio(){
+
+        if (tv_category.getText().toString().equals("")){
+            Toast.makeText(PortFolioActivity.this, "Please Select Category", Toast.LENGTH_SHORT).show();
+        }else {
+
+            if (tv_month.getText().toString().equals("")){
+                Toast.makeText(PortFolioActivity.this, "Please Select Month", Toast.LENGTH_SHORT).show();
+            }else {
+                if (tv_year.getText().toString().equals("")){
+                    Toast.makeText(PortFolioActivity.this, "Please Select Year", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (portPolioImageGalleryArrayList.size()<=1)
+                    {
+                        Toast.makeText(PortFolioActivity.this, "Please select atleast one image", Toast.LENGTH_SHORT).show();
+                    }else {
+                        firePortFolioData();
+                    }
+
+                }
+            }
+        }
+    }
+
+    public void firePortFolioData(){
+
+        ArrayList<SetGetAPIPostData> arrayListPostParamsValues = new ArrayList<>();
+
+        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        arrayListPostParamsValues.add(setGetAPIPostData);
+
+        setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("cat_id");
+        setGetAPIPostData.setValues(catid);
+        arrayListPostParamsValues.add(setGetAPIPostData);
+
+        setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("month");
+        setGetAPIPostData.setValues(monthName);
+        arrayListPostParamsValues.add(setGetAPIPostData);
+
+        setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("year");
+        setGetAPIPostData.setValues(yearName);
+        arrayListPostParamsValues.add(setGetAPIPostData);
+
+        ArrayList<File> filesImages = new ArrayList<>();
+
+        for (int i=0;i<portPolioImageGalleryArrayList.size();i++){
+            filesImages.add(new File(portPolioImageGalleryArrayList.get(i)));
+        }
+
+        CustomJSONParser.ImageParam = "gallery_image";
+
+        new CustomJSONParser().APIForWithPhotosMultiplePostMethod(PortFolioActivity.this, ProConstant.proportfolio_add, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                Logger.printMessage("result", result);
+                myLoader.dismissLoader();
+                try {
+                    JSONObject jo = new JSONObject(result);
+                    String msg = jo.getString("message");
+                    Toast.makeText(PortFolioActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
+
+                    RLAddPortFolio.setVisibility(View.GONE);
+                    rcv_port_folio.setVisibility(View.VISIBLE);
+                    findViewById(R.id.img_add_port_folio).setVisibility(View.VISIBLE);
+
+
+                    portPolioImageGalleryArrayList.clear();
+                    if (portFolioAddImageAdapter != null) {
+                        portFolioAddImageAdapter.notifyDataSetChanged();
+                    }
+                    tv_category.setText("");
+                    tv_month.setText("");
+                    tv_year.setText("");
+
+                    catid="";
+                    monthName="";
+                    yearName="";
+
+                    if (showPortFolioArrayList.size() > 0) {
+                        showPortFolioArrayList.clear();
+                    }
+                    showData();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(String error, String response) {
+                myLoader.dismissLoader();
+
+            }
+
+            @Override
+            public void onError(String error) {
+                myLoader.dismissLoader();
+
+            }
+
+            @Override
+            public void onStart() {
+                myLoader.showLoader();
+            }
+        });
+
+    }
+
+
 }
