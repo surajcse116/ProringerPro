@@ -49,6 +49,9 @@ public class ProConstant {
     public static  String notification=BASEURL+"app_pro_notification";
     public static  String updateNotificationDetailsAPI=BASEURL+"app_pronotification_save";
 
+    public static  String serviceAreaOfUserAPI=BASEURL+"app_pro_servicearea?";
+    public static  String serviceAreaSaveOfUserAPI=BASEURL+"app_pro_servicearea_save";
+
 
     public static String latitude = "";
     public static String longtitude = "";
