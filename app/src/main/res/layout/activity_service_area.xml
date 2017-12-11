@@ -73,27 +73,35 @@
             android:textColor="@color/colorTextBlack"
              />
 
-        <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-            android:id="@+id/edt_cities"
+        <RelativeLayout
+            android:id="@+id/relative_dropdown"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_below="@id/tv_cities"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_selecter"
-            android:hint="e.g.Chicago"
-            android:inputType="text"
-            android:padding="10dp"
-            android:textColor="@color/colorTextDark"
-            android:textSize="14sp" />
+            android:layout_below="@+id/tv_cities"
+            android:background="@drawable/edit_text_selecter">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/edt_cities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:hint="Select catagory"
+                android:paddingLeft="10dp"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+
+        </RelativeLayout>
 
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
             android:id="@+id/tv_add"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
-            android:layout_below="@+id/edt_cities"
+            android:layout_below="@+id/relative_dropdown"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
