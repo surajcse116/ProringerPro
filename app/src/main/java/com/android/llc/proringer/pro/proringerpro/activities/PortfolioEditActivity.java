@@ -21,7 +21,6 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogCategory;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogMonthYear;
 import com.android.llc.proringer.pro.proringerpro.adapter.PortFolioEditAddImageAdapter;
-import com.android.llc.proringer.pro.proringerpro.adapter.PortfolioEditImageAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
@@ -387,6 +386,62 @@ public class PortfolioEditActivity extends AppCompatActivity {
         Params.put("portfolio_id", port_id);
         Logger.printMessage("PARAMS", String.valueOf(Params));
         new CustomJSONParser().fireAPIForPostMethod(PortfolioEditActivity.this, ProConstant.deleteportfolio, Params, null, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                myLoader.dismissLoader();
+                JSONObject mainResponseObj = null;
+                try {
+                    mainResponseObj = new JSONObject(result);
+                    Logger.printMessage("message", mainResponseObj.getString("message"));
+                    Toast.makeText(PortfolioEditActivity.this,mainResponseObj.getString("message"),Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent();
+//                                    intent.putExtra("editTextValue", "value_here")
+                    setResult(RESULT_OK, intent);
+                    finish();
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String error, String response) {
+                myLoader.dismissLoader();
+                new MYAlert(PortfolioEditActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                    @Override
+                    public void OnOk(boolean res) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+                myLoader.dismissLoader();
+                new MYAlert(PortfolioEditActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                    @Override
+                    public void OnOk(boolean res) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onStart() {
+                myLoader.showLoader();
+            }
+        });
+    }
+
+    public void deletePortFolioImage(){
+
+        HashMap<String, String> Params = new HashMap<>();
+        Params.put("user_id", ProApplication.getInstance().getUserId());
+        Params.put("image_id", "");
+        Logger.printMessage("PARAMS", String.valueOf(Params));
+        new CustomJSONParser().fireAPIForPostMethod(PortfolioEditActivity.this, ProConstant.deleteportfolioImage, Params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();

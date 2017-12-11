@@ -42,7 +42,7 @@ public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolio
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.adapter_add_image, parent, false));
+        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.adapter_edit_add_image, parent, false));
 
     }
 
@@ -87,6 +87,12 @@ public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolio
                 }
             });
         }
+        holder.img_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -95,11 +101,12 @@ public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolio
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView img;
+        ImageView img,img_delete;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             img = (ImageView) itemView.findViewById(R.id.img);
+            img_delete = (ImageView) itemView.findViewById(R.id.img_delete);
         }
     }
 }

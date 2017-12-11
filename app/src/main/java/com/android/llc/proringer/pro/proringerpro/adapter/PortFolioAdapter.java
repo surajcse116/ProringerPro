@@ -25,18 +25,19 @@ import java.util.ArrayList;
 public class PortFolioAdapter extends RecyclerView.Adapter<PortFolioAdapter.MyViewHolder> {
     Context mContext;
     private ArrayList<SetGetShowPortFolio> arrlist;
+
     public PortFolioAdapter(Context mContext,ArrayList<SetGetShowPortFolio> arrlist){
         this.mContext=mContext;
         this.arrlist=arrlist;
     }
     @Override
-    public PortFolioAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.portfoliophoto, parent, false));
 
     }
 
     @Override
-    public void onBindViewHolder(PortFolioAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         Picasso.with(mContext).load(arrlist.get(position).getGallery_image()).into(holder.img);
         holder.tv_name.setText(arrlist.get(position).getCategory_name());
         holder.tv_date.setText(arrlist.get(position).getProject_month()+arrlist.get(position).getProject_year());

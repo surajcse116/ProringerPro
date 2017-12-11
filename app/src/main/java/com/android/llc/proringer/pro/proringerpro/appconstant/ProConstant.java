@@ -45,6 +45,7 @@ public class ProConstant {
     public static String proportfolio_add = BASEURL + "app_proportfolio_add";
     public static String deletelicense = BASEURL + "app_prolicense_delete";
     public static String deleteportfolio = BASEURL + "ap_protfolio_delete";
+    public static String deleteportfolioImage = BASEURL + "app_portfolio_image_delete";
 
     public static  String notification=BASEURL+"app_pro_notification";
     public static  String updateNotificationDetailsAPI=BASEURL+"app_pronotification_save";

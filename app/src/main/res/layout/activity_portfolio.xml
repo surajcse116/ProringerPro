@@ -146,10 +146,6 @@
 
 
 
-
-
-
-
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
             android:id="@+id/tv_upload_limit"
             android:layout_width="wrap_content"
