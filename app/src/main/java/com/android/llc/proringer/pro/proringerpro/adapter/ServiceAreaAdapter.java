@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.pojo.SavePojo;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 import java.util.ArrayList;
@@ -18,9 +19,9 @@ import java.util.ArrayList;
 
 public class ServiceAreaAdapter extends RecyclerView.Adapter<ServiceAreaAdapter.MyViewHolder> {
     Context mcontext;
-    ArrayList<String> stringArrayList;
+    ArrayList<SavePojo> stringArrayList;
 
-    public ServiceAreaAdapter(Context mcontext, ArrayList<String> stringArrayList) {
+    public ServiceAreaAdapter(Context mcontext, ArrayList<SavePojo> stringArrayList) {
         this.mcontext = mcontext;
         this.stringArrayList = stringArrayList;
     }
@@ -32,7 +33,7 @@ public class ServiceAreaAdapter extends RecyclerView.Adapter<ServiceAreaAdapter.
 
     @Override
     public void onBindViewHolder(ServiceAreaAdapter.MyViewHolder holder, final int position) {
-        holder.tv_city.setText(stringArrayList.get(position));
+        holder.tv_city.setText(stringArrayList.get(position).getCity());
         holder.img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

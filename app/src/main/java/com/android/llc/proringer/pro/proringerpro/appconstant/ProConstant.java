@@ -53,6 +53,9 @@ public class ProConstant {
     public static  String serviceAreaSaveOfUserAPI=BASEURL+"app_pro_servicearea_save";
 
 
+    public static  String servicesave=BASEURL+"app_pro_servicearea_save";
+
+
     public static String latitude = "";
     public static String longtitude = "";
     public static String f_name = "";
@@ -66,4 +69,6 @@ public class ProConstant {
     public static String country1 = "";
     public static String id = "";
     public static String paypal = "";
+
+    public static String placeid = "";
 }

@@ -8,6 +8,7 @@ import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.utils.NetworkUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
@@ -136,64 +137,6 @@ public class HelperClass {
                     if (exception.equals("")) {
                         if (addressList != null && addressList.size() > 0)
                             callback.onComplete(addressList);
-                    } else {
-                        callback.onError(exception);
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, params);
-
-        } else {
-            callback.onError(mcontext.getResources().getString(R.string.no_internet_connection_found_Please_check_your_internet_connection));
-        }
-    }
-
-    public void getZipLocationStateAPI(final getApiProcessCallback callback, String... params) {
-
-        if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
-            new AsyncTask<String, Void, String>() {
-                String exception = "";
-
-                @Override
-                protected void onPreExecute() {
-                    super.onPreExecute();
-                    callback.onStart();
-                }
-
-                @Override
-                protected String doInBackground(String... params) {
-                    OkHttpClient client = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
-
-                    try {
-                        String query = URLEncoder.encode(params[0], "utf-8");
-                        String searchLocalProject = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&key=AIzaSyDoLuAdSE7M9SzeIht7-Bm-WrUjnDQBofg&language=en";
-                        Logger.printMessage("searchLocationAPI", "" + searchLocalProject);
-                        Request request = new Request.Builder()
-                                .url(searchLocalProject)
-                                .build();
-
-                        Response response = client.newCall(request).execute();
-                        String responseString = response.body().string();
-
-                        JSONObject mainRes = new JSONObject(responseString);
-
-                        if (mainRes.getString("status").equalsIgnoreCase("OK")) {
-                            return responseString;
-                        } else {
-                            exception = mainRes.getString("status");
-                            return exception;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        exception = "Something error. Please search again.";
-                        return exception;
-                    }
-                }
-
-                @Override
-                protected void onPostExecute(String s) {
-                    super.onPostExecute(s);
-                    if (exception.equals("")) {
-                        callback.onComplete(s);
                     } else {
                         callback.onError(exception);
                     }
@@ -374,6 +317,81 @@ public class HelperClass {
             callback.onError(mcontext.getResources().getString(R.string.no_internet_connection_found_Please_check_your_internet_connection));
         }
 
+    }
+
+
+
+    public void getZipLocationStateAPI(final getApiProcessCallback callback, String... params) {
+
+        if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
+            new AsyncTask<String, Void, String>() {
+                String exception = "";
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    callback.onStart();
+                }
+
+                @Override
+                protected String doInBackground(String... params) {
+                    OkHttpClient client = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
+
+                    try {
+                        String query = URLEncoder.encode(params[0], "utf-8");
+                        String searchLocalProject = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&key=AIzaSyDoLuAdSE7M9SzeIht7-Bm-WrUjnDQBofg&language=en";
+                        Logger.printMessage("searchLocationAPI", "" + searchLocalProject);
+                        Request request = new Request.Builder()
+                                .url(searchLocalProject)
+                                .build();
+
+                        Response response = client.newCall(request).execute();
+                        String responseString = response.body().string();
+
+                        JSONObject mainRes = new JSONObject(responseString);
+
+                        if (mainRes.getString("status").equalsIgnoreCase("OK")) {
+                            return responseString;
+                        } else {
+                            exception = mainRes.getString("status");
+                            return exception;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        exception = "Something error. Please search again.";
+                        return exception;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    try {
+                        JSONObject jo =new JSONObject(s);
+                        JSONArray JOB= jo.getJSONArray("results");
+                        for (int i=0;i<JOB.length();i++)
+                        {
+                            JSONObject ji= JOB.getJSONObject(i);
+                            ProConstant.placeid=ji.getString("place_id");
+                            Logger.printMessage("palceidvalue",ProConstant.placeid);
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (exception.equals("")) {
+                        callback.onComplete(s);
+                        Logger.printMessage("Message",s);
+                    } else {
+                        callback.onError(exception);
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, params);
+
+        } else {
+            callback.onError(mcontext.getResources().getString(R.string.no_internet_connection_found_Please_check_your_internet_connection));
+        }
     }
 
 
