@@ -106,7 +106,7 @@ public class FaqActivity extends AppCompatActivity {
                 if (myLoader != null && myLoader.isMyLoaderShowing())
                     myLoader.dismissLoader();
 
-                new CustomAlert().getOkEventFromNormalAlert(FaqActivity.this, "Faq", "" + error, new CustomAlert.MyCustomAlertListener() {
+                new CustomAlert().getOkEventFromNormalAlert(FaqActivity.this, "FaqFragment", "" + error, new CustomAlert.MyCustomAlertListener() {
                     @Override
                     public void callBackOk() {
 
