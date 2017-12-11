@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogCategory;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogMonthYear;
+import com.android.llc.proringer.pro.proringerpro.adapter.PortFolioEditAddImageAdapter;
 import com.android.llc.proringer.pro.proringerpro.adapter.PortfolioEditImageAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
@@ -55,7 +56,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
     CustomListAdapterDialogCategory customListAdapterDialogCategory = null;
     ArrayList<String> portPolioImageGalleryArrayList = null;
 
-    PortfolioEditImageAdapter portfolioEditImageAdapter = null;
+    PortFolioEditAddImageAdapter portFolioEditAddImageAdapter = null;
 
     RecyclerView rcv_add_port_folio;
 
@@ -101,8 +102,8 @@ public class PortfolioEditActivity extends AppCompatActivity {
                 portPolioImageGalleryArrayList.add(multiple_gallery_image.getString(i));
             }
 
-            portfolioEditImageAdapter = new PortfolioEditImageAdapter(PortfolioEditActivity.this, portPolioImageGalleryArrayList);
-            rcv_add_port_folio.setAdapter(portfolioEditImageAdapter);
+            portFolioEditAddImageAdapter = new PortFolioEditAddImageAdapter(PortfolioEditActivity.this, portPolioImageGalleryArrayList);
+            rcv_add_port_folio.setAdapter(portFolioEditAddImageAdapter);
 
         } catch (JSONException e) {
             e.printStackTrace();

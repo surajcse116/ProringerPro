@@ -42,7 +42,7 @@ public class PortfolioEditImageAdapter extends RecyclerView.Adapter<PortfolioEdi
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.adapter_add_image, parent, false));
+        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.adapter_edit_add_image, parent, false));
 
     }
 
