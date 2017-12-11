@@ -44,7 +44,8 @@ import java.util.HashMap;
  */
 
 public class PortfolioEditActivity extends AppCompatActivity {
-    String port_id = "", catid = "", month = "", year = "", category_name = "", monthDigit = "", monthName = "", yearName = "", yearDigit = "";
+    String port_id = "", catid = "", month = "", year = "", category_name = "",
+            monthDigit = "", monthName = "", yearName = "", yearDigit = "";
 
     JSONArray multiple_gallery_image, categoryJsonArray;
     ProRegularTextView tv_category, tv_month, tv_year;
