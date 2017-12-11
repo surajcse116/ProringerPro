@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.PortFolioActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.PortfolioEditActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -33,7 +34,7 @@ public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolio
         this.portPolioImageGalleryArrayList = portPolioImageGalleryArrayList;
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
-        ((PortFolioActivity) mContext).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        ((PortfolioEditActivity) mContext).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 
         screenHeight = displaymetrics.heightPixels;
         screenWidth = displaymetrics.widthPixels;
@@ -51,22 +52,41 @@ public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolio
         holder.img.getLayoutParams().width = screenWidth / 5;
         holder.img.getLayoutParams().height = screenWidth / 5;
 
-        Glide.with(mContext).load("file://" + portPolioImageGalleryArrayList.get(position)).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
-            /**
-             * {@inheritDoc}
-             * If no {@link GlideAnimation} is given or if the animation does not set the
-             * {@link Drawable} on the view, the drawable is set using
-             * {@link ImageView#setImageDrawable(Drawable)}.
-             *
-             * @param resource  {@inheritDoc}
-             * @param animation {@inheritDoc}
-             */
-            @Override
-            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
-                super.onResourceReady(resource, animation);
-            }
-        });
-
+        if (!portPolioImageGalleryArrayList.get(position).startsWith("http"))
+        {
+            Glide.with(mContext).load("file://" + portPolioImageGalleryArrayList.get(position)).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
+                /**
+                 * {@inheritDoc}
+                 * If no {@link GlideAnimation} is given or if the animation does not set the
+                 * {@link Drawable} on the view, the drawable is set using
+                 * {@link ImageView#setImageDrawable(Drawable)}.
+                 *
+                 * @param resource  {@inheritDoc}
+                 * @param animation {@inheritDoc}
+                 */
+                @Override
+                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                    super.onResourceReady(resource, animation);
+                }
+            });
+        }
+        else {
+            Glide.with(mContext).load(portPolioImageGalleryArrayList.get(position)).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
+                /**
+                 * {@inheritDoc}
+                 * If no {@link GlideAnimation} is given or if the animation does not set the
+                 * {@link Drawable} on the view, the drawable is set using
+                 * {@link ImageView#setImageDrawable(Drawable)}.
+                 *
+                 * @param resource  {@inheritDoc}
+                 * @param animation {@inheritDoc}
+                 */
+                @Override
+                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                    super.onResourceReady(resource, animation);
+                }
+            });
+        }
     }
 
     @Override
