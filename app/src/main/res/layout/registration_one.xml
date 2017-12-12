@@ -48,6 +48,8 @@
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
             android:padding="5dp"
             android:textColor="@color/colorTextDark"
             android:textSize="14sp" />
@@ -62,6 +64,8 @@
             android:hint="Confirm Email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
             android:padding="5dp"
             android:textColor="@color/colorTextDark"
             android:textSize="14sp" />
@@ -69,13 +73,15 @@
         <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/proet_phon"
+            android:id="@+id/proet_phone"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_selecter"
             android:hint="Phone Number"
-            android:inputType="number"
-            android:maxLength="12"
+            android:singleLine="true"
+            android:lines="1"
+            android:inputType="phone"
+            android:maxLength="14"
             android:maxLines="1"
             android:padding="5dp"
             android:textColor="@color/colorTextDark"
@@ -90,8 +96,9 @@
             android:background="@drawable/edit_text_selecter"
             android:hint="Password"
             android:inputType="textPassword"
-            android:maxLength="12"
             android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
             android:padding="5dp"
             android:textColor="@color/colorTextDark"
             android:textSize="14sp" />
@@ -105,8 +112,9 @@
             android:background="@drawable/edit_text_selecter"
             android:hint="Confirm Password"
             android:inputType="textPassword"
-            android:maxLength="12"
             android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
             android:padding="5dp"
             android:textColor="@color/colorTextDark"
             android:textSize="14sp" />
@@ -142,7 +150,7 @@
                 android:id="@+id/tv_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Log in here"
+                android:text=" Log in here"
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
 

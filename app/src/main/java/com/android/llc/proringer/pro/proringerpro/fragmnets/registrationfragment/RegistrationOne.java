@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,8 +39,8 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTe
 
 public class RegistrationOne extends Fragment {
     ProRegularTextView next;
-    ProLightEditText proet_fname, proet_lname, proet_email, proet_cemail, proet_phon, proet_password, proet_cpassword;
-
+    ProLightEditText proet_fname, proet_lname, proet_email, proet_cemail, proet_phone, proet_password, proet_cpassword;
+    int textLength = 0;
 
     @Nullable
     @Override
@@ -54,7 +56,7 @@ public class RegistrationOne extends Fragment {
         proet_lname = (ProLightEditText) view.findViewById(R.id.proet_lname);
         proet_email = (ProLightEditText) view.findViewById(R.id.proet_email);
         proet_cemail = (ProLightEditText) view.findViewById(R.id.proet_cemail);
-        proet_phon = (ProLightEditText) view.findViewById(R.id.proet_phon);
+        proet_phone = (ProLightEditText) view.findViewById(R.id.proet_phone);
         proet_password = (ProLightEditText) view.findViewById(R.id.proet_password);
         proet_cpassword = (ProLightEditText) view.findViewById(R.id.proet_cpassword);
 
@@ -71,18 +73,58 @@ public class RegistrationOne extends Fragment {
             }
         });
 
+
+        proet_phone.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String text = proet_phone.getText().toString();
+                textLength = proet_phone.getText().length();
+
+                if (text.endsWith("-") || text.endsWith(" ") || text.endsWith(" "))
+                    return;
+
+                if (textLength == 1) {
+                    if (!text.contains("(")) {
+                        proet_phone.setText(new StringBuilder(text).insert(text.length() - 1, "(").toString());
+                        proet_phone.setSelection(proet_phone.getText().length());
+                    }
+
+                } else if (textLength == 5) {
+
+                    if (!text.contains(")")) {
+                        proet_phone.setText(new StringBuilder(text).insert(text.length() - 1, ")").toString());
+                        proet_phone.setSelection(proet_phone.getText().length());
+                    }
+
+                } else if (textLength == 6) {
+                    proet_phone.setText(new StringBuilder(text).insert(text.length() - 1, " ").toString());
+                    proet_phone.setSelection(proet_phone.getText().length());
+
+                } else if (textLength == 10) {
+                    if (!text.contains("-")) {
+                        proet_phone.setText(new StringBuilder(text).insert(text.length() - 1, "-").toString());
+                        proet_phone.setSelection(proet_phone.getText().length());
+                    }
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+
     }
 
-    public void validation()
-
-    {
-        String f_name, l_name, email, phone, password;
+    public void validation() {
         ProConstant.f_name = proet_fname.getText().toString();
         ProConstant.l_name = proet_lname.getText().toString();
         ProConstant.email = proet_cemail.getText().toString();
-        ProConstant.phone = proet_phon.getText().toString();
+        ProConstant.phone = proet_phone.getText().toString();
         ProConstant.password = proet_cpassword.getText().toString();
-        password = proet_password.getText().toString();
+        String password = proet_password.getText().toString();
 
         Logger.printMessage("f_name", ProConstant.f_name);
         Logger.printMessage("l_name", ProConstant.l_name);
@@ -106,9 +148,9 @@ public class RegistrationOne extends Fragment {
                             proet_cemail.setError("Email id dosenot match");
                             proet_cemail.setFocusable(true);
                         } else {
-                            if (proet_phon.getText().toString().trim().equals("")) {
-                                proet_phon.setError("please enter phone number");
-                                proet_phon.setFocusable(true);
+                            if (proet_phone.getText().toString().trim().equals("")) {
+                                proet_phone.setError("please enter phone number");
+                                proet_phone.setFocusable(true);
                             } else {
                                 if (TextUtils.isEmpty(password) || password.length() < 6) {
 
@@ -149,8 +191,6 @@ public class RegistrationOne extends Fragment {
                 }
 
             }
-
-
         }
     }
 }
