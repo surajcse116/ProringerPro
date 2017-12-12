@@ -1,6 +1,7 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -93,6 +95,21 @@ public class TermsPrivacyActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
 
+                    String manufacturer = Build.MANUFACTURER;
+                    final String model = Build.MODEL;
+                    final int version = Build.VERSION.SDK_INT;
+                    String versionRelease = Build.VERSION.RELEASE;
+
+                    Logger.printMessage("LandScreenActivity", "manufacturer " + manufacturer
+                            + " \n model " + model
+                            + " \n version " + version
+                            + " \n versionRelease " + versionRelease
+                    );
+
+                    TelephonyManager manager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                    final String carrierName = manager.getNetworkOperatorName();
+
+
                     LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     TextView tv = new TextView(TermsPrivacyActivity.this);
                     tv.setLayoutParams(lparams);
@@ -114,7 +131,9 @@ public class TermsPrivacyActivity extends AppCompatActivity {
                                 Uri uriSupport = Uri.parse("mailto:admin@proringer.com")
                                         .buildUpon()
                                         .appendQueryParameter("subject", "Support")
-                                        .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1")
+                                        .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1\n" +
+                                                "Device: "+model+", "+version+"\n" +
+                                                "Carrier:"+" "+carrierName)
                                         .build();
                                 Intent emailSupportIntent = new Intent(Intent.ACTION_SENDTO, uriSupport);
                                 emailSupportIntent.putExtra(Intent.EXTRA_EMAIL, TOSuppory);
@@ -147,7 +166,9 @@ public class TermsPrivacyActivity extends AppCompatActivity {
                                 Uri uriSupport = Uri.parse("mailto:admin@proringer.com")
                                         .buildUpon()
                                         .appendQueryParameter("subject", "Support")
-                                        .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1")
+                                        .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1\n" +
+                                                "Device: "+model+", "+version+"\n" +
+                                                "Carrier:"+" "+carrierName)
                                         .build();
                                 Intent emailSupportIntent = new Intent(Intent.ACTION_SENDTO, uriSupport);
                                 emailSupportIntent.putExtra(Intent.EXTRA_EMAIL, TOSuppory);
@@ -223,6 +244,20 @@ public class TermsPrivacyActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
 
+                    String manufacturer = Build.MANUFACTURER;
+                    final String model = Build.MODEL;
+                    final int version = Build.VERSION.SDK_INT;
+                    final String versionRelease = Build.VERSION.RELEASE;
+
+                    Logger.printMessage("LandScreenActivity", "manufacturer " + manufacturer
+                            + " \n model " + model
+                            + " \n version " + version
+                            + " \n versionRelease " + versionRelease
+                    );
+
+                    TelephonyManager manager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                    final String carrierName = manager.getNetworkOperatorName();
+
                     LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     TextView tv = new TextView(TermsPrivacyActivity.this);
                     tv.setLayoutParams(lparams);
@@ -244,7 +279,9 @@ public class TermsPrivacyActivity extends AppCompatActivity {
                                 Uri uriSupport = Uri.parse("mailto:admin@proringer.com")
                                         .buildUpon()
                                         .appendQueryParameter("subject", "Support")
-                                        .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1")
+                                        .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1\n" +
+                                                "Device: "+model+", "+versionRelease+"\n" +
+                                                "Carrier:"+" "+carrierName)
                                         .build();
                                 Intent emailSupportIntent = new Intent(Intent.ACTION_SENDTO, uriSupport);
                                 emailSupportIntent.putExtra(Intent.EXTRA_EMAIL, TOSuppory);
@@ -277,7 +314,9 @@ public class TermsPrivacyActivity extends AppCompatActivity {
                                 Uri uriSupport = Uri.parse("mailto:admin@proringer.com")
                                         .buildUpon()
                                         .appendQueryParameter("subject", "Support")
-                                        .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1")
+                                        .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1\n" +
+                                                "Device: "+model+", "+versionRelease+"\n" +
+                                                "Carrier:"+" "+carrierName)
                                         .build();
                                 Intent emailSupportIntent = new Intent(Intent.ACTION_SENDTO, uriSupport);
                                 emailSupportIntent.putExtra(Intent.EXTRA_EMAIL, TOSuppory);

@@ -1,9 +1,11 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -169,6 +172,20 @@ public class LandScreenActivity extends AppCompatActivity {
         navigationHandler.init(mDrawer, new NavigationHandler.OnHandleInput() {
             @Override
             public void onClickItem(String tag) {
+
+                String manufacturer = Build.MANUFACTURER;
+                String model = Build.MODEL;
+                int version = Build.VERSION.SDK_INT;
+                String versionRelease = Build.VERSION.RELEASE;
+
+                Logger.printMessage("LandScreenActivity", "manufacturer " + manufacturer
+                        + " \n model " + model
+                        + " \n version " + version
+                        + " \n versionRelease " + versionRelease
+                );
+
+                TelephonyManager manager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                final String carrierName = manager.getNetworkOperatorName();
 
                 dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
                 dashboard_text.setTextColor(Color.parseColor("#505050"));
@@ -333,11 +350,14 @@ public class LandScreenActivity extends AppCompatActivity {
 
                     case NavigationHandler.EMAIL_SUPPORT:
                         closeDrawer();
+
                         String[] TOSuppory = {"support@proringer.com"};
                         Uri uriSupport = Uri.parse("mailto:support@proringer.com")
                                 .buildUpon()
                                 .appendQueryParameter("subject", "Support")
-                                .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1")
+                                .appendQueryParameter("body", "I think \n \n \n ProRinger mobile app v1.0.1 \n" +
+                                        "Device: "+model+", "+versionRelease+"\n" +
+                                        "Carrier:"+" "+carrierName)
                                 .build();
                         Intent emailSupportIntent = new Intent(Intent.ACTION_SENDTO, uriSupport);
                         emailSupportIntent.putExtra(Intent.EXTRA_EMAIL, TOSuppory);
@@ -349,11 +369,14 @@ public class LandScreenActivity extends AppCompatActivity {
                         break;
                     case NavigationHandler.PROVIDE_FEEDBACK:
                         closeDrawer();
+
                         String[] TOFeedback = {"feedback@proringer.com"};
                         Uri uriFeedback = Uri.parse("mailto:feedback@proringer.com")
                                 .buildUpon()
                                 .appendQueryParameter("subject", "Leave Feedback")
-                                .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1")
+                                .appendQueryParameter("body", "I think \n \n \n ProRinger mobile app v1.0.1\n" +
+                                        "Device: "+model+", "+versionRelease+"\n" +
+                                        "Carrier:"+" "+carrierName)
                                 .build();
                         Intent emailFeedbackIntent = new Intent(Intent.ACTION_SENDTO, uriFeedback);
                         emailFeedbackIntent.putExtra(Intent.EXTRA_EMAIL, TOFeedback);
