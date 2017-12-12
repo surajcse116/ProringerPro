@@ -55,6 +55,8 @@ public class ProConstant {
 
 
     public static  String servicesave=BASEURL+"app_pro_servicearea_save";
+    public static  String app_term=BASEURL+"app_term";
+    public static  String app_privacy_policy=BASEURL+"app_privacy_policy";
 
 
     public static String latitude = "";
