@@ -116,6 +116,7 @@ public class InviteAfriendFragment extends Fragment {
                                     try {
                                         JSONObject job = new JSONObject(result);
                                         String message = job.getString("message");
+                                        Logger.printMessage("invite_message-->",message);
                                         Toast.makeText(getActivity(), "" + message, Toast.LENGTH_SHORT).show();
                                     } catch (JSONException e) {
                                         e.printStackTrace();
