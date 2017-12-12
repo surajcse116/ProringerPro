@@ -139,15 +139,13 @@ public class GetStartedActivity extends AppCompatActivity implements
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 startActivityForResult(new Intent(GetStartedActivity.this, LogInActivity.class), LOG_IN_REQUEST);
-
-
             }
         });
 
 
         adapter = new GetStartedTutorial(getSupportFragmentManager());
+
         get_started_pager.setAdapter(adapter);
 
         get_started_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

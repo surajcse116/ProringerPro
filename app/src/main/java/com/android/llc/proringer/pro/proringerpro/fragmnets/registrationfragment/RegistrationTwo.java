@@ -108,11 +108,11 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
         prolight_State.setClickable(false);
         prolight_zip.setEnabled(false);
         prolight_phone.setClickable(true);
-        catagory();
+        category();
         dropdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogServies(view,catagory);
+                showDialogServices(view,catagory);
 
             }
         });
@@ -192,8 +192,6 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
         word4.setSpan(privacySpan, 0, privacyPolicies.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         terms_and_condition.append(word4);
 
-
-
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -227,7 +225,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
             }
         }
     }
-    private void showDialogServies(View v, JSONArray PredictionsJsonArray) {
+    private void showDialogServices(View v, JSONArray PredictionsJsonArray) {
 
         popupWindow = new PopupWindow(getActivity());
         // Closes the popup window when touch outside.
@@ -270,7 +268,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
         void onItemPassed(int position, JSONObject value);
     }
 
-    public  void catagory()
+    public  void category()
     {
         new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
@@ -308,17 +306,6 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
 
     public void validation()
     {
-        String businessname=prolight_businessname.getText().toString();
-        String address=prolight_address.getText().toString();
-        String city=prolight_city.getText().toString();
-        String state=prolight_State.getText().toString();
-        String zip=prolight_zip.getText().toString();
-        String phonenumber=prolight_phone.getText().toString();
-        String businessemail=prolight_email.getText().toString();
-        String primaryservice=tv_service.getText().toString();
-        String servicearea=prolight_service_area.getText().toString();
-
-
         if (prolight_businessname.getText().toString().trim().equals(""))
         {
             prolight_businessname.setError("Please enter Business name");
@@ -389,15 +376,15 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                             Logger.printMessage("email",ProConstant.email);
                                             Logger.printMessage("phone",ProConstant.phone);
                                             Logger.printMessage("password",ProConstant.password);
-                                            Logger.printMessage("busimessname",businessname);
-                                            Logger.printMessage("address",address);
-                                            Logger.printMessage("city",city);
-                                            Logger.printMessage("state",state);
-                                            Logger.printMessage("zip",zip);
-                                            Logger.printMessage("businessemail",businessemail);
-                                            Logger.printMessage("phonenumber",phonenumber);
-                                            Logger.printMessage("primaryservice",primaryservice);
-                                            Logger.printMessage("servicearea",servicearea);
+                                            Logger.printMessage("busimessname",prolight_businessname.getText().toString().trim());
+                                            Logger.printMessage("address",prolight_address.getText().toString().trim());
+                                            Logger.printMessage("city",prolight_city.getText().toString().trim());
+                                            Logger.printMessage("state",prolight_State.getText().toString().trim());
+                                            Logger.printMessage("zip",prolight_zip.getText().toString().trim());
+                                            Logger.printMessage("businessemail",prolight_email.getText().toString().trim());
+                                            Logger.printMessage("phonenumber",prolight_phone.getText().toString().trim());
+                                            Logger.printMessage("primaryservice",tv_service.getText().toString().trim());
+                                            Logger.printMessage("servicearea",prolight_service_area.getText().toString().trim());
                                             Logger.printMessage("latittuted",ProConstant.latitude);
                                             Logger.printMessage("Logtitude",ProConstant.longtitude);
                                             Logger.printMessage("country",ProConstant.Country);
@@ -408,16 +395,16 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                             Params1.put("pro_email",ProConstant.email);
                                             Params1.put("pro_phone",ProConstant.phone);
                                             Params1.put("pro_password",ProConstant.password);
-                                            Params1.put("com_name",businessname);
-                                            Params1.put("com_address",address);
-                                            Params1.put("city",city);
-                                            Params1.put("state",state);
-                                            Params1.put("zipcode",zip);
+                                            Params1.put("com_name",prolight_businessname.getText().toString().trim());
+                                            Params1.put("com_address",prolight_address.getText().toString().trim());
+                                            Params1.put("city",prolight_city.getText().toString().trim());
+                                            Params1.put("state",prolight_State.getText().toString().trim());
+                                            Params1.put("zipcode",prolight_zip.getText().toString().trim());
                                             Params1.put("country",ProConstant.Country);
-                                            Params1.put("alt_phone",phonenumber);
-                                            Params1.put("com_email",businessemail);
+                                            Params1.put("alt_phone",prolight_phone.getText().toString().trim());
+                                            Params1.put("com_email",prolight_email.getText().toString().trim());
                                             Params1.put("primary_category",pros_contact_service);
-                                            Params1.put("service_area",servicearea);
+                                            Params1.put("service_area",prolight_service_area.getText().toString().trim());
                                             Params1.put("latitude",ProConstant.latitude);
                                             Params1.put("longitude",ProConstant.longtitude);
                                             Params1.put("device_type","A");
@@ -439,6 +426,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                                            Toast.makeText(getActivity(), ""+messsage,Toast.LENGTH_SHORT).show();
                                                            Intent i=new Intent(getActivity(), SignupCompleteActivity.class);
                                                            startActivity(i);
+                                                           getActivity().finish();
 
                                                    } catch (JSONException e) {
                                                        e.printStackTrace();

@@ -7,6 +7,7 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.android.llc.proringer.pro.proringerpro.R;
@@ -48,17 +49,19 @@ public class LogInActivity extends AppCompatActivity {
     private ProSemiBoldTextView log_in;
     private ProLightEditText email, password;
 
-    public MyLoader myLoader=null;
+    public MyLoader myLoader = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        myLoader=new MyLoader(LogInActivity.this);
+
+        myLoader = new MyLoader(LogInActivity.this);
         final String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         Logger.printMessage("DEVICE ID", android_id);
@@ -101,8 +104,13 @@ public class LogInActivity extends AppCompatActivity {
 
                                 ProApplication.getInstance().setUserPreference(jsonInfo.getString("user_id"), jsonInfo.getString("user_type"), jsonInfo.getString("first_name"), jsonInfo.getString("last_name"));
                                 ProApplication.getInstance().setUserEmail(email.getText().toString().trim());
-                                Intent i = new Intent(LogInActivity.this, LandScreenActivity.class);
-                                startActivity(i);
+
+                                Intent intent = new Intent(LogInActivity.this, LandScreenActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -149,17 +157,17 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == android.R.id.home)
-//            onBackPressed();
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        setResult(GetStartedActivity.RESULT_CANCELED);
-//        finish();
-//        }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home)
+            onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(GetStartedActivity.RESULT_CANCELED);
+        finish();
+    }
 }
 

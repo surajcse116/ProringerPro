@@ -641,7 +641,7 @@ public class PortFolioActivity extends AppCompatActivity {
                 if (tv_year.getText().toString().equals("")){
                     Toast.makeText(PortFolioActivity.this, "Please Select Year", Toast.LENGTH_SHORT).show();
                 }else {
-                    if (portPolioImageGalleryArrayList.size()<=1)
+                    if (portPolioImageGalleryArrayList.size()<1)
                     {
                         Toast.makeText(PortFolioActivity.this, "Please select atleast one image", Toast.LENGTH_SHORT).show();
                     }else {
