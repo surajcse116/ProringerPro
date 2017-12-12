@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,12 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.Patterns;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.webkit.URLUtil;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -58,8 +54,6 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by su on 8/17/17.
@@ -351,7 +345,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         rcv_.setAdapter(customListAdapterDialog);
         // some other visual settings
         popupWindow.setFocusable(false);
-        popupWindow.setWidth(width);
+        popupWindow.setWidth(width-50);
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 
         // set the list view as pop up window content
@@ -665,14 +659,11 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                                                     Logger.printMessage("lat", ProConstant.latitude);
                                                     Logger.printMessage("long", ProConstant.longtitude);
 
-                                                    LayoutInflater factory = LayoutInflater.from(CompanyProfileActivity.this);
-                                                    final View deleteDialogView = factory.inflate(R.layout.alertdialog, null);
-                                                    final AlertDialog deleteDialog = new AlertDialog.Builder(CompanyProfileActivity.this).create();
-                                                    deleteDialog.setView(deleteDialogView);
-                                                    deleteDialogView.findViewById(R.id.Yes).setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View view) {
 
+                                                    CustomAlert customAlert = new CustomAlert();
+                                                    customAlert.getEventFromNormalAlert(CompanyProfileActivity.this, "", "Confirm company profile update", "Ok", "Cancel", new CustomAlert.MyCustomAlertListener() {
+                                                        @Override
+                                                        public void callBackOk() {
                                                             HashMap<String, String> Params = new HashMap<>();
                                                             Params.put("user_id", ProApplication.getInstance().getUserId());
                                                             Params.put("desc", businessdata);
@@ -731,18 +722,13 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                                                                     myLoader.showLoader();
                                                                 }
                                                             });
-                                                            deleteDialog.dismiss();
                                                         }
-                                                    });
-                                                    deleteDialogView.findViewById(R.id.NO).setOnClickListener(new View.OnClickListener() {
+
                                                         @Override
-                                                        public void onClick(View v) {
-                                                            deleteDialog.dismiss();
+                                                        public void callBackCancel() {
+
                                                         }
                                                     });
-
-                                                    deleteDialog.show();
-
                                                 }
 
                                             }

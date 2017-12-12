@@ -16,7 +16,7 @@ import com.android.llc.proringer.pro.proringerpro.activities.CompanyProfileActiv
 import com.android.llc.proringer.pro.proringerpro.activities.LicenceListActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PortFolioActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PremiumActivity;
-import com.android.llc.proringer.pro.proringerpro.activities.UserinformationActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.UserInformationActivity;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 
 /**
@@ -55,7 +55,7 @@ public class DashBoardFragment extends Fragment {
         userInformation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), UserinformationActivity.class);
+                Intent i = new Intent(getActivity(), UserInformationActivity.class);
                 startActivity(i);
             }
         });
