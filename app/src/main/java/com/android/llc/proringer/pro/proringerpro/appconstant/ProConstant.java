@@ -71,7 +71,6 @@ public class ProConstant {
     public static String state = "";
     public static String country1 = "";
     public static String id = "";
-    public static String paypal = "";
 
     public static String placeid = "";
 }
