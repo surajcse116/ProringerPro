@@ -589,7 +589,6 @@ public class PortFolioActivity extends AppCompatActivity {
             @Override
             public void onError(String error, String response) {
                 myLoader.dismissLoader();
-
             }
 
             @Override

@@ -20,6 +20,7 @@ import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -62,7 +63,7 @@ public class LandScreenActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle = null;
     private FragmentManager fragmentManager = null;
     ProRegularTextView tv_title;
-    ImageView iv_pro_logo, search_local_pro_header, img_back;
+    ImageView iv_pro_logo, search_local_pro_header;
     LinearLayout linear_buttombar;
     private ImageView dashboard_image, my_projects_image, messages_image, fav_pro_image;
     private ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
@@ -70,6 +71,8 @@ public class LandScreenActivity extends AppCompatActivity {
     public MyLoader myLoader = null;
 
     NavigationHandler navigationHandler = null;
+
+    private InputMethodManager keyboard;
 
 
     @Override
@@ -81,12 +84,28 @@ public class LandScreenActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
 
+        keyboard = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+
+            }
+        };
+
         mDrawer.addDrawerListener(toggle);
+
         tv_title = (ProRegularTextView) findViewById(R.id.tv_title);
         tv_title.setVisibility(View.GONE);
         linear_buttombar = (LinearLayout) findViewById(R.id.linear_buttombar);
@@ -184,7 +203,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         + " \n versionRelease " + versionRelease
                 );
 
-                TelephonyManager manager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                 final String carrierName = manager.getNetworkOperatorName();
 
                 dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
@@ -356,8 +375,8 @@ public class LandScreenActivity extends AppCompatActivity {
                                 .buildUpon()
                                 .appendQueryParameter("subject", "Support")
                                 .appendQueryParameter("body", "I think \n \n \n ProRinger mobile app v1.0.1 \n" +
-                                        "Device: "+model+", "+versionRelease+"\n" +
-                                        "Carrier:"+" "+carrierName)
+                                        "Device: " + model + ", " + versionRelease + "\n" +
+                                        "Carrier:" + " " + carrierName)
                                 .build();
                         Intent emailSupportIntent = new Intent(Intent.ACTION_SENDTO, uriSupport);
                         emailSupportIntent.putExtra(Intent.EXTRA_EMAIL, TOSuppory);
@@ -375,8 +394,8 @@ public class LandScreenActivity extends AppCompatActivity {
                                 .buildUpon()
                                 .appendQueryParameter("subject", "Leave Feedback")
                                 .appendQueryParameter("body", "I think \n \n \n ProRinger mobile app v1.0.1\n" +
-                                        "Device: "+model+", "+versionRelease+"\n" +
-                                        "Carrier:"+" "+carrierName)
+                                        "Device: " + model + ", " + versionRelease + "\n" +
+                                        "Carrier:" + " " + carrierName)
                                 .build();
                         Intent emailFeedbackIntent = new Intent(Intent.ACTION_SENDTO, uriFeedback);
                         emailFeedbackIntent.putExtra(Intent.EXTRA_EMAIL, TOFeedback);
@@ -658,6 +677,7 @@ public class LandScreenActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Logger.printMessage("home_click", "-->yes");
         if (item.getItemId() == android.R.id.home) {
             if (fragmentManager.findFragmentByTag(ProjectMessagingFragment.class.getCanonicalName()) != null && fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName().equals(ProjectMessagingFragment.class.getCanonicalName())) {
                 toggleToolBar(false);
@@ -687,11 +707,41 @@ public class LandScreenActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("");
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+                /** Called when a drawer has settled in a completely closed state. */
+                public void onDrawerClosed(View view) {
+                    super.onDrawerClosed(view);
+
+
+                }
+
+                /** Called when a drawer has settled in a completely open state. */
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+
+                    closeKeypad();
+
+                }
+            };
             mDrawer.addDrawerListener(toggle);
             toggle.syncState();
             toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.nav_toggle_icon, null));
             mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+
+//            toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Logger.printMessage("toggle-->", "Yes");
+//                }
+//            });
+
+//            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Logger.printMessage("toggle-->", "Yes");
+//                }
+//            });
 
         }
     }
@@ -704,5 +754,11 @@ public class LandScreenActivity extends AppCompatActivity {
         transactDashBoard();
     }
 
-    ;
+    public void closeKeypad() {
+        try {
+            keyboard.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
