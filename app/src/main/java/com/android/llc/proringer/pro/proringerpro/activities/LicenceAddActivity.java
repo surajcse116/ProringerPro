@@ -5,12 +5,15 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,7 +41,9 @@ import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageFilePath;
+import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
+import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
@@ -66,12 +71,13 @@ public class LicenceAddActivity extends AppCompatActivity {
     ImageView img_licence_file;
     boolean flag = true;
 
+    private static final int REQUEST_IMAGE_CAPTURE = 5;
+    private static final int PICK_IMAGE = 3;
+
     File file = null;
     Dialog dialog = null;
 
     RelativeLayout relative_dropdown;
-    private static final int REQUEST_WRITE_PERMISSION1 = 3000;
-    private static final int REQUEST_WRITE_PERMISSION2 = 4000;
 
     private int PICK_IMAGE_REQUEST = 100;
     private int PICK_PDF_REQUEST = 200;
@@ -125,14 +131,18 @@ public class LicenceAddActivity extends AppCompatActivity {
         findViewById(R.id.tv_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPhotoDialog();
+                Intent intent = new Intent(LicenceAddActivity.this, PermissionController.class);
+                intent.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
+                startActivityForResult(intent, 200);
             }
         });
 
         findViewById(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPhotoDialog();
+                Intent intent = new Intent(LicenceAddActivity.this, PermissionController.class);
+                intent.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
+                startActivityForResult(intent, 200);
             }
         });
 
@@ -241,29 +251,26 @@ public class LicenceAddActivity extends AppCompatActivity {
         img_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION1);
-                } else {
-                    openImageGallery();
+                dialog.dismiss();
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                if (intent.resolveActivity((LicenceAddActivity.this).getPackageManager()) != null) {
+                    intent.setType("image/*");
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
                 }
+
             }
         });
 
         img_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION2);
-                } else {
-                    openPDFGallery();
-                }
+                dialog.dismiss();
+                ProConstant.cameraRequested = true;
+                startActivityForResult(new Intent(LicenceAddActivity.this, ImageTakerActivityCamera.class), REQUEST_IMAGE_CAPTURE);
             }
         });
         dialog.show();
     }
-
 
     public void saveData() {
 
@@ -450,21 +457,26 @@ public class LicenceAddActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && file != null) {
-            Uri selectedImageURI = data.getData();
-            Logger.printMessage("photoPath", mycurrentphotopath);
-            try {
-                file = new File(ImageFilePath.getPath(getApplicationContext(), selectedImageURI));
 
+        Logger.printMessage("resultCode", "requestCode " + requestCode + " &b resultcode :: " + resultCode);
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+            Logger.printMessage("image****", "" + data.getData());
+            try {
+                Uri uri = data.getData();
+                File dataFile = new File(getRealPathFromURI(uri));
+                if (!dataFile.exists())
+                    Logger.printMessage("image****", "data file does not exists");
+                mycurrentphotopath = dataFile.getAbsolutePath();
+
+                file=new File(mycurrentphotopath);
 
                 if (file.getAbsolutePath().contains(".jpeg") || file.getAbsolutePath().contains(".png")
                         || file.getAbsolutePath().contains(".jpg")) {
                     mycurrentphotopath = file.getAbsolutePath();
 
-                    Logger.printMessage("my important path", mycurrentphotopath);
-                    LLUpload.setVisibility(View.GONE);
+                    Logger.printMessage("photoPath-->", mycurrentphotopath);
                     LLEdit.setVisibility(View.VISIBLE);
                     img_licence_file.setImageResource(android.R.color.transparent);
                     ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
@@ -472,85 +484,35 @@ public class LicenceAddActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "This is not an image", Toast.LENGTH_SHORT).show();
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && file != null) {
-            Uri selectedDataURI = data.getData();
-            try {
-                Logger.printMessage("selectedDataURI", "" + selectedDataURI);
-                file = new File(ImageFilePath.getPath(getApplicationContext(), selectedDataURI));
-                Logger.printMessage("path", "" + file.getAbsolutePath());
-                if (file.getAbsolutePath().contains(".pdf")) {
-                    mycurrentphotopath = file.getAbsolutePath();
-                    LLUpload.setVisibility(View.GONE);
-                    LLEdit.setVisibility(View.VISIBLE);
-                    img_licence_file.setImageResource(android.R.color.transparent);
-                    img_licence_file.setImageResource(R.drawable.ic_pdf);
-                    ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
-//                    GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(img_licence_file);
-//                    Glide.with(getApplicationContext()).load(R.drawable.ic_pdf).into(imageViewTarget);
-//
-//                    Glide.with(getApplicationContext()).load(R.drawable.ic_pdf).into(img_licence_file);
-                } else {
-                    Toast.makeText(getApplicationContext(), "This is not a pdf file", Toast.LENGTH_SHORT).show();
+
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (data != null) {
+                        mycurrentphotopath = data.getExtras().get("data").toString();
+                        file=new File(mycurrentphotopath);
+                        Logger.printMessage("image****", "" + mycurrentphotopath);
+
+                        Logger.printMessage("photoPath-->", mycurrentphotopath);
+                        LLEdit.setVisibility(View.VISIBLE);
+                        img_licence_file.setImageResource(android.R.color.transparent);
+                        ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
+                        Glide.with(getApplicationContext()).load(file).into(img_licence_file);
+
+                    }
                 }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            }, 800);
+        } else if (requestCode == 200 && resultCode == RESULT_OK) {
+            showPhotoDialog();
         }
     }
 
-    private void openImageGallery() {
-        try {
-            file = createImageFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
 
-        dialog.dismiss();
-    }
-
-    private void openPDFGallery() {
-        try {
-            file = createImageFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF"), PICK_PDF_REQUEST);
-
-        dialog.dismiss();
-    }
-
-    File createImageFile() throws IOException {
-
-        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());///new approach
-        String imagefilename = "IMAGE_" + timestamp + "_";///new approach
-        File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imagefilename, ".jpg", storageDirectory);/////new approach
-        return image;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == REQUEST_WRITE_PERMISSION1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            openImageGallery();
-        }
-        if (requestCode == REQUEST_WRITE_PERMISSION2 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            openPDFGallery();
-        }
-    }
 
     private void setDate(String date) {
         Logger.printMessage("setDate", "" + date);
@@ -567,5 +529,18 @@ public class LicenceAddActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public String getRealPathFromURI(Uri contentURI) {
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            // Source is Dropbox or other similar local file path
+            return contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
     }
 }
