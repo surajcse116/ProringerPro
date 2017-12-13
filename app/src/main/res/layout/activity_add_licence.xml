@@ -84,13 +84,13 @@
                 </RelativeLayout>
 
                 <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                    android:id="@+id/tv_issue"
+                    android:id="@+id/tv_issuer"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_below="@+id/relative_dropdown"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/edit_text_selecter"
-                    android:hint="Issue"
+                    android:hint="Issuer"
                     android:inputType="text"
                     android:padding="10dp"
                     android:textColor="@color/colorTextDark"
@@ -100,7 +100,7 @@
                     android:id="@+id/tv_licence_number"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_below="@+id/tv_issue"
+                    android:layout_below="@+id/tv_issuer"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/edit_text_selecter"
                     android:hint="Licence #"
@@ -141,11 +141,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="30dp"
-                            android:text="add image or PDF" />
+                            android:text="add image or PDF"
+                            android:textSize="14sp"/>
 
                         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
                             android:id="@+id/tv_add"
-                            android:layout_width="150dp"
+                            android:layout_width="180dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
@@ -155,7 +156,7 @@
                             android:padding="8dp"
                             android:text="UPLOAD LICENCE"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="16sp" />
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 
@@ -188,6 +189,7 @@
                             android:background="@color/colorAccent"
                             android:gravity="center"
                             android:padding="8dp"
+                            android:layout_marginBottom="5dp"
                             android:text="EDIT FILE"
                             android:textColor="@color/colorPrimary"
                             android:textSize="16sp"

@@ -64,7 +64,7 @@ public class LicenceAddActivity extends AppCompatActivity {
     String catid = "";
     LinearLayout LLEdit, LLUpload;
     ImageView img_licence_file;
-    boolean flag=true;
+    boolean flag = true;
 
     File file = null;
     Dialog dialog = null;
@@ -77,7 +77,7 @@ public class LicenceAddActivity extends AppCompatActivity {
     private int PICK_PDF_REQUEST = 200;
 
     ProRegularTextView tv_service, tv_save_licence;
-    ProLightEditText tv_issue, tv_licence_number;
+    ProLightEditText tv_issuer, tv_licence_number;
     ProRegularTextView tv_expires;
 
     private int mYear = 0, mMonth = 0, mDay = 0, mHour, mMinute;
@@ -102,7 +102,7 @@ public class LicenceAddActivity extends AppCompatActivity {
 
         tv_save_licence = (ProRegularTextView) findViewById(R.id.tv_save_licence);
         tv_service = (ProRegularTextView) findViewById(R.id.tv_service);
-        tv_issue = (ProLightEditText) findViewById(R.id.tv_issue);
+        tv_issuer = (ProLightEditText) findViewById(R.id.tv_issuer);
         tv_licence_number = (ProLightEditText) findViewById(R.id.tv_licence_number);
         tv_expires = (ProRegularTextView) findViewById(R.id.tv_expires);
         img_licence_file = (ImageView) findViewById(R.id.img_licence_file);
@@ -266,20 +266,18 @@ public class LicenceAddActivity extends AppCompatActivity {
 
 
     public void saveData() {
-        String uid = ProApplication.getInstance().getUserId();
-        String issuere = tv_issue.getText().toString().trim();
-        String license = tv_licence_number.getText().toString().trim();
+
         String expire = tv_expires.getText().toString().trim();
 
         if (tv_service.getText().toString().trim().equals("")) {
             Toast.makeText(LicenceAddActivity.this, "Select Category", Toast.LENGTH_SHORT).show();
 
         } else {
-            if (issuere.equals("")) {
-                tv_issue.setError("Enter issuer name");
-                tv_issue.setFocusable(true);
+            if (tv_issuer.getText().toString().trim().equals("")) {
+                tv_issuer.setError("Enter issuer name");
+                tv_issuer.setFocusable(true);
             } else {
-                if (license.equals("")) {
+                if (tv_licence_number.getText().toString().trim().equals("")) {
                     tv_licence_number.setError("Enter licence number");
                     tv_licence_number.setFocusable(true);
                 } else {
@@ -287,82 +285,88 @@ public class LicenceAddActivity extends AppCompatActivity {
                         Toast.makeText(LicenceAddActivity.this, "Select Expires date", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Logger.printMessage("my save path", String.valueOf(file));
-                        Logger.printMessage("uid", uid);
-                        Logger.printMessage("catid", catid);
-                        Logger.printMessage("issuer", issuere);
-                        Logger.printMessage("license", license);
-                        Logger.printMessage("expire", expire);
 
-                        ArrayList<SetGetAPIPostData> arrayListPostParamsValues = new ArrayList<>();
+                        if (file == null) {
+                            Toast.makeText(LicenceAddActivity.this, "please choose file to upload", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Logger.printMessage("my save path", String.valueOf(file));
+                            Logger.printMessage("uid", ProApplication.getInstance().getUserId());
+                            Logger.printMessage("catid", catid);
+                            Logger.printMessage("issuer", tv_issuer.getText().toString().trim());
+                            Logger.printMessage("license", tv_licence_number.getText().toString().trim());
+                            Logger.printMessage("expire", expire);
 
-
-                        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
-                        setGetAPIPostData.setPARAMS("user_id");
-                        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
-                        arrayListPostParamsValues.add(setGetAPIPostData);
-
-                        setGetAPIPostData = new SetGetAPIPostData();
-                        setGetAPIPostData.setPARAMS("cat_id");
-                        setGetAPIPostData.setValues(catid);
-                        arrayListPostParamsValues.add(setGetAPIPostData);
-
-                        setGetAPIPostData = new SetGetAPIPostData();
-                        setGetAPIPostData.setPARAMS("license_issuer");
-                        setGetAPIPostData.setValues(issuere);
-                        arrayListPostParamsValues.add(setGetAPIPostData);
-
-                        setGetAPIPostData = new SetGetAPIPostData();
-                        setGetAPIPostData.setPARAMS("licenses_no");
-                        setGetAPIPostData.setValues(license);
-                        arrayListPostParamsValues.add(setGetAPIPostData);
-
-                        setGetAPIPostData = new SetGetAPIPostData();
-                        setGetAPIPostData.setPARAMS("date_expire");
-                        setGetAPIPostData.setValues(expire);
-                        arrayListPostParamsValues.add(setGetAPIPostData);
-
-                        ArrayList<File> filesImages = new ArrayList<>();
-                        filesImages.add(file);
+                            ArrayList<SetGetAPIPostData> arrayListPostParamsValues = new ArrayList<>();
 
 
-                        CustomJSONParser.ImageParam = "image_info";
+                            SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+                            setGetAPIPostData.setPARAMS("user_id");
+                            setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+                            arrayListPostParamsValues.add(setGetAPIPostData);
 
-                        new CustomJSONParser().APIForWithPhotoPostMethod(LicenceAddActivity.this, ProConstant.licenseadd, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
-                            @Override
-                            public void onSuccess(String result) {
-                                Logger.printMessage("result", result);
-                                myLoader.dismissLoader();
-                                try {
-                                    JSONObject jo = new JSONObject(result);
-                                    String msg = jo.getString("message");
-                                    Toast.makeText(LicenceAddActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
+                            setGetAPIPostData = new SetGetAPIPostData();
+                            setGetAPIPostData.setPARAMS("cat_id");
+                            setGetAPIPostData.setValues(catid);
+                            arrayListPostParamsValues.add(setGetAPIPostData);
 
-                                    Intent intent = new Intent();
-                                    setResult(RESULT_OK, intent);
-                                    finish();
+                            setGetAPIPostData = new SetGetAPIPostData();
+                            setGetAPIPostData.setPARAMS("license_issuer");
+                            setGetAPIPostData.setValues(tv_issuer.getText().toString().trim());
+                            arrayListPostParamsValues.add(setGetAPIPostData);
+
+                            setGetAPIPostData = new SetGetAPIPostData();
+                            setGetAPIPostData.setPARAMS("licenses_no");
+                            setGetAPIPostData.setValues(tv_licence_number.getText().toString().trim());
+                            arrayListPostParamsValues.add(setGetAPIPostData);
+
+                            setGetAPIPostData = new SetGetAPIPostData();
+                            setGetAPIPostData.setPARAMS("date_expire");
+                            setGetAPIPostData.setValues(expire);
+                            arrayListPostParamsValues.add(setGetAPIPostData);
+
+                            ArrayList<File> filesImages = new ArrayList<>();
+                            filesImages.add(file);
 
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                            CustomJSONParser.ImageParam = "image_info";
+
+                            new CustomJSONParser().APIForWithPhotoPostMethod(LicenceAddActivity.this, ProConstant.licenseadd, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
+                                @Override
+                                public void onSuccess(String result) {
+                                    Logger.printMessage("result", result);
+                                    myLoader.dismissLoader();
+                                    try {
+                                        JSONObject jo = new JSONObject(result);
+                                        String msg = jo.getString("message");
+                                        Toast.makeText(LicenceAddActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = new Intent();
+                                        setResult(RESULT_OK, intent);
+                                        finish();
+
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onError(String error, String response) {
-                                myLoader.dismissLoader();
-                            }
+                                @Override
+                                public void onError(String error, String response) {
+                                    myLoader.dismissLoader();
+                                }
 
-                            @Override
-                            public void onError(String error) {
-                                myLoader.dismissLoader();
-                            }
+                                @Override
+                                public void onError(String error) {
+                                    myLoader.dismissLoader();
+                                }
 
-                            @Override
-                            public void onStart() {
-                                myLoader.showLoader();
-                            }
-                        });
+                                @Override
+                                public void onStart() {
+                                    myLoader.showLoader();
+                                }
+                            });
+
+                        }
                     }
                 }
             }
@@ -547,8 +551,9 @@ public class LicenceAddActivity extends AppCompatActivity {
             openPDFGallery();
         }
     }
+
     private void setDate(String date) {
-        Logger.printMessage("setDate", ""+date);
+        Logger.printMessage("setDate", "" + date);
         flag = false;
         tv_expires.setText(date);
     }
