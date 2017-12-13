@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/LLMain"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
@@ -23,22 +23,23 @@
 
         <ImageView
             android:id="@+id/img_gallery"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="80dp"
-            android:layout_marginTop="50dp"
-            android:padding="10dp"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:layout_marginRight="10dp"
             android:src="@drawable/ic_gallery_picture" />
 
 
         <ImageView
-            android:id="@+id/img_pdf"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="50dp"
-            android:padding="12dp"
-            android:visibility="gone"
-            android:src="@drawable/ic_pdf" />
+            android:id="@+id/img_camera"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_center"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_photo_camera" />
 
     </LinearLayout>
 

@@ -226,7 +226,7 @@ public class LicenceAddActivity extends AppCompatActivity {
         int width = displayMetrics.widthPixels / 2;
 
         ImageView img_gallery = (ImageView) dialog.findViewById(R.id.img_gallery);
-        ImageView img_pdf = (ImageView) dialog.findViewById(R.id.img_pdf);
+        ImageView img_camera = (ImageView) dialog.findViewById(R.id.img_camera);
         ProRegularTextView TXTTitle = (ProRegularTextView) dialog.findViewById(R.id.Title);
 
         LinearLayout LLMain = (LinearLayout) dialog.findViewById(R.id.LLMain);
@@ -250,7 +250,7 @@ public class LicenceAddActivity extends AppCompatActivity {
             }
         });
 
-        img_pdf.setOnClickListener(new View.OnClickListener() {
+        img_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

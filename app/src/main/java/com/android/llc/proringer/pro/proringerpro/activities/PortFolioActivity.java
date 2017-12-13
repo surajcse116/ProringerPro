@@ -642,7 +642,7 @@ public class PortFolioActivity extends AppCompatActivity {
                 }else {
                     if (portPolioImageGalleryArrayList.size()<1)
                     {
-                        Toast.makeText(PortFolioActivity.this, "Please select atleast one image", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PortFolioActivity.this, "Please select at least one image", Toast.LENGTH_SHORT).show();
                     }else {
                         firePortFolioData();
                     }
