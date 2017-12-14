@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.activities.PortFolioActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PortfolioEditActivity;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -47,7 +47,7 @@ public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolio
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.img.getLayoutParams().width = screenWidth / 5;
         holder.img.getLayoutParams().height = screenWidth / 5;
@@ -91,6 +91,19 @@ public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolio
             @Override
             public void onClick(View v) {
 
+
+                CustomAlert customAlert = new CustomAlert();
+                customAlert.getEventFromNormalAlert(mContext, "Delete", "Are you sure to delete this image?", "YES,DELETE IT", "CANCEL", new CustomAlert.MyCustomAlertListener() {
+                    @Override
+                    public void callBackOk() {
+//                        ((PortfolioEditActivity)mContext).deletePortFolioImage(position,"image_id");
+                    }
+
+                    @Override
+                    public void callBackCancel() {
+
+                    }
+                });
             }
         });
     }

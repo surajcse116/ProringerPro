@@ -79,9 +79,6 @@ public class LicenceAddActivity extends AppCompatActivity {
 
     RelativeLayout relative_dropdown;
 
-    private int PICK_IMAGE_REQUEST = 100;
-    private int PICK_PDF_REQUEST = 200;
-
     ProRegularTextView tv_service, tv_save_licence;
     ProLightEditText tv_issuer, tv_licence_number;
     ProRegularTextView tv_expires;
@@ -420,7 +417,6 @@ public class LicenceAddActivity extends AppCompatActivity {
         popupWindow.showAsDropDown(v, -5, 0);
 
     }
-
 
     public void category() {
         new CustomJSONParser().fireAPIForGetMethod(LicenceAddActivity.this, ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {

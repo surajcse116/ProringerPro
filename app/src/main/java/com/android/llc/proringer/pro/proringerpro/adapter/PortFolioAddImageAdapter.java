@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.PortFolioActivity;
-import com.android.llc.proringer.pro.proringerpro.activities.PortfolioEditActivity;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -42,32 +42,70 @@ public class PortFolioAddImageAdapter extends RecyclerView.Adapter<PortFolioAddI
 
     @Override
     public PortFolioAddImageAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.adapter_add_image, parent, false));
+        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.adapter_edit_add_image, parent, false));
 
     }
 
     @Override
-    public void onBindViewHolder(PortFolioAddImageAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.img.getLayoutParams().width = screenWidth / 5;
         holder.img.getLayoutParams().height = screenWidth / 5;
 
-        Glide.with(mContext).load("file://" + portPolioImageGalleryArrayList.get(position)).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
-            /**
-             * {@inheritDoc}
-             * If no {@link GlideAnimation} is given or if the animation does not set the
-             * {@link Drawable} on the view, the drawable is set using
-             * {@link ImageView#setImageDrawable(Drawable)}.
-             *
-             * @param resource  {@inheritDoc}
-             * @param animation {@inheritDoc}
-             */
+        if (!portPolioImageGalleryArrayList.get(position).startsWith("http"))
+        {
+            Glide.with(mContext).load("file://" + portPolioImageGalleryArrayList.get(position)).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
+                /**
+                 * {@inheritDoc}
+                 * If no {@link GlideAnimation} is given or if the animation does not set the
+                 * {@link Drawable} on the view, the drawable is set using
+                 * {@link ImageView#setImageDrawable(Drawable)}.
+                 *
+                 * @param resource  {@inheritDoc}
+                 * @param animation {@inheritDoc}
+                 */
+                @Override
+                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                    super.onResourceReady(resource, animation);
+                }
+            });
+        }
+        else {
+            Glide.with(mContext).load(portPolioImageGalleryArrayList.get(position)).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
+                /**
+                 * {@inheritDoc}
+                 * If no {@link GlideAnimation} is given or if the animation does not set the
+                 * {@link Drawable} on the view, the drawable is set using
+                 * {@link ImageView#setImageDrawable(Drawable)}.
+                 *
+                 * @param resource  {@inheritDoc}
+                 * @param animation {@inheritDoc}
+                 */
+                @Override
+                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                    super.onResourceReady(resource, animation);
+                }
+            });
+        }
+        holder.img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
-                super.onResourceReady(resource, animation);
+            public void onClick(View v) {
+
+                CustomAlert customAlert = new CustomAlert();
+                customAlert.getEventFromNormalAlert(mContext, "Delete", "Are you sure to delete this image?", "YES,DELETE IT", "CANCEL", new CustomAlert.MyCustomAlertListener() {
+                    @Override
+                    public void callBackOk() {
+                        portPolioImageGalleryArrayList.remove(position);
+                        notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void callBackCancel() {
+
+                    }
+                });
             }
         });
-
     }
 
     @Override
@@ -76,11 +114,12 @@ public class PortFolioAddImageAdapter extends RecyclerView.Adapter<PortFolioAddI
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView img;
+        ImageView img,img_delete;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             img = (ImageView) itemView.findViewById(R.id.img);
+            img_delete = (ImageView) itemView.findViewById(R.id.img_delete);
         }
     }
 }
