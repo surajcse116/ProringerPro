@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetServicePojo;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 import java.util.ArrayList;
@@ -18,11 +19,12 @@ import java.util.ArrayList;
 
 public class ServiceOfferedAdapter extends RecyclerView.Adapter<ServiceOfferedAdapter.MyViewHolder> {
     Context mcontext;
-    ArrayList<String> stringServiceList;
+    ArrayList<SetGetServicePojo> setGetServicePojoArrayList;
 
-    public ServiceOfferedAdapter(Context mcontext, ArrayList<String> stringServiceList) {
+
+    public ServiceOfferedAdapter(Context mcontext, ArrayList<SetGetServicePojo> setGetServicePojoArrayList) {
         this.mcontext = mcontext;
-        this.stringServiceList = stringServiceList;
+        this.setGetServicePojoArrayList = setGetServicePojoArrayList;
     }
 
     @Override
@@ -32,11 +34,11 @@ public class ServiceOfferedAdapter extends RecyclerView.Adapter<ServiceOfferedAd
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.tv_city.setText(stringServiceList.get(position));
+        holder.tv_city.setText(setGetServicePojoArrayList.get(position).getCategory_name());
         holder.img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stringServiceList.remove(position);
+                setGetServicePojoArrayList.remove(position);
                 notifyDataSetChanged();
             }
         });
@@ -44,7 +46,7 @@ public class ServiceOfferedAdapter extends RecyclerView.Adapter<ServiceOfferedAd
 
     @Override
     public int getItemCount() {
-        return stringServiceList.size();
+        return setGetServicePojoArrayList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
