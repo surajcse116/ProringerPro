@@ -52,8 +52,7 @@ public class PortFolioAddImageAdapter extends RecyclerView.Adapter<PortFolioAddI
         holder.img.getLayoutParams().width = screenWidth / 5;
         holder.img.getLayoutParams().height = screenWidth / 5;
 
-        if (!portPolioImageGalleryArrayList.get(position).startsWith("http"))
-        {
+        if (!portPolioImageGalleryArrayList.get(position).startsWith("http")) {
             Glide.with(mContext).load("file://" + portPolioImageGalleryArrayList.get(position)).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
                 /**
                  * {@inheritDoc}
@@ -69,8 +68,7 @@ public class PortFolioAddImageAdapter extends RecyclerView.Adapter<PortFolioAddI
                     super.onResourceReady(resource, animation);
                 }
             });
-        }
-        else {
+        } else {
             Glide.with(mContext).load(portPolioImageGalleryArrayList.get(position)).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
                 /**
                  * {@inheritDoc}
@@ -114,7 +112,7 @@ public class PortFolioAddImageAdapter extends RecyclerView.Adapter<PortFolioAddI
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView img,img_delete;
+        ImageView img, img_delete;
 
         public MyViewHolder(View itemView) {
             super(itemView);

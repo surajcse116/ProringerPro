@@ -379,9 +379,8 @@ public class PortFolioActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(PortFolioActivity.this, "You can't select pictures more than 10", Toast.LENGTH_SHORT).show();
             }
-        }
-        else if (requestCode==111){
-            if(resultCode == RESULT_OK) {
+        } else if (requestCode == 111) {
+            if (resultCode == RESULT_OK) {
 //                String strEditText = data.getStringExtra("TextValue");
                 showPortFolioArrayList.clear();
                 showData();
@@ -628,22 +627,21 @@ public class PortFolioActivity extends AppCompatActivity {
         }
     }
 
-    public void validationForPortFolio(){
+    public void validationForPortFolio() {
 
-        if (tv_category.getText().toString().equals("")){
+        if (tv_category.getText().toString().equals("")) {
             Toast.makeText(PortFolioActivity.this, "Please Select Category", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
 
-            if (tv_month.getText().toString().equals("")){
+            if (tv_month.getText().toString().equals("")) {
                 Toast.makeText(PortFolioActivity.this, "Please Select Month", Toast.LENGTH_SHORT).show();
-            }else {
-                if (tv_year.getText().toString().equals("")){
+            } else {
+                if (tv_year.getText().toString().equals("")) {
                     Toast.makeText(PortFolioActivity.this, "Please Select Year", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (portPolioImageGalleryArrayList.size()<1)
-                    {
+                } else {
+                    if (portPolioImageGalleryArrayList.size() < 1) {
                         Toast.makeText(PortFolioActivity.this, "Please select at least one image", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         firePortFolioData();
                     }
 
@@ -652,7 +650,7 @@ public class PortFolioActivity extends AppCompatActivity {
         }
     }
 
-    public void firePortFolioData(){
+    public void firePortFolioData() {
 
         ArrayList<SetGetAPIPostData> arrayListPostParamsValues = new ArrayList<>();
 
@@ -678,7 +676,7 @@ public class PortFolioActivity extends AppCompatActivity {
 
         ArrayList<File> filesImages = new ArrayList<>();
 
-        for (int i=0;i<portPolioImageGalleryArrayList.size();i++){
+        for (int i = 0; i < portPolioImageGalleryArrayList.size(); i++) {
             filesImages.add(new File(portPolioImageGalleryArrayList.get(i)));
         }
 
@@ -707,9 +705,9 @@ public class PortFolioActivity extends AppCompatActivity {
                     tv_month.setText("");
                     tv_year.setText("");
 
-                    catid="";
-                    monthName="";
-                    yearName="";
+                    catid = "";
+                    monthName = "";
+                    yearName = "";
 
                     if (showPortFolioArrayList.size() > 0) {
                         showPortFolioArrayList.clear();

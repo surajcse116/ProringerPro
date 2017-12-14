@@ -84,6 +84,8 @@ public class PortfolioEditActivity extends AppCompatActivity {
 
     private String mCurrentPhotoPath = "";
 
+    boolean checkImageDeleteFlag = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -292,10 +294,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
 
-            Intent intent = new Intent();
-//                                    intent.putExtra("editTextValue", "value_here")
-            setResult(RESULT_CANCELED, intent);
-            finish();
+            onBackPressed();
 
         }
         return super.onOptionsItemSelected(item);
@@ -491,11 +490,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
                     portPolioImageGalleryArrayList.remove(position);
                     portFolioEditAddImageAdapter.notifyDataSetChanged();
 
-                    Intent intent = new Intent();
-//                                    intent.putExtra("editTextValue", "value_here")
-                    setResult(RESULT_OK, intent);
-                    finish();
-
+                    checkImageDeleteFlag = true;
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -743,22 +738,21 @@ public class PortfolioEditActivity extends AppCompatActivity {
         }
     }
 
-    public void validationForPortFolio(){
+    public void validationForPortFolio() {
 
-        if (tv_category.getText().toString().equals("")){
+        if (tv_category.getText().toString().equals("")) {
             Toast.makeText(PortfolioEditActivity.this, "Please Select Category", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
 
-            if (tv_month.getText().toString().equals("")){
+            if (tv_month.getText().toString().equals("")) {
                 Toast.makeText(PortfolioEditActivity.this, "Please Select Month", Toast.LENGTH_SHORT).show();
-            }else {
-                if (tv_year.getText().toString().equals("")){
+            } else {
+                if (tv_year.getText().toString().equals("")) {
                     Toast.makeText(PortfolioEditActivity.this, "Please Select Year", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (portPolioImageGalleryArrayList.size()<1)
-                    {
+                } else {
+                    if (portPolioImageGalleryArrayList.size() < 1) {
                         Toast.makeText(PortfolioEditActivity.this, "Please select at least one image", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         fireEditPortFolio();
                     }
 
@@ -768,4 +762,19 @@ public class PortfolioEditActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (checkImageDeleteFlag) {
+            Intent intent = new Intent();
+//          intent.putExtra("editTextValue", "value_here")
+            setResult(RESULT_OK, intent);
+            finish();
+        } else {
+            Intent intent = new Intent();
+//          intent.putExtra("editTextValue", "value_here")
+            setResult(RESULT_CANCELED, intent);
+            finish();
+        }
+    }
 }
