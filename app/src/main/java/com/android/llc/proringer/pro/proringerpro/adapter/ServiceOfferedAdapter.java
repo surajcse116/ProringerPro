@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.activities.AddServicesActivity;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetServicePojo;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
@@ -38,6 +39,7 @@ public class ServiceOfferedAdapter extends RecyclerView.Adapter<ServiceOfferedAd
         holder.img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((AddServicesActivity)mcontext).runtimeServiceRemoveRefineView(setGetServicePojoArrayList.get(position).getParent_category_id());
                 setGetServicePojoArrayList.remove(position);
                 notifyDataSetChanged();
             }

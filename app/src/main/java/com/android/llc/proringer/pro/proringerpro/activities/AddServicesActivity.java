@@ -29,7 +29,6 @@ import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetServicePojo;
-import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 import org.json.JSONArray;
@@ -49,7 +48,7 @@ public class AddServicesActivity extends AppCompatActivity {
     ServiceOfferedAdapter serviceOfferedAdapter = null;
     LinearLayout linear_refine_service = null;
     PopupWindow popupWindow = null;
-    String pros_contact_service;
+    String category_Id_parent;
     CustomListAdapterServiceListDialogCategory customListAdapterDialogCategory = null;
     ProRegularTextView tv_service;
     JSONArray CategoryJsonArray = null;
@@ -81,9 +80,9 @@ public class AddServicesActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (((ProRegularTextView) findViewById(R.id.tv_service)).getText().toString().trim().equalsIgnoreCase("")) {
-                    ((ProRegularTextView) findViewById(R.id.tv_service)).setError("Please Enter City name");
+                    ((ProRegularTextView) findViewById(R.id.tv_service)).setError("Please Select Category name");
                 } else {
-//                    createListAndAdapterSet(cvxcvbcxvbcbcd);
+                    addCategoryAndSubCategory(tv_service.getText().toString().trim(), category_Id_parent);
                 }
             }
         });
@@ -110,20 +109,6 @@ public class AddServicesActivity extends AppCompatActivity {
     }
 
 
-    public void createListAndAdapterSet(SetGetServicePojo setGetServicePojo) {
-
-        setGetServicePojoArrayList.add(setGetServicePojo);
-
-        Logger.printMessage("ListSize-->", "" + setGetServicePojoArrayList.size());
-
-        if (serviceOfferedAdapter == null) {
-            serviceOfferedAdapter = new ServiceOfferedAdapter(AddServicesActivity.this, setGetServicePojoArrayList);
-            rcv_service.setAdapter(serviceOfferedAdapter);
-        } else {
-            serviceOfferedAdapter.notifyDataSetChanged();
-        }
-    }
-
     public void runtimeServiceRefineView(ArrayList<SetGetServicePojo> setGetServicePojoArrayList) {
 
         for (int i = 0; i < setGetServicePojoArrayList.size(); i++) {
@@ -142,6 +127,7 @@ public class AddServicesActivity extends AppCompatActivity {
 
 
             final LinearLayout linearLayoutChild = new LinearLayout(AddServicesActivity.this);
+            linearLayoutChild.setTag("sub"+setGetServicePojoArrayList.get(i).getParent_category_id());
             linearLayoutChild.setOrientation(LinearLayout.VERTICAL);
             linearLayoutChild.setPadding(62, 5, 0, 5);
 
@@ -149,8 +135,8 @@ public class AddServicesActivity extends AppCompatActivity {
 
                 try {
                     CheckBox checkRefineChild = new CheckBox(this);
-                    checkRefineChild.setText(setGetServicePojoArrayList.get(i).getService_category_list().getJSONObject(j).getString("sub_category_name"));
-                    checkRefineChild.setTag(setGetServicePojoArrayList.get(i).getService_category_list().getJSONObject(j).getString("sub_category_id"));
+                    checkRefineChild.setText(setGetServicePojoArrayList.get(i).getService_category_list().getJSONObject(j).getString("category_name"));
+                    checkRefineChild.setTag(setGetServicePojoArrayList.get(i).getService_category_list().getJSONObject(j).getString("id"));
 //                linearLayoutChild.addView(checkRefineChild,j, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     linearLayoutChild.addView(checkRefineChild, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 } catch (Exception ex) {
@@ -214,6 +200,15 @@ public class AddServicesActivity extends AppCompatActivity {
         }
     }
 
+    public void runtimeServiceRemoveRefineView(String tagId){
+
+        View parentCheckBox =linear_refine_service.findViewWithTag(tagId);
+        View subLinearView=linear_refine_service.findViewWithTag("sub"+tagId);
+
+        linear_refine_service.removeView(subLinearView);
+        linear_refine_service.removeView(parentCheckBox);
+    }
+
     private void showDialogServices(View v, JSONArray PredictionsJsonArray) {
 
         popupWindow = new PopupWindow(AddServicesActivity.this);
@@ -236,8 +231,10 @@ public class AddServicesActivity extends AppCompatActivity {
                 try {
                     tv_service.setText(value.getString("category_name"));
 //                    service=value.getString("category_name");
-                    pros_contact_service = value.getString("id");
-                    Logger.printMessage("id", pros_contact_service);
+                    category_Id_parent = value.getString("id");
+
+                    Logger.printMessage("id-->", category_Id_parent);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -361,6 +358,9 @@ public class AddServicesActivity extends AppCompatActivity {
     }
 
     public void addCategoryAndSubCategory(final String category_name, final String parent_category_id) {
+
+        final ArrayList<SetGetServicePojo> ServicePojoArrayList=new ArrayList<>();
+
         boolean check = false;
         for (int c = 0; c < setGetServicePojoArrayList.size(); c++) {
             if (setGetServicePojoArrayList.get(c).getParent_category_id().equals(parent_category_id)) {
@@ -393,6 +393,8 @@ public class AddServicesActivity extends AppCompatActivity {
                         setGetServicePojo.setService_category_list(info_array);
                         setGetServicePojoArrayList.add(setGetServicePojo);
 
+                        ServicePojoArrayList.add(setGetServicePojo);
+
                         Logger.printMessage("CatAndSubCatListSize-->", "" + setGetServicePojoArrayList.size());
 
                         Logger.printMessage("ListSize-->", "" + setGetServicePojoArrayList.size());
@@ -408,7 +410,7 @@ public class AddServicesActivity extends AppCompatActivity {
                         ex.printStackTrace();
                     }
 
-                    runtimeServiceRefineView(setGetServicePojoArrayList);
+                    runtimeServiceRefineView(ServicePojoArrayList);
 
                     myLoader.dismissLoader();
                 }
