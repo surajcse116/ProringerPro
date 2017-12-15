@@ -622,34 +622,24 @@ public class PortfolioEditActivity extends AppCompatActivity {
 
     }
 
-    private void showPhotoDialog() {
-        dialog = new Dialog(PortfolioEditActivity.this);
+    private void showImagePickerOption() {
+        final Dialog dialog = new Dialog(PortfolioEditActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 //                    dialog.setCancelable(false);
-        dialog.setContentView(R.layout.alert_dialog_image_or_pdf);
+        dialog.setContentView(R.layout.custom_dialogbox_gallery_camera);
         //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels / 2;
-        int width = displayMetrics.widthPixels / 2;
 
-        ImageView img_gallery = (ImageView) dialog.findViewById(R.id.img_gallery);
-        ImageView img_camera = (ImageView) dialog.findViewById(R.id.img_camera);
-        ProRegularTextView TXTTitle = (ProRegularTextView) dialog.findViewById(R.id.Title);
+        RelativeLayout RLMain = (RelativeLayout) dialog.findViewById(R.id.RLMain);
 
-        LinearLayout LLMain = (LinearLayout) dialog.findViewById(R.id.LLMain);
-
-        // LLMain.getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(LicenceListActivity.this)[1]) /2;
+        RLMain.getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(PortfolioEditActivity.this)[1]);
 //        RLMain.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
-        LLMain.setMinimumWidth(height);
-        LLMain.getLayoutParams().height = (MethodsUtils.getScreenHeightAndWidth(PortfolioEditActivity.this)[1]) / 2;
+        RLMain.getLayoutParams().height = (MethodsUtils.getScreenHeightAndWidth(PortfolioEditActivity.this)[1]) / 2;
 
-        TXTTitle.setText("Licence");
 
-        img_gallery.setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.img_gallery).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 dialog.dismiss();
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 if (intent.resolveActivity((PortfolioEditActivity.this).getPackageManager()) != null) {
@@ -659,14 +649,15 @@ public class PortfolioEditActivity extends AppCompatActivity {
             }
         });
 
-        img_camera.setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.img_camera).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 dialog.dismiss();
                 ProConstant.cameraRequested = true;
                 startActivityForResult(new Intent(PortfolioEditActivity.this, ImageTakerActivityCamera.class), REQUEST_IMAGE_CAPTURE);
             }
         });
+
         dialog.show();
     }
 
@@ -733,7 +724,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
             }, 800);
         } else if (requestCode == 200 && resultCode == RESULT_OK) {
             if (portFolioImageSetgetGalleries.size() < 10) {
-                showPhotoDialog();
+                showImagePickerOption();
             } else {
                 Toast.makeText(PortfolioEditActivity.this, "You can't select pictures more than 10", Toast.LENGTH_SHORT).show();
             }

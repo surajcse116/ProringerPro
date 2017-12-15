@@ -220,52 +220,43 @@ public class LicenceAddActivity extends AppCompatActivity {
         category();
     }
 
-    private void showPhotoDialog() {
-        dialog = new Dialog(LicenceAddActivity.this);
+
+    private void showImagePickerOption() {
+        final Dialog dialog = new Dialog(LicenceAddActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 //                    dialog.setCancelable(false);
-        dialog.setContentView(R.layout.alert_dialog_image_or_pdf);
+        dialog.setContentView(R.layout.custom_dialogbox_gallery_camera);
         //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels / 2;
-        int width = displayMetrics.widthPixels / 2;
 
-        ImageView img_gallery = (ImageView) dialog.findViewById(R.id.img_gallery);
-        ImageView img_camera = (ImageView) dialog.findViewById(R.id.img_camera);
-        ProRegularTextView TXTTitle = (ProRegularTextView) dialog.findViewById(R.id.Title);
+        RelativeLayout RLMain = (RelativeLayout) dialog.findViewById(R.id.RLMain);
 
-        LinearLayout LLMain = (LinearLayout) dialog.findViewById(R.id.LLMain);
-
-        // LLMain.getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(LicenceListActivity.this)[1]) /2;
+        RLMain.getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(LicenceAddActivity.this)[1]);
 //        RLMain.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
-        LLMain.setMinimumWidth(height);
-        LLMain.getLayoutParams().height = (MethodsUtils.getScreenHeightAndWidth(LicenceAddActivity.this)[1]) / 2;
+        RLMain.getLayoutParams().height = (MethodsUtils.getScreenHeightAndWidth(LicenceAddActivity.this)[1]) / 2;
 
-        TXTTitle.setText("Licence");
 
-        img_gallery.setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.img_gallery).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 dialog.dismiss();
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 if (intent.resolveActivity((LicenceAddActivity.this).getPackageManager()) != null) {
                     intent.setType("image/*");
                     startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
                 }
-
             }
         });
 
-        img_camera.setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.img_camera).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 dialog.dismiss();
                 ProConstant.cameraRequested = true;
                 startActivityForResult(new Intent(LicenceAddActivity.this, ImageTakerActivityCamera.class), REQUEST_IMAGE_CAPTURE);
             }
         });
+
         dialog.show();
     }
 
@@ -503,7 +494,7 @@ public class LicenceAddActivity extends AppCompatActivity {
                 }
             }, 800);
         } else if (requestCode == 200 && resultCode == RESULT_OK) {
-            showPhotoDialog();
+            showImagePickerOption();
         }
     }
 
