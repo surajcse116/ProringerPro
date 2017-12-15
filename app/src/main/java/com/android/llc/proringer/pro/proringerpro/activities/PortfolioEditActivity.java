@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogCategory;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogMonthYear;
-import com.android.llc.proringer.pro.proringerpro.adapter.PortFolioAddImageAdapter;
 import com.android.llc.proringer.pro.proringerpro.adapter.PortFolioEditAddImageAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
@@ -39,12 +38,12 @@ import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
+import com.android.llc.proringer.pro.proringerpro.pojo.PortFolioImageSetgetGallery;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
-import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,7 +73,9 @@ public class PortfolioEditActivity extends AppCompatActivity {
     PopupWindow popupWindow;
     CustomListAdapterDialogMonthYear customListAdapterDialogMonthYear = null;
     CustomListAdapterDialogCategory customListAdapterDialogCategory = null;
-    ArrayList<String> portPolioImageGalleryArrayList = null;
+
+
+    ArrayList<PortFolioImageSetgetGallery> portFolioImageSetgetGalleries = null;
 
     PortFolioEditAddImageAdapter portFolioEditAddImageAdapter = null;
 
@@ -117,19 +118,23 @@ public class PortfolioEditActivity extends AppCompatActivity {
         tv_category.setText(getIntent().getExtras().getString("category_name"));
 
 
-        portPolioImageGalleryArrayList = new ArrayList<>();
+        portFolioImageSetgetGalleries = new ArrayList<>();
 
         try {
             multiple_gallery_image = new JSONArray(getIntent().getExtras().getString("multiple_gallery_image"));
             categoryJsonArray = new JSONArray(getIntent().getExtras().getString("categoryJsonArray"));
 
             for (int i = 0; i < multiple_gallery_image.length(); i++) {
-                portPolioImageGalleryArrayList.add(multiple_gallery_image.getString(i));
+
+                PortFolioImageSetgetGallery portFolioImageSetgetGallery=new PortFolioImageSetgetGallery();
+                portFolioImageSetgetGallery.setId(multiple_gallery_image.getJSONObject(i).getString("id"));
+                portFolioImageSetgetGallery.setImage_name(multiple_gallery_image.getJSONObject(i).getString("image_name"));
+                portFolioImageSetgetGalleries.add(portFolioImageSetgetGallery);
             }
 
-            Logger.printMessage("imageGalleryCount-->", "" + portPolioImageGalleryArrayList.size());
+            Logger.printMessage("imageGalleryCount-->", "" + portFolioImageSetgetGalleries.size());
 
-            portFolioEditAddImageAdapter = new PortFolioEditAddImageAdapter(PortfolioEditActivity.this, portPolioImageGalleryArrayList);
+            portFolioEditAddImageAdapter = new PortFolioEditAddImageAdapter(PortfolioEditActivity.this, portFolioImageSetgetGalleries);
             rcv_add_port_folio.setAdapter(portFolioEditAddImageAdapter);
 
         } catch (JSONException e) {
@@ -487,7 +492,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
                     Logger.printMessage("message", mainResponseObj.getString("message"));
                     Toast.makeText(PortfolioEditActivity.this, mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
 
-                    portPolioImageGalleryArrayList.remove(position);
+                    portFolioImageSetgetGalleries.remove(position);
                     portFolioEditAddImageAdapter.notifyDataSetChanged();
 
                     checkImageDeleteFlag = true;
@@ -528,8 +533,8 @@ public class PortfolioEditActivity extends AppCompatActivity {
 
     public void fireEditPortFolio() {
 
-        for (int p = 0; p < portPolioImageGalleryArrayList.size(); p++) {
-            Logger.printMessage("Image_path[" + p + "]-->", "" + portPolioImageGalleryArrayList.get(p));
+        for (int p = 0; p < portFolioImageSetgetGalleries.size(); p++) {
+            Logger.printMessage("Image_path[" + p + "]-->", "" + portFolioImageSetgetGalleries.get(p).getImage_name());
         }
 
 
@@ -569,10 +574,10 @@ public class PortfolioEditActivity extends AppCompatActivity {
 
         ArrayList<File> filesImages = new ArrayList<>();
 
-        for (int i = 0; i < portPolioImageGalleryArrayList.size(); i++) {
-            if (!portPolioImageGalleryArrayList.get(i).trim().startsWith("http")) {
-                filesImages.add(new File(portPolioImageGalleryArrayList.get(i)));
-                Logger.printMessage("ImagePostFile[" + i + "]-->", "" + portPolioImageGalleryArrayList.get(i));
+        for (int i = 0; i < portFolioImageSetgetGalleries.size(); i++) {
+            if (!portFolioImageSetgetGalleries.get(i).getImage_name().trim().startsWith("http")) {
+                filesImages.add(new File(portFolioImageSetgetGalleries.get(i).getImage_name()));
+                Logger.printMessage("ImagePostFile[" + i + "]-->", "" + portFolioImageSetgetGalleries.get(i).getImage_name());
             }
         }
 
@@ -679,12 +684,16 @@ public class PortfolioEditActivity extends AppCompatActivity {
                     Logger.printMessage("image****", "data file does not exists");
                 mCurrentPhotoPath = dataFile.getAbsolutePath();
 
-                Logger.printMessage("list_size", "" + portPolioImageGalleryArrayList.size());
+                Logger.printMessage("list_size", "" + portFolioImageSetgetGalleries.size());
 
-                portPolioImageGalleryArrayList.add(mCurrentPhotoPath);
+                PortFolioImageSetgetGallery portFolioImageSetgetGallery=new PortFolioImageSetgetGallery();
+                portFolioImageSetgetGallery.setId("");
+                portFolioImageSetgetGallery.setImage_name(mCurrentPhotoPath);
+                portFolioImageSetgetGalleries.add(portFolioImageSetgetGallery);
+
 
                 if (portFolioEditAddImageAdapter == null) {
-                    portFolioEditAddImageAdapter = new PortFolioEditAddImageAdapter(PortfolioEditActivity.this, portPolioImageGalleryArrayList);
+                    portFolioEditAddImageAdapter = new PortFolioEditAddImageAdapter(PortfolioEditActivity.this, portFolioImageSetgetGalleries);
                     rcv_add_port_folio.setAdapter(portFolioEditAddImageAdapter);
                 } else {
                     portFolioEditAddImageAdapter.notifyDataSetChanged();
@@ -706,9 +715,14 @@ public class PortfolioEditActivity extends AppCompatActivity {
                         Logger.printMessage("selectedDataURI", "" + selectedDataURI);
 
                         Logger.printMessage("image****", "" + mCurrentPhotoPath);
-                        portPolioImageGalleryArrayList.add(mCurrentPhotoPath);
+
+                        PortFolioImageSetgetGallery portFolioImageSetgetGallery=new PortFolioImageSetgetGallery();
+                        portFolioImageSetgetGallery.setId("");
+                        portFolioImageSetgetGallery.setImage_name(mCurrentPhotoPath);
+                        portFolioImageSetgetGalleries.add(portFolioImageSetgetGallery);
+
                         if (portFolioEditAddImageAdapter == null) {
-                            portFolioEditAddImageAdapter = new PortFolioEditAddImageAdapter(PortfolioEditActivity.this, portPolioImageGalleryArrayList);
+                            portFolioEditAddImageAdapter = new PortFolioEditAddImageAdapter(PortfolioEditActivity.this, portFolioImageSetgetGalleries);
                             rcv_add_port_folio.setAdapter(portFolioEditAddImageAdapter);
                         } else {
                             portFolioEditAddImageAdapter.notifyDataSetChanged();
@@ -718,7 +732,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
                 }
             }, 800);
         } else if (requestCode == 200 && resultCode == RESULT_OK) {
-            if (portPolioImageGalleryArrayList.size() < 10) {
+            if (portFolioImageSetgetGalleries.size() < 10) {
                 showPhotoDialog();
             } else {
                 Toast.makeText(PortfolioEditActivity.this, "You can't select pictures more than 10", Toast.LENGTH_SHORT).show();
@@ -750,7 +764,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
                 if (tv_year.getText().toString().equals("")) {
                     Toast.makeText(PortfolioEditActivity.this, "Please Select Year", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (portPolioImageGalleryArrayList.size() < 1) {
+                    if (portFolioImageSetgetGalleries.size() < 1) {
                         Toast.makeText(PortfolioEditActivity.this, "Please select at least one image", Toast.LENGTH_SHORT).show();
                     } else {
                         fireEditPortFolio();
@@ -764,7 +778,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
         if (checkImageDeleteFlag) {
             Intent intent = new Intent();
 //          intent.putExtra("editTextValue", "value_here")
@@ -776,5 +790,6 @@ public class PortfolioEditActivity extends AppCompatActivity {
             setResult(RESULT_CANCELED, intent);
             finish();
         }
+        super.onBackPressed();
     }
 }

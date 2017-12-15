@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.PortfolioEditActivity;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
+import com.android.llc.proringer.pro.proringerpro.pojo.PortFolioImageSetgetGallery;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -25,13 +26,13 @@ import java.util.ArrayList;
 
 public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolioEditAddImageAdapter.MyViewHolder> {
     Context mContext;
-    ArrayList<String> portPolioImageGalleryArrayList;
+    ArrayList<PortFolioImageSetgetGallery> portFolioImageSetgetGalleries;
     int screenHeight;
     int screenWidth;
 
-    public PortFolioEditAddImageAdapter(Context mContext, ArrayList<String> portPolioImageGalleryArrayList) {
+    public PortFolioEditAddImageAdapter(Context mContext, ArrayList<PortFolioImageSetgetGallery> portFolioImageSetgetGalleries) {
         this.mContext = mContext;
-        this.portPolioImageGalleryArrayList = portPolioImageGalleryArrayList;
+        this.portFolioImageSetgetGalleries = portFolioImageSetgetGalleries;
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         ((PortfolioEditActivity) mContext).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -52,8 +53,8 @@ public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolio
         holder.img.getLayoutParams().width = screenWidth / 5;
         holder.img.getLayoutParams().height = screenWidth / 5;
 
-        if (!portPolioImageGalleryArrayList.get(position).startsWith("http")) {
-            Glide.with(mContext).load("file://" + portPolioImageGalleryArrayList.get(position)).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
+        if (!portFolioImageSetgetGalleries.get(position).getImage_name().startsWith("http")) {
+            Glide.with(mContext).load("file://" + portFolioImageSetgetGalleries.get(position).getImage_name()).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
                 /**
                  * {@inheritDoc}
                  * If no {@link GlideAnimation} is given or if the animation does not set the
@@ -69,7 +70,7 @@ public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolio
                 }
             });
         } else {
-            Glide.with(mContext).load(portPolioImageGalleryArrayList.get(position)).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
+            Glide.with(mContext).load(portFolioImageSetgetGalleries.get(position).getImage_name()).fitCenter().into(new GlideDrawableImageViewTarget(holder.img) {
                 /**
                  * {@inheritDoc}
                  * If no {@link GlideAnimation} is given or if the animation does not set the
@@ -94,7 +95,12 @@ public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolio
                 customAlert.getEventFromNormalAlert(mContext, "Delete", "Are you sure to delete this image?", "YES,DELETE IT", "CANCEL", new CustomAlert.MyCustomAlertListener() {
                     @Override
                     public void callBackOk() {
-//                        ((PortfolioEditActivity)mContext).deletePortFolioImage(position,"image_id");
+                        if (portFolioImageSetgetGalleries.get(position).getImage_name().startsWith("http")) {
+                            ((PortfolioEditActivity) mContext).deletePortFolioImage(position, portFolioImageSetgetGalleries.get(position).getId());
+                        }else {
+                            portFolioImageSetgetGalleries.remove(position);
+                            notifyDataSetChanged();
+                        }
                     }
 
                     @Override
@@ -108,7 +114,7 @@ public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolio
 
     @Override
     public int getItemCount() {
-        return portPolioImageGalleryArrayList.size();
+        return portFolioImageSetgetGalleries.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
