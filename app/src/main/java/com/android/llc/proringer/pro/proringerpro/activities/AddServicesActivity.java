@@ -47,6 +47,7 @@ import java.util.HashMap;
 
 public class AddServicesActivity extends AppCompatActivity {
 
+    boolean atLeastOneChecked=false;
     RecyclerView rcv_service;
     ServiceOfferedAdapter serviceOfferedAdapter = null;
     LinearLayout linear_refine_service = null;
@@ -486,6 +487,7 @@ public class AddServicesActivity extends AppCompatActivity {
 
                         CheckBox checkBoxChild = (CheckBox) linearLayoutChild.getChildAt(p);
                         if (checkBoxChild.isChecked()) {
+                            atLeastOneChecked=true;
                             Logger.printMessage("id", "" + checkBoxChild.getTag());
                             serviceString=serviceString+","+checkBoxChild.getTag();
                         }
@@ -503,53 +505,57 @@ public class AddServicesActivity extends AppCompatActivity {
             Logger.printMessage("PARAMS", String.valueOf(Params));
             Logger.printMessage("PARAMS-->", String.valueOf(ParamArrayPost));
 
-            new CustomJSONParser().fireAPIForPostMethodNormalTxtArray(AddServicesActivity.this, ProConstant.app_proservices_save, Params, ParamArrayPost, new CustomJSONParser.CustomJSONResponse() {
-                @Override
-                public void onSuccess(String result) {
-                    myLoader.dismissLoader();
-                    JSONObject mainResponseObj = null;
-                    try {
-                        mainResponseObj = new JSONObject(result);
-                        Logger.printMessage("message", mainResponseObj.getString("message"));
-                        Toast.makeText(AddServicesActivity.this, mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+            if (atLeastOneChecked){
+                new CustomJSONParser().fireAPIForPostMethodNormalTxtArray(AddServicesActivity.this, ProConstant.app_proservices_save, Params, ParamArrayPost, new CustomJSONParser.CustomJSONResponse() {
+                    @Override
+                    public void onSuccess(String result) {
+                        myLoader.dismissLoader();
+                        JSONObject mainResponseObj = null;
+                        try {
+                            mainResponseObj = new JSONObject(result);
+                            Logger.printMessage("message", mainResponseObj.getString("message"));
+                            Toast.makeText(AddServicesActivity.this, mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
 
-                        Intent intent = new Intent();
+                            Intent intent = new Intent();
 //                                    intent.putExtra("editTextValue", "value_here")
-                        setResult(RESULT_OK, intent);
-                        finish();
+                            setResult(RESULT_OK, intent);
+                            finish();
 
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
 
-                @Override
-                public void onError(String error, String response) {
-                    myLoader.dismissLoader();
-                    new MYAlert(AddServicesActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
-                        @Override
-                        public void OnOk(boolean res) {
+                    @Override
+                    public void onError(String error, String response) {
+                        myLoader.dismissLoader();
+                        new MYAlert(AddServicesActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                            @Override
+                            public void OnOk(boolean res) {
 
-                        }
-                    });
-                }
+                            }
+                        });
+                    }
 
-                @Override
-                public void onError(String error) {
-                    myLoader.dismissLoader();
-                    new MYAlert(AddServicesActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
-                        @Override
-                        public void OnOk(boolean res) {
+                    @Override
+                    public void onError(String error) {
+                        myLoader.dismissLoader();
+                        new MYAlert(AddServicesActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                            @Override
+                            public void OnOk(boolean res) {
 
-                        }
-                    });
-                }
+                            }
+                        });
+                    }
 
-                @Override
-                public void onStart() {
-                    myLoader.showLoader();
-                }
-            });
+                    @Override
+                    public void onStart() {
+                        myLoader.showLoader();
+                    }
+                });
+            }else {
+             Toast.makeText(AddServicesActivity.this,"You can not delete primary trade",Toast.LENGTH_SHORT).show();
+            }
         }
 }
