@@ -1,5 +1,6 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.android.llc.proringer.pro.proringerpro.adapter.ServiceOfferedAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
+import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
@@ -36,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -97,6 +100,13 @@ public class AddServicesActivity extends AppCompatActivity {
         });
 
         category();
+
+        findViewById(R.id.tv_continue_service_area).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveServices();
+            }
+        });
 
     }
 
@@ -453,4 +463,93 @@ public class AddServicesActivity extends AppCompatActivity {
         }
     }
 
+    public void saveServices() {
+
+        HashMap<String, String> Params = new HashMap<>();
+        Params.put("user_id", ProApplication.getInstance().getUserId());
+
+        HashMap<String, String> ParamArrayPost = new HashMap<>();
+
+        String serviceString="";
+
+
+        for (int c = 0; c < linear_refine_service.getChildCount(); c++) {
+                View v = linear_refine_service.getChildAt(c);
+
+                if (c % 2 == 0) {
+                    CheckBox checkBoxHeader = (CheckBox) v;
+                    Logger.printMessage("checkBoxHeader-->", "" + checkBoxHeader.isChecked());
+                } else {
+                    LinearLayout linearLayoutChild = (LinearLayout) v;
+                    Logger.printMessage("countEve-->", "" + linearLayoutChild.getChildCount());
+                    for (int p = 0; p < linearLayoutChild.getChildCount(); p++) {
+
+                        CheckBox checkBoxChild = (CheckBox) linearLayoutChild.getChildAt(p);
+                        if (checkBoxChild.isChecked()) {
+                            Logger.printMessage("id", "" + checkBoxChild.getTag());
+                            serviceString=serviceString+","+checkBoxChild.getTag();
+                        }
+                    }
+                }
+            }
+
+            String paramService[]=serviceString.split(",");
+
+        for (int q=1;q<paramService.length;q++){
+            ParamArrayPost.put("subcategory" + "[" + q + "]", paramService[q]);
+        }
+
+
+            Logger.printMessage("PARAMS", String.valueOf(Params));
+            Logger.printMessage("PARAMS-->", String.valueOf(ParamArrayPost));
+
+            new CustomJSONParser().fireAPIForPostMethodNormalTxtArray(AddServicesActivity.this, ProConstant.app_proservices_save, Params, ParamArrayPost, new CustomJSONParser.CustomJSONResponse() {
+                @Override
+                public void onSuccess(String result) {
+                    myLoader.dismissLoader();
+                    JSONObject mainResponseObj = null;
+                    try {
+                        mainResponseObj = new JSONObject(result);
+                        Logger.printMessage("message", mainResponseObj.getString("message"));
+                        Toast.makeText(AddServicesActivity.this, mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent();
+//                                    intent.putExtra("editTextValue", "value_here")
+                        setResult(RESULT_OK, intent);
+                        finish();
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(String error, String response) {
+                    myLoader.dismissLoader();
+                    new MYAlert(AddServicesActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                        @Override
+                        public void OnOk(boolean res) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(String error) {
+                    myLoader.dismissLoader();
+                    new MYAlert(AddServicesActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                        @Override
+                        public void OnOk(boolean res) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onStart() {
+                    myLoader.showLoader();
+                }
+            });
+        }
 }
