@@ -80,7 +80,7 @@ public class AddServicesActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (((ProRegularTextView) findViewById(R.id.tv_service)).getText().toString().trim().equalsIgnoreCase("")) {
-                    ((ProRegularTextView) findViewById(R.id.tv_service)).setError("Please Select Category name");
+                    Toast.makeText(AddServicesActivity.this,"Please Select Category name",Toast.LENGTH_SHORT).show();
                 } else {
                     addCategoryAndSubCategory(tv_service.getText().toString().trim(), category_Id_parent);
                 }
@@ -116,7 +116,7 @@ public class AddServicesActivity extends AppCompatActivity {
             final CheckBox checkRefineHeader = new CheckBox(this);
 
             checkRefineHeader.setText(setGetServicePojoArrayList.get(i).getCategory_name());
-            checkRefineHeader.setTag(setGetServicePojoArrayList.get(i).getParent_category_id());
+            checkRefineHeader.setTag(setGetServicePojoArrayList.get(i).getId());
 
             LinearLayout.LayoutParams L = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             L.setMargins(10, 0, 10, 0);
@@ -127,16 +127,24 @@ public class AddServicesActivity extends AppCompatActivity {
 
 
             final LinearLayout linearLayoutChild = new LinearLayout(AddServicesActivity.this);
-            linearLayoutChild.setTag("sub"+setGetServicePojoArrayList.get(i).getParent_category_id());
+            linearLayoutChild.setTag("sub"+setGetServicePojoArrayList.get(i).getId());
             linearLayoutChild.setOrientation(LinearLayout.VERTICAL);
             linearLayoutChild.setPadding(62, 5, 0, 5);
 
-            for (int j = 0; j < setGetServicePojoArrayList.get(i).getService_category_list().length(); j++) {
+            for (int j = 0; j < setGetServicePojoArrayList.get(i).getGetSubcategory().length(); j++) {
 
                 try {
                     CheckBox checkRefineChild = new CheckBox(this);
-                    checkRefineChild.setText(setGetServicePojoArrayList.get(i).getService_category_list().getJSONObject(j).getString("category_name"));
-                    checkRefineChild.setTag(setGetServicePojoArrayList.get(i).getService_category_list().getJSONObject(j).getString("id"));
+                    checkRefineChild.setText(setGetServicePojoArrayList.get(i).getGetSubcategory().getJSONObject(j).getString("category_name"));
+                    checkRefineChild.setTag(setGetServicePojoArrayList.get(i).getGetSubcategory().getJSONObject(j).getString("id"));
+
+                    if (setGetServicePojoArrayList.get(i).getGetSubcategory().getJSONObject(j).getInt("cat_selected")==1){
+                        checkRefineChild.setChecked(true);
+                        checkRefineHeader.setChecked(true);
+                    }else {
+                        checkRefineChild.setChecked(false);
+                    }
+
 //                linearLayoutChild.addView(checkRefineChild,j, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     linearLayoutChild.addView(checkRefineChild, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 } catch (Exception ex) {
@@ -315,8 +323,9 @@ public class AddServicesActivity extends AppCompatActivity {
                     for (int i = 0; i < info_array.length(); i++) {
                         SetGetServicePojo setGetServicePojo = new SetGetServicePojo();
                         setGetServicePojo.setCategory_name(info_array.getJSONObject(i).getString("category_name"));
-                        setGetServicePojo.setParent_category_id(info_array.getJSONObject(i).getString("parent_category_id"));
-                        setGetServicePojo.setService_category_list(info_array.getJSONObject(i).getJSONArray("service_category_list"));
+                        setGetServicePojo.setId(info_array.getJSONObject(i).getString("id"));
+                        setGetServicePojo.setParent_id(info_array.getJSONObject(i).getString("parent_id"));
+                        setGetServicePojo.setGetSubcategory(info_array.getJSONObject(i).getJSONArray("getSubcategory"));
                         setGetServicePojoArrayList.add(setGetServicePojo);
                     }
 
@@ -359,11 +368,12 @@ public class AddServicesActivity extends AppCompatActivity {
 
     public void addCategoryAndSubCategory(final String category_name, final String parent_category_id) {
 
+
         final ArrayList<SetGetServicePojo> ServicePojoArrayList=new ArrayList<>();
 
         boolean check = false;
         for (int c = 0; c < setGetServicePojoArrayList.size(); c++) {
-            if (setGetServicePojoArrayList.get(c).getParent_category_id().equals(parent_category_id)) {
+            if (setGetServicePojoArrayList.get(c).getId().equals(parent_category_id)) {
                 check = true;
             }
         }
@@ -384,13 +394,21 @@ public class AddServicesActivity extends AppCompatActivity {
                     try {
 
                         JSONObject jsonObject = new JSONObject(result);
+
                         JSONArray info_array = jsonObject.getJSONArray("info_array");
 
+                        for (int c=0;c<info_array.length();c++){
+                            info_array.getJSONObject(c).put("cat_selected",0);
+                        }
+
+                        Logger.printMessage("info_array-->",""+info_array);
 
                         SetGetServicePojo setGetServicePojo = new SetGetServicePojo();
                         setGetServicePojo.setCategory_name(category_name);
-                        setGetServicePojo.setParent_category_id(parent_category_id);
-                        setGetServicePojo.setService_category_list(info_array);
+                        setGetServicePojo.setId(parent_category_id);
+                        setGetServicePojo.setParent_id("0");
+                        setGetServicePojo.setGetSubcategory(info_array);
+
                         setGetServicePojoArrayList.add(setGetServicePojo);
 
                         ServicePojoArrayList.add(setGetServicePojo);
@@ -427,7 +445,7 @@ public class AddServicesActivity extends AppCompatActivity {
 
                 @Override
                 public void onStart() {
-
+                    myLoader.showLoader();
                 }
             });
         } else {

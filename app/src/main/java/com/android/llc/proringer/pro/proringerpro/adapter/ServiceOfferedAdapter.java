@@ -39,7 +39,7 @@ public class ServiceOfferedAdapter extends RecyclerView.Adapter<ServiceOfferedAd
         holder.img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((AddServicesActivity)mcontext).runtimeServiceRemoveRefineView(setGetServicePojoArrayList.get(position).getParent_category_id());
+                ((AddServicesActivity)mcontext).runtimeServiceRemoveRefineView(setGetServicePojoArrayList.get(position).getId());
                 setGetServicePojoArrayList.remove(position);
                 notifyDataSetChanged();
             }
