@@ -7,7 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.AddServiceAreaActivity;
@@ -17,7 +20,21 @@ import com.android.llc.proringer.pro.proringerpro.activities.LicenceListActivity
 import com.android.llc.proringer.pro.proringerpro.activities.PortFolioActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PremiumActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.UserInformationActivity;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
+import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
+import com.bumptech.glide.Glide;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by su on 9/22/17.
@@ -25,8 +42,14 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldT
 
 public class DashBoardFragment extends Fragment {
 
-    ProSemiBoldTextView tv_userinfo, log_in;
+    ProSemiBoldTextView tv_userinfo, log_in,tv_name,tv_rating;
+    TextView tv_active_projects;
+    ProRegularTextView tv_address,tv_totalmessage,tv_favorite_pros;
     RelativeLayout userInformation, servicearea, service_setting, licence, login_settings, Protofolio;
+    RatingBar rbar;
+    ImageView profile_pic;
+    ArrayList<SetGetAPI> arrayList=null;
+    MyLoader myload;
 
     @Nullable
     @Override
@@ -44,6 +67,16 @@ public class DashBoardFragment extends Fragment {
         login_settings = (RelativeLayout) view.findViewById(R.id.login_settings);
         Protofolio = (RelativeLayout) view.findViewById(R.id.Protofolio);
         log_in = (ProSemiBoldTextView) view.findViewById(R.id.log_in);
+        tv_active_projects=(TextView)view.findViewById(R.id.tv_active_projects);
+        tv_name=(ProSemiBoldTextView)view.findViewById(R.id.tv_name);
+        tv_address=(ProRegularTextView)view.findViewById(R.id.tv_address);
+        tv_totalmessage=(ProRegularTextView)view.findViewById(R.id.tv_totalmessage);
+        tv_favorite_pros=(ProRegularTextView)view.findViewById(R.id.tv_favorite_pros);
+        tv_rating=(ProSemiBoldTextView)view.findViewById(R.id.tv_rating);
+        profile_pic=(ImageView)view.findViewById(R.id.profile_pic);
+        rbar=(RatingBar)view.findViewById(R.id.rbar);
+        myload= new MyLoader(getActivity());
+        showdata();
         log_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,4 +129,60 @@ public class DashBoardFragment extends Fragment {
             }
         });
     }
+
+    public  void showdata()
+    {
+        arrayList=new ArrayList<SetGetAPI>();
+        SetGetAPI setGetAPI =new SetGetAPI();
+        setGetAPI.setPARAMS("user_id");
+        setGetAPI.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPI);
+
+        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.dashboard, arrayList, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                myload.dismissLoader();
+                Logger.printMessage("Result",result);
+                try {
+                    JSONObject job= new JSONObject(result);
+                    Logger.printMessage("resultarr", String.valueOf(job));
+                    JSONArray jarr= job.getJSONArray("info_array");
+                    for (int i=0;i<jarr.length();i++)
+                    {
+                        JSONObject jo= jarr.getJSONObject(i);
+                        tv_name.setText(jo.getString("company_name"));
+                        tv_rating.setText(jo.getString("avg_rating"));
+                        tv_active_projects.setText(jo.getString("total_review"));
+                        tv_totalmessage.setText(jo.getString("total_msg"));
+                        tv_favorite_pros.setText(jo.getString("project_watchlist"));
+                        Glide.with(getActivity()).load(jo.getString("profile_img")).into(profile_pic);
+                        String address=jo.getString("city")+","+jo.getString("state")+jo.getString("zipcode");
+                        tv_address.setText(address);
+                        rbar.setStepSize((float) 0.5);
+                        rbar.setRating(Float.parseFloat(jo.getString("avg_rating")));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(String error, String response) {
+                myload.dismissLoader();
+
+            }
+
+            @Override
+            public void onError(String error) {
+                myload.dismissLoader();
+            }
+
+            @Override
+            public void onStart() {
+                myload.showLoader();
+            }
+        });
+    }
+
 }

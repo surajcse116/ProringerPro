@@ -76,12 +76,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/tv_rate_value"
                                 android:numStars="5"
-                                android:rating="4.5"
                                 android:stepSize="0.5" />
 
                             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:id="@+id/tv_rating"
                                 android:layout_marginLeft="10dp"
                                 android:text="4.55"
                                 android:textColor="@color/colorAccent"
@@ -204,6 +204,7 @@
                 <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/tv_totalmessage"
                     android:paddingBottom="5dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
