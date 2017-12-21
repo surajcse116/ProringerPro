@@ -374,7 +374,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         Uri uriSupport = Uri.parse("mailto:support@proringer.com")
                                 .buildUpon()
                                 .appendQueryParameter("subject", "Support")
-                                .appendQueryParameter("body", "I think \n \n \n ProRinger mobile app v1.0.1 \n" +
+                                .appendQueryParameter("body", "  \n \n \n ProRinger Pro App v1.0.1 \n" +
                                         "Device: " + model + ", " + versionRelease + "\n" +
                                         "Carrier:" + " " + carrierName)
                                 .build();
@@ -393,7 +393,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         Uri uriFeedback = Uri.parse("mailto:feedback@proringer.com")
                                 .buildUpon()
                                 .appendQueryParameter("subject", "Leave Feedback")
-                                .appendQueryParameter("body", "I think \n \n \n ProRinger mobile app v1.0.1\n" +
+                                .appendQueryParameter("body", "  \n \n \n ProRinger Pro App v1.0.1\n" +
                                         "Device: " + model + ", " + versionRelease + "\n" +
                                         "Carrier:" + " " + carrierName)
                                 .build();

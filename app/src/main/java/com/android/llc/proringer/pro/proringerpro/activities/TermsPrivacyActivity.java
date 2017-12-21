@@ -131,7 +131,7 @@ public class TermsPrivacyActivity extends AppCompatActivity {
                                 Uri uriSupport = Uri.parse("mailto:admin@proringer.com")
                                         .buildUpon()
                                         .appendQueryParameter("subject", "Support")
-                                        .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1\n" +
+                                        .appendQueryParameter("body", "  \n \n \n ProRinger Pro App v1.0.1\n" +
                                                 "Device: "+model+", "+version+"\n" +
                                                 "Carrier:"+" "+carrierName)
                                         .build();
@@ -166,7 +166,7 @@ public class TermsPrivacyActivity extends AppCompatActivity {
                                 Uri uriSupport = Uri.parse("mailto:admin@proringer.com")
                                         .buildUpon()
                                         .appendQueryParameter("subject", "Support")
-                                        .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1\n" +
+                                        .appendQueryParameter("body", "  \n \n \n ProRinger Pro App v1.0.1\n" +
                                                 "Device: "+model+", "+version+"\n" +
                                                 "Carrier:"+" "+carrierName)
                                         .build();
@@ -279,7 +279,7 @@ public class TermsPrivacyActivity extends AppCompatActivity {
                                 Uri uriSupport = Uri.parse("mailto:admin@proringer.com")
                                         .buildUpon()
                                         .appendQueryParameter("subject", "Support")
-                                        .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1\n" +
+                                        .appendQueryParameter("body", "  \n \n \n ProRinger Pro App v1.0.1\n" +
                                                 "Device: "+model+", "+versionRelease+"\n" +
                                                 "Carrier:"+" "+carrierName)
                                         .build();
@@ -314,7 +314,7 @@ public class TermsPrivacyActivity extends AppCompatActivity {
                                 Uri uriSupport = Uri.parse("mailto:admin@proringer.com")
                                         .buildUpon()
                                         .appendQueryParameter("subject", "Support")
-                                        .appendQueryParameter("body", "I think \n \n \n Proringer mobile app v1.0.1\n" +
+                                        .appendQueryParameter("body", "  \n \n \n ProRinger Pro App v1.0.1\n" +
                                                 "Device: "+model+", "+versionRelease+"\n" +
                                                 "Carrier:"+" "+carrierName)
                                         .build();
