@@ -32,7 +32,7 @@ import java.util.HashMap;
 public class SocialMediaFragment extends Fragment {
 
 
-    ProLightEditText et_facebook, et_twitter, et_google, et_linkedin, et_youtube,et_pinterest, et_instagram, et_skype;
+    ProLightEditText et_facebook, et_twitter, et_google, et_linkedin, et_youtube, et_pinterest, et_instagram, et_skype;
     ProRegularTextView tv_save;
     ArrayList<SetGetAPI> arrayList = null;
     MyLoader myload;
@@ -73,100 +73,204 @@ public class SocialMediaFragment extends Fragment {
 
     }
 
+    public boolean checkAtLeastOneFieldNotBlank() {
+
+        if (et_facebook.getText().toString().trim().length() > 0 ||
+                et_twitter.getText().toString().trim().length() > 0 ||
+                et_google.getText().toString().trim().length() > 0 ||
+                et_linkedin.getText().toString().trim().length() > 0 ||
+                et_youtube.getText().toString().trim().length() > 0 ||
+                et_pinterest.getText().toString().trim().length() > 0 ||
+                et_instagram.getText().toString().trim().length() > 0 ||
+                et_skype.getText().toString().trim().length() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+
     public void validation() {
 
-        if (et_facebook.getText().toString().trim().equals("")) {
-            et_facebook.setError("Please fill the facebook link");
-            et_facebook.requestFocus();
-        } else {
-            if (!facebookUrlCheck(et_facebook.getText().toString().trim())) {
-                et_facebook.setError("Please fill correct facebook link");
-               et_facebook.requestFocus();
-            } else {
-                et_facebook.setError(null);//removes error
-                et_facebook.clearFocus();
-                if (et_twitter.getText().toString().trim().equals("")) {
-                    et_twitter.setError("Please fill the twitter link");
-                    et_twitter.requestFocus();
-                } else {
-                    if (!twitterUrlCheck(et_twitter.getText().toString().trim())) {
-                        et_twitter.setError("Please fill correct twitter link");
-                        et_twitter.requestFocus();
-                    } else {
-                        et_twitter.setError(null);//removes error
-                        et_twitter.clearFocus();
-                        if (et_google.getText().toString().trim().equals("")) {
-                            et_google.setError("Please fill the google link");
-                            et_google.requestFocus();
-                        } else {
-                            if (!googlePlusUrlCheck(et_google.getText().toString().trim())) {
-                                et_google.setError("Please fill correct google link");
-                                et_google.requestFocus();
-                            } else {
-                                et_google.setError(null);//removes error
-                                et_google.clearFocus();
-                                if (et_linkedin.getText().toString().trim().equals("")) {
-                                    et_linkedin.setError("Please fill the linkedin link");
-                                    et_linkedin.requestFocus();
-                                } else {
-                                    if (!linkedInUrlCheck(et_linkedin.getText().toString().trim())) {
-                                        et_linkedin.setError("Please fill correct linkedin link");
-                                        et_linkedin.requestFocus();
-                                    } else {
-                                        et_linkedin.setError(null);//removes error
-                                        et_linkedin.clearFocus();
-                                        if (et_youtube.getText().toString().trim().equals("")) {
-                                            et_youtube.setError("Please fill the link");
-                                            et_youtube.requestFocus();
-                                        } else {
-                                            if (!youtubeUrlCheck(et_youtube.getText().toString().trim())) {
-                                                et_youtube.setError("Please fill correct youTube link");
-                                                et_youtube.requestFocus();
-                                            } else {
-                                                et_youtube.setError(null);//removes error
-                                                et_youtube.clearFocus();
-                                                if (et_pinterest.getText().toString().trim().equals("")) {
-                                                    et_pinterest.setError("Please fill the pinterest link");
-                                                    et_pinterest.requestFocus();
-                                                } else {
-                                                    if(!pinterestUrlCheck(et_pinterest.getText().toString().trim())){
-                                                        et_pinterest.setError("Please fill correct pinterest link");
-                                                        et_pinterest.requestFocus();
-                                                    }else {
-                                                        et_pinterest.setError(null);//removes error
-                                                        et_pinterest.clearFocus();
-                                                        if (et_instagram.getText().toString().trim().equals("")) {
-                                                            et_instagram.setError("Please fill the instagram link");
-                                                            et_instagram.requestFocus();
-                                                        } else {
-                                                            if (!instagramtUrlCheck(et_instagram.getText().toString().trim())){
-                                                                et_instagram.setError("Please fill correct instagram link");
-                                                                et_instagram.requestFocus();
-                                                            }else {
-                                                                et_instagram.setError(null);//removes error
-                                                                et_instagram.clearFocus();
-                                                                if (et_skype.getText().toString().trim().equals("")) {
-                                                                    et_skype.setError("Please fill the link");
-                                                                    et_skype.requestFocus();
-                                                                } else {
-                                                                    et_skype.setError(null);//removes error
-                                                                    et_skype.clearFocus();
-                                                                    submitData();
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+        if (checkAtLeastOneFieldNotBlank()) {
+
+            if(et_facebook.getText().toString().trim().length()>0) {
+                if (!facebookUrlCheck(et_facebook.getText().toString().trim())) {
+                    et_facebook.setError("Please fill correct facebook link");
+                    et_facebook.requestFocus();
+                    return;
+                }
+                else {
+                    et_facebook.setError(null);//removes error
+                    et_facebook.clearFocus();
                 }
             }
+
+            if(et_twitter.getText().toString().trim().length()>0) {
+                if (!twitterUrlCheck(et_twitter.getText().toString().trim())) {
+                    et_twitter.setError("Please fill correct twitter link");
+                    et_twitter.requestFocus();
+                    return;
+                }else {
+                    et_twitter.setError(null);//removes error
+                    et_twitter.clearFocus();
+                }
+            }
+
+            if(et_google.getText().toString().trim().length()>0) {
+                if (!googlePlusUrlCheck(et_google.getText().toString().trim())) {
+                    et_google.setError("Please fill correct google link");
+                    et_google.requestFocus();
+                    return;
+                }else {
+                    et_google.setError(null);//removes error
+                    et_google.clearFocus();
+                }
+            }
+
+            if(et_linkedin.getText().toString().trim().length()>0) {
+                if (!linkedInUrlCheck(et_linkedin.getText().toString().trim())) {
+                    et_linkedin.setError("Please fill correct linkedin link");
+                    et_linkedin.requestFocus();
+                    return;
+                }else {
+                    et_linkedin.setError(null);//removes error
+                    et_linkedin.clearFocus();
+                }
+            }
+
+            if(et_youtube.getText().toString().trim().length()>0) {
+                if (et_youtube.getText().toString().trim().equals("")) {
+                    et_youtube.setError("Please fill the link");
+                    et_youtube.requestFocus();
+                    return;
+                }else {
+                    et_youtube.setError(null);//removes error
+                    et_youtube.clearFocus();
+                }
+            }
+
+            if (et_pinterest.getText().toString().trim().length()>0) {
+                if (!pinterestUrlCheck(et_pinterest.getText().toString().trim())) {
+                    et_pinterest.setError("Please fill correct pinterest link");
+                    et_pinterest.requestFocus();
+                    return;
+                }else {
+                    et_pinterest.setError(null);//removes error
+                    et_pinterest.clearFocus();
+                }
+            }
+
+            if (et_instagram.getText().toString().trim().length()>0) {
+                if (!instagramtUrlCheck(et_instagram.getText().toString().trim())) {
+                    et_instagram.setError("Please fill correct instagram link");
+                    et_instagram.requestFocus();
+                    return;
+                }else {
+                    et_instagram.setError(null);//removes error
+                    et_instagram.clearFocus();
+                }
+            }
+
+            submitData();
+
+        } else {
+            Toast.makeText(getActivity(), "Please fill  at least one link for submit", Toast.LENGTH_SHORT).show();
         }
+
+//        if (et_facebook.getText().toString().trim().equals("")) {
+//            et_facebook.setError("Please fill the facebook link");
+//            et_facebook.requestFocus();
+//        } else {
+//            if (!facebookUrlCheck(et_facebook.getText().toString().trim())) {
+//                et_facebook.setError("Please fill correct facebook link");
+//                et_facebook.requestFocus();
+//            } else {
+//                et_facebook.setError(null);//removes error
+//                et_facebook.clearFocus();
+//                if (et_twitter.getText().toString().trim().equals("")) {
+//                    et_twitter.setError("Please fill the twitter link");
+//                    et_twitter.requestFocus();
+//                } else {
+//                    if (!twitterUrlCheck(et_twitter.getText().toString().trim())) {
+//                        et_twitter.setError("Please fill correct twitter link");
+//                        et_twitter.requestFocus();
+//                    } else {
+//                        et_twitter.setError(null);//removes error
+//                        et_twitter.clearFocus();
+//                        if (et_google.getText().toString().trim().equals("")) {
+//                            et_google.setError("Please fill the google link");
+//                            et_google.requestFocus();
+//                        } else {
+//                            if (!googlePlusUrlCheck(et_google.getText().toString().trim())) {
+//                                et_google.setError("Please fill correct google link");
+//                                et_google.requestFocus();
+//                            } else {
+//                                et_google.setError(null);//removes error
+//                                et_google.clearFocus();
+//                                if (et_linkedin.getText().toString().trim().equals("")) {
+//                                    et_linkedin.setError("Please fill the linkedin link");
+//                                    et_linkedin.requestFocus();
+//                                } else {
+//                                    if (!linkedInUrlCheck(et_linkedin.getText().toString().trim())) {
+//                                        et_linkedin.setError("Please fill correct linkedin link");
+//                                        et_linkedin.requestFocus();
+//                                    } else {
+//                                        et_linkedin.setError(null);//removes error
+//                                        et_linkedin.clearFocus();
+//                                        if (et_youtube.getText().toString().trim().equals("")) {
+//                                            et_youtube.setError("Please fill the link");
+//                                            et_youtube.requestFocus();
+//                                        } else {
+//                                            if (!youtubeUrlCheck(et_youtube.getText().toString().trim())) {
+//                                                et_youtube.setError("Please fill correct youTube link");
+//                                                et_youtube.requestFocus();
+//                                            } else {
+//                                                et_youtube.setError(null);//removes error
+//                                                et_youtube.clearFocus();
+//                                                if (et_pinterest.getText().toString().trim().equals("")) {
+//                                                    et_pinterest.setError("Please fill the pinterest link");
+//                                                    et_pinterest.requestFocus();
+//                                                } else {
+//                                                    if (!pinterestUrlCheck(et_pinterest.getText().toString().trim())) {
+//                                                        et_pinterest.setError("Please fill correct pinterest link");
+//                                                        et_pinterest.requestFocus();
+//                                                    } else {
+//                                                        et_pinterest.setError(null);//removes error
+//                                                        et_pinterest.clearFocus();
+//                                                        if (et_instagram.getText().toString().trim().equals("")) {
+//                                                            et_instagram.setError("Please fill the instagram link");
+//                                                            et_instagram.requestFocus();
+//                                                        } else {
+//                                                            if (!instagramtUrlCheck(et_instagram.getText().toString().trim())) {
+//                                                                et_instagram.setError("Please fill correct instagram link");
+//                                                                et_instagram.requestFocus();
+//                                                            } else {
+//                                                                et_instagram.setError(null);//removes error
+//                                                                et_instagram.clearFocus();
+//                                                                if (et_skype.getText().toString().trim().equals("")) {
+//                                                                    et_skype.setError("Please fill the link");
+//                                                                    et_skype.requestFocus();
+//                                                                } else {
+//                                                                    et_skype.setError(null);//removes error
+//                                                                    et_skype.clearFocus();
+//                                                                    submitData();
+//                                                                }
+//                                                            }
+//                                                        }
+//                                                    }
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     public void showData() {
@@ -235,7 +339,7 @@ public class SocialMediaFragment extends Fragment {
 
     }
 
-    public void submitData(){
+    public void submitData() {
         Logger.printMessage("facebook", et_facebook.getText().toString().trim());
         Logger.printMessage("twitter", et_twitter.getText().toString().trim());
         Logger.printMessage("google", et_google.getText().toString().trim());

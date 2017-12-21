@@ -149,7 +149,7 @@
             android:layout_below="@+id/relative_year_dropdown"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:text="add up to 10 photos"
+            android:text="Add up to 10 photos"
             />
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView

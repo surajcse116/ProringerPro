@@ -60,6 +60,8 @@ import java.util.HashMap;
 
 public class PortfolioEditActivity extends AppCompatActivity {
 
+    public int imageExistCount=0;
+
     private static final int REQUEST_IMAGE_CAPTURE = 5;
     private static final int PICK_IMAGE = 3;
 
@@ -132,7 +134,9 @@ public class PortfolioEditActivity extends AppCompatActivity {
                 portFolioImageSetgetGalleries.add(portFolioImageSetgetGallery);
             }
 
-            Logger.printMessage("imageGalleryCount-->", "" + portFolioImageSetgetGalleries.size());
+
+            imageExistCount=portFolioImageSetgetGalleries.size();
+            Logger.printMessage("imageExistCount-->", "" + imageExistCount);
 
             portFolioEditAddImageAdapter = new PortFolioEditAddImageAdapter(PortfolioEditActivity.this, portFolioImageSetgetGalleries);
             rcv_add_port_folio.setAdapter(portFolioEditAddImageAdapter);
@@ -262,7 +266,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 CustomAlert customAlert = new CustomAlert();
-                customAlert.getEventFromNormalAlert(PortfolioEditActivity.this, "Delete", "Are you sure to delete " + tv_category.getText().toString().trim() + " gallery", "YES,DELETE IT", "CANCEL", new CustomAlert.MyCustomAlertListener() {
+                customAlert.getEventFromNormalAlert(PortfolioEditActivity.this, "Delete", "Are you sure to delete " + tv_category.getText().toString().trim() + " gallery", "YES, DELETE IT", "CANCEL", new CustomAlert.MyCustomAlertListener() {
                     @Override
                     public void callBackOk() {
                         deletePortFolio();
@@ -496,6 +500,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
                     portFolioEditAddImageAdapter.notifyDataSetChanged();
 
                     checkImageDeleteFlag = true;
+                    imageExistCount--;
 
                 } catch (JSONException e) {
                     e.printStackTrace();

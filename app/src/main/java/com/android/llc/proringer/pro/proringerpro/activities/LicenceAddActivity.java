@@ -195,11 +195,10 @@ public class LicenceAddActivity extends AppCompatActivity {
                         month = i1;
                         date = i2;
                         Logger.printMessage("year", "" + year);
-                        String s = i + "-" + month + "-" + i2;
                         Calendar calendar = Calendar.getInstance();
                         calendar.set(year, month, date);
                         Date date2 = calendar.getTime();
-                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+                        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
                         date1 = format.format(date2);
                         setDate(date1);
                     }
@@ -505,6 +504,8 @@ public class LicenceAddActivity extends AppCompatActivity {
         Logger.printMessage("setDate", "" + date);
         flag = false;
         tv_expires.setText(date);
+//        String array[]=date.split("/");
+//        tv_expires.setText(array[0]+"-"+array[1]+"-"+array[2]);
     }
 
     @Override

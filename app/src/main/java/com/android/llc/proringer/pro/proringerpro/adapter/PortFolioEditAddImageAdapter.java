@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.PortfolioEditActivity;
@@ -90,13 +91,18 @@ public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolio
             @Override
             public void onClick(View v) {
 
-
                 CustomAlert customAlert = new CustomAlert();
-                customAlert.getEventFromNormalAlert(mContext, "Delete", "Are you sure to delete this image?", "YES,DELETE IT", "CANCEL", new CustomAlert.MyCustomAlertListener() {
+                customAlert.getEventFromNormalAlert(mContext, "Delete", "Are you sure to delete this image?", "YES, DELETE IT", "CANCEL", new CustomAlert.MyCustomAlertListener() {
                     @Override
                     public void callBackOk() {
                         if (portFolioImageSetgetGalleries.get(position).getImage_name().startsWith("http")) {
-                            ((PortfolioEditActivity) mContext).deletePortFolioImage(position, portFolioImageSetgetGalleries.get(position).getId());
+
+                            if (((PortfolioEditActivity) mContext).imageExistCount>1){
+                                ((PortfolioEditActivity) mContext).deletePortFolioImage(position, portFolioImageSetgetGalleries.get(position).getId());
+                            }else {
+                                Toast.makeText(mContext,"PortFolio must have one Image",Toast.LENGTH_LONG).show();
+                            }
+
                         }else {
                             portFolioImageSetgetGalleries.remove(position);
                             notifyDataSetChanged();

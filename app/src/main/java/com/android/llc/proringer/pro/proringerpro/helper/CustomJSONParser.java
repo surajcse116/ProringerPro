@@ -240,9 +240,9 @@ public class CustomJSONParser {
                         Logger.printMessage(data.getPARAMS(), data.getValues());
                     }
 
-                    for (File file : Photos) {
-                        if (file != null) {
-                            builderNew.addFormDataPart("" + ImageParam, file.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, file));
+                    if (Photos!=null) {
+                        for (File file : Photos) {
+                                builderNew.addFormDataPart("" + ImageParam, file.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, file));
                         }
                     }
                 }
