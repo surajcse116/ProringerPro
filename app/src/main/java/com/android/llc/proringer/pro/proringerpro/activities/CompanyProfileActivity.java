@@ -183,7 +183,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                 startActivityForResult(i, 1);
             }
         });
-        et_busineestype.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.et_busineestype).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialogServies(view, btype);
@@ -345,7 +345,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         rcv_.setAdapter(customListAdapterDialog);
         // some other visual settings
         popupWindow.setFocusable(false);
-        popupWindow.setWidth(width-50);
+        popupWindow.setWidth(width-30);
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 
         // set the list view as pop up window content

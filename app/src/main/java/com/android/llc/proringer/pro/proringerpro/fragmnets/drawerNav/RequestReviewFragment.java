@@ -76,16 +76,12 @@ public class RequestReviewFragment extends Fragment {
     }
 
     public void validation() {
-        String fname = et_fname.getText().toString().trim();
-        String lname = et_lname.getText().toString().trim();
-        String email = et_email.getText().toString().trim();
-        String cemail = et_cemail.getText().toString().trim();
-        String comment = et_comment.getText().toString().trim();
-        if (fname.equals("")) {
+
+        if (et_fname.getText().toString().trim().equals("")) {
             et_fname.setError("Please enter the first name");
             et_fname.setFocusable(true);
         } else {
-            if (lname.equals("")) {
+            if (et_lname.getText().toString().trim().equals("")) {
                 et_lname.setError("Please enter the last name");
                 et_lname.setFocusable(true);
             } else {
@@ -95,17 +91,17 @@ public class RequestReviewFragment extends Fragment {
                             et_cemail.setError("Email id dose not match!");
                             et_cemail.setFocusable(true);
                         } else {
-                            if (comment.equals("")) {
+                            if (et_comment.getText().toString().trim().equals("")) {
                                 et_comment.setError("Please enter  comment");
                                 et_comment.setFocusable(true);
                             } else {
                                 HashMap<String, String> Params = new HashMap<>();
                                 Params.put("user_id", ProApplication.getInstance().getUserId());
-                                Params.put("first_name", fname);
-                                Params.put("last_name", lname);
-                                Params.put("email", email);
-                                Params.put("conf_emailid", cemail);
-                                Params.put("comment", comment);
+                                Params.put("first_name", et_fname.getText().toString().trim());
+                                Params.put("last_name", et_lname.getText().toString().trim());
+                                Params.put("email", et_email.getText().toString().trim());
+                                Params.put("conf_emailid", et_cemail.getText().toString().trim());
+                                Params.put("comment", et_comment.getText().toString().trim());
                                 Logger.printMessage("parms", String.valueOf(Params));
 
                                 new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.replyreviw, Params, null, new CustomJSONParser.CustomJSONResponse() {
@@ -117,6 +113,7 @@ public class RequestReviewFragment extends Fragment {
                                             JSONObject job = new JSONObject(result);
                                             String message = job.getString("message");
                                             Toast.makeText(getActivity(), "" + message, Toast.LENGTH_SHORT).show();
+                                            resetForm();
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -156,16 +153,13 @@ public class RequestReviewFragment extends Fragment {
 
                                     }
                                 });
-
                             }
-
                         }
 
                     } else {
                         et_cemail.setError("Please enter valid confirm email");
                         et_cemail.setFocusable(true);
                     }
-
                 } else {
                     et_email.setError("Please enter valid email");
                     et_email.setFocusable(true);
@@ -173,5 +167,13 @@ public class RequestReviewFragment extends Fragment {
             }
         }
 
+    }
+
+    private void resetForm() {
+        et_fname.setText("");
+        et_lname.setText("");
+        et_email.setText("");
+        et_cemail.setText("");
+        et_comment.setText("");
     }
 }

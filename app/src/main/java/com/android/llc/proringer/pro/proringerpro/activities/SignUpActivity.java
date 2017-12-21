@@ -94,7 +94,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName().equals(RegistrationTwo.class.getCanonicalName())) {
-            transactRegistrationFragmentOne();
+            fragmentManager.popBackStack("" + RegistrationTwo.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         } else {
             setResult(RESULT_CANCELED);
             finish();

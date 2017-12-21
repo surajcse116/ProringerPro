@@ -21,6 +21,7 @@ import com.android.llc.proringer.pro.proringerpro.activities.PortFolioActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PremiumActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.UserInformationActivity;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
@@ -176,6 +177,18 @@ public class DashBoardFragment extends Fragment {
             @Override
             public void onError(String error) {
                 myload.dismissLoader();
+                CustomAlert customAlert = new CustomAlert();
+                customAlert.getEventFromNormalAlert(getActivity(), "Load Error", "" + error, "Retry", "Abort", new CustomAlert.MyCustomAlertListener() {
+                    @Override
+                    public void callBackOk() {
+
+                    }
+
+                    @Override
+                    public void callBackCancel() {
+
+                    }
+                });
             }
 
             @Override

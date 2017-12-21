@@ -116,6 +116,9 @@ public class InviteAfriendFragment extends Fragment {
                                         String message = job.getString("message");
                                         Logger.printMessage("invite_message-->",message);
                                         Toast.makeText(getActivity(), "" + message, Toast.LENGTH_SHORT).show();
+
+                                        resetForm();
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }

@@ -9,9 +9,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextPaint;
+import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
@@ -24,8 +27,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.LocationActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.SignupCompleteActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.TermsPrivacyActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogCategory;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
@@ -67,9 +72,11 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
     public MyLoader myload = null;
     RelativeLayout relative_dropdown;
     JSONArray catagory;
+    ProLightTextView terms_and_condition;
     PopupWindow popupWindow;
     CustomListAdapterDialogCategory custom = null;
     String pros_contact_service = "";
+    int textLength = 0;
 
     @Nullable
     @Override
@@ -80,7 +87,10 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final ProLightTextView terms_and_condition = (ProLightTextView) view.findViewById(R.id.terms_and_condition);
+
+        terms_and_condition= (ProLightTextView) view.findViewById(R.id.terms_and_condition);
+        terms_and_condition.setMovementMethod(LinkMovementMethod.getInstance());
+
         String contactTextOne = "By singing up with ProRinger you agree with our  ";
         String contactTextClick = "Terms of Use";
         String contactTextTwo = " and ";
@@ -100,6 +110,49 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
         tv_service = (ProRegularTextView) view.findViewById(R.id.tv_service);
         relative_dropdown = (RelativeLayout) view.findViewById(R.id.relative_dropdown);
 
+
+        prolight_phone.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String text = prolight_phone.getText().toString();
+                textLength = prolight_phone.getText().length();
+
+                if (text.endsWith("-") || text.endsWith(" ") || text.endsWith(" "))
+                    return;
+
+                if (textLength == 1) {
+                    if (!text.contains("(")) {
+                        prolight_phone.setText(new StringBuilder(text).insert(text.length() - 1, "(").toString());
+                        prolight_phone.setSelection(prolight_phone.getText().length());
+                    }
+
+                } else if (textLength == 5) {
+
+                    if (!text.contains(")")) {
+                        prolight_phone.setText(new StringBuilder(text).insert(text.length() - 1, ")").toString());
+                        prolight_phone.setSelection(prolight_phone.getText().length());
+                    }
+
+                } else if (textLength == 6) {
+                    prolight_phone.setText(new StringBuilder(text).insert(text.length() - 1, " ").toString());
+                    prolight_phone.setSelection(prolight_phone.getText().length());
+
+                } else if (textLength == 10) {
+                    if (!text.contains("-")) {
+                        prolight_phone.setText(new StringBuilder(text).insert(text.length() - 1, "-").toString());
+                        prolight_phone.setSelection(prolight_phone.getText().length());
+                    }
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+
         prolight_address.setFocusable(false);
         prolight_address.setClickable(false);
 
@@ -112,8 +165,8 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
         prolight_zip.setEnabled(false);
         prolight_zip.setClickable(false);
 
-        prolight_service_area.setEnabled(false);
-        prolight_service_area.setClickable(false);
+//        prolight_service_area.setEnabled(false);
+//        prolight_service_area.setClickable(false);
 
         category();
 
@@ -157,6 +210,10 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                 // There is the OnCLick. put your intent to Register class here
                 widget.invalidate();
                 Logger.printMessage("SpanHello", "click");
+
+                Intent intentTerms = new Intent(getActivity(), TermsPrivacyActivity.class);
+                intentTerms.putExtra("value", "term");
+                startActivity(intentTerms);
             }
 
             @Override
@@ -182,6 +239,10 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                 // There is the OnCLick. put your intent to Register class here
                 widget.invalidate();
                 Logger.printMessage("SpanHello", "click");
+
+                Intent intentPolicy = new Intent(getActivity(), TermsPrivacyActivity.class);
+                intentPolicy.putExtra("value", "policy");
+                startActivity(intentPolicy);
             }
 
             @Override
