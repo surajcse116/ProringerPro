@@ -129,15 +129,6 @@ public class LicenceAddActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LicenceAddActivity.this, PermissionController.class);
-                intent.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
-                startActivityForResult(intent, 200);
-            }
-        });
-
         relative_dropdown = (RelativeLayout) findViewById(R.id.relative_dropdown);
 
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:orientation="horizontal"
+       >
+
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:padding="10dp"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:src="@drawable/ic_cross_circle_gray"
+            android:background="@color/colorPrimary"/>
+
+        <TextView
+            android:layout_toRightOf="@+id/img_back"
+            android:visibility="gone"
+            android:id="@+id/tv_crop"
+            android:text="Crop"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+    <com.android.llc.proringer.pro.proringerpro.cropImagePackage.CropImageView
+        android:id="@+id/cropImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
+
+
+
