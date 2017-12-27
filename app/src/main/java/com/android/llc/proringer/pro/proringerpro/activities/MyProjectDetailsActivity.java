@@ -9,6 +9,8 @@ import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProjectListingAdapter;
@@ -19,7 +21,10 @@ import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
+import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,6 +39,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity {
     int screenWidth;
     String project_id="";
     ImageView img_project, img_map;
+    RelativeLayout RLImage;
 
     ArrayList<SetGetAPI> arrayList = null;
     MyLoader myload;
@@ -55,14 +61,17 @@ public class MyProjectDetailsActivity extends AppCompatActivity {
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 
-        screenHeight = displaymetrics.heightPixels;
-        screenWidth = displaymetrics.widthPixels;
+        screenHeight =displaymetrics.heightPixels;
+        screenWidth =displaymetrics.widthPixels;
 
+        RLImage = (RelativeLayout) findViewById(R.id.RLImage);
         img_project = (ImageView) findViewById(R.id.img_project);
         img_map = (ImageView) findViewById(R.id.img_map);
 
 
-        img_project.getLayoutParams().height = screenWidth - 100;
+
+        RLImage.getLayoutParams().height = (int) 3*(screenWidth - 20)/4;
+        RLImage.getLayoutParams().width = screenWidth-20;
 
         img_map.getLayoutParams().height = (screenWidth - 10) / 2;
 
@@ -96,6 +105,16 @@ public class MyProjectDetailsActivity extends AppCompatActivity {
             public void onSuccess(String result) {
                 myload.dismissLoader();
                 Logger.printMessage("Result", result);
+
+                try {
+                    JSONArray info_array=new JSONObject(result).getJSONArray("info_array");
+                    JSONObject jsonObject=info_array.getJSONObject(0);
+
+                    Glide.with(MyProjectDetailsActivity.this).load(jsonObject.getString("project_image")).into(img_project);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
