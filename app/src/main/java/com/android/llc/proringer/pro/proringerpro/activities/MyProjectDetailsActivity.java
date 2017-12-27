@@ -70,7 +70,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity {
         RLImage.getLayoutParams().height = (int) 3*(screenWidth - 20)/4;
         RLImage.getLayoutParams().width = screenWidth-20;
 
-        img_map.getLayoutParams().height = (screenWidth - 10) / 2;
+        img_map.getLayoutParams().height = (int) 2*(screenWidth - 10) / 5;
 
         showData();
 
