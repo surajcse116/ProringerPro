@@ -1,7 +1,9 @@
 package com.android.llc.proringer.pro.proringerpro.helper;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
@@ -9,7 +11,9 @@ import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -216,9 +220,9 @@ public class CustomJSONParser {
         }
     }
 
-    public void APIForWithPhotoPostMethod(Context context, final String URL, final ArrayList<SetGetAPIPostData> apiPostDataArrayList, final ArrayList<File> Photos, final CustomJSONResponse customJSONResponse) {
+    public void APIForWithPhotoPostMethod(final Context context, final String URL, final ArrayList<SetGetAPIPostData> apiPostDataArrayList, final ArrayList<File> Photos, final CustomJSONResponse customJSONResponse) {
         if (NetworkUtil.getInstance().isNetworkAvailable(context)) {
-            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/*");
 
             new AsyncTask<Void, Void, Void>() {
 
@@ -242,7 +246,28 @@ public class CustomJSONParser {
 
                     if (Photos!=null) {
                         for (File file : Photos) {
-                                builderNew.addFormDataPart("" + ImageParam, file.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, file));
+                            try {
+                                Bitmap bmp = ImageCompressor.with(context).compressBitmap(file.getAbsolutePath());
+                                Logger.printMessage("*****", "%% Bitmap size:: " + (bmp.getByteCount() / 1024) + " kb");
+                                File upload_temp = new File(context.getCacheDir(), "" + System.currentTimeMillis() + ".png");
+                                upload_temp.createNewFile();
+                                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                                bmp.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                                byte[] bitmapdata = bos.toByteArray();
+
+                                FileOutputStream fos = new FileOutputStream(upload_temp);
+                                fos.write(bitmapdata);
+                                fos.flush();
+                                fos.close();
+
+                                Logger.printMessage("fileUploading-->",""+upload_temp.getAbsolutePath());
+
+                                builderNew.addFormDataPart("" + ImageParam, upload_temp.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, upload_temp));
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                         }
                     }
                 }

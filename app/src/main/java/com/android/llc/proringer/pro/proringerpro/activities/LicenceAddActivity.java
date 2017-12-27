@@ -9,13 +9,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -30,6 +30,8 @@ import android.widget.Toast;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogCategory;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.cropImagePackage.CropImage;
+import com.android.llc.proringer.pro.proringerpro.cropImagePackage.CropImageView;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
@@ -48,7 +50,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -128,6 +129,7 @@ public class LicenceAddActivity extends AppCompatActivity {
                 startActivityForResult(intent, 200);
             }
         });
+
 
         relative_dropdown = (RelativeLayout) findViewById(R.id.relative_dropdown);
 
@@ -432,58 +434,84 @@ public class LicenceAddActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Logger.printMessage("resultCode", "requestCode " + requestCode + " &b resultcode :: " + resultCode);
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            Logger.printMessage("image****", "" + data.getData());
-            try {
-                Uri uri = data.getData();
-                File dataFile = new File(getRealPathFromURI(uri));
-                if (!dataFile.exists())
-                    Logger.printMessage("image****", "data file does not exists");
-                mycurrentphotopath = dataFile.getAbsolutePath();
-
+//        Logger.printMessage("resultCode", "requestCode " + requestCode + " &b resultcode :: " + resultCode);
+//        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+//            Logger.printMessage("image****", "" + data.getData());
+//            try {
+//                Uri uri = data.getData();
+//                File dataFile = new File(getRealPathFromURI(uri));
+//                if (!dataFile.exists())
+//                    Logger.printMessage("image****", "data file does not exists");
+//                mycurrentphotopath = dataFile.getAbsolutePath();
+//
+//                file=new File(mycurrentphotopath);
+//
+//                if (file.getAbsolutePath().contains(".jpeg") || file.getAbsolutePath().contains(".png")
+//                        || file.getAbsolutePath().contains(".jpg")) {
+//                    mycurrentphotopath = file.getAbsolutePath();
+//
+//                    Logger.printMessage("photoPath-->", mycurrentphotopath);
+//                    LLEdit.setVisibility(View.VISIBLE);
+//                    img_licence_file.setImageResource(android.R.color.transparent);
+//                    ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
+//                    Glide.with(getApplicationContext()).load(file).into(img_licence_file);
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "This is not an image", Toast.LENGTH_SHORT).show();
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (data != null) {
+//                        mycurrentphotopath = data.getExtras().get("data").toString();
+//                        file=new File(mycurrentphotopath);
+//                        Logger.printMessage("image****", "" + mycurrentphotopath);
+//
+//                        Logger.printMessage("photoPath-->", mycurrentphotopath);
+//                        LLEdit.setVisibility(View.VISIBLE);
+//                        img_licence_file.setImageResource(android.R.color.transparent);
+//                        ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
+//                        Glide.with(getApplicationContext()).load(file).into(img_licence_file);
+//
+//                    }
+//                }
+//            }, 800);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                mycurrentphotopath = result.getUri().toString();
+                Log.i("path-->", mycurrentphotopath);
                 file=new File(mycurrentphotopath);
-
-                if (file.getAbsolutePath().contains(".jpeg") || file.getAbsolutePath().contains(".png")
-                        || file.getAbsolutePath().contains(".jpg")) {
-                    mycurrentphotopath = file.getAbsolutePath();
-
-                    Logger.printMessage("photoPath-->", mycurrentphotopath);
-                    LLEdit.setVisibility(View.VISIBLE);
-                    img_licence_file.setImageResource(android.R.color.transparent);
-                    ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
-                    Glide.with(getApplicationContext()).load(file).into(img_licence_file);
-                } else {
-                    Toast.makeText(getApplicationContext(), "This is not an image", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+                LLEdit.setVisibility(View.VISIBLE);
+                img_licence_file.setImageResource(android.R.color.transparent);
+                Glide.with(getApplicationContext()).load(mycurrentphotopath).into(img_licence_file);
+                ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
+                Toast.makeText(LicenceAddActivity.this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(LicenceAddActivity.this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
             }
-
-        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (data != null) {
-                        mycurrentphotopath = data.getExtras().get("data").toString();
-                        file=new File(mycurrentphotopath);
-                        Logger.printMessage("image****", "" + mycurrentphotopath);
-
-                        Logger.printMessage("photoPath-->", mycurrentphotopath);
-                        LLEdit.setVisibility(View.VISIBLE);
-                        img_licence_file.setImageResource(android.R.color.transparent);
-                        ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
-                        Glide.with(getApplicationContext()).load(file).into(img_licence_file);
-
-                    }
-                }
-            }, 800);
         } else if (requestCode == 200 && resultCode == RESULT_OK) {
-            showImagePickerOption();
+//            showImagePickerOption();
+            startCropImageActivity(null);
         }
     }
 
 
+    /**
+     * Start crop image activity for the given image.
+     */
+    private void startCropImageActivity(Uri imageUri) {
+        Intent intent = CropImage.activity(imageUri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(false)
+                .setAspectRatio(1, 1)
+                .getIntent(LicenceAddActivity.this);
+        startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
 
 
     private void setDate(String date) {
