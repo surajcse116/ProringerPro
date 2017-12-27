@@ -67,6 +67,10 @@ public class ProConstant {
 
     public static  String dashboard=BASEURL+"app_pro_dashboard?";
 
+    public static  String app_pro_myproject=BASEURL+"app_pro_myproject?";
+
+    public static  String app_pro_myproject_details=BASEURL+"app_pro_myproject_details?";
+
 
     public static String latitude = "";
     public static String longtitude = "";

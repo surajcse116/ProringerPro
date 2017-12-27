@@ -10,10 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="visible"
-        android:id="@+id/no_project_available">
+        android:id="@+id/LL_Main"
+        >
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:id="@+id/tv_empty_show"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="20dp"
@@ -29,12 +30,11 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:visibility="visible"
-            android:id="@+id/project_list"
+            android:id="@+id/rcv_project_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
-
 
     <LinearLayout
         android:visibility="gone"

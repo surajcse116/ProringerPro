@@ -46,7 +46,7 @@
             android:padding="10dp">
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
-                android:id="@+id/project_name"
+                android:id="@+id/tv_project_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/project_name"
+                android:layout_below="@+id/tv_project_name"
                 android:layout_gravity="right"
                 android:background="@drawable/background_transparent_with_border"
                 android:padding="15dp"
@@ -73,7 +73,7 @@
                 android:id="@+id/job_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/project_name"
+                android:layout_below="@+id/tv_project_name"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_oval_grey_text"
                 android:minWidth="90dp"

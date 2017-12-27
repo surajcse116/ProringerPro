@@ -14,6 +14,18 @@ import android.widget.LinearLayout;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.MyProjectDetailsActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProjectListingAdapter;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
+import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by bodhidipta on 12/06/17.
@@ -34,8 +46,11 @@ import com.android.llc.proringer.pro.proringerpro.adapter.ProjectListingAdapter;
  */
 
 public class MyProjectsFragment extends Fragment {
-    RecyclerView project_list;
-    LinearLayout no_project_available, LLNetworkDisconnection;
+    RecyclerView rcv_project_list;
+    LinearLayout LLNetworkDisconnection, LL_Main;
+    ProRegularTextView tv_empty_show;
+    ArrayList<SetGetAPI> arrayList = null;
+    MyLoader myload;
 
     @Nullable
     @Override
@@ -47,27 +62,99 @@ public class MyProjectsFragment extends Fragment {
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        no_project_available = (LinearLayout) view.findViewById(R.id.no_project_available);
         LLNetworkDisconnection = (LinearLayout) view.findViewById(R.id.LLNetworkDisconnection);
-        project_list = (RecyclerView) view.findViewById(R.id.project_list);
-        project_list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LL_Main = (LinearLayout) view.findViewById(R.id.LL_Main);
 
+        rcv_project_list = (RecyclerView) view.findViewById(R.id.rcv_project_list);
+        tv_empty_show = (ProRegularTextView) view.findViewById(R.id.tv_empty_show);
 
-        project_list.setVisibility(View.VISIBLE);
+        rcv_project_list.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        tv_empty_show.setVisibility(View.GONE);
 
-        project_list.setAdapter(new ProjectListingAdapter(getActivity(), new onOptionSelected() {
-            @Override
-            public void onItemPassed(int position, String value) {
-                Intent intent = new Intent(getActivity(), MyProjectDetailsActivity.class);
-                getActivity().startActivity(intent);
-            }
-        }));
+        myload = new MyLoader(getActivity());
 
+        showData();
     }
 
 
     public interface onOptionSelected {
-        void onItemPassed(int position, String value);
+        void onItemPassed(int position, JSONObject value);
     }
+
+    public void showData() {
+        arrayList = new ArrayList<SetGetAPI>();
+        SetGetAPI setGetAPI = new SetGetAPI();
+        setGetAPI.setPARAMS("user_id");
+        setGetAPI.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPI);
+
+        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_pro_myproject, arrayList, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                myload.dismissLoader();
+                Logger.printMessage("Result", result);
+                try {
+                    if (new JSONObject(result).getJSONArray("info_array").length() > 0) {
+
+                        rcv_project_list.setVisibility(View.VISIBLE);
+                        tv_empty_show.setVisibility(View.GONE);
+
+                        rcv_project_list.setAdapter(new ProjectListingAdapter(getActivity(), new JSONObject(result).getJSONArray("info_array"), new onOptionSelected() {
+                            @Override
+                            public void onItemPassed(int position, JSONObject value) {
+
+                                try {
+                                    Intent intent = new Intent(getActivity(), MyProjectDetailsActivity.class);
+                                    intent.putExtra("project_id",value.getString("project_id"));
+                                    getActivity().startActivity(intent);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }));
+                    } else {
+                        rcv_project_list.setVisibility(View.GONE);
+                        tv_empty_show.setVisibility(View.VISIBLE);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String error, String response) {
+                myload.dismissLoader();
+
+//                CustomAlert customAlert = new CustomAlert();
+//                customAlert.getEventFromNormalAlert(getActivity(), "Load Error", "" + error, "Retry", "Abort", new CustomAlert.MyCustomAlertListener() {
+//                    @Override
+//                    public void callBackOk() {
+//
+//                    }
+//
+//                    @Override
+//                    public void callBackCancel() {
+//
+//                    }
+//                });
+            }
+
+            @Override
+            public void onError(String error) {
+                myload.dismissLoader();
+                if (error.equalsIgnoreCase("No internet connection found. Please check your internet connection.")) {
+                    LLNetworkDisconnection.setVisibility(View.VISIBLE);
+                    LL_Main.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onStart() {
+                myload.showLoader();
+            }
+        });
+    }
+
+
 }
