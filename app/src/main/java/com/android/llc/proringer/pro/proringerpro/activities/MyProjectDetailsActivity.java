@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
@@ -16,6 +17,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
@@ -32,7 +34,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity {
     int screenHeight;
     int screenWidth;
     String project_id="";
-    ImageView img_project, img_map;
+    ImageView img_project, img_map,img_likes;
     RelativeLayout RLImage;
 
     ArrayList<SetGetAPI> arrayList = null;
@@ -61,6 +63,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity {
         RLImage = (RelativeLayout) findViewById(R.id.RLImage);
         img_project = (ImageView) findViewById(R.id.img_project);
         img_map = (ImageView) findViewById(R.id.img_map);
+        img_likes = (ImageView) findViewById(R.id.img_likes);
 
 
 
@@ -104,7 +107,26 @@ public class MyProjectDetailsActivity extends AppCompatActivity {
                     JSONArray info_array=new JSONObject(result).getJSONArray("info_array");
                     JSONObject jsonObject=info_array.getJSONObject(0);
 
+                    ((ProRegularTextView)findViewById(R.id.tv_posted_by_value)).setText(jsonObject.getString("posted_by"));
+                    ((ProRegularTextView)findViewById(R.id.tv_posted_date)).setText(jsonObject.getString("post_date"));
+                    ((ProRegularTextView)findViewById(R.id.tv_address)).setText(jsonObject.getString("address"));
+
                     Glide.with(MyProjectDetailsActivity.this).load(jsonObject.getString("project_image")).into(img_project);
+                    ((ProRegularTextView)findViewById(R.id.tv_project_title)).setText(jsonObject.getString("project_name"));
+                    ((ProRegularTextView)findViewById(R.id.tv_project_title)).setText(jsonObject.getString("project_name"));
+                    ((ProRegularTextView)findViewById(R.id.tv_type_of_work)).setText(jsonObject.getString("type_of_work"));
+                    ((ProRegularTextView)findViewById(R.id.tv_service)).setText(jsonObject.getString("service"));
+                    ((ProRegularTextView)findViewById(R.id.tv_property)).setText(jsonObject.getString("property"));
+                    ((ProRegularTextView)findViewById(R.id.tv_phone)).setText(jsonObject.getString("phone"));
+                    ((ProRegularTextView)findViewById(R.id.tv_describetion)).setText(jsonObject.getString("job_details"));
+
+                    if (jsonObject.getString("add_favouite").equalsIgnoreCase("0")){
+//                        img_likes.setImageResource(R.drawable.ic_unfavorite);
+                        Glide.with(MyProjectDetailsActivity.this).load("").placeholder(R.drawable.ic_unfavorite).into(img_likes);
+                    }else {
+//                        img_likes.setImageResource(R.drawable.ic_favorite);
+                        Glide.with(MyProjectDetailsActivity.this).load("").placeholder(R.drawable.ic_favorite).into(img_likes);
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -79,7 +79,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
                         android:padding="15dp"
-                        android:src="@drawable/ic_favorite" />
+                        />
 
                 </RelativeLayout>
 
@@ -150,6 +150,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:singleLine="true"
+                                android:id="@+id/tv_type_of_work"
                                 android:text="Installation"
                                 android:textSize="12sp" />
 
@@ -176,6 +177,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:singleLine="true"
+                                android:id="@+id/tv_service"
                                 android:text="Shingles"
                                 android:textSize="12sp" />
 
@@ -203,6 +205,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:singleLine="true"
                                 android:text="Installation"
+                                android:id="@+id/tv_property"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -227,6 +230,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:singleLine="true"
+                                android:id="@+id/tv_phone"
                                 android:text="Installation"
                                 android:textSize="12sp" />
 
