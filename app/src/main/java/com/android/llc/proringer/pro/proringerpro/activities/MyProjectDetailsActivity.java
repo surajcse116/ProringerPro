@@ -98,14 +98,6 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
         mapview.getLayoutParams().height = (int) 2 * (screenWidth - 10) / 5;
 
         showData();
-
-        mapview.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-
     }
 
     @Override
