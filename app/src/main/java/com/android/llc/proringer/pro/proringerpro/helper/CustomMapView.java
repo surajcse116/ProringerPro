@@ -21,10 +21,12 @@ public class CustomMapView extends MapView {
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_UP:
+                Logger.printMessage("up-->","yes");
                 System.out.println("unlocked");
                 this.getParent().requestDisallowInterceptTouchEvent(false);
                 break;
             case MotionEvent.ACTION_DOWN:
+                Logger.printMessage("down-->","yes");
                 System.out.println("locked");
                 this.getParent().requestDisallowInterceptTouchEvent(true);
                 break;
