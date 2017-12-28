@@ -42,4 +42,6 @@
     <string name="crop_image_menu_crop">Crop</string>
     <string name="pick_image_intent_chooser_title">Select source</string>
 
+    <string name="google_maps_key">AIzaSyAIL_lx23KFw4H-K59TZP78FKaIs_hH1kQ</string>
+
 </resources>

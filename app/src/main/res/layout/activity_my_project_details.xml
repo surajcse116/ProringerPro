@@ -40,6 +40,7 @@
 
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/tv_request_review"
@@ -233,8 +234,8 @@
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/img_map"
+                    <com.android.llc.proringer.pro.proringerpro.helper.CustomMapView
+                        android:id="@+id/mapview"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
