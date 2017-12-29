@@ -12,7 +12,8 @@
         android:layout_marginTop="15dp"
         android:background="@color/colorGreen"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:elevation="3dp">
 
         <ImageView
             android:layout_width="25dp"

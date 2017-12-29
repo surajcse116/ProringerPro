@@ -35,6 +35,7 @@ import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.WatchListF
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.AvailabilityTimeSlotFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfriendFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.NotificationsFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.ProjectListFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReplyFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.RequestReviewFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.SocialMediaFragment;
@@ -648,6 +649,30 @@ public class LandScreenActivity extends AppCompatActivity {
             Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
         }
     }
+
+
+
+    /**
+     * Fragment transaction for Watch List
+     */
+    private void transactProjectList() {
+        toggleToolBar(false);
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + ProjectListFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + ProjectListFragment.class.getCanonicalName());
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + ProjectListFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + ProjectListFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new ProjectListFragment(), "" + ProjectListFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + ProjectListFragment.class.getCanonicalName());
+        transaction.commit();
+
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
+        }
+    }
+
 
 
     /**

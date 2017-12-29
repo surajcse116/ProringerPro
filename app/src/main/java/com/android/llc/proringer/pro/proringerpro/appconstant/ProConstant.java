@@ -47,32 +47,22 @@ public class ProConstant {
     public static String deletelicense = BASEURL + "app_prolicense_delete";
     public static String deleteportfolio = BASEURL + "ap_protfolio_delete";
     public static String deleteportfolioImage = BASEURL + "app_portfolio_image_delete";
-
     public static String notification = BASEURL + "app_pro_notification";
     public static String updateNotificationDetailsAPI = BASEURL + "app_pronotification_save";
-
     public static String serviceAreaOfUserAPI = BASEURL + "app_pro_servicearea?";
     public static String serviceAreaSaveOfUserAPI = BASEURL + "app_pro_servicearea_save";
-
-
     public static String app_proservices_save = BASEURL + "app_proservices_save";
-
     public static String app_term = BASEURL + "app_term";
     public static String app_privacy_policy = BASEURL + "app_privacy_policy";
-
-
     public static String app_pro_services = BASEURL + "app_pro_services?";
     public static String app_catrgoryservice_list = BASEURL + "app_catrgoryservice_list?";
-
-
     public static String dashboard = BASEURL + "app_pro_dashboard?";
-
     public static String app_pro_myproject = BASEURL + "app_pro_myproject?";
-
     public static String app_pro_myproject_details = BASEURL + "app_pro_myproject_details?";
     public static String app_pro_watchlist = BASEURL + "app_pro_watchlist?";
     public static String app_pro_watchlist_delete = BASEURL + "app_pro_watchlist_delete";
     public static String app_pro_myproject_delete = BASEURL + "app_pro_myproject_delete";
+    public static String app_pro_project_search = BASEURL + "app_pro_project_search?";
 
 
     public static String latitude = "";

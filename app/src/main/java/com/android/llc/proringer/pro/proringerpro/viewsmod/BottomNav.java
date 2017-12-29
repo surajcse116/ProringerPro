@@ -37,7 +37,7 @@ public class BottomNav {
     private ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
     private LinearLayout dashboard_cont, my_projects_cont, messages_cont, fav_pro_cont,log_out_pro_cont;
 
-    public static final String DASHBOARD = "dashboard", MY_PROJECTS = "my_project", MESSAGES = "messages", WATCH_LIST = "watch_list", CREATE_PROJECT = "create_project";
+    public static final String DASHBOARD = "dashboard", MY_PROJECTS = "my_project", MESSAGES = "messages", WATCH_LIST = "project_or_watch_list_fragment", CREATE_PROJECT = "create_project";
 
     public static BottomNav getInstance(Context context, View view) {
         return new BottomNav(context, view);

@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.WatchListFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.ProjectListFragment;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.ShowMyDialog;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProLightTextView;
@@ -30,27 +31,27 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 /**
- * Created by su on 8/10/17.
+ * Created by su on 12/29/17.
  */
 
-public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyViewHolder> {
-    WatchListFragment.onOptionSelected callback;
+public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.MyViewHolder> {
+    ProjectListFragment.onOptionSelected callback;
     Context mcontext;
     JSONArray info_array;
 
-    public WatchListAdapter(Context mcontext,JSONArray info_array, WatchListFragment.onOptionSelected callback) {
+    public ProjectListAdapter(Context mcontext,JSONArray info_array, ProjectListFragment.onOptionSelected callback) {
         this.mcontext = mcontext;
         this.info_array=info_array;
         this.callback = callback;
     }
 
     @Override
-    public WatchListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MyViewHolder(LayoutInflater.from(mcontext).inflate(R.layout.adapter_search_watch_list_rowitem, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final WatchListAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 //        callback.onItemPassed(position, jsonInfoArray.getJSONObject(position).getString("pros_id"));
 
         if (position==info_array.length()-1){
@@ -102,7 +103,7 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
                         holder.tv_job_details.setText(word1);
 
 
-                        String contactTextClick = "Read More..";
+                        String contactTextClick = "Read";
                         Spannable word2 = new SpannableString(contactTextClick);
 
                         final ClickableSpan myClickableSpan = new ClickableSpan() {

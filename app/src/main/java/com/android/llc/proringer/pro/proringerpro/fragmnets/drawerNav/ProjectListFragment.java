@@ -1,4 +1,4 @@
-package com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav;
+package com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -16,8 +16,10 @@ import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
+import com.android.llc.proringer.pro.proringerpro.adapter.ProjectListAdapter;
 import com.android.llc.proringer.pro.proringerpro.adapter.WatchListAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.WatchListFragment;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
@@ -35,26 +37,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by bodhidipta on 12/06/17.
- * <!-- * Copyright (c) 2017, Proringer-->
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * -->
+ * Created by su on 12/29/17.
  */
 
-public class WatchListFragment extends Fragment {
+public class ProjectListFragment extends Fragment {
     private RecyclerView rcv_watch_list;
-    WatchListAdapter watchListAdapter;
+    ProjectListAdapter projectListAdapter;
     ProRegularTextView tv_empty_show;
     ArrayList<SetGetAPI> arrayList=null;
     MyLoader myLoader;
@@ -76,15 +64,13 @@ public class WatchListFragment extends Fragment {
 
         rcv_watch_list.setLayoutManager(new LinearLayoutManager((LandScreenActivity) getActivity()));
 
-        showData("");
-
     }
 
     public interface onOptionSelected {
         void onItemPassed(int position, JSONObject jsonObject);
     }
 
-    public  void showData(String search_field)
+    public  void showData(String category_search,String zip_search,String allservice)
     {
         arrayList=new ArrayList<SetGetAPI>();
         SetGetAPI setGetAPI =new SetGetAPI();
@@ -93,11 +79,21 @@ public class WatchListFragment extends Fragment {
         arrayList.add(setGetAPI);
 
         setGetAPI =new SetGetAPI();
-        setGetAPI.setPARAMS("Search_field");
-        setGetAPI.setValues(search_field);
+        setGetAPI.setPARAMS("category_search");
+        setGetAPI.setValues(category_search);
         arrayList.add(setGetAPI);
 
-        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_pro_watchlist, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        setGetAPI =new SetGetAPI();
+        setGetAPI.setPARAMS("zip_search");
+        setGetAPI.setValues(zip_search);
+        arrayList.add(setGetAPI);
+
+        setGetAPI =new SetGetAPI();
+        setGetAPI.setPARAMS("allservice");
+        setGetAPI.setValues(allservice);
+        arrayList.add(setGetAPI);
+
+        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_pro_project_search, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();
@@ -110,7 +106,7 @@ public class WatchListFragment extends Fragment {
                         rcv_watch_list.setVisibility(View.VISIBLE);
                         tv_empty_show.setVisibility(View.GONE);
 
-                        watchListAdapter = new WatchListAdapter(getActivity(), info_array, new onOptionSelected() {
+                        projectListAdapter = new ProjectListAdapter(getActivity(), info_array, new ProjectListFragment.onOptionSelected() {
                             @Override
                             public void onItemPassed(int position, JSONObject jsonObject) {
                                 try {
@@ -120,7 +116,7 @@ public class WatchListFragment extends Fragment {
                                 }
                             }
                         });
-                        rcv_watch_list.setAdapter(watchListAdapter);
+                        rcv_watch_list.setAdapter(projectListAdapter);
 
                     }else {
                         rcv_watch_list.setVisibility(View.GONE);
@@ -196,7 +192,7 @@ public class WatchListFragment extends Fragment {
                                     Toast.makeText(getActivity(), mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
 
                                     info_array.remove(position);
-                                    watchListAdapter.notifyDataSetChanged();
+                                    projectListAdapter.notifyDataSetChanged();
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
