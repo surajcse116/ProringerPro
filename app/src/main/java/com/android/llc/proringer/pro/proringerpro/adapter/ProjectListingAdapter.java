@@ -6,14 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MyProjectsFragment;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
+import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * Created by su on 8/12/17.
@@ -23,10 +32,12 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     Context mcontext;
     MyProjectsFragment.onOptionSelected callback;
     JSONArray info_array;
+    MyProjectsFragment myProjectsFragment;
 
-    public ProjectListingAdapter(Context mcontext,JSONArray info_array, MyProjectsFragment.onOptionSelected callback) {
+    public ProjectListingAdapter(Context mcontext, MyProjectsFragment myProjectsFragment, JSONArray info_array, MyProjectsFragment.onOptionSelected callback) {
         this.mcontext = mcontext;
-        this.info_array=info_array;
+        this.myProjectsFragment = myProjectsFragment;
+        this.info_array = info_array;
         this.callback = callback;
     }
 
@@ -60,16 +71,15 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 try {
                     viewHolderPending.tv_project_name.setText(info_array.getJSONObject(position).getString("project_name"));
-                    viewHolderPending.tv_submitted_date.setText("Submitted on "+info_array.getJSONObject(position).getString("submitted_date"));
-                    viewHolderPending.tv_expire.setText("EXPIRE "+info_array.getJSONObject(position).getString("expiry_date"));
+                    viewHolderPending.tv_submitted_date.setText("Submitted on " + info_array.getJSONObject(position).getString("submitted_date"));
+                    viewHolderPending.tv_expire.setText("EXPIRE " + info_array.getJSONObject(position).getString("expiry_date"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                if(position==0){
+                if (position == 0) {
                     viewHolderPending.start_project.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     viewHolderPending.start_project.setVisibility(View.GONE);
                 }
 
@@ -84,10 +94,9 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
 
 
-                if(position==0){
+                if (position == 0) {
                     viewHolderAccepted.start_project.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     viewHolderAccepted.start_project.setVisibility(View.GONE);
                 }
                 break;
@@ -97,14 +106,23 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 try {
                     viewHolderExpire.tv_project_name.setText(info_array.getJSONObject(position).getString("project_name"));
+                    viewHolderExpire.tv_delete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                myProjectsFragment.deleteMyProject(position, info_array.getJSONObject(position).getString("applied_jobid"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                if(position==0){
+                if (position == 0) {
                     viewHolderExpire.start_project.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     viewHolderExpire.start_project.setVisibility(View.GONE);
                 }
                 break;
@@ -120,13 +138,11 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public int getItemViewType(int position) {
 //        return super.getItemViewType(position);
         try {
-            if (info_array.getJSONObject(position).getString("job_status").equalsIgnoreCase("Y")){
+            if (info_array.getJSONObject(position).getString("job_status").equalsIgnoreCase("Y")) {
                 return 0;
-            }
-            else if(info_array.getJSONObject(position).getString("job_status").equalsIgnoreCase("A"))
-            {
+            } else if (info_array.getJSONObject(position).getString("job_status").equalsIgnoreCase("A")) {
                 return 1;
-            }else {
+            } else {
                 return 2;
             }
         } catch (JSONException e) {
@@ -139,16 +155,17 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         LinearLayout start_project;
         ProSemiBoldTextView tv_project_name;
-        ProRegularTextView tv_submitted_date,tv_expire;
+        ProRegularTextView tv_submitted_date, tv_expire;
 
         View totalView;
+
         public ViewHolderPending(View itemView) {
             super(itemView);
             start_project = (LinearLayout) itemView.findViewById(R.id.start_project);
 
-            tv_project_name=(ProSemiBoldTextView)itemView.findViewById(R.id.tv_project_name);
-            tv_submitted_date=(ProRegularTextView)itemView.findViewById(R.id.tv_submitted_date);
-            tv_expire=(ProRegularTextView)itemView.findViewById(R.id.tv_expire);
+            tv_project_name = (ProSemiBoldTextView) itemView.findViewById(R.id.tv_project_name);
+            tv_submitted_date = (ProRegularTextView) itemView.findViewById(R.id.tv_submitted_date);
+            tv_expire = (ProRegularTextView) itemView.findViewById(R.id.tv_expire);
 
             totalView = itemView;
         }
@@ -157,6 +174,7 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     class ViewHolderAccepted extends RecyclerView.ViewHolder {
         LinearLayout start_project;
         ProSemiBoldTextView tv_project_name;
+
         public ViewHolderAccepted(View itemView) {
             super(itemView);
             start_project = (LinearLayout) itemView.findViewById(R.id.start_project);
@@ -167,11 +185,15 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     class ViewHolderExpire extends RecyclerView.ViewHolder {
         LinearLayout start_project;
         ProSemiBoldTextView tv_project_name;
+        ProRegularTextView tv_delete;
+
         public ViewHolderExpire(View itemView) {
             super(itemView);
             start_project = (LinearLayout) itemView.findViewById(R.id.start_project);
             tv_project_name = (ProSemiBoldTextView) itemView.findViewById(R.id.tv_project_name);
+            tv_delete = (ProRegularTextView) itemView.findViewById(R.id.tv_delete);
 
         }
     }
+
 }

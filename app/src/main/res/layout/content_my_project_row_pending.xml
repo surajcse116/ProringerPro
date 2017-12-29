@@ -33,8 +33,8 @@
         android:id="@+id/total_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="3dp"
         app:cardElevation="2dp">
@@ -51,9 +51,10 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
                 android:paddingRight="10dp"
+                android:maxLines="2"
                 android:text="Ready to hire for a plumbing project-within a week"
                 android:textColor="@color/colorTextDark"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                 android:id="@+id/tv_submitted_date"
@@ -64,7 +65,7 @@
                 android:paddingTop="5dp"
                 android:text="Submitted on 07/07/2017"
                 android:textColor="@color/colorSelectedDark"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                 android:id="@+id/messages"
@@ -81,7 +82,7 @@
                 android:paddingTop="5dp"
                 android:text="MESSAGES"
                 android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                 android:id="@+id/job_status"
@@ -97,7 +98,7 @@
                 android:paddingTop="5dp"
                 android:text="PENDING"
                 android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView

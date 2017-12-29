@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.MyProjectDetailsActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProjectListingAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
@@ -22,10 +24,12 @@ import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by bodhidipta on 12/06/17.
@@ -51,6 +55,8 @@ public class MyProjectsFragment extends Fragment {
     ProRegularTextView tv_empty_show;
     ArrayList<SetGetAPI> arrayList = null;
     MyLoader myload;
+    JSONArray info_array;
+    ProjectListingAdapter projectListingAdapter;
 
     @Nullable
     @Override
@@ -95,24 +101,25 @@ public class MyProjectsFragment extends Fragment {
                 myload.dismissLoader();
                 Logger.printMessage("Result", result);
                 try {
-                    if (new JSONObject(result).getJSONArray("info_array").length() > 0) {
+                    info_array = new JSONObject(result).getJSONArray("info_array");
+                    if (info_array.length() > 0) {
 
                         rcv_project_list.setVisibility(View.VISIBLE);
                         tv_empty_show.setVisibility(View.GONE);
-
-                        rcv_project_list.setAdapter(new ProjectListingAdapter(getActivity(), new JSONObject(result).getJSONArray("info_array"), new onOptionSelected() {
+                        projectListingAdapter = new ProjectListingAdapter(getActivity(), MyProjectsFragment.this, info_array, new onOptionSelected() {
                             @Override
                             public void onItemPassed(int position, JSONObject value) {
 
                                 try {
                                     Intent intent = new Intent(getActivity(), MyProjectDetailsActivity.class);
-                                    intent.putExtra("project_id",value.getString("project_id"));
+                                    intent.putExtra("project_id", value.getString("project_id"));
                                     getActivity().startActivity(intent);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
-                        }));
+                        });
+                        rcv_project_list.setAdapter(projectListingAdapter);
                     } else {
                         rcv_project_list.setVisibility(View.GONE);
                         tv_empty_show.setVisibility(View.VISIBLE);
@@ -157,4 +164,57 @@ public class MyProjectsFragment extends Fragment {
     }
 
 
+    public void deleteMyProject(final int position, String project_appliedid) {
+        HashMap<String, String> Params = new HashMap<>();
+        Params.put("user_id", ProApplication.getInstance().getUserId());
+        Params.put("project_appliedid", project_appliedid);
+        Logger.printMessage("params", String.valueOf(Params));
+
+        new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_myproject_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                myload.dismissLoader();
+                Logger.printMessage("result", result);
+                try {
+                    if (new JSONObject(result).getBoolean("response")) {
+                        info_array.remove(position);
+                        projectListingAdapter.notifyDataSetChanged();
+                    }
+                    Toast.makeText(getActivity(), "" + new JSONObject(result).getString("message"), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String error, String response) {
+                myload.dismissLoader();
+                Toast.makeText(getActivity(), "" + response, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(String error) {
+                myload.dismissLoader();
+
+
+                CustomAlert customAlert = new CustomAlert();
+                customAlert.getEventFromNormalAlert(getActivity(), "Load Error", "" + error, "Ok", "Cancel", new CustomAlert.MyCustomAlertListener() {
+                    @Override
+                    public void callBackOk() {
+
+                    }
+
+                    @Override
+                    public void callBackCancel() {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onStart() {
+                myload.showLoader();
+            }
+        });
+    }
 }
