@@ -15,7 +15,6 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldT
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.HashMap;
 
 /**
  * Created by su on 8/12/17.
