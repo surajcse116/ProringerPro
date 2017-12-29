@@ -70,6 +70,8 @@ public class ProConstant {
     public static  String app_pro_myproject=BASEURL+"app_pro_myproject?";
 
     public static  String app_pro_myproject_details=BASEURL+"app_pro_myproject_details?";
+    public static  String app_pro_watchlist=BASEURL+"app_pro_watchlist?";
+    public static  String app_pro_watchlist_delete=BASEURL+"app_pro_watchlist_delete";
 
 
     public static String latitude = "";
