@@ -70,6 +70,7 @@ public class LandScreenActivity extends AppCompatActivity {
     private ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
     ArrayList<SetGetAPI> arrayList = null;
     public MyLoader myLoader = null;
+    public String local_project_search_zip="";
 
     NavigationHandler navigationHandler = null;
 
@@ -127,10 +128,15 @@ public class LandScreenActivity extends AppCompatActivity {
         search_local_pro_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LandScreenActivity.this, SearchNearActivity.class);
-                startActivity(i);
+                toggleProMapSearch(true);
+                NavigationHandler.getInstance().highlightTag(NavigationHandler.FIND_LOCAL_PROJECT);
+                bottomNavInstance.highLightSelected(BottomNav.CREATE_PROJECT);
+                transactProjectList();
             }
         });
+
+
+
         toggle.syncState();
 
 
@@ -147,6 +153,7 @@ public class LandScreenActivity extends AppCompatActivity {
 
                 switch (selected_tag) {
                     case BottomNav.DASHBOARD:
+                        toggleProMapSearch(false);
                         closeDrawer();
                         transactDashBoard();
                         toolbar.setVisibility(View.VISIBLE);
@@ -163,6 +170,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         closeDrawer();
                         break;
                     case BottomNav.MESSAGES:
+                        toggleProMapSearch(false);
                         transactMessages();
                         toolbar.setVisibility(View.VISIBLE);
                         iv_pro_logo.setVisibility(View.VISIBLE);
@@ -170,6 +178,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         closeDrawer();
                         break;
                     case BottomNav.WATCH_LIST:
+                        toggleProMapSearch(false);
                         transactWatchList();
                         iv_pro_logo.setVisibility(View.VISIBLE);
                         tv_title.setVisibility(View.GONE);
@@ -222,6 +231,9 @@ public class LandScreenActivity extends AppCompatActivity {
                 switch (tag) {
 
                     case NavigationHandler.FIND_LOCAL_PROJECT:
+                        toggleProMapSearch(true);
+                        bottomNavInstance.highLightSelected(BottomNav.CREATE_PROJECT);
+                        transactProjectList();
                         closeDrawer();
                         break;
 
@@ -229,6 +241,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         break;
 
                     case NavigationHandler.NOTIFICATION:
+                        toggleProMapSearch(false);
                         closeDrawer();
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
@@ -238,6 +251,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         break;
 
                     case NavigationHandler.QUICK_REPLY:
+                        toggleProMapSearch(false);
                         closeDrawer();
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
@@ -248,6 +262,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         break;
 
                     case NavigationHandler.AVAILABILITY:
+                        toggleProMapSearch(false);
                         closeDrawer();
                         transactTimeAvailability();
                         linear_buttombar.setVisibility(View.VISIBLE);
@@ -257,6 +272,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         break;
 
                     case NavigationHandler.SOCIAL_MEDIA:
+                        toggleProMapSearch(false);
                         closeDrawer();
                         transactSocialMedia();
                         linear_buttombar.setVisibility(View.VISIBLE);
@@ -266,11 +282,13 @@ public class LandScreenActivity extends AppCompatActivity {
                         break;
 
                     case NavigationHandler.SHARE_PROFILE:
+                        toggleProMapSearch(false);
                         closeDrawer();
                         linear_buttombar.setVisibility(View.VISIBLE);
                         break;
 
                     case NavigationHandler.REQUEST_REVIEW:
+                        toggleProMapSearch(false);
                         closeDrawer();
                         transactRequestReview();
                         linear_buttombar.setVisibility(View.VISIBLE);
@@ -280,6 +298,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         break;
 
                     case NavigationHandler.INVITE_FRIEND:
+                        toggleProMapSearch(false);
                         closeDrawer();
                         transactInviteFriend();
                         linear_buttombar.setVisibility(View.VISIBLE);
@@ -289,6 +308,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         break;
 
                     case NavigationHandler.LOGOUT:
+                        toggleProMapSearch(false);
                         closeDrawer();
                         linear_buttombar.setVisibility(View.VISIBLE);
 
@@ -369,6 +389,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         break;
 
                     case NavigationHandler.EMAIL_SUPPORT:
+                        toggleProMapSearch(false);
                         closeDrawer();
 
                         String[] TOSuppory = {"support@proringer.com"};
@@ -384,10 +405,12 @@ public class LandScreenActivity extends AppCompatActivity {
                         startActivity(Intent.createChooser(emailSupportIntent, "Send mail..."));
                         break;
                     case NavigationHandler.FAQ:
+                        toggleProMapSearch(false);
                         closeDrawer();
                         startActivity(new Intent(LandScreenActivity.this, FaqActivity.class));
                         break;
                     case NavigationHandler.PROVIDE_FEEDBACK:
+                        toggleProMapSearch(false);
                         closeDrawer();
 
                         String[] TOFeedback = {"feedback@proringer.com"};
@@ -408,12 +431,14 @@ public class LandScreenActivity extends AppCompatActivity {
                         break;
 
                     case NavigationHandler.TERMS_OF_SERVICE:
+                        toggleProMapSearch(false);
                         closeDrawer();
                         Intent intentTerms = new Intent(LandScreenActivity.this, TermsPrivacyActivity.class);
                         intentTerms.putExtra("value", "term");
                         startActivity(intentTerms);
                         break;
                     case NavigationHandler.PRIVACY_POLICY:
+                        toggleProMapSearch(false);
                         closeDrawer();
                         Intent intentPolicy = new Intent(LandScreenActivity.this, TermsPrivacyActivity.class);
                         intentPolicy.putExtra("value", "policy");
@@ -471,6 +496,14 @@ public class LandScreenActivity extends AppCompatActivity {
             findViewById(R.id.search_local_pro_header).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.search_local_pro_header_map).setVisibility(View.VISIBLE);
+            findViewById(R.id.search_local_pro_header_map).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent searchIntent = new Intent(LandScreenActivity.this, SearchNearActivity.class);
+                    startActivityForResult(searchIntent, 41);
+
+                }
+            });
             findViewById(R.id.search_local_pro_header).setVisibility(View.GONE);
         }
     }
@@ -656,6 +689,7 @@ public class LandScreenActivity extends AppCompatActivity {
      * Fragment transaction for Watch List
      */
     private void transactProjectList() {
+        local_project_search_zip = "";
         toggleToolBar(false);
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + ProjectListFragment.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + ProjectListFragment.class.getCanonicalName());
@@ -784,6 +818,28 @@ public class LandScreenActivity extends AppCompatActivity {
             keyboard.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 41) {
+
+            Bundle extras = data.getBundleExtra("data");
+            if (extras != null) {
+                local_project_search_zip = extras.getString("searchZip");
+                Logger.printMessage("local_pros_search_zip", "--->" + local_project_search_zip);
+
+
+                if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + ProjectListFragment.class.getCanonicalName()) != null) {
+                    Logger.printMessage("back_stack", "Removed *****" + ProjectListFragment.class.getCanonicalName());
+                    ProjectListFragment fragment = (ProjectListFragment) fragmentManager.findFragmentByTag("" + ProjectListFragment.class.getCanonicalName());
+                    fragment.loadList();
+                    Logger.printMessage("LoadListFromActivity", "YES");
+                }
+
+            }
         }
     }
 }

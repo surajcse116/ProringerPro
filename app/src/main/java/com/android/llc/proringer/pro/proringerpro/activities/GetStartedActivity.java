@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,7 +20,7 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.GetStartedTutorial;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
-import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
+import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
@@ -339,7 +338,7 @@ public class GetStartedActivity extends AppCompatActivity implements
             Logger.printMessage("LATTITUIDE", lat);
             Logger.printMessage("Longtitude", lng);
 
-            HelperClass.getInstance(GetStartedActivity.this).setCurrentLatLng(lat, lng);
+            ProHelperClass.getInstance(GetStartedActivity.this).setCurrentLatLng(lat, lng);
 
             Logger.printMessage("updateUI", "At Time: " + mLastUpdateTime + "\n" +
                     "Latitude: " + lat + "\n" +

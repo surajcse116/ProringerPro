@@ -15,13 +15,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -38,7 +35,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.PortFolioImageSetgetGallery;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetPortFolioImageGallery;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
@@ -77,7 +74,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
     CustomListAdapterDialogCategory customListAdapterDialogCategory = null;
 
 
-    ArrayList<PortFolioImageSetgetGallery> portFolioImageSetgetGalleries = null;
+    ArrayList<SetGetPortFolioImageGallery> portFolioImageSetgetGalleries = null;
 
     PortFolioEditAddImageAdapter portFolioEditAddImageAdapter = null;
 
@@ -128,10 +125,10 @@ public class PortfolioEditActivity extends AppCompatActivity {
 
             for (int i = 0; i < multiple_gallery_image.length(); i++) {
 
-                PortFolioImageSetgetGallery portFolioImageSetgetGallery=new PortFolioImageSetgetGallery();
-                portFolioImageSetgetGallery.setId(multiple_gallery_image.getJSONObject(i).getString("id"));
-                portFolioImageSetgetGallery.setImage_name(multiple_gallery_image.getJSONObject(i).getString("image_name"));
-                portFolioImageSetgetGalleries.add(portFolioImageSetgetGallery);
+                SetGetPortFolioImageGallery setGetPortFolioImageGallery =new SetGetPortFolioImageGallery();
+                setGetPortFolioImageGallery.setId(multiple_gallery_image.getJSONObject(i).getString("id"));
+                setGetPortFolioImageGallery.setImage_name(multiple_gallery_image.getJSONObject(i).getString("image_name"));
+                portFolioImageSetgetGalleries.add(setGetPortFolioImageGallery);
             }
 
 
@@ -682,10 +679,10 @@ public class PortfolioEditActivity extends AppCompatActivity {
 
                 Logger.printMessage("list_size", "" + portFolioImageSetgetGalleries.size());
 
-                PortFolioImageSetgetGallery portFolioImageSetgetGallery=new PortFolioImageSetgetGallery();
-                portFolioImageSetgetGallery.setId("");
-                portFolioImageSetgetGallery.setImage_name(mCurrentPhotoPath);
-                portFolioImageSetgetGalleries.add(portFolioImageSetgetGallery);
+                SetGetPortFolioImageGallery setGetPortFolioImageGallery =new SetGetPortFolioImageGallery();
+                setGetPortFolioImageGallery.setId("");
+                setGetPortFolioImageGallery.setImage_name(mCurrentPhotoPath);
+                portFolioImageSetgetGalleries.add(setGetPortFolioImageGallery);
 
 
                 if (portFolioEditAddImageAdapter == null) {
@@ -712,10 +709,10 @@ public class PortfolioEditActivity extends AppCompatActivity {
 
                         Logger.printMessage("image****", "" + mCurrentPhotoPath);
 
-                        PortFolioImageSetgetGallery portFolioImageSetgetGallery=new PortFolioImageSetgetGallery();
-                        portFolioImageSetgetGallery.setId("");
-                        portFolioImageSetgetGallery.setImage_name(mCurrentPhotoPath);
-                        portFolioImageSetgetGalleries.add(portFolioImageSetgetGallery);
+                        SetGetPortFolioImageGallery setGetPortFolioImageGallery =new SetGetPortFolioImageGallery();
+                        setGetPortFolioImageGallery.setId("");
+                        setGetPortFolioImageGallery.setImage_name(mCurrentPhotoPath);
+                        portFolioImageSetgetGalleries.add(setGetPortFolioImageGallery);
 
                         if (portFolioEditAddImageAdapter == null) {
                             portFolioEditAddImageAdapter = new PortFolioEditAddImageAdapter(PortfolioEditActivity.this, portFolioImageSetgetGalleries);

@@ -13,8 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -23,7 +21,7 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomMapView;
-import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
+import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
@@ -227,7 +225,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
     }
 
     public void showlatlong() {
-        HelperClass.getInstance(MyProjectDetailsActivity.this).getlatlongAPI(new HelperClass.getApiProcessCallback() {
+        ProHelperClass.getInstance(MyProjectDetailsActivity.this).getlatlongAPI(new ProHelperClass.getApiProcessCallback() {
             @Override
             public void onStart() {
 

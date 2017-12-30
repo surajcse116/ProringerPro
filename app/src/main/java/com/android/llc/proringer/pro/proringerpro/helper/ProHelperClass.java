@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.database.DatabaseHandler;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAddressData;
 import com.android.llc.proringer.pro.proringerpro.utils.NetworkUtil;
 
 import org.json.JSONArray;
@@ -12,7 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
@@ -38,21 +43,21 @@ import okhttp3.Response;
  * limitations under the License.
  */
 
-public class HelperClass {
-    private static HelperClass instance = null;
+public class ProHelperClass {
+    private static ProHelperClass instance = null;
     private static Context mcontext = null;
     private String currentLat = "";
     private String currentLng = "";
 
-    public static HelperClass getInstance(Context context) {
+    public static ProHelperClass getInstance(Context context) {
         mcontext = context;
         if (instance == null)
-            instance = new HelperClass();
+            instance = new ProHelperClass();
 
         return instance;
     }
 
-    private HelperClass() {
+    private ProHelperClass() {
     }
 
     public void setCurrentLatLng(String currentLat, String currentLng) {
@@ -468,8 +473,214 @@ public class HelperClass {
     }
 
 
+    /**
+     * Search area by google API
+     *
+     * @param callback
+     * @param params
+     */
+
+    public void getSearchArea(final onSearchZipCallback callback, String... params) {
+        if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
+            new AsyncTask<String, Void, String>() {
+                String exception = "";
+                List<SetGetAddressData> addressList;
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    callback.onStartFetch();
+                }
+
+                @Override
+                protected String doInBackground(String... params) {
+                    OkHttpClient client = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
+
+                    try {
+                        String searchLocalProject = "https://maps.googleapis.com/maps/api/geocode/json?address=" + params[0] + "&key=AIzaSyDoLuAdSE7M9SzeIht7-Bm-WrUjnDQBofg&language=en";
+                        Logger.printMessage("searchLocationAPI", "" + searchLocalProject);
+                        Request request = new Request.Builder()
+                                .url(searchLocalProject)
+                                .build();
+
+                        Response response = client.newCall(request).execute();
+                        String responseString = response.body().string();
+
+                        JSONObject mainRes = new JSONObject(responseString);
+
+                        if (mainRes.getString("status").equalsIgnoreCase("OK") &&
+                                mainRes.has("results") &&
+                                mainRes.getJSONArray("results").length() > 0) {
+
+                            addressList = new ArrayList<SetGetAddressData>();
+                            JSONArray results = mainRes.getJSONArray("results");
+
+                            for (int i = 0; i < results.length(); i++) {
+
+                                JSONObject outerJsonObj = results.getJSONObject(i);
+                                if (outerJsonObj.getJSONArray("types").toString().contains("postal_code")) {
+
+                                    String city = "";
+                                    String country = "";
+                                    String state_code = "";
+
+                                    /**
+                                     * loop through address component
+                                     * for country and state
+                                     */
+                                    if (outerJsonObj.has("address_components") &&
+                                            outerJsonObj.getJSONArray("address_components").length() > 0) {
+
+                                        JSONArray address_components = outerJsonObj.getJSONArray("address_components");
+
+                                        for (int j = 0; j < address_components.length(); j++) {
+
+                                            if (address_components.getJSONObject(j).has("types") &&
+                                                    address_components.getJSONObject(j).getJSONArray("types").length() > 0
+                                                    ) {
+
+                                                JSONArray types = address_components.getJSONObject(j).getJSONArray("types");
+
+                                                for (int k = 0; k < types.length(); k++) {
+                                                    if (types.getString(k).equals("administrative_area_level_2")) {
+                                                        city = address_components.getJSONObject(j).getString("short_name");
+                                                    }
+
+                                                    if (types.getString(k).equals("administrative_area_level_1")) {
+                                                        state_code = address_components.getJSONObject(j).getString("short_name");
+                                                    }
+
+                                                    if (types.getString(k).equals("country")) {
+                                                        country = address_components.getJSONObject(j).getString("short_name");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if (country.equals("CA") || country.equals("US")) {
+                                            SetGetAddressData data = new SetGetAddressData(
+                                                    outerJsonObj.getString("formatted_address"),
+                                                    state_code,
+                                                    country,
+                                                    params[0]
+                                            );
+                                            data.setCity(city);
+                                            data.setLatitude(outerJsonObj.getJSONObject("geometry").getJSONObject("location").getString("lat"));
+                                            data.setLongitude(outerJsonObj.getJSONObject("geometry").getJSONObject("location").getString("lng"));
+                                            addressList.add(data);
+                                        } else {
+                                            exception = "This Zip code does not belongs to the USA or CANADA";
+                                        }
+                                    }
+                                } else {
+                                    exception = "Please enter valid postal code.";
+                                }
+                            }
+                        }
+
+                        Logger.printMessage("location", "" + responseString);
+                        return responseString;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        exception = "Some error occured while searching entered zip. Please search again.";
+                        return exception;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    if (exception.equals("")) {
+                        if (addressList != null && addressList.size() > 0)
+                            callback.onComplete(addressList);
+                    } else {
+                        callback.onError(exception);
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, params);
+
+        } else {
+            callback.onError(mcontext.getResources().getString(R.string.no_internet_connection_found_Please_check_your_internet_connection));
+        }
+    }
+
+
+    /**
+     * get zip code  using google api
+     *
+     * @param callback
+     */
+    public void getZipCodeUsingGoogleApi(final getApiProcessCallback callback) {
+        if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
+            new AsyncTask<String, Void, String>() {
+                ;
+                String exception = "";
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    callback.onStart();
+                }
+
+                @Override
+                protected String doInBackground(String... params) {
+                    try {
+                        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
+
+                        String geocodenotiAPI = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + ProHelperClass.getInstance(mcontext).getCurrentLatLng()[0] + "," + ProHelperClass.getInstance(mcontext).getCurrentLatLng()[1]
+                                + "&key=AIzaSyDoLuAdSE7M9SzeIht7-Bm-WrUjnDQBofg&language=en";
+                        Logger.printMessage("geocode", geocodenotiAPI);
+                        Request request = new Request.Builder()
+                                .get()
+                                .url(geocodenotiAPI)
+                                .build();
+
+                        Response response = client.newCall(request).execute();
+                        String responseString = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        // Logger.printMessage("jsonObject",""+jsonObject);
+                        if (jsonObject.getString("status").equalsIgnoreCase("OK")) {
+                            return responseString;
+                        } else {
+                            exception = jsonObject.getString("error_message");
+                            return exception;
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        exception = e.getMessage();
+                        return exception;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    if (exception.equals("")) {
+                        callback.onComplete(s);
+                    } else {
+                        callback.onError(s);
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        } else {
+            callback.onError(mcontext.getResources().getString(R.string.no_internet_connection_found_Please_check_your_internet_connection));
+        }
+    }
+
+
     public interface onSearchPlacesNameCallback {
         void onComplete(ArrayList<String> listdata);
+
+        void onError(String error);
+
+        void onStartFetch();
+    }
+
+    /**
+     * Interface used to get call back for search locationList
+     */
+    public interface onSearchZipCallback {
+        void onComplete(List<SetGetAddressData> listdata);
 
         void onError(String error);
 
@@ -482,5 +693,12 @@ public class HelperClass {
         void onComplete(String message);
 
         void onError(String error);
+    }
+
+    public String[] getCurrentLatLng() {
+        String str[] = {
+                currentLat, currentLng
+        };
+        return str;
     }
 }

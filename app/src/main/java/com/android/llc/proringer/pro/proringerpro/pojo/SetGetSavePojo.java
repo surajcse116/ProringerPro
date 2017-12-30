@@ -4,7 +4,7 @@ package com.android.llc.proringer.pro.proringerpro.pojo;
  * Created by su on 8/12/17.
  */
 
-public class SavePojo {
+public class SetGetSavePojo {
     String city,id;
 
     public String getId() {

@@ -44,4 +44,6 @@
 
     <string name="google_maps_key">AIzaSyAIL_lx23KFw4H-K59TZP78FKaIs_hH1kQ</string>
 
+    <string name="title_location_permission">Location Permission</string>
+
 </resources>

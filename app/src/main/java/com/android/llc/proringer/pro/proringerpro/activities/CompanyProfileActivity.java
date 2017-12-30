@@ -29,7 +29,7 @@ import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialo
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
-import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
+import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
@@ -527,7 +527,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
             Logger.printMessage("LATTITUIDE", lattitude);
             Logger.printMessage("Longtitude", longttitude);
 
-            HelperClass.getInstance(CompanyProfileActivity.this).setCurrentLatLng(lattitude, longttitude);
+            ProHelperClass.getInstance(CompanyProfileActivity.this).setCurrentLatLng(lattitude, longttitude);
 
             com.android.llc.proringer.pro.proringerpro.helper.Logger.printMessage("updateUI", "At Time: " + mLastUpdateTime + "\n" +
                     "Latitude: " + lattitude + "\n" +

@@ -72,7 +72,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             holder.tv_pros_company_name.setText(info_array.getJSONObject(position).getString("prjct_name").trim());
             holder.tv_category_name.setText(info_array.getJSONObject(position).getString("category_name").trim());
             holder.tv_address.setText(info_array.getJSONObject(position).getString("city").trim()+", "+info_array.getJSONObject(position).getString("state").trim()+" "+info_array.getJSONObject(position).getString("zip").trim());
-            holder.tv_category_service_name.setText(info_array.getJSONObject(position).getString("category_service_name").trim());
+            holder.tv_category_service_name.setText(info_array.getJSONObject(position).getString("service_name").trim());
             holder.tv_service_look_type.setText(info_array.getJSONObject(position).getString("service_look_type").trim());
 
             holder.tv_post_time.setText(info_array.getJSONObject(position).getString("post_time").trim());

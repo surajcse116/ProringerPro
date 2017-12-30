@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.PortfolioEditActivity;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
-import com.android.llc.proringer.pro.proringerpro.pojo.PortFolioImageSetgetGallery;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetPortFolioImageGallery;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -27,11 +27,11 @@ import java.util.ArrayList;
 
 public class PortFolioEditAddImageAdapter extends RecyclerView.Adapter<PortFolioEditAddImageAdapter.MyViewHolder> {
     Context mContext;
-    ArrayList<PortFolioImageSetgetGallery> portFolioImageSetgetGalleries;
+    ArrayList<SetGetPortFolioImageGallery> portFolioImageSetgetGalleries;
     int screenHeight;
     int screenWidth;
 
-    public PortFolioEditAddImageAdapter(Context mContext, ArrayList<PortFolioImageSetgetGallery> portFolioImageSetgetGalleries) {
+    public PortFolioEditAddImageAdapter(Context mContext, ArrayList<SetGetPortFolioImageGallery> portFolioImageSetgetGalleries) {
         this.mContext = mContext;
         this.portFolioImageSetgetGalleries = portFolioImageSetgetGalleries;
 

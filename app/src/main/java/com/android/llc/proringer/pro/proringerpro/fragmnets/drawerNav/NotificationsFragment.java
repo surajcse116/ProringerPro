@@ -10,7 +10,7 @@ import android.widget.ScrollView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
-import com.android.llc.proringer.pro.proringerpro.helper.HelperClass;
+import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
@@ -183,7 +183,7 @@ public class NotificationsFragment extends Fragment {
 
         ScrollViewMAin.setVisibility(View.VISIBLE);
 
-        HelperClass.getInstance(getActivity()).getUserNotification(new HelperClass.getApiProcessCallback() {
+        ProHelperClass.getInstance(getActivity()).getUserNotification(new ProHelperClass.getApiProcessCallback() {
             @Override
             public void onStart() {
                 myLoader.showLoader();
@@ -231,7 +231,7 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void setChangeNotification() {
-        HelperClass.getInstance(getActivity()).updateUserNotification(new HelperClass.getApiProcessCallback() {
+        ProHelperClass.getInstance(getActivity()).updateUserNotification(new ProHelperClass.getApiProcessCallback() {
                                                                           @Override
                                                                           public void onStart() {
 

@@ -9,20 +9,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.database.DatabaseHandler;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
+import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -95,7 +102,7 @@ public class LogInActivity extends AppCompatActivity {
                     new CustomJSONParser().fireAPIForPostMethod(LogInActivity.this, ProConstant.Login, Params, null, new CustomJSONParser.CustomJSONResponse() {
                         @Override
                         public void onSuccess(String result) {
-                            myLoader.dismissLoader();
+
                             JSONObject mainResponseObj = null;
                             try {
                                 mainResponseObj = new JSONObject(result);
@@ -105,12 +112,63 @@ public class LogInActivity extends AppCompatActivity {
                                 ProApplication.getInstance().setUserPreference(jsonInfo.getString("user_id"), jsonInfo.getString("user_type"), jsonInfo.getString("first_name"), jsonInfo.getString("last_name"));
                                 ProApplication.getInstance().setUserEmail(email.getText().toString().trim());
 
-                                Intent intent = new Intent(LogInActivity.this, LandScreenActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                finish();
+                                ArrayList arrayList=new ArrayList<SetGetAPI>();
+                                SetGetAPI setGetAPI =new SetGetAPI();
+                                setGetAPI.setPARAMS("user_id");
+                                setGetAPI.setValues(ProApplication.getInstance().getUserId());
+                                arrayList.add(setGetAPI);
 
+                                new CustomJSONParser().fireAPIForGetMethod(LogInActivity.this, ProConstant.dashboard, arrayList, new CustomJSONParser.CustomJSONResponse() {
+                                    @Override
+                                    public void onSuccess(String result) {
+                                        //Log.d("business",result);
+                                        try {
+                                            JSONObject job = new JSONObject(result);
+                                            Logger.printMessage("array",""+job);
 
+                                            String dateToday = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+
+                                            DatabaseHandler.getInstance(LogInActivity.this).insertIntoDatabase(
+                                                    dateToday,
+                                                    ProApplication.getInstance().getUserId(),
+                                                    result,
+                                                    new DatabaseHandler.onCompleteProcess() {
+                                                        @Override
+                                                        public void onSuccess() {
+                                                            myLoader.dismissLoader();
+                                                            Intent intent = new Intent(LogInActivity.this, LandScreenActivity.class);
+                                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
+
+                                                        @Override
+                                                        public void onError(String err) {
+
+                                                        }
+                                                    });
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(String error, String response) {
+                                        Toast.makeText(LogInActivity.this, "No data found" + response, Toast.LENGTH_SHORT).show();
+                                        myLoader.dismissLoader();
+                                    }
+
+                                    @Override
+                                    public void onError(String error) {
+                                        myLoader.dismissLoader();
+                                    }
+
+                                    @Override
+                                    public void onStart() {
+
+                                    }
+                                });
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

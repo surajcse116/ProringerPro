@@ -4,7 +4,7 @@ package com.android.llc.proringer.pro.proringerpro.pojo;
  * Created by su on 12/15/17.
  */
 
-public class PortFolioImageSetgetGallery {
+public class SetGetPortFolioImageGallery {
     String id="",image_name="";
 
     public String getId() {
