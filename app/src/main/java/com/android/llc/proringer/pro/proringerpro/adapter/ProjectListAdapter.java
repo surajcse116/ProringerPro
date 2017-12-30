@@ -92,8 +92,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
                          */
                         String contactTextOne = null;
                         try {
-                            if (info_array.getJSONObject(position).getString("job_details").trim().length() >= 60) {
-                                contactTextOne = info_array.getJSONObject(position).getString("job_details").trim().trim().substring(0, 60) + "....";
+                            if (info_array.getJSONObject(position).getString("job_details").trim().length() >= 40) {
+                                contactTextOne = info_array.getJSONObject(position).getString("job_details").trim().trim().substring(0, 40) + "....";
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
