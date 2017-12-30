@@ -29,8 +29,8 @@ import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialT
  * -->
  */
 
-public class GetStartedTutorial extends FragmentPagerAdapter {
-    public GetStartedTutorial(FragmentManager fm) {
+public class GetStartedTutorialPagerAdapter extends FragmentPagerAdapter {
+    public GetStartedTutorialPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

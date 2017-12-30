@@ -17,7 +17,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.adapter.GetStartedTutorial;
+import com.android.llc.proringer.pro.proringerpro.adapter.GetStartedTutorialPagerAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
@@ -61,7 +61,7 @@ public class GetStartedActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private ViewPager get_started_pager;
-    private GetStartedTutorial adapter;
+    private GetStartedTutorialPagerAdapter adapter;
     private ImageView pager_dot_one, pager_dot_two, pager_dot_three, pager_dot_four, slide_left, slide_right;
     private ProRegularTextView get_started, sign_in;
     public static final int LOG_IN_REQUEST = 1;
@@ -143,7 +143,7 @@ public class GetStartedActivity extends AppCompatActivity implements
         });
 
 
-        adapter = new GetStartedTutorial(getSupportFragmentManager());
+        adapter = new GetStartedTutorialPagerAdapter(getSupportFragmentManager());
 
         get_started_pager.setAdapter(adapter);
 

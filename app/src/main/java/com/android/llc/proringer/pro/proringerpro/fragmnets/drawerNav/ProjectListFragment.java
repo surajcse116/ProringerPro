@@ -201,6 +201,7 @@ public class ProjectListFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
 
             @Override
