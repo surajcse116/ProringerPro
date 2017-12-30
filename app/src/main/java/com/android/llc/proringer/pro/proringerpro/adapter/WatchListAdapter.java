@@ -60,11 +60,11 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
             holder.LL_Main.setLayoutParams(params);
         }
 
-        if(position==0){
-            holder.find_local_pros.setVisibility(View.VISIBLE);
-        }else {
+//        if(position==0){
+//            holder.find_local_pros.setVisibility(View.VISIBLE);
+//        }else {
             holder.find_local_pros.setVisibility(View.GONE);
-        }
+//        }
 
         try {
             Glide.with(mcontext).load(info_array.getJSONObject(position).getString("prjct_img").trim()).into(holder.img_project);

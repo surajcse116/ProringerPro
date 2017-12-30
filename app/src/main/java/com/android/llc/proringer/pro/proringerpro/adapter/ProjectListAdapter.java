@@ -61,11 +61,11 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             holder.LL_Main.setLayoutParams(params);
         }
 
-        if(position==0){
-            holder.find_local_pros.setVisibility(View.VISIBLE);
-        }else {
+//        if(position==0){
+//            holder.find_local_pros.setVisibility(View.VISIBLE);
+//        }else {
             holder.find_local_pros.setVisibility(View.GONE);
-        }
+//        }
 
         try {
             Glide.with(mcontext).load(info_array.getJSONObject(position).getString("prjct_img").trim()).into(holder.img_project);
@@ -133,21 +133,28 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
                 }
             });
 
+            if (info_array.getJSONObject(position).getString("watchlist_status").trim().equals("0")){
+                holder.img_favorite.setImageResource(R.drawable.ic_unfavorite);
+            }else {
+                holder.img_favorite.setImageResource(R.drawable.ic_favorite);
+
+                holder.img_favorite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            callback.onItemPassed(position,info_array.getJSONObject(position));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }
 
             holder.cardView_main_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                }
-            });
-            holder.img_favorite.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        callback.onItemPassed(position,info_array.getJSONObject(position));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
                 }
             });
         } catch (JSONException e) {

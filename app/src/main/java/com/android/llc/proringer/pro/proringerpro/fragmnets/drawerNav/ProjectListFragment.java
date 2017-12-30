@@ -52,13 +52,14 @@ public class ProjectListFragment extends Fragment {
     private RecyclerView rcv_watch_list;
     ProjectListAdapter projectListAdapter;
     ProRegularTextView tv_empty_show;
-    ArrayList<SetGetAPI> arrayList=null;
+    ArrayList<SetGetAPI> arrayList = null;
     MyLoader myLoader;
     ProRegularEditText edt_search;
     TextWatcher mySearchTextWatcher;
     JSONArray info_array;
     ImageView img_clear;
     private InputMethodManager keyboard;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -69,11 +70,11 @@ public class ProjectListFragment extends Fragment {
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        myLoader=new MyLoader(getActivity());
+        myLoader = new MyLoader(getActivity());
         keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         rcv_watch_list = (RecyclerView) view.findViewById(R.id.rcv_watch_list);
-        tv_empty_show=(ProRegularTextView)view.findViewById(R.id.tv_empty_show);
+        tv_empty_show = (ProRegularTextView) view.findViewById(R.id.tv_empty_show);
         edt_search = (ProRegularEditText) view.findViewById(R.id.edt_search);
         img_clear = (ImageView) view.findViewById(R.id.img_clear);
         img_clear.setVisibility(View.GONE);
@@ -151,25 +152,24 @@ public class ProjectListFragment extends Fragment {
         void onItemPassed(int position, JSONObject jsonObject);
     }
 
-    public  void loadList()
-    {
-        arrayList=new ArrayList<SetGetAPI>();
-        SetGetAPI setGetAPI =new SetGetAPI();
+    public void loadList() {
+        arrayList = new ArrayList<SetGetAPI>();
+        SetGetAPI setGetAPI = new SetGetAPI();
         setGetAPI.setPARAMS("user_id");
         setGetAPI.setValues(ProApplication.getInstance().getUserId());
         arrayList.add(setGetAPI);
 
-        setGetAPI =new SetGetAPI();
+        setGetAPI = new SetGetAPI();
         setGetAPI.setPARAMS("category_search");
         setGetAPI.setValues(category_search);
         arrayList.add(setGetAPI);
 
-        setGetAPI =new SetGetAPI();
+        setGetAPI = new SetGetAPI();
         setGetAPI.setPARAMS("zip_search");
         setGetAPI.setValues(((LandScreenActivity) getActivity()).local_project_search_zip);
         arrayList.add(setGetAPI);
 
-        setGetAPI =new SetGetAPI();
+        setGetAPI = new SetGetAPI();
         setGetAPI.setPARAMS("allservice");
         setGetAPI.setValues("1");
         arrayList.add(setGetAPI);
@@ -178,42 +178,38 @@ public class ProjectListFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();
-                Logger.printMessage("Result",result);
+                Logger.printMessage("Result", result);
                 try {
                     Logger.printMessage("resultarr", String.valueOf(new JSONObject(result)));
-                    info_array= new JSONObject(result).getJSONArray("info_array");
+                    info_array = new JSONObject(result).getJSONArray("info_array");
 
-                    if (info_array.length()>0) {
-                        rcv_watch_list.setVisibility(View.VISIBLE);
-                        tv_empty_show.setVisibility(View.GONE);
+                    rcv_watch_list.setVisibility(View.VISIBLE);
+                    tv_empty_show.setVisibility(View.GONE);
 
-                        projectListAdapter = new ProjectListAdapter(getActivity(), info_array, new ProjectListFragment.onOptionSelected() {
-                            @Override
-                            public void onItemPassed(int position, JSONObject jsonObject) {
-                                try {
-                                    deleteWatchListItem(position,jsonObject.getString("id"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                        rcv_watch_list.setAdapter(projectListAdapter);
-
-                    }else {
-                        rcv_watch_list.setVisibility(View.GONE);
-                        tv_empty_show.setVisibility(View.VISIBLE);
-                    }
+                    projectListAdapter = new ProjectListAdapter(getActivity(), info_array, new ProjectListFragment.onOptionSelected() {
+                        @Override
+                        public void onItemPassed(int position, JSONObject jsonObject) {
+//                                try {
+//                                    deleteWatchListItem(position,jsonObject.getString("id"));
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+                        }
+                    });
+                    rcv_watch_list.setAdapter(projectListAdapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
             public void onError(String error, String response) {
                 myLoader.dismissLoader();
 
+                Logger.printMessage("ErrorMessage", "-->" + error);
+                rcv_watch_list.setVisibility(View.GONE);
+                tv_empty_show.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -225,6 +221,7 @@ public class ProjectListFragment extends Fragment {
                     public void callBackOk() {
 
                     }
+
                     @Override
                     public void callBackCancel() {
 
@@ -319,6 +316,7 @@ public class ProjectListFragment extends Fragment {
                 })
                 .show();
     }
+
     public void closeKeypad() {
         try {
             keyboard.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
