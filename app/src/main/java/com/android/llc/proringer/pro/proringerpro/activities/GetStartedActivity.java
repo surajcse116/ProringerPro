@@ -67,7 +67,7 @@ public class GetStartedActivity extends AppCompatActivity implements
     public static final int LOG_IN_REQUEST = 1;
     //RelativeLayout RLBottom;
     public static final int SIGN_UP_REQUEST = 2;
-    ImageView img_background;
+    ImageView img_background,img_pager;
     private static final String TAG = "LocationActivity";
     private static final long INTERVAL = 1000 * 10;
     private static final long FASTEST_INTERVAL = 1000 * 1;
@@ -109,6 +109,7 @@ public class GetStartedActivity extends AppCompatActivity implements
         int width = displayMetrics.widthPixels;
 
         img_background = (ImageView) findViewById(R.id.img_background);
+        img_pager = (ImageView) findViewById(R.id.img_pager);
 
         Glide.with(GetStartedActivity.this).load(R.drawable.welcome_intro_get_started).into(img_background);
 
@@ -156,6 +157,7 @@ public class GetStartedActivity extends AppCompatActivity implements
             @Override
             public void onPageSelected(int position) {
                 manageDots(position);
+                managepostion(position);
             }
 
             @Override
@@ -199,7 +201,32 @@ public class GetStartedActivity extends AppCompatActivity implements
                 break;
         }
     }
-
+    private void managepostion(int position)
+    {
+        switch (position)
+        {
+            case 0:
+                //  Glide.with(GetStartedActivity.this).load(R.color.colorHeader).into(img_pager);
+                img_pager.setBackgroundColor(getResources().getColor(R.color.colorHeader));
+                break;
+            case 1:
+                //Glide.with(GetStartedActivity.this).load(R.color.colorAccent).into(img_pager);
+                img_pager.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                break;
+            case 2:
+                //Glide.with(GetStartedActivity.this).load(R.color.colorLightBrick).into(img_pager);
+                img_pager.setBackgroundColor(getResources().getColor(R.color.colorLightBrick));
+                break;
+            case 3:
+                // Glide.with(GetStartedActivity.this).load(R.color.colorSky).into(img_pager);
+                img_pager.setBackgroundColor(getResources().getColor(R.color.colorSky));
+                break;
+            case 4:
+                //Glide.with(GetStartedActivity.this).load(R.color.colorHeader).into(img_pager);
+                img_pager.setBackgroundColor(getResources().getColor(R.color.colorHeader));
+                break;
+        }
+    }
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)

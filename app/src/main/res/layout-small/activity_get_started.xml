@@ -25,6 +25,16 @@
             android:background="@android:color/transparent"
             android:layout_weight="2">
 
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="65dp"
+                android:id="@+id/img_pager"
+                android:scaleType="fitXY"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:background="@color/colorHeader" />
+
         </RelativeLayout>
 
 
@@ -39,7 +49,7 @@
                 android:layout_alignParentBottom="true"
                 android:id="@+id/sign_in"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
+                android:layout_height="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@color/colorAccent"
                 android:elevation="2dp"
@@ -53,19 +63,19 @@
 
 
             <!--<com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView-->
-                <!--android:layout_above="@+id/sign_in"-->
-                <!--android:id="@+id/get_started"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/button_height"-->
-                <!--android:layout_marginBottom="5dp"-->
-                <!--android:layout_marginLeft="15dp"-->
-                <!--android:layout_marginRight="15dp"-->
-                <!--android:background="@color/colorAccent"-->
-                <!--android:elevation="2dp"-->
-                <!--android:gravity="center"-->
-                <!--android:text="GET STARTED"-->
-                <!--android:textColor="@color/colorPrimary"-->
-                <!--android:textSize="16sp" />-->
+            <!--android:layout_above="@+id/sign_in"-->
+            <!--android:id="@+id/get_started"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/button_height"-->
+            <!--android:layout_marginBottom="5dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--android:background="@color/colorAccent"-->
+            <!--android:elevation="2dp"-->
+            <!--android:gravity="center"-->
+            <!--android:text="GET STARTED"-->
+            <!--android:textColor="@color/colorPrimary"-->
+            <!--android:textSize="16sp" />-->
 
             <RelativeLayout
                 android:layout_above="@+id/sign_in"
@@ -80,8 +90,8 @@
                     android:layout_centerHorizontal="true" />
 
                 <LinearLayout
-                    android:layout_width="280dp"
-                    android:layout_height="30dp"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
@@ -89,28 +99,28 @@
 
                     <ImageView
                         android:id="@+id/pager_dot_one"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="5dp"
+                        android:layout_height="5dp"
                         android:background="@drawable/circle_orenge_border" />
 
                     <ImageView
                         android:id="@+id/pager_dot_two"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="5dp"
+                        android:layout_height="5dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:background="@drawable/circle_dark" />
 
                     <ImageView
                         android:id="@+id/pager_dot_three"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="5dp"
+                        android:layout_height="5dp"
                         android:background="@drawable/circle_dark" />
 
                     <ImageView
                         android:id="@+id/pager_dot_four"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="5dp"
+                        android:layout_height="5dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:background="@drawable/circle_dark" />
