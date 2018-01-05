@@ -259,6 +259,7 @@ public class WatchListFragment extends Fragment {
                         HashMap<String, String> Params = new HashMap<>();
                         Params.put("user_id", ProApplication.getInstance().getUserId());
                         Params.put("project_id", project_id);
+                        Params.put("project_function", "0");
                         Logger.printMessage("PARAMS", String.valueOf(Params));
                         new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_watchlist_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
                             @Override

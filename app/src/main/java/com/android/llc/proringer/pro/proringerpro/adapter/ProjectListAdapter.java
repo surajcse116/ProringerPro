@@ -135,14 +135,24 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
             if (info_array.getJSONObject(position).getString("watchlist_status").trim().equals("0")){
                 holder.img_favorite.setImageResource(R.drawable.ic_unfavorite);
-            }else {
-                holder.img_favorite.setImageResource(R.drawable.ic_favorite);
-
                 holder.img_favorite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try {
-                            callback.onItemPassed(position,info_array.getJSONObject(position));
+                            callback.onFavorite(position,info_array.getJSONObject(position),"1");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }else {
+                holder.img_favorite.setImageResource(R.drawable.ic_favorite);
+                holder.img_favorite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            callback.onFavorite(position,info_array.getJSONObject(position),"0");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -151,10 +161,15 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
             }
 
+
             holder.cardView_main_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    try {
+                        callback.onItemPassed(position,info_array.getJSONObject(position));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         } catch (JSONException e) {

@@ -150,6 +150,7 @@ public class ProjectListFragment extends Fragment {
 
     public interface onOptionSelected {
         void onItemPassed(int position, JSONObject jsonObject);
+        void onFavorite(int position, JSONObject jsonObject,String addOrDelete);
     }
 
     public void loadList() {
@@ -189,11 +190,16 @@ public class ProjectListFragment extends Fragment {
                     projectListAdapter = new ProjectListAdapter(getActivity(), info_array, new ProjectListFragment.onOptionSelected() {
                         @Override
                         public void onItemPassed(int position, JSONObject jsonObject) {
-//                                try {
-//                                    deleteWatchListItem(position,jsonObject.getString("id"));
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
+
+                        }
+
+                        @Override
+                        public void onFavorite(int position, JSONObject jsonObject,String addOrDelete) {
+                            try {
+                                addorDeleteWatchListItem(position,jsonObject.getString("id"),addOrDelete);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                     rcv_watch_list.setAdapter(projectListAdapter);
@@ -237,10 +243,15 @@ public class ProjectListFragment extends Fragment {
         });
     }
 
-    public void deleteWatchListItem(final int position, final String project_id) {
+    public void addorDeleteWatchListItem(final int position, final String project_id, final String project_function) {
 
         TextView title = new TextView(getActivity());
-        title.setText("Are you sure you want to remove from watch List?");
+
+        if (project_function.equals("1")) {
+            title.setText("Are you sure you want to Add to watch List?");
+        }else {
+            title.setText("Are you sure you want to Delete from watch List?");
+        }
 //                title.setBackgroundResource(R.drawable.gradient);
         title.setPadding(10, 10, 10, 10);
         title.setGravity(Gravity.CENTER);
@@ -257,20 +268,34 @@ public class ProjectListFragment extends Fragment {
                         ///////////delete from watch list
 
                         HashMap<String, String> Params = new HashMap<>();
+
                         Params.put("user_id", ProApplication.getInstance().getUserId());
                         Params.put("project_id", project_id);
+                        Params.put("project_function", project_function);
+
+                        Logger.printMessage("user_id", ProApplication.getInstance().getUserId());
+                        Logger.printMessage("project_id", project_id);
+                        Logger.printMessage("project_function", project_function);
+
                         Logger.printMessage("PARAMS", String.valueOf(Params));
+
+
                         new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_watchlist_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
                             @Override
                             public void onSuccess(String result) {
                                 myLoader.dismissLoader();
-                                JSONObject mainResponseObj = null;
                                 try {
-                                    mainResponseObj = new JSONObject(result);
+                                    JSONObject mainResponseObj = new JSONObject(result);
                                     Logger.printMessage("message", mainResponseObj.getString("message"));
                                     Toast.makeText(getActivity(), mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
 
-                                    info_array.remove(position);
+
+                                    if (project_function.equals("1")) {
+                                        info_array.getJSONObject(position).put("watchlist_status", "1");
+                                    }else {
+                                        info_array.getJSONObject(position).put("watchlist_status", "0");
+                                    }
+
                                     projectListAdapter.notifyDataSetChanged();
 
                                 } catch (JSONException e) {
