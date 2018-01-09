@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 
 
@@ -49,24 +50,35 @@ public class ContactUsActivity extends AppCompatActivity {
     private void validateContactUs() {
         if (first_name.getText().toString().trim().equals("")) {
             first_name.setError("First name can not be blank.");
+            first_name.requestFocus();
         } else {
+            first_name.setError(null);
+            first_name.clearFocus();
+
             if (last_name.getText().toString().trim().equals("")) {
                 last_name.setError("Last name can not be blank.");
                 last_name.requestFocus();
             } else {
+                last_name.setError(null);
+                last_name.clearFocus();
                 if (email.getText().toString().trim().equals("")) {
                     email.setError("Email name can not be blank.");
                 } else {
-                    if (Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()) {
-
+                    if (MethodsUtils.isValidEmail(email.getText().toString().trim())) {
+                        email.setError(null);
+                        email.clearFocus();
                         if (phonenumber.getText().toString().trim().equals("")) {
                             phonenumber.setError("Phone number name can not be blank.");
                             phonenumber.requestFocus();
                         } else {
+                            phonenumber.setError(null);
+                            phonenumber.clearFocus();
                             if (contact_info.getText().toString().trim().equals("")) {
                                 contact_info.setError("Phone number name can not be blank.");
                                 contact_info.requestFocus();
                             } else {
+                                contact_info.setError(null);
+                                contact_info.clearFocus();
                                 getSubmitParams();
                             }
                         }

@@ -90,12 +90,23 @@ public class InviteAfriendFragment extends Fragment {
                 last_name.setError("Last name can not be blank.");
                 last_name.requestFocus();
             } else {
+                last_name.setError(null);
+                last_name.clearFocus();
                 if (email.getText().toString().trim().equals("")) {
                     email.setError("Email name can not be blank.");
                     email.requestFocus();
                 } else {
+                    email.setError(null);
+                    email.clearFocus();
                     if (Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()) {
+
+                        email.setError(null);
+                        email.clearFocus();
+
                         if (email.getText().toString().trim().equals(confirm_email.getText().toString().trim())) {
+
+                            confirm_email.setError(null);
+                            confirm_email.clearFocus();
 
                             HashMap<String, String> Params = new HashMap<>();
                             Params.put("user_id", ProApplication.getInstance().getUserId());

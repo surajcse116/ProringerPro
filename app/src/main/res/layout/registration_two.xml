@@ -17,7 +17,7 @@
             android:padding="10dp">
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:id="@+id/prolight_businessname"
+                android:id="@+id/edt_businessname"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="10dp"
@@ -30,21 +30,47 @@
                 android:textColor="@color/colorTextDark"
                 android:textSize="14sp" />
 
-            <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:id="@+id/prolight_address"
+
+            <RelativeLayout
+                android:id="@+id/RL_address"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_selecter"
-                android:hint="Address"
-                android:inputType="text"
-                android:padding="5dp"
-                android:textColor="@color/colorTextDark"
-                android:textSize="14sp" />
+                android:layout_height="45dp"
+                >
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tv_prolight_address"
+                    android:background="@drawable/edit_text_selecter"
+                    android:inputType="text"
+                    android:hint="Address"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="45dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="14sp" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+
+
+            </RelativeLayout>
+
+
+
+
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:id="@+id/prolight_city"
+                android:id="@+id/edt_city"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="10dp"
@@ -58,7 +84,7 @@
                 android:textSize="14sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:id="@+id/prolight_State"
+                android:id="@+id/edt_State"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="10dp"
@@ -72,7 +98,7 @@
                 android:textSize="14sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:id="@+id/prolight_zip"
+                android:id="@+id/edt_zip"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="10dp"
@@ -86,7 +112,7 @@
                 android:textSize="14sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:id="@+id/prolight_phone"
+                android:id="@+id/edt_phone"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="10dp"
@@ -101,7 +127,7 @@
                 android:textSize="14sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:id="@+id/prolight_email"
+                android:id="@+id/edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="10dp"
@@ -116,7 +142,7 @@
                 android:textSize="14sp" />
 
             <RelativeLayout
-                android:id="@+id/relative_dropdown"
+                android:id="@+id/RL_Service"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -141,18 +167,35 @@
                     android:src="@drawable/ic_arrow_drop_down_black_24dp" />
             </RelativeLayout>
 
-            <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:id="@+id/prolight_service_area"
+            <RelativeLayout
+                android:id="@+id/RL_Service_Area"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_selecter"
-                android:hint="Service Area"
-                android:inputType="text"
-                android:padding="5dp"
-                android:textColor="@color/colorTextDark"
-                android:textSize="14sp" />
+                android:background="@drawable/edit_text_selecter">
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                    android:id="@+id/tv_service_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:hint="Service Area"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="14sp" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+
+            </RelativeLayout>
+
+
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                 android:id="@+id/protv_com"

@@ -153,8 +153,6 @@
                         android:textAllCaps="true" />
 
 
-
-
                     <RelativeLayout
                         android:id="@+id/relative_dropdown"
                         android:layout_marginTop="5dp"
@@ -187,9 +185,6 @@
 
 
                     </RelativeLayout>
-
-
-
 
                 </LinearLayout>
 

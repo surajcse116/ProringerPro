@@ -57,7 +57,7 @@
         <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/proet_cemail"
+            android:id="@+id/proet_c_email"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_selecter"
@@ -106,7 +106,7 @@
         <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/proet_cpassword"
+            android:id="@+id/proet_c_password"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_selecter"
@@ -120,7 +120,7 @@
             android:textSize="14sp" />
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-            android:id="@+id/next"
+            android:id="@+id/tv_next"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginBottom="10dp"

@@ -602,42 +602,67 @@ public class CompanyProfileActivity extends AppCompatActivity implements
 
         if (et_name.getText().toString().trim().equals("")) {
             et_name.setError("Please enter company name");
-            et_name.setFocusable(true);
+            et_name.requestFocus();
         } else {
             if (et_email.getText().toString().trim().equals("")) {
                 et_email.setError("Please enter email");
-                et_email.setFocusable(true);
+                et_email.requestFocus();
             } else {
+                et_email.setError(null);
+                et_email.clearFocus();
                 if (MethodsUtils.isValidEmail(et_email.getText().toString())) {
+
+                    et_email.setError(null);
+                    et_email.clearFocus();
+
                     if (et_companywesite.getText().toString().trim().equals("")) {
                         et_companywesite.setError("Please enter company  website");
-                        et_companywesite.setFocusable(true);
+                        et_companywesite.requestFocus();
                     } else {
+                        et_companywesite.setError(null);
+                        et_companywesite.clearFocus();
+
                         if (MethodsUtils.isValidUrl(et_companywesite.getText().toString())) {
+
+                            et_companywesite.setError(null);
+                            et_companywesite.clearFocus();
+
                             if (et_companyphone.getText().toString().trim().equals("")) {
                                 et_companyphone.setError("Enter company phone number");
-                                et_companyphone.setFocusable(true);
+                                et_companyphone.requestFocus();
                             } else {
+                                et_companyphone.setError(null);
+                                et_companyphone.clearFocus();
                                 if (et_employee.getText().toString().trim().equals("")) {
                                     et_employee.setError("Enter employee value");
-                                    et_employee.setFocusable(true);
+                                    et_employee.requestFocus();
                                 } else {
+                                    et_employee.setError(null);
+                                    et_employee.clearFocus();
                                     if (et_address.getText().toString().trim().equals("")) {
                                         et_address.setError("Select your street address");
-                                        et_address.setFocusable(true);
+                                        et_address.requestFocus();
                                     } else {
+                                        et_address.setError(null);
+                                        et_address.clearFocus();
                                         if (et_zip.getText().toString().trim().equals("")) {
                                             et_zip.setError("Select your zipcode");
-                                            et_zip.setFocusable(true);
+                                            et_zip.requestFocus();
                                         } else {
+                                            et_zip.setError(null);
+                                            et_zip.clearFocus();
                                             if (et_city.getText().toString().trim().equals("")) {
                                                 et_city.setError("Select your city");
-                                                et_city.setFocusable(true);
+                                                et_city.requestFocus();
                                             } else {
+                                                et_city.setError(null);
+                                                et_city.clearFocus();
                                                 if (et_state.getText().toString().trim().equals("")) {
                                                     et_state.setError("select your state");
-                                                    et_state.setFocusable(true);
+                                                    et_state.requestFocus();
                                                 } else {
+                                                    et_state.setError(null);
+                                                    et_state.clearFocus();
                                                     final String locale = CompanyProfileActivity.this.getResources().getConfiguration().locale.getCountry();
                                                     ProConstant.country1 = locale;
 
@@ -738,12 +763,12 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                             }
                         } else {
                             et_companywesite.setError("Please enter correct website");
-                            et_companywesite.setFocusable(true);
+                            et_companywesite.requestFocus();
                         }
                     }
                 } else {
                     et_email.setError("Please enter valid email");
-                    et_email.setFocusable(true);
+                    et_email.requestFocus();
                 }
             }
         }

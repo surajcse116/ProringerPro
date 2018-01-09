@@ -79,22 +79,38 @@ public class RequestReviewFragment extends Fragment {
 
         if (et_fname.getText().toString().trim().equals("")) {
             et_fname.setError("Please enter the first name");
-            et_fname.setFocusable(true);
+            et_fname.requestFocus();
         } else {
+            et_fname.setError(null);
+            et_fname.clearFocus();
             if (et_lname.getText().toString().trim().equals("")) {
                 et_lname.setError("Please enter the last name");
-                et_lname.setFocusable(true);
+                et_lname.requestFocus();
             } else {
+                et_lname.setError(null);
+                et_lname.clearFocus();
                 if (Patterns.EMAIL_ADDRESS.matcher(et_email.getText().toString()).matches()) {
+
+                    et_email.setError(null);
+                    et_email.clearFocus();
+
                     if (Patterns.EMAIL_ADDRESS.matcher((et_cemail.getText().toString())).matches()) {
+
+                        et_cemail.setError(null);
+                        et_cemail.clearFocus();
+
                         if (!et_cemail.getText().toString().trim().equals(et_email.getText().toString().trim())) {
                             et_cemail.setError("Email id dose not match!");
-                            et_cemail.setFocusable(true);
+                            et_cemail.requestFocus();
                         } else {
+                            et_cemail.setError(null);
+                            et_cemail.clearFocus();
                             if (et_comment.getText().toString().trim().equals("")) {
                                 et_comment.setError("Please enter  comment");
-                                et_comment.setFocusable(true);
+                                et_comment.requestFocus();
                             } else {
+                                et_comment.setError(null);
+                                et_comment.clearFocus();
                                 HashMap<String, String> Params = new HashMap<>();
                                 Params.put("user_id", ProApplication.getInstance().getUserId());
                                 Params.put("first_name", et_fname.getText().toString().trim());
@@ -158,11 +174,11 @@ public class RequestReviewFragment extends Fragment {
 
                     } else {
                         et_cemail.setError("Please enter valid confirm email");
-                        et_cemail.setFocusable(true);
+                        et_cemail.requestFocus();
                     }
                 } else {
                     et_email.setError("Please enter valid email");
-                    et_email.setFocusable(true);
+                    et_email.requestFocus();
                 }
             }
         }

@@ -37,6 +37,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyCustomAlertListener;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
+import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProLightTextView;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -67,10 +68,10 @@ import java.util.HashMap;
 public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
 
 
-    ProLightEditText prolight_businessname, prolight_address, prolight_city, prolight_State, prolight_zip, prolight_phone, prolight_email, prolight_service_area;
-    ProRegularTextView protv_com, tv_service;
+    ProLightEditText edt_businessname, edt_city, edt_State, edt_zip, edt_phone, edt_email;
+    ProRegularTextView protv_com, tv_service,tv_prolight_address,tv_service_area;
     public MyLoader myload = null;
-    RelativeLayout relative_dropdown;
+    RelativeLayout RL_Service,RL_address,RL_Service_Area;
     JSONArray catagory;
     ProLightTextView terms_and_condition;
     PopupWindow popupWindow;
@@ -99,48 +100,50 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
         myload = new MyLoader(getActivity());
 
         protv_com = (ProRegularTextView) view.findViewById(R.id.protv_com);
-        prolight_businessname = (ProLightEditText) view.findViewById(R.id.prolight_businessname);
-        prolight_address = (ProLightEditText) view.findViewById(R.id.prolight_address);
-        prolight_city = (ProLightEditText) view.findViewById(R.id.prolight_city);
-        prolight_State = (ProLightEditText) view.findViewById(R.id.prolight_State);
-        prolight_zip = (ProLightEditText) view.findViewById(R.id.prolight_zip);
-        prolight_phone = (ProLightEditText) view.findViewById(R.id.prolight_phone);
-        prolight_email = (ProLightEditText) view.findViewById(R.id.prolight_email);
-        prolight_service_area = (ProLightEditText) view.findViewById(R.id.prolight_service_area);
+        edt_businessname = (ProLightEditText) view.findViewById(R.id.edt_businessname);
+        tv_prolight_address = (ProRegularTextView) view.findViewById(R.id.tv_prolight_address);
+        edt_city = (ProLightEditText) view.findViewById(R.id.edt_city);
+        edt_State = (ProLightEditText) view.findViewById(R.id.edt_State);
+        edt_zip = (ProLightEditText) view.findViewById(R.id.edt_zip);
+        edt_phone = (ProLightEditText) view.findViewById(R.id.edt_phone);
+        edt_email = (ProLightEditText) view.findViewById(R.id.edt_email);
+        tv_service_area = (ProRegularTextView) view.findViewById(R.id.tv_service_area);
         tv_service = (ProRegularTextView) view.findViewById(R.id.tv_service);
-        relative_dropdown = (RelativeLayout) view.findViewById(R.id.relative_dropdown);
+        RL_Service = (RelativeLayout) view.findViewById(R.id.RL_Service);
+        RL_Service_Area = (RelativeLayout) view.findViewById(R.id.RL_Service_Area);
+        RL_address = (RelativeLayout) view.findViewById(R.id.RL_address);
 
 
-        prolight_phone.addTextChangedListener(new TextWatcher() {
+        edt_phone.addTextChangedListener(new TextWatcher() {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String text = prolight_phone.getText().toString();
-                textLength = prolight_phone.getText().length();
+                String text = edt_phone.getText().toString();
+                textLength = edt_phone.getText().length();
 
                 if (text.endsWith("-") || text.endsWith(" ") || text.endsWith(" "))
                     return;
 
                 if (textLength == 1) {
                     if (!text.contains("(")) {
-                        prolight_phone.setText(new StringBuilder(text).insert(text.length() - 1, "(").toString());
-                        prolight_phone.setSelection(prolight_phone.getText().length());
+                        edt_phone.setText(new StringBuilder(text).insert(text.length() - 1, "(").toString());
+                        edt_phone.setSelection(edt_phone.getText().length());
                     }
 
                 } else if (textLength == 5) {
 
                     if (!text.contains(")")) {
-                        prolight_phone.setText(new StringBuilder(text).insert(text.length() - 1, ")").toString());
-                        prolight_phone.setSelection(prolight_phone.getText().length());
+                        edt_phone.setText(new StringBuilder(text).insert(text.length() - 1, ")").toString());
+                        edt_phone.setSelection(edt_phone.getText().length());
                     }
 
                 } else if (textLength == 6) {
-                    prolight_phone.setText(new StringBuilder(text).insert(text.length() - 1, " ").toString());
-                    prolight_phone.setSelection(prolight_phone.getText().length());
+                    edt_phone.setText(new StringBuilder(text).insert(text.length() - 1, " ").toString());
+                    edt_phone.setSelection(edt_phone.getText().length());
 
                 } else if (textLength == 10) {
                     if (!text.contains("-")) {
-                        prolight_phone.setText(new StringBuilder(text).insert(text.length() - 1, "-").toString());
-                        prolight_phone.setSelection(prolight_phone.getText().length());
+                        edt_phone.setText(new StringBuilder(text).insert(text.length() - 1, "-").toString());
+                        edt_phone.setSelection(edt_phone.getText().length());
                     }
                 }
             }
@@ -153,46 +156,48 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
         });
 
 
-        prolight_address.setFocusable(false);
-        prolight_address.setClickable(false);
+        edt_city.setEnabled(false);
+        edt_city.setClickable(false);
 
-        prolight_city.setEnabled(false);
-        prolight_city.setClickable(false);
+        edt_State.setEnabled(false);
+        edt_State.setClickable(false);
 
-        prolight_State.setEnabled(false);
-        prolight_State.setClickable(false);
-
-        prolight_zip.setEnabled(false);
-        prolight_zip.setClickable(false);
+        edt_zip.setEnabled(false);
+        edt_zip.setClickable(false);
 
 //        prolight_service_area.setEnabled(false);
 //        prolight_service_area.setClickable(false);
 
         category();
 
-        relative_dropdown = (RelativeLayout) view.findViewById(R.id.relative_dropdown);
-        relative_dropdown.setOnClickListener(new View.OnClickListener() {
+        RL_Service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                relative_dropdown.setBackgroundResource(R.drawable.background_solidorange_border);
+                RL_Service.setBackgroundResource(R.drawable.background_solidorange_border);
                 showDialogServices(view, catagory);
             }
         });
-        prolight_zip.setClickable(false);
+
+        RL_Service_Area.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), LocationActivity.class);
+                startActivityForResult(i, 2);
+            }
+        });
+
         protv_com.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 validation();
-
             }
         });
-        prolight_address.setOnClickListener(new View.OnClickListener() {
+
+        tv_prolight_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), LocationActivity.class);
                 startActivityForResult(i, 1);
-
             }
         });
 
@@ -273,15 +278,35 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                     Logger.printMessage("state", "--->" + extras.getString("state"));
 
                     if (!extras.getString("selectedPlace").equals("")) {
-                        prolight_address.setText(extras.getString("selectedPlace").substring(0, extras.getString("selectedPlace").indexOf(",")));
+                        tv_prolight_address.setText(extras.getString("selectedPlace").substring(0, extras.getString("selectedPlace").indexOf(",")));
 //                        address.setText(extras.getString("selectedPlace").substring(0, extras.getString("selectedPlace").indexOf(",")));
                     }
-                    prolight_zip.setText(extras.getString("zip"));
-                    prolight_city.setText(extras.getString("city"));
-                    prolight_State.setText(extras.getString("state"));
+                    edt_zip.setText(extras.getString("zip"));
+                    edt_city.setText(extras.getString("city"));
+                    edt_State.setText(extras.getString("state"));
                     String servicearea = extras.getString("city") + ", " + extras.getString("state");
                     Logger.printMessage("ServiceArea-->", servicearea);
-                    prolight_service_area.setText(servicearea);
+                    tv_service_area.setText(servicearea);
+                }
+            }
+        }
+        if (requestCode==2){
+            if (resultCode == Activity.RESULT_OK) {
+
+                Bundle extras = data.getBundleExtra("data");
+                if (extras != null) {
+
+                    Logger.printMessage("city", "--->" + extras.getString("city"));
+                    Logger.printMessage("state", "--->" + extras.getString("state"));
+
+                    if (!extras.getString("selectedPlace").equals("")) {
+                        tv_prolight_address.setText(extras.getString("selectedPlace").substring(0, extras.getString("selectedPlace").indexOf(",")));
+//                        address.setText(extras.getString("selectedPlace").substring(0, extras.getString("selectedPlace").indexOf(",")));
+                    }
+
+                    String servicearea = extras.getString("city") + ", " + extras.getString("state");
+                    Logger.printMessage("ServiceArea-->", servicearea);
+                    tv_service_area.setText(servicearea);
                 }
             }
         }
@@ -367,132 +392,161 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
 
 
     public void validation() {
-        if (prolight_businessname.getText().toString().trim().equals("")) {
-            prolight_businessname.setError("Please enter Business name");
-            prolight_businessname.setFocusable(true);
+        if (edt_businessname.getText().toString().trim().equals("")) {
+            edt_businessname.setError("Please enter Business name");
+            edt_businessname.requestFocus();
         } else {
-            if (prolight_address.getText().toString().trim().equals("")) {
-                prolight_address.setError("Please enter Address");
-                prolight_address.setFocusable(true);
+
+            edt_businessname.setError(null);
+            edt_businessname.clearFocus();
+
+            if (tv_prolight_address.getText().toString().trim().equals("")) {
+                Toast.makeText(getActivity(),"Please choose Address",Toast.LENGTH_SHORT).show();
             } else {
-                if (prolight_city.getText().toString().trim().equals("")) {
-                    prolight_city.setError("Please enter City");
-                    prolight_city.setFocusable(true);
+                if (edt_city.getText().toString().trim().equals("")) {
+                    edt_city.setError("Please enter City");
+                    edt_city.requestFocus();
 
                 } else {
-                    if (prolight_State.getText().toString().trim().equals("")) {
-                        prolight_State.setError("Please enter State ");
-                        prolight_State.setFocusable(true);
+
+                    edt_city.setError(null);
+                    edt_city.clearFocus();
+
+                    if (edt_State.getText().toString().trim().equals("")) {
+                        edt_State.setError("Please enter State ");
+                        edt_State.requestFocus();
 
                     } else {
-                        if (prolight_zip.getText().toString().trim().equals("")) {
-                            prolight_zip.setError("Please enter zip");
-                            prolight_State.setFocusable(true);
+                        edt_State.setError(null);
+                        edt_State.clearFocus();
+
+                        if (edt_zip.getText().toString().trim().equals("")) {
+                            edt_zip.setError("Please enter zip");
+                            edt_zip.requestFocus();
                         } else {
-                            if (prolight_phone.getText().toString().trim().equals("")) {
-                                prolight_phone.setError("please enter Phone number");
-                                prolight_phone.setFocusable(false);
+                            edt_zip.setError(null);
+                            edt_zip.clearFocus();
+
+                            if (edt_phone.getText().toString().trim().equals("")) {
+                                edt_phone.setError("please enter Phone number");
+                                edt_phone.requestFocus();
                             } else {
-                                if (prolight_email.getText().toString().trim().equals("")) {
-                                    prolight_email.setError("Please enter Business email ");
-                                    prolight_email.setFocusable(true);
+                                edt_phone.setError(null);
+                                edt_phone.clearFocus();
+
+                                if (edt_email.getText().toString().trim().equals("")) {
+                                    edt_email.setError("Please enter Business email ");
+                                    edt_email.requestFocus();
                                 } else {
-                                    if (tv_service.getText().toString().trim().equals("")) {
-                                        tv_service.setError("Please enter Primary service");
-                                        tv_service.setFocusable(true);
-                                    } else {
-                                        if (prolight_service_area.getText().toString().trim().equals("")) {
-                                            prolight_service_area.setError("Please enter service area");
-                                            prolight_service_area.setFocusable(true);
+                                    edt_email.setError(null);
+                                    edt_email.clearFocus();
+
+                                    if (MethodsUtils.isValidEmail(edt_email.getText().toString().trim()))
+                                    {
+                                        edt_email.setError(null);
+                                        edt_email.clearFocus();
+
+                                        if (tv_service.getText().toString().trim().equals("")) {
+                                            tv_service.setError("Please enter Primary service");
+                                            tv_service.requestFocus();
                                         } else {
-                                            Logger.printMessage("fname", ProConstant.f_name);
-                                            Logger.printMessage("lname", ProConstant.l_name);
-                                            Logger.printMessage("email", ProConstant.email);
-                                            Logger.printMessage("phone", ProConstant.phone);
-                                            Logger.printMessage("password", ProConstant.password);
-                                            Logger.printMessage("busimessname", prolight_businessname.getText().toString().trim());
-                                            Logger.printMessage("address", prolight_address.getText().toString().trim());
-                                            Logger.printMessage("city", prolight_city.getText().toString().trim());
-                                            Logger.printMessage("state", prolight_State.getText().toString().trim());
-                                            Logger.printMessage("zip", prolight_zip.getText().toString().trim());
-                                            Logger.printMessage("businessemail", prolight_email.getText().toString().trim());
-                                            Logger.printMessage("phonenumber", prolight_phone.getText().toString().trim());
-                                            Logger.printMessage("primaryservice", tv_service.getText().toString().trim());
-                                            Logger.printMessage("servicearea", prolight_service_area.getText().toString().trim());
-                                            Logger.printMessage("latittuted", ProConstant.latitude);
-                                            Logger.printMessage("Logtitude", ProConstant.longtitude);
-                                            Logger.printMessage("country", ProConstant.Country);
+                                            tv_service.setError(null);
+                                            tv_service.clearFocus();
+                                            if (tv_service_area.getText().toString().trim().equals("")) {
+                                                Toast.makeText(getActivity(),"Please choose Service Area",Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Logger.printMessage("fname", ProConstant.f_name);
+                                                Logger.printMessage("lname", ProConstant.l_name);
+                                                Logger.printMessage("email", ProConstant.email);
+                                                Logger.printMessage("phone", ProConstant.phone);
+                                                Logger.printMessage("password", ProConstant.password);
+                                                Logger.printMessage("busimessname", edt_businessname.getText().toString().trim());
+                                                Logger.printMessage("address", tv_prolight_address.getText().toString().trim());
+                                                Logger.printMessage("city", edt_city.getText().toString().trim());
+                                                Logger.printMessage("state", edt_State.getText().toString().trim());
+                                                Logger.printMessage("zip", edt_zip.getText().toString().trim());
+                                                Logger.printMessage("businessemail", edt_email.getText().toString().trim());
+                                                Logger.printMessage("phonenumber", edt_phone.getText().toString().trim());
+                                                Logger.printMessage("primaryservice", tv_service.getText().toString().trim());
+                                                Logger.printMessage("servicearea", tv_service_area.getText().toString().trim());
+                                                Logger.printMessage("latittuted", ProConstant.latitude);
+                                                Logger.printMessage("Logtitude", ProConstant.longtitude);
+                                                Logger.printMessage("country", ProConstant.Country);
 
-                                            HashMap<String, String> Params1 = new HashMap<>();
-                                            Params1.put("contact_f_name", ProConstant.f_name);
-                                            Params1.put("contact_l_name", ProConstant.l_name);
-                                            Params1.put("pro_email", ProConstant.email);
-                                            Params1.put("pro_phone", ProConstant.phone);
-                                            Params1.put("pro_password", ProConstant.password);
-                                            Params1.put("com_name", prolight_businessname.getText().toString().trim());
-                                            Params1.put("com_address", prolight_address.getText().toString().trim());
-                                            Params1.put("city", prolight_city.getText().toString().trim());
-                                            Params1.put("state", prolight_State.getText().toString().trim());
-                                            Params1.put("zipcode", prolight_zip.getText().toString().trim());
-                                            Params1.put("country", ProConstant.Country);
-                                            Params1.put("alt_phone", prolight_phone.getText().toString().trim());
-                                            Params1.put("com_email", prolight_email.getText().toString().trim());
-                                            Params1.put("primary_category", pros_contact_service);
-                                            Params1.put("service_area", prolight_service_area.getText().toString().trim());
-                                            Params1.put("latitude", ProConstant.latitude);
-                                            Params1.put("longitude", ProConstant.longtitude);
-                                            Params1.put("device_type", "A");
+                                                HashMap<String, String> Params1 = new HashMap<>();
+                                                Params1.put("contact_f_name", ProConstant.f_name);
+                                                Params1.put("contact_l_name", ProConstant.l_name);
+                                                Params1.put("pro_email", ProConstant.email);
+                                                Params1.put("pro_phone", ProConstant.phone);
+                                                Params1.put("pro_password", ProConstant.password);
+                                                Params1.put("com_name", edt_businessname.getText().toString().trim());
+                                                Params1.put("com_address", tv_prolight_address.getText().toString().trim());
+                                                Params1.put("city", edt_city.getText().toString().trim());
+                                                Params1.put("state", edt_State.getText().toString().trim());
+                                                Params1.put("zipcode", edt_zip.getText().toString().trim());
+                                                Params1.put("country", ProConstant.Country);
+                                                Params1.put("alt_phone", edt_phone.getText().toString().trim());
+                                                Params1.put("com_email", edt_email.getText().toString().trim());
+                                                Params1.put("primary_category", pros_contact_service);
+                                                Params1.put("service_area", tv_service_area.getText().toString().trim());
+                                                Params1.put("latitude", ProConstant.latitude);
+                                                Params1.put("longitude", ProConstant.longtitude);
+                                                Params1.put("device_type", "A");
 
-                                            Logger.printMessage("PARAMS", String.valueOf(Params1));
+                                                Logger.printMessage("PARAMS", String.valueOf(Params1));
 
-                                            myload.showLoader();
+                                                myload.showLoader();
 
 
-                                            new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.Signup, Params1, null, new CustomJSONParser.CustomJSONResponse() {
-                                                @Override
-                                                public void onSuccess(String result) {
-                                                    myload.dismissLoader();
-                                                    try {
-                                                        JSONObject myob = new JSONObject(result);
-                                                        boolean response = Boolean.parseBoolean(myob.getString("response"));
-                                                        String messsage = myob.getString("message");
+                                                new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.Signup, Params1, null, new CustomJSONParser.CustomJSONResponse() {
+                                                    @Override
+                                                    public void onSuccess(String result) {
+                                                        myload.dismissLoader();
+                                                        try {
+                                                            JSONObject myob = new JSONObject(result);
+                                                            boolean response = Boolean.parseBoolean(myob.getString("response"));
+                                                            String messsage = myob.getString("message");
 
-                                                        Toast.makeText(getActivity(), "" + messsage, Toast.LENGTH_SHORT).show();
-                                                        Intent i = new Intent(getActivity(), SignupCompleteActivity.class);
-                                                        startActivity(i);
-                                                        getActivity().finish();
+                                                            Toast.makeText(getActivity(), "" + messsage, Toast.LENGTH_SHORT).show();
+                                                            Intent i = new Intent(getActivity(), SignupCompleteActivity.class);
+                                                            startActivity(i);
+                                                            getActivity().finish();
 
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+
+
                                                     }
 
-
-                                                }
-
-                                                @Override
-                                                public void onError(String error, String response) {
-                                                    myload.dismissLoader();
-                                                    try {
-                                                        JSONObject job = new JSONObject(response);
-                                                        String resp = job.getString("message");
-                                                        Toast.makeText(getActivity(), "" + resp, Toast.LENGTH_SHORT).show();
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
+                                                    @Override
+                                                    public void onError(String error, String response) {
+                                                        myload.dismissLoader();
+                                                        try {
+                                                            JSONObject job = new JSONObject(response);
+                                                            String resp = job.getString("message");
+                                                            Toast.makeText(getActivity(), "" + resp, Toast.LENGTH_SHORT).show();
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
                                                     }
-                                                }
 
-                                                @Override
-                                                public void onError(String error) {
-                                                    myload.dismissLoader();
-                                                }
+                                                    @Override
+                                                    public void onError(String error) {
+                                                        myload.dismissLoader();
+                                                    }
 
-                                                @Override
-                                                public void onStart() {
+                                                    @Override
+                                                    public void onStart() {
 
-                                                }
-                                            });
+                                                    }
+                                                });
 
+                                            }
                                         }
+                                    }else {
+                                        edt_email.setError("Please enter Valid Business email ");
+                                        edt_email.requestFocus();
                                     }
                                 }
                             }

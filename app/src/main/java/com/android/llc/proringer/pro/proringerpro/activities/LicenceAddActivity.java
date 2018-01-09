@@ -257,15 +257,18 @@ public class LicenceAddActivity extends AppCompatActivity {
         } else {
             if (tv_issuer.getText().toString().trim().equals("")) {
                 tv_issuer.setError("Enter issuer name");
-                tv_issuer.setFocusable(true);
+                tv_issuer.requestFocus();
             } else {
+                tv_issuer.setError(null);
+                tv_issuer.clearFocus();
                 if (tv_licence_number.getText().toString().trim().equals("")) {
                     tv_licence_number.setError("Enter licence number");
-                    tv_licence_number.setFocusable(true);
+                    tv_licence_number.requestFocus();
                 } else {
+                    tv_licence_number.setError(null);
+                    tv_licence_number.clearFocus();
                     if (expire.equals("")) {
                         Toast.makeText(LicenceAddActivity.this, "Select Expires date", Toast.LENGTH_SHORT).show();
-
                     } else {
 
                         if (file == null) {
