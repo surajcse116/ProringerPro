@@ -1,6 +1,7 @@
 package com.android.llc.proringer.pro.proringerpro.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,7 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         switch (holder.getItemViewType()) {
             case 0:
                 ViewHolderPending viewHolderPending = (ViewHolderPending) holder;
-                viewHolderPending.totalView.setOnClickListener(new View.OnClickListener() {
+                viewHolderPending.total_card_view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         try {
@@ -60,6 +61,7 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         }
                     }
                 });
+
 
                 try {
                     viewHolderPending.tv_project_name.setText(info_array.getJSONObject(position).getString("project_name"));
@@ -71,6 +73,14 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 if (position == 0) {
                     viewHolderPending.start_project.setVisibility(View.VISIBLE);
+
+                    viewHolderPending.start_project.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            callback.searchLocalProject();
+                        }
+                    });
+
                 } else {
                     viewHolderPending.start_project.setVisibility(View.GONE);
                 }
@@ -88,6 +98,14 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 if (position == 0) {
                     viewHolderAccepted.start_project.setVisibility(View.VISIBLE);
+
+                    viewHolderAccepted.start_project.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            callback.searchLocalProject();
+                        }
+                    });
+
                 } else {
                     viewHolderAccepted.start_project.setVisibility(View.GONE);
                 }
@@ -114,6 +132,13 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 if (position == 0) {
                     viewHolderExpire.start_project.setVisibility(View.VISIBLE);
+                    viewHolderExpire.start_project.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            callback.searchLocalProject();
+                        }
+                    });
+
                 } else {
                     viewHolderExpire.start_project.setVisibility(View.GONE);
                 }
@@ -148,8 +173,8 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LinearLayout start_project;
         ProSemiBoldTextView tv_project_name;
         ProRegularTextView tv_submitted_date, tv_expire;
+        CardView total_card_view;
 
-        View totalView;
 
         public ViewHolderPending(View itemView) {
             super(itemView);
@@ -158,19 +183,21 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             tv_project_name = (ProSemiBoldTextView) itemView.findViewById(R.id.tv_project_name);
             tv_submitted_date = (ProRegularTextView) itemView.findViewById(R.id.tv_submitted_date);
             tv_expire = (ProRegularTextView) itemView.findViewById(R.id.tv_expire);
+            total_card_view = (CardView) itemView.findViewById(R.id.total_card_view);
 
-            totalView = itemView;
         }
     }
 
     class ViewHolderAccepted extends RecyclerView.ViewHolder {
         LinearLayout start_project;
         ProSemiBoldTextView tv_project_name;
+        CardView total_card_view;
 
         public ViewHolderAccepted(View itemView) {
             super(itemView);
             start_project = (LinearLayout) itemView.findViewById(R.id.start_project);
             tv_project_name = (ProSemiBoldTextView) itemView.findViewById(R.id.tv_project_name);
+            total_card_view = (CardView) itemView.findViewById(R.id.total_card_view);
         }
     }
 
@@ -178,13 +205,14 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LinearLayout start_project;
         ProSemiBoldTextView tv_project_name;
         ProRegularTextView tv_delete;
+        CardView total_card_view;
 
         public ViewHolderExpire(View itemView) {
             super(itemView);
             start_project = (LinearLayout) itemView.findViewById(R.id.start_project);
             tv_project_name = (ProSemiBoldTextView) itemView.findViewById(R.id.tv_project_name);
             tv_delete = (ProRegularTextView) itemView.findViewById(R.id.tv_delete);
-
+            total_card_view = (CardView) itemView.findViewById(R.id.total_card_view);
         }
     }
 

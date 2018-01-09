@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.MyProjectDetailsActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProjectListingAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
@@ -86,6 +87,7 @@ public class MyProjectsFragment extends Fragment {
 
     public interface onOptionSelected {
         void onItemPassed(int position, JSONObject value);
+        void searchLocalProject();
     }
 
     public void showData() {
@@ -117,6 +119,11 @@ public class MyProjectsFragment extends Fragment {
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+                            }
+
+                            @Override
+                            public void searchLocalProject() {
+                                ((LandScreenActivity)getActivity()).transactProjectList();
                             }
                         });
                         rcv_project_list.setAdapter(projectListingAdapter);
@@ -162,7 +169,6 @@ public class MyProjectsFragment extends Fragment {
             }
         });
     }
-
 
     public void deleteMyProject(final int position, String project_appliedid) {
         HashMap<String, String> Params = new HashMap<>();

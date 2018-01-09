@@ -688,7 +688,7 @@ public class LandScreenActivity extends AppCompatActivity {
     /**
      * Fragment transaction for Watch List
      */
-    private void transactProjectList() {
+    public void transactProjectList() {
         local_project_search_zip = "";
         toggleToolBar(false);
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + ProjectListFragment.class.getCanonicalName()) != null) {
