@@ -123,7 +123,7 @@ public class MyProjectsFragment extends Fragment {
 
                             @Override
                             public void searchLocalProject() {
-                                ((LandScreenActivity)getActivity()).transactProjectList();
+                                ((LandScreenActivity)getActivity()).projectTransactAndSetView();
                             }
                         });
                         rcv_project_list.setAdapter(projectListingAdapter);

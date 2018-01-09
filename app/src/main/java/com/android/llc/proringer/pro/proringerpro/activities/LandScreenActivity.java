@@ -125,13 +125,12 @@ public class LandScreenActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         search_local_pro_header = (ImageView) findViewById(R.id.search_local_pro_header);
+
         search_local_pro_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggleProMapSearch(true);
                 NavigationHandler.getInstance().highlightTag(NavigationHandler.FIND_LOCAL_PROJECT);
-                bottomNavInstance.highLightSelected(BottomNav.CREATE_PROJECT);
-                transactProjectList();
+                projectTransactAndSetView();
             }
         });
 
@@ -231,9 +230,7 @@ public class LandScreenActivity extends AppCompatActivity {
                 switch (tag) {
 
                     case NavigationHandler.FIND_LOCAL_PROJECT:
-                        toggleProMapSearch(true);
-                        bottomNavInstance.highLightSelected(BottomNav.CREATE_PROJECT);
-                        transactProjectList();
+                        projectTransactAndSetView();
                         closeDrawer();
                         break;
 
@@ -841,5 +838,10 @@ public class LandScreenActivity extends AppCompatActivity {
 
             }
         }
+    }
+    public void projectTransactAndSetView(){
+        toggleProMapSearch(true);
+        bottomNavInstance.highLightSelected(BottomNav.CREATE_PROJECT);
+        transactProjectList();
     }
 }
