@@ -83,26 +83,28 @@
                         android:src="@drawable/ic_arrow_drop_down_black_24dp" />
                 </RelativeLayout>
 
-                <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText
                     android:id="@+id/tv_issuer"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_below="@+id/relative_dropdown"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/edit_text_selecter"
+                    android:gravity="center_vertical"
                     android:hint="Issuer"
                     android:inputType="text"
                     android:padding="10dp"
                     android:textColor="@color/colorTextDark"
                     android:textSize="14sp" />
 
-                <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText
                     android:id="@+id/tv_licence_number"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_below="@+id/tv_issuer"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/edit_text_selecter"
+                    android:gravity="center_vertical"
                     android:hint="Licence #"
                     android:inputType="text"
                     android:padding="10dp"
@@ -117,6 +119,7 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/edit_text_selecter"
                     android:hint="Expires"
+                    android:gravity="center_vertical"
                     android:inputType="text"
                     android:padding="10dp"
                     android:textColor="@color/colorTextDark"

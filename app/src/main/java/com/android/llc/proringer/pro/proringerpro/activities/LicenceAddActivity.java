@@ -42,6 +42,7 @@ import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
 
@@ -75,9 +76,8 @@ public class LicenceAddActivity extends AppCompatActivity {
 
     RelativeLayout relative_dropdown;
 
-    ProRegularTextView tv_service, tv_save_licence;
-    ProLightEditText tv_issuer, tv_licence_number;
-    ProRegularTextView tv_expires;
+    ProRegularTextView tv_service, tv_save_licence,tv_expires;
+    ProRegularEditText tv_issuer,tv_licence_number;
 
     private int mYear = 0, mMonth = 0, mDay = 0, mHour, mMinute;
     int month, date,year;
@@ -100,8 +100,8 @@ public class LicenceAddActivity extends AppCompatActivity {
 
         tv_save_licence = (ProRegularTextView) findViewById(R.id.tv_save_licence);
         tv_service = (ProRegularTextView) findViewById(R.id.tv_service);
-        tv_issuer = (ProLightEditText) findViewById(R.id.tv_issuer);
-        tv_licence_number = (ProLightEditText) findViewById(R.id.tv_licence_number);
+        tv_issuer = (ProRegularEditText) findViewById(R.id.tv_issuer);
+        tv_licence_number = (ProRegularEditText) findViewById(R.id.tv_licence_number);
         tv_expires = (ProRegularTextView) findViewById(R.id.tv_expires);
         img_licence_file = (ImageView) findViewById(R.id.img_licence_file);
         LLUpload = (LinearLayout) findViewById(R.id.LLUpload);
