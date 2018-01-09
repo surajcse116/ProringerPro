@@ -91,8 +91,8 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
                          */
                         String contactTextOne = null;
                         try {
-                            if (info_array.getJSONObject(position).getString("job_details").trim().length() >= 60) {
-                                contactTextOne = info_array.getJSONObject(position).getString("job_details").trim().trim().substring(0, 60) + "....";
+                            if (info_array.getJSONObject(position).getString("job_details").trim().length() >= 30) {
+                                contactTextOne = info_array.getJSONObject(position).getString("job_details").trim().trim().substring(0, 30) + "....";
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

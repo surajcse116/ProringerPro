@@ -31,7 +31,7 @@
                 android:imeOptions="actionDone"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textColorHint="@color/colorTextDark"
+                android:textColorHint="@color/colorHeader"
                 android:textSize="14sp" />
 
             <ImageView
