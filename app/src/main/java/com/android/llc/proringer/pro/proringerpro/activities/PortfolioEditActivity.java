@@ -1,6 +1,8 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -15,10 +17,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.DatePicker;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -49,6 +53,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -57,13 +62,17 @@ import java.util.HashMap;
 
 public class PortfolioEditActivity extends AppCompatActivity {
 
+    private int mYear = 0, mMonth = 0, mDay = 0;
+    int month, date,year;
+    boolean flag = true;
+
     public int imageExistCount=0;
 
     private static final int REQUEST_IMAGE_CAPTURE = 5;
     private static final int PICK_IMAGE = 3;
 
     String port_id = "", catid = "",
-            monthDigit = "", yearDigit = "";
+            monthDigit = "", yearDigit = "",monthName = "", yearName = "";
     Dialog dialog = null;
 
     JSONArray multiple_gallery_image, categoryJsonArray;
@@ -144,79 +153,149 @@ public class PortfolioEditActivity extends AppCompatActivity {
 
 
         relative_month_dropdown.setOnClickListener(new View.OnClickListener() {
+
+            boolean check = true;
+
             @Override
             public void onClick(View view) {
                 relative_category_dropdown.setBackgroundResource(R.drawable.edit_text_selecter);
                 relative_month_dropdown.setBackgroundResource(R.drawable.background_solidorange_border);
                 relative_year_dropdown.setBackgroundResource(R.drawable.edit_text_selecter);
 
-                JSONArray jsonArray = new JSONArray();
-                JSONObject question = new JSONObject();
-                try {
-                    question.put("name", "January");
-                    question.put("digit", "1");
-                    jsonArray.put(question);
 
-                    question = new JSONObject();
-                    question.put("name", "February");
-                    question.put("digit", "2");
-                    jsonArray.put(question);
+                final Calendar c = Calendar.getInstance();
 
-                    question = new JSONObject();
-                    question.put("name", "March");
-                    question.put("digit", "3");
-                    jsonArray.put(question);
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+                Logger.printMessage("year--------->", "" + mYear);
 
-                    question = new JSONObject();
-                    question.put("name", "April");
-                    question.put("digit", "4");
-                    jsonArray.put(question);
 
-                    question = new JSONObject();
-                    question.put("name", "May");
-                    question.put("digit", "5");
-                    jsonArray.put(question);
-
-                    question = new JSONObject();
-                    question.put("name", "June");
-                    question.put("digit", "6");
-                    jsonArray.put(question);
-
-                    question = new JSONObject();
-                    question.put("name", "July");
-                    question.put("digit", "7");
-                    jsonArray.put(question);
-
-                    question = new JSONObject();
-                    question.put("name", "August");
-                    question.put("digit", "8");
-                    jsonArray.put(question);
-
-                    question = new JSONObject();
-                    question.put("name", "September");
-                    question.put("digit", "9");
-                    jsonArray.put(question);
-
-                    question = new JSONObject();
-                    question.put("name", "October");
-                    question.put("digit", "10");
-                    jsonArray.put(question);
-
-                    question = new JSONObject();
-                    question.put("name", "November");
-                    question.put("digit", "11");
-                    jsonArray.put(question);
-
-                    question = new JSONObject();
-                    question.put("name", "December");
-                    question.put("digit", "12");
-                    jsonArray.put(question);
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                if (!check) {
+                    mYear = c.get(Calendar.YEAR);
+                    mMonth = c.get(Calendar.MONTH);
+                    mDay = c.get(Calendar.DAY_OF_MONTH);
                 }
-                showMonthDialog(view, jsonArray);
+                if (!flag) {
+                    mYear = year;
+                    mMonth = month;
+                    mDay = date;
+                }
+                DatePickerDialog datePickerDialog = new DatePickerDialog(PortfolioEditActivity.this, new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker datePicker, final int i, final int i1, final int i2) {
+
+                        int selectedDate = datePicker.getDayOfMonth();
+
+                        Logger.printMessage("selectedDate", "" + selectedDate);
+                        // datePicker.setMinDate(System.currentTimeMillis() - 1000);
+                        Logger.printMessage("onDateSet", "onDateSet");
+                        String date1 = "";
+                        year = i;
+                        month = i1;
+                        date = i2;
+
+                        Logger.printMessage("year", "" + year);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(year, month, date);
+                        Date date2 = calendar.getTime();
+
+
+                        tv_month.setText((String) DateFormat.format("MMM",  date2));
+                        monthName = (String) DateFormat.format("MMM",  date2);
+                        monthDigit = (String) DateFormat.format("MM",   date2);
+                        Logger.printMessage("monthDigit-->", monthDigit);
+
+
+                        tv_year.setText((String) DateFormat.format("yyyy", date2));
+                        yearName = (String) DateFormat.format("yyyy", date2);
+                        yearDigit = (String) DateFormat.format("yyyy", date2);
+                        Logger.printMessage("yearDigit-->", yearDigit);
+
+
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Logger.printMessage("Cancel", "Cancel");
+                        check = false;
+                    }
+                });
+                datePickerDialog.show();
+
+
+
+
+//                JSONArray jsonArray = new JSONArray();
+//                JSONObject question = new JSONObject();
+//                try {
+//                    question.put("name", "January");
+//                    question.put("digit", "1");
+//                    jsonArray.put(question);
+//
+//                    question = new JSONObject();
+//                    question.put("name", "February");
+//                    question.put("digit", "2");
+//                    jsonArray.put(question);
+//
+//                    question = new JSONObject();
+//                    question.put("name", "March");
+//                    question.put("digit", "3");
+//                    jsonArray.put(question);
+//
+//                    question = new JSONObject();
+//                    question.put("name", "April");
+//                    question.put("digit", "4");
+//                    jsonArray.put(question);
+//
+//                    question = new JSONObject();
+//                    question.put("name", "May");
+//                    question.put("digit", "5");
+//                    jsonArray.put(question);
+//
+//                    question = new JSONObject();
+//                    question.put("name", "June");
+//                    question.put("digit", "6");
+//                    jsonArray.put(question);
+//
+//                    question = new JSONObject();
+//                    question.put("name", "July");
+//                    question.put("digit", "7");
+//                    jsonArray.put(question);
+//
+//                    question = new JSONObject();
+//                    question.put("name", "August");
+//                    question.put("digit", "8");
+//                    jsonArray.put(question);
+//
+//                    question = new JSONObject();
+//                    question.put("name", "September");
+//                    question.put("digit", "9");
+//                    jsonArray.put(question);
+//
+//                    question = new JSONObject();
+//                    question.put("name", "October");
+//                    question.put("digit", "10");
+//                    jsonArray.put(question);
+//
+//                    question = new JSONObject();
+//                    question.put("name", "November");
+//                    question.put("digit", "11");
+//                    jsonArray.put(question);
+//
+//                    question = new JSONObject();
+//                    question.put("name", "December");
+//                    question.put("digit", "12");
+//                    jsonArray.put(question);
+//
+//                } catch (JSONException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//                showMonthDialog(view, jsonArray);
             }
         });
 
@@ -231,30 +310,95 @@ public class PortfolioEditActivity extends AppCompatActivity {
         });
 
         relative_year_dropdown.setOnClickListener(new View.OnClickListener() {
+            boolean check = true;
+
             @Override
             public void onClick(View view) {
                 relative_category_dropdown.setBackgroundResource(R.drawable.edit_text_selecter);
                 relative_month_dropdown.setBackgroundResource(R.drawable.edit_text_selecter);
                 relative_year_dropdown.setBackgroundResource(R.drawable.background_solidorange_border);
 
-                int year = Calendar.getInstance().get(Calendar.YEAR);
+                final Calendar c = Calendar.getInstance();
 
-                JSONArray jsonArray = new JSONArray();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+                Logger.printMessage("year--------->", "" + mYear);
 
-                for (int i = 0; i < 50; i++) {
-                    try {
-                        JSONObject question = new JSONObject();
-                        question.put("name", "" + year);
-                        question.put("digit", "" + year);
-                        jsonArray.put(question);
 
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    year = year - 1;
+                if (!check) {
+                    mYear = c.get(Calendar.YEAR);
+                    mMonth = c.get(Calendar.MONTH);
+                    mDay = c.get(Calendar.DAY_OF_MONTH);
                 }
-                showYearDialog(view, jsonArray);
+                if (!flag) {
+                    mYear = year;
+                    mMonth = month;
+                    mDay = date;
+                }
+                DatePickerDialog datePickerDialog = new DatePickerDialog(PortfolioEditActivity.this, new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker datePicker, final int i, final int i1, final int i2) {
+
+                        int selectedDate = datePicker.getDayOfMonth();
+
+                        Logger.printMessage("selectedDate", "" + selectedDate);
+                        // datePicker.setMinDate(System.currentTimeMillis() - 1000);
+                        Logger.printMessage("onDateSet", "onDateSet");
+                        String date1 = "";
+                        year = i;
+                        month = i1;
+                        date = i2;
+
+                        Logger.printMessage("year", "" + year);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(year, month, date);
+                        Date date2 = calendar.getTime();
+
+
+                        tv_month.setText((String) DateFormat.format("MMM",  date2));
+                        monthName = (String) DateFormat.format("MMM",  date2);
+                        monthDigit = (String) DateFormat.format("MM",   date2);
+                        Logger.printMessage("monthDigit-->", monthDigit);
+
+
+                        tv_year.setText((String) DateFormat.format("yyyy", date2));
+                        yearName = (String) DateFormat.format("yyyy", date2);
+                        yearDigit = (String) DateFormat.format("yyyy", date2);
+                        Logger.printMessage("yearDigit-->", yearDigit);
+
+
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Logger.printMessage("Cancel", "Cancel");
+                        check = false;
+                    }
+                });
+                datePickerDialog.show();
+
+//                int year = Calendar.getInstance().get(Calendar.YEAR);
+//
+//                JSONArray jsonArray = new JSONArray();
+//
+//                for (int i = 0; i < 50; i++) {
+//                    try {
+//                        JSONObject question = new JSONObject();
+//                        question.put("name", "" + year);
+//                        question.put("digit", "" + year);
+//                        jsonArray.put(question);
+//
+//                    } catch (JSONException e) {
+//                        // TODO Auto-generated catch block
+//                        e.printStackTrace();
+//                    }
+//                    year = year - 1;
+//                }
+//                showYearDialog(view, jsonArray);
             }
         });
 

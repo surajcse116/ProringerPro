@@ -80,8 +80,7 @@ public class LicenceAddActivity extends AppCompatActivity {
     ProRegularTextView tv_expires;
 
     private int mYear = 0, mMonth = 0, mDay = 0, mHour, mMinute;
-    int year;
-    int month, date;
+    int month, date,year;
 
     MyLoader myLoader;
     JSONArray categoryJsonArray;
