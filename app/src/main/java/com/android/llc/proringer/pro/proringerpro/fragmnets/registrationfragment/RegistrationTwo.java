@@ -447,11 +447,8 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                         edt_email.clearFocus();
 
                                         if (tv_service.getText().toString().trim().equals("")) {
-                                            tv_service.setError("Please enter Primary service");
-                                            tv_service.requestFocus();
+                                            Toast.makeText(getActivity(),"Please select Primary service",Toast.LENGTH_SHORT).show();
                                         } else {
-                                            tv_service.setError(null);
-                                            tv_service.clearFocus();
                                             if (tv_service_area.getText().toString().trim().equals("")) {
                                                 Toast.makeText(getActivity(),"Please choose Service Area",Toast.LENGTH_SHORT).show();
                                             } else {
