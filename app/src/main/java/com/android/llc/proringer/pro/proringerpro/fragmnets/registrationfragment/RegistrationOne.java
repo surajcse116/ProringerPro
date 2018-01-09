@@ -11,15 +11,25 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LogInActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.SignUpActivity;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
+import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
+import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * Created by Bodhidipta on 24/07/17.
@@ -43,6 +53,8 @@ public class RegistrationOne extends Fragment {
     ProLightEditText proet_fname, proet_lname, proet_email, proet_c_email, proet_phone, proet_password, proet_c_password;
     int textLength = 0;
 
+    MyLoader myLoader;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,6 +72,8 @@ public class RegistrationOne extends Fragment {
         proet_phone = (ProLightEditText) view.findViewById(R.id.proet_phone);
         proet_password = (ProLightEditText) view.findViewById(R.id.proet_password);
         proet_c_password = (ProLightEditText) view.findViewById(R.id.proet_c_password);
+
+        myLoader = new MyLoader(getActivity());
 
         tv_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,103 +149,146 @@ public class RegistrationOne extends Fragment {
         Logger.printMessage("password", ProConstant.password);
 
 
-        if (proet_fname.getText().toString().trim().equals("")){
+        if (proet_fname.getText().toString().trim().equals("")) {
             proet_fname.setError("Please enter First Name");
             proet_fname.requestFocus();
-        }else {
+        } else {
             proet_fname.setError(null);
             proet_fname.clearFocus();
 
-            if (proet_lname.getText().toString().trim().equals("")){
+            if (proet_lname.getText().toString().trim().equals("")) {
                 proet_lname.setError("Please enter First Name");
                 proet_lname.requestFocus();
-            }else {
+            } else {
                 proet_lname.setError(null);
                 proet_lname.clearFocus();
 
-                if (proet_email.getText().toString().trim().equals("")){
+                if (proet_email.getText().toString().trim().equals("")) {
                     proet_email.setError("Please enter Email");
                     proet_email.requestFocus();
-                }else {
+                } else {
                     proet_email.setError(null);
                     proet_email.clearFocus();
 
-                    if (MethodsUtils.isValidEmail(proet_email.getText().toString().trim())){
+                    if (MethodsUtils.isValidEmail(proet_email.getText().toString().trim())) {
 
                         proet_email.setError(null);
                         proet_email.clearFocus();
 
-                        if (!proet_email.getText().toString().trim().equals(proet_c_email.getText().toString().trim())){
+                        if (!proet_email.getText().toString().trim().equals(proet_c_email.getText().toString().trim())) {
                             proet_c_email.setError("Confirm Email is not same with given Email");
                             proet_c_email.requestFocus();
-                        }
-                        else {
+                        } else {
                             proet_c_email.setError(null);
                             proet_c_email.clearFocus();
 
-                            if (proet_phone.getText().toString().trim().equals("")){
+                            if (proet_phone.getText().toString().trim().equals("")) {
 
                                 proet_phone.setError("Enter Phone Number");
                                 proet_phone.requestFocus();
-                            }
-                            else {
+                            } else {
 
                                 proet_phone.setError(null);
                                 proet_phone.clearFocus();
 
 
-                                if (proet_phone.getText().toString().trim().length()<14){
+                                if (proet_phone.getText().toString().trim().length() < 14) {
 
                                     proet_phone.setError("Enter valid Phone Number");
                                     proet_phone.requestFocus();
-                                }
-                                else {
+                                } else {
 
                                     proet_phone.setError(null);
                                     proet_phone.clearFocus();
 
 
-                                    if (proet_password.getText().toString().trim().equals("")){
+                                    if (proet_password.getText().toString().trim().equals("")) {
 
                                         proet_password.setError("Enter Password");
                                         proet_password.requestFocus();
-                                    }
-                                    else {
+                                    } else {
 
                                         proet_password.setError(null);
                                         proet_password.clearFocus();
 
 
-                                        if (proet_password.getText().toString().trim().length()<6){
+                                        if (proet_password.getText().toString().trim().length() < 6) {
 
                                             proet_password.setError("password length should be 6 or greater than 6");
                                             proet_password.requestFocus();
-                                        }
-                                        else {
+                                        } else {
 
                                             proet_password.setError(null);
                                             proet_password.clearFocus();
 
 
-                                            if (!proet_c_password.getText().toString().trim().equals(proet_password.getText().toString().trim())){
+                                            if (!proet_c_password.getText().toString().trim().equals(proet_password.getText().toString().trim())) {
 
                                                 proet_c_password.setError("confirm password should be same with password");
                                                 proet_c_password.requestFocus();
-                                            }
-                                            else {
+                                            } else {
 
                                                 proet_c_password.setError(null);
                                                 proet_c_password.clearFocus();
 
-                                                ((SignUpActivity) getActivity()).transactRegistrationFragmentTwo();
+                                                HashMap<String, String> Params = new HashMap<>();
 
+                                                Params.put("email_id", proet_c_email.getText().toString().trim());
+
+                                                Logger.printMessage("PARAMS", String.valueOf(Params));
+
+
+                                                new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_email_checking, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                                    @Override
+                                                    public void onSuccess(String result) {
+                                                        myLoader.dismissLoader();
+                                                        try {
+
+                                                            JSONObject mainResponseObj = new JSONObject(result);
+                                                            Logger.printMessage("message", mainResponseObj.getString("message"));
+                                                            //Toast.makeText(getActivity(), mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+
+                                                            ((SignUpActivity) getActivity()).transactRegistrationFragmentTwo();
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onError(String error, String response) {
+                                                        myLoader.dismissLoader();
+                                                        new MYAlert(getActivity()).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                                                            @Override
+                                                            public void OnOk(boolean res) {
+
+                                                            }
+                                                        });
+                                                    }
+
+                                                    @Override
+                                                    public void onError(String error) {
+                                                        myLoader.dismissLoader();
+                                                        new MYAlert(getActivity()).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                                                            @Override
+                                                            public void OnOk(boolean res) {
+
+                                                            }
+                                                        });
+                                                    }
+
+                                                    @Override
+                                                    public void onStart() {
+                                                        myLoader.showLoader();
+                                                    }
+                                                });
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                    }else {
+                    } else {
                         proet_email.setError("Please Valid Email");
                         proet_email.requestFocus();
                     }
