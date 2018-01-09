@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.WatchListFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.ProjectListFragment;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.ShowMyDialog;
