@@ -168,7 +168,7 @@
                             android:id="@+id/et_busineestype"
                             android:background="@drawable/edit_text_selecter"
                             android:inputType="text"
-                            android:gravity="center"
+                            android:gravity="center_vertical"
                             android:paddingLeft="10dp"
                             android:paddingRight="45dp"
                             android:paddingTop="10dp"

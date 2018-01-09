@@ -350,7 +350,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
 
         // set the list view as pop up window content
         popupWindow.setContentView(dailogView);
-        popupWindow.showAsDropDown(v, -5, 0);
+        popupWindow.showAsDropDown(v, 0, 0);
 
     }
 
