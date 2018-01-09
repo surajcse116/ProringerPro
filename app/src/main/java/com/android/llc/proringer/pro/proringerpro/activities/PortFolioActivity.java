@@ -256,14 +256,14 @@ public class PortFolioActivity extends AppCompatActivity {
             }
         });
 
-        category();
-
         findViewById(R.id.tv_save_port_folio).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 validationForPortFolio();
             }
         });
+
+        category();
     }
 
 
@@ -272,8 +272,7 @@ public class PortFolioActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             if (RLAddPortFolio.getVisibility() == View.VISIBLE) {
                 RLAddPortFolio.setVisibility(View.GONE);
-                rcv_port_folio.setVisibility(View.VISIBLE);
-                findViewById(R.id.img_add_port_folio).setVisibility(View.VISIBLE);
+                category();
             } else {
                 finish();
             }
@@ -568,7 +567,13 @@ public class PortFolioActivity extends AppCompatActivity {
                     if (showPortFolioArrayList.size() == 0) {
                         RLEmpty.setVisibility(View.VISIBLE);
                         rcv_port_folio.setVisibility(View.GONE);
+                        findViewById(R.id.img_add_port_folio).setVisibility(View.VISIBLE);
                     } else {
+                        if (showPortFolioArrayList.size()<2){
+                            findViewById(R.id.img_add_port_folio).setVisibility(View.VISIBLE);
+                        }else {
+                            findViewById(R.id.img_add_port_folio).setVisibility(View.GONE);
+                        }
                         RLEmpty.setVisibility(View.GONE);
                         rcv_port_folio.setVisibility(View.VISIBLE);
 
