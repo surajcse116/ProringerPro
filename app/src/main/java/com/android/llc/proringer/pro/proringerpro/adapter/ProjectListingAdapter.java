@@ -16,6 +16,8 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldT
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.Calendar;
+
 
 /**
  * Created by su on 8/12/17.
@@ -80,7 +82,41 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 try {
                     viewHolderPending.tv_project_name.setText(info_array.getJSONObject(position).getString("project_name"));
                     viewHolderPending.tv_submitted_date.setText("Submitted on " + info_array.getJSONObject(position).getString("submitted_date"));
-                    viewHolderPending.tv_expire.setText("EXPIRE " + info_array.getJSONObject(position).getString("expiry_date"));
+
+                    // get current year、month and day
+                    Calendar calendar = Calendar.getInstance();
+                    int currentYear = calendar.get(Calendar.YEAR);
+                    int currentMonth = calendar.get(Calendar.MONTH);
+                    int currentDay = calendar.get(Calendar.DATE);
+
+                    String split[]=info_array.getJSONObject(position).getString("expiry_date").split("/");
+
+                    int apiYear= Integer.parseInt(split[2]);
+                    int apiMonth= Integer.parseInt(split[0]);
+                    int apiDay= Integer.parseInt(split[1]);
+
+
+
+                    if (currentYear>apiYear){
+                        viewHolderPending.tv_expire.setText("EXPIRED " + info_array.getJSONObject(position).getString("expiry_date"));
+                    }
+                    else if(currentYear<apiYear){
+                        viewHolderPending.tv_expire.setText("EXPIRE " + info_array.getJSONObject(position).getString("expiry_date"));
+                    }else if(currentYear==apiYear){
+                        if (currentMonth<apiMonth){
+                            viewHolderPending.tv_expire.setText("EXPIRE " + info_array.getJSONObject(position).getString("expiry_date"));
+                        }else if(currentMonth>apiMonth){
+                            viewHolderPending.tv_expire.setText("EXPIRED " + info_array.getJSONObject(position).getString("expiry_date"));
+                        }else if(currentMonth==apiMonth){
+                            if (currentDay<apiDay){
+                                viewHolderPending.tv_expire.setText("EXPIRED " + info_array.getJSONObject(position).getString("expiry_date"));
+                            }else if(currentDay==apiDay){
+                                viewHolderPending.tv_expire.setText("EXPIRE " + info_array.getJSONObject(position).getString("expiry_date"));
+                            }else if(currentDay>apiDay){
+                                viewHolderPending.tv_expire.setText("EXPIRED " + info_array.getJSONObject(position).getString("expiry_date"));
+                            }
+                        }
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
