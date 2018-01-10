@@ -327,6 +327,9 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
         mMap.setIndoorEnabled(true);
         mMap.setBuildingsEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
+        // Set a preference for minimum and maximum zoom.
+        mMap.setMinZoomPreference(8.0f);
+        mMap.setMaxZoomPreference(12.0f);
 
     }
 
