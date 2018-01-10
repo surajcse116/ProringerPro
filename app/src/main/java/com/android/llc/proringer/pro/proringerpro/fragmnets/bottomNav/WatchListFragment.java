@@ -245,7 +245,7 @@ public class WatchListFragment extends Fragment {
         title.setPadding(10, 10, 10, 10);
         title.setGravity(Gravity.CENTER);
         title.setTextColor(getActivity().getResources().getColor(R.color.colorTextBlack));
-        title.setTextSize(18);
+        title.setTextSize(14);
 
         new AlertDialog.Builder((LandScreenActivity) getActivity())
                 .setCustomTitle(title)

@@ -196,7 +196,7 @@ public class ProjectListFragment extends Fragment {
                         @Override
                         public void onFavorite(int position, JSONObject jsonObject,String addOrDelete) {
                             try {
-                                addorDeleteWatchListItem(position,jsonObject.getString("id"),addOrDelete);
+                                addOrDeleteWatchListItem(position,jsonObject.getString("id"),addOrDelete);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -243,7 +243,7 @@ public class ProjectListFragment extends Fragment {
         });
     }
 
-    public void addorDeleteWatchListItem(final int position, final String project_id, final String project_function) {
+    public void addOrDeleteWatchListItem(final int position, final String project_id, final String project_function) {
 
         TextView title = new TextView(getActivity());
 
@@ -256,7 +256,7 @@ public class ProjectListFragment extends Fragment {
         title.setPadding(10, 10, 10, 10);
         title.setGravity(Gravity.CENTER);
         title.setTextColor(getActivity().getResources().getColor(R.color.colorTextBlack));
-        title.setTextSize(18);
+        title.setTextSize(14);
 
         new AlertDialog.Builder((LandScreenActivity) getActivity())
                 .setCustomTitle(title)
