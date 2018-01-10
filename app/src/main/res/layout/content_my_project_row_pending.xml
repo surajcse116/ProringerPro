@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_submitted_date"
-                android:background="@drawable/bg_oval_blue_text"
+                android:background="@drawable/bg_oval_yellow_text"
                 android:gravity="center"
                 android:minWidth="90dp"
                 android:paddingBottom="5dp"
@@ -98,7 +98,7 @@
                 android:paddingRight="15dp"
                 android:paddingTop="5dp"
                 android:text="PENDING"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorTextDark"
                 android:textSize="10sp" />
 
 

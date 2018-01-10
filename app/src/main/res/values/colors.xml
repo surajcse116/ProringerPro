@@ -15,5 +15,6 @@
     <color name="colorLightBrick">#f2cec5</color>
     <color name="colorGreen">#2ecc71</color>
     <color name="colorSky">#2ab3ef</color>
+    <color name="colorYellow">#EEE989</color>
     <color name="colorLightOrange">#ffce93</color>
 </resources>
