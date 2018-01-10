@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
+import com.android.llc.proringer.pro.proringerpro.helper.ViewHelper;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
@@ -140,7 +142,13 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
                     ((ProRegularTextView) findViewById(R.id.tv_service)).setText(jsonObject.getString("service"));
                     ((ProRegularTextView) findViewById(R.id.tv_property)).setText(jsonObject.getString("property"));
                     ((ProRegularTextView) findViewById(R.id.tv_phone)).setText(jsonObject.getString("phone"));
-                    ((ProRegularTextView) findViewById(R.id.tv_describetion)).setText(jsonObject.getString("job_details"));
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        ((ProRegularTextView) findViewById(R.id.tv_describetion)).setText(Html.fromHtml(ViewHelper.SetParaAlign(jsonObject.getString("job_details"), ViewHelper.P_Justify), Html.FROM_HTML_MODE_LEGACY));
+                    } else {
+                        ((ProRegularTextView) findViewById(R.id.tv_describetion)).setText(Html.fromHtml(ViewHelper.SetParaAlign(jsonObject.getString("job_details"), ViewHelper.P_Justify)));
+                    }
+
 
                     zip = jsonObject.getString("zip");
 
