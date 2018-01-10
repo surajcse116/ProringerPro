@@ -43,7 +43,7 @@ import java.util.ArrayList;
 
 public class DashBoardFragment extends Fragment {
 
-    ProSemiBoldTextView tv_userinfo, log_in,tv_name,tv_rating;
+    ProSemiBoldTextView tv_userinfo, tv_goto_premium,tv_name,tv_rating;
     TextView tv_active_projects;
     ProRegularTextView tv_address,tv_totalmessage,tv_favorite_pros;
     RelativeLayout userInformation, servicearea, service_setting, licence, login_settings, Protofolio;
@@ -67,7 +67,7 @@ public class DashBoardFragment extends Fragment {
         licence = (RelativeLayout) view.findViewById(R.id.licence);
         login_settings = (RelativeLayout) view.findViewById(R.id.login_settings);
         Protofolio = (RelativeLayout) view.findViewById(R.id.Protofolio);
-        log_in = (ProSemiBoldTextView) view.findViewById(R.id.log_in);
+        tv_goto_premium = (ProSemiBoldTextView) view.findViewById(R.id.tv_goto_premium);
         tv_active_projects=(TextView)view.findViewById(R.id.tv_active_projects);
         tv_name=(ProSemiBoldTextView)view.findViewById(R.id.tv_name);
         tv_address=(ProRegularTextView)view.findViewById(R.id.tv_address);
@@ -78,7 +78,7 @@ public class DashBoardFragment extends Fragment {
         rbar=(RatingBar)view.findViewById(R.id.rbar);
         myload= new MyLoader(getActivity());
         showdata();
-        log_in.setOnClickListener(new View.OnClickListener() {
+        tv_goto_premium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), PremiumActivity.class);
