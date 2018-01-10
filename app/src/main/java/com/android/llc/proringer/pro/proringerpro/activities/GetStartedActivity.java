@@ -136,6 +136,9 @@ public class GetStartedActivity extends AppCompatActivity implements
 //        });
 //
 
+        Glide.with(GetStartedActivity.this).load("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/6l9WhMqUVS.jpg").into(img_pager);
+
+
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,7 +160,7 @@ public class GetStartedActivity extends AppCompatActivity implements
             @Override
             public void onPageSelected(int position) {
                 manageDots(position);
-                managepostion(position);
+                managePositionImage(position);
             }
 
             @Override
@@ -193,38 +196,38 @@ public class GetStartedActivity extends AppCompatActivity implements
                 pager_dot_three.setBackgroundResource(R.drawable.circle_dark);
                 pager_dot_four.setBackgroundResource(R.drawable.circle_orenge_border);
                 break;
-            case 4:
-                pager_dot_one.setBackgroundResource(R.drawable.circle_dark);
-                pager_dot_two.setBackgroundResource(R.drawable.circle_dark);
-                pager_dot_three.setBackgroundResource(R.drawable.circle_dark);
-                pager_dot_four.setBackgroundResource(R.drawable.circle_dark);
-                break;
+//            case 4:
+//                pager_dot_one.setBackgroundResource(R.drawable.circle_dark);
+//                pager_dot_two.setBackgroundResource(R.drawable.circle_dark);
+//                pager_dot_three.setBackgroundResource(R.drawable.circle_dark);
+//                pager_dot_four.setBackgroundResource(R.drawable.circle_dark);
+//                break;
         }
     }
-    private void managepostion(int position)
+    private void managePositionImage(int position)
     {
         switch (position)
         {
             case 0:
-                //  Glide.with(GetStartedActivity.this).load(R.color.colorHeader).into(img_pager);
-                img_pager.setBackgroundColor(getResources().getColor(R.color.colorHeader));
+                  Glide.with(GetStartedActivity.this).load("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/6l9WhMqUVS.jpg").into(img_pager);
+//                img_pager.setBackgroundColor(getResources().getColor(R.color.colorHeader));
                 break;
             case 1:
-                //Glide.with(GetStartedActivity.this).load(R.color.colorAccent).into(img_pager);
-                img_pager.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                Glide.with(GetStartedActivity.this).load("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/dBY7IAcHF4.jpg").into(img_pager);
+//                img_pager.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 break;
             case 2:
-                //Glide.with(GetStartedActivity.this).load(R.color.colorLightBrick).into(img_pager);
-                img_pager.setBackgroundColor(getResources().getColor(R.color.colorLightBrick));
+                Glide.with(GetStartedActivity.this).load("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/BstMg3zkbw.jpg").into(img_pager);
+//                img_pager.setBackgroundColor(getResources().getColor(R.color.colorLightBrick));
                 break;
             case 3:
-                // Glide.with(GetStartedActivity.this).load(R.color.colorSky).into(img_pager);
-                img_pager.setBackgroundColor(getResources().getColor(R.color.colorSky));
+                 Glide.with(GetStartedActivity.this).load("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/CGFeJbcS0P.jpg").into(img_pager);
+//                img_pager.setBackgroundColor(getResources().getColor(R.color.colorSky));
                 break;
-            case 4:
-                //Glide.with(GetStartedActivity.this).load(R.color.colorHeader).into(img_pager);
-                img_pager.setBackgroundColor(getResources().getColor(R.color.colorHeader));
-                break;
+//            case 4:
+//                //Glide.with(GetStartedActivity.this).load(R.color.colorHeader).into(img_pager);
+//                img_pager.setBackgroundColor(getResources().getColor(R.color.colorHeader));
+//                break;
         }
     }
     public boolean checkLocationPermission() {

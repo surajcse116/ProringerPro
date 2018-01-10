@@ -77,6 +77,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             holder.tv_post_time.setText(info_array.getJSONObject(position).getString("post_time").trim());
 
             holder.tv_job_details.setText(info_array.getJSONObject(position).getString("job_details").trim());
+
             holder.tv_job_details.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
@@ -89,45 +90,50 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
                         /**
                          * Contact us spannable text with click listener
                          */
-                        String contactTextOne = null;
+
                         try {
                             if (info_array.getJSONObject(position).getString("job_details").trim().length() >= 30) {
-                                contactTextOne = info_array.getJSONObject(position).getString("job_details").trim().trim().substring(0, 30) + "....";
+                                String contactTextOne  = info_array.getJSONObject(position).getString("job_details").trim().trim().substring(0, 30) + "....";
+
+                                Spannable word1 = new SpannableString(contactTextOne);
+                                //word1.setSpan(new ForegroundColorSpan(mcontext.getResources().getColor(R.color.colorTextDark)), 0, contactTextOne.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                holder.tv_job_details.setText(word1);
+
+
+                                String contactTextClick = "Read";
+                                Spannable word2 = new SpannableString(contactTextClick);
+
+                                final ClickableSpan myClickableSpan = new ClickableSpan() {
+                                    @Override
+                                    public void onClick(View widget) {
+                                        // There is the OnCLick. put your intent to Register class here
+                                        widget.invalidate();
+                                        Logger.printMessage("SpanHello", "click");
+
+
+                                        try {
+                                            new ShowMyDialog(mcontext).showDescribetionDialog(info_array.getJSONObject(position).getString("prjct_name"), info_array.getJSONObject(position).getString("job_details").trim());
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void updateDrawState(TextPaint ds) {
+                                        ds.setColor(mcontext.getResources().getColor(R.color.colorAccent));
+                                        ds.setUnderlineText(false);
+                                    }
+                                };
+                                word2.setSpan(myClickableSpan, 0, contactTextClick.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                holder.tv_job_details.append(word2);
+                            }
+                            else {
+                                holder.tv_job_details.append(info_array.getJSONObject(position).getString("job_details").trim());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Spannable word1 = new SpannableString(contactTextOne);
-                        //word1.setSpan(new ForegroundColorSpan(mcontext.getResources().getColor(R.color.colorTextDark)), 0, contactTextOne.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        holder.tv_job_details.setText(word1);
 
-
-                        String contactTextClick = "Read";
-                        Spannable word2 = new SpannableString(contactTextClick);
-
-                        final ClickableSpan myClickableSpan = new ClickableSpan() {
-                            @Override
-                            public void onClick(View widget) {
-                                // There is the OnCLick. put your intent to Register class here
-                                widget.invalidate();
-                                Logger.printMessage("SpanHello", "click");
-
-
-                                try {
-                                    new ShowMyDialog(mcontext).showDescribetionDialog(info_array.getJSONObject(position).getString("prjct_name"), info_array.getJSONObject(position).getString("job_details").trim());
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            @Override
-                            public void updateDrawState(TextPaint ds) {
-                                ds.setColor(mcontext.getResources().getColor(R.color.colorAccent));
-                                ds.setUnderlineText(false);
-                            }
-                        };
-                        word2.setSpan(myClickableSpan, 0, contactTextClick.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        holder.tv_job_details.append(word2);
                     }
                 }
             });
