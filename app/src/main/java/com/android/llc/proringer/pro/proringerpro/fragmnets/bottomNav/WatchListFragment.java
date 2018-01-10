@@ -240,7 +240,7 @@ public class WatchListFragment extends Fragment {
     public void deleteWatchListItem(final int position, final String project_id) {
 
         TextView title = new TextView(getActivity());
-        title.setText("Are you sure you want to remove from watch List?");
+        title.setText("Are you sure you want to remove from watchlist?");
 //                title.setBackgroundResource(R.drawable.gradient);
         title.setPadding(10, 10, 10, 10);
         title.setGravity(Gravity.CENTER);

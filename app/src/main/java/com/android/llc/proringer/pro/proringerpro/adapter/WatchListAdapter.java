@@ -92,7 +92,7 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
                         String contactTextOne = null;
                         try {
                             if (info_array.getJSONObject(position).getString("job_details").trim().length() >= 30) {
-                                contactTextOne = info_array.getJSONObject(position).getString("job_details").trim().trim().substring(0, 30) + "....";
+                                contactTextOne = info_array.getJSONObject(position).getString("job_details").trim().trim().substring(0, 30) + "...";
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -102,7 +102,7 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
                         holder.tv_job_details.setText(word1);
 
 
-                        String contactTextClick = "Read More..";
+                        String contactTextClick = "Read More";
                         Spannable word2 = new SpannableString(contactTextClick);
 
                         final ClickableSpan myClickableSpan = new ClickableSpan() {

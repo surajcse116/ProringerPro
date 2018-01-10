@@ -93,14 +93,14 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
                         try {
                             if (info_array.getJSONObject(position).getString("job_details").trim().length() >= 30) {
-                                String contactTextOne  = info_array.getJSONObject(position).getString("job_details").trim().trim().substring(0, 30) + "....";
+                                String contactTextOne  = info_array.getJSONObject(position).getString("job_details").trim().trim().substring(0, 30) + "...";
 
                                 Spannable word1 = new SpannableString(contactTextOne);
                                 //word1.setSpan(new ForegroundColorSpan(mcontext.getResources().getColor(R.color.colorTextDark)), 0, contactTextOne.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                                 holder.tv_job_details.setText(word1);
 
 
-                                String contactTextClick = "Read";
+                                String contactTextClick = "Read More";
                                 Spannable word2 = new SpannableString(contactTextClick);
 
                                 final ClickableSpan myClickableSpan = new ClickableSpan() {

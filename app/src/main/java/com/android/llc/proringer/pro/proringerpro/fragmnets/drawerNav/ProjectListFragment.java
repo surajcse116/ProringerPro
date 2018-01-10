@@ -248,9 +248,9 @@ public class ProjectListFragment extends Fragment {
         TextView title = new TextView(getActivity());
 
         if (project_function.equals("1")) {
-            title.setText("Are you sure you want to Add to watch List?");
+            title.setText("Are you sure you want to Add to watchlist?");
         }else {
-            title.setText("Are you sure you want to Delete from watch List?");
+            title.setText("Are you sure you want to Delete from watchlist?");
         }
 //                title.setBackgroundResource(R.drawable.gradient);
         title.setPadding(10, 10, 10, 10);
