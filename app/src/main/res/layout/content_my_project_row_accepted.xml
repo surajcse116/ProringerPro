@@ -59,7 +59,7 @@
                 android:textSize="12sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                android:id="@+id/review_pro"
+                android:id="@+id/tv_review_pro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -73,7 +73,7 @@
 
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                android:id="@+id/job_status"
+                android:id="@+id/tv_job_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_project_name"

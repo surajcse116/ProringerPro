@@ -69,12 +69,12 @@
                 android:textSize="12sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                android:id="@+id/messages"
+                android:id="@+id/tv_messages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_submitted_date"
                 android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/job_status"
+                android:layout_toRightOf="@+id/tv_job_status"
                 android:background="@drawable/bg_oval_orange_text"
                 android:gravity="center"
                 android:paddingBottom="5dp"
@@ -86,7 +86,7 @@
                 android:textSize="10sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                android:id="@+id/job_status"
+                android:id="@+id/tv_job_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_submitted_date"
@@ -106,8 +106,7 @@
                 android:id="@+id/tv_expire"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/messages"
-                android:layout_alignBottom="@+id/messages"
+                android:layout_alignBaseline="@+id/tv_messages"
                 android:layout_alignParentEnd="true"
                 android:text="Expire 07/01/2017"
                 android:textAllCaps="true"

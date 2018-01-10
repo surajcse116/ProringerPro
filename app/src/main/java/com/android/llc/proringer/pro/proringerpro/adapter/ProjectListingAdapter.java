@@ -62,6 +62,20 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     }
                 });
 
+                viewHolderPending.tv_job_status.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+                viewHolderPending.tv_messages.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
 
                 try {
                     viewHolderPending.tv_project_name.setText(info_array.getJSONObject(position).getString("project_name"));
@@ -109,6 +123,22 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 } else {
                     viewHolderAccepted.start_project.setVisibility(View.GONE);
                 }
+
+                viewHolderAccepted.tv_job_status.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+
+                viewHolderAccepted.tv_review_pro.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
                 break;
 
             case 2:
@@ -172,7 +202,7 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         LinearLayout start_project;
         ProSemiBoldTextView tv_project_name;
-        ProRegularTextView tv_submitted_date, tv_expire;
+        ProRegularTextView tv_submitted_date, tv_expire,tv_job_status,tv_messages;
         CardView total_card_view;
 
 
@@ -182,6 +212,8 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             tv_project_name = (ProSemiBoldTextView) itemView.findViewById(R.id.tv_project_name);
             tv_submitted_date = (ProRegularTextView) itemView.findViewById(R.id.tv_submitted_date);
+            tv_job_status = (ProRegularTextView) itemView.findViewById(R.id.tv_job_status);
+            tv_messages = (ProRegularTextView) itemView.findViewById(R.id.tv_messages);
             tv_expire = (ProRegularTextView) itemView.findViewById(R.id.tv_expire);
             total_card_view = (CardView) itemView.findViewById(R.id.total_card_view);
 
@@ -192,11 +224,14 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LinearLayout start_project;
         ProSemiBoldTextView tv_project_name;
         CardView total_card_view;
+        ProRegularTextView tv_job_status,tv_review_pro;
 
         public ViewHolderAccepted(View itemView) {
             super(itemView);
             start_project = (LinearLayout) itemView.findViewById(R.id.start_project);
             tv_project_name = (ProSemiBoldTextView) itemView.findViewById(R.id.tv_project_name);
+            tv_job_status = (ProRegularTextView) itemView.findViewById(R.id.tv_job_status);
+            tv_review_pro = (ProRegularTextView) itemView.findViewById(R.id.tv_review_pro);
             total_card_view = (CardView) itemView.findViewById(R.id.total_card_view);
         }
     }
