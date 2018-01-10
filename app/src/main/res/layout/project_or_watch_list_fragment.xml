@@ -62,7 +62,7 @@
             android:layout_marginTop="10dp"
             android:background="@color/colorLightBrick"
             android:gravity="center"
-            android:text="You have not added any project to your watchlist."
+            android:text="No Results Found"
             android:textColor="@color/colorTextDark"
             android:textSize="14sp" />
 
