@@ -109,11 +109,13 @@ public class PortFolioActivity extends AppCompatActivity {
         tv_year = (ProRegularTextView) findViewById(R.id.tv_year);
 
         myLoader = new MyLoader(PortFolioActivity.this);
+
         arrayList = new ArrayList<SetGetAPI>();
         SetGetAPI setGetAPI = new SetGetAPI();
         setGetAPI.setValues(ProApplication.getInstance().getUserId());
         setGetAPI.setPARAMS("user_id");
         arrayList.add(setGetAPI);
+
         showPortFolioArrayList = new ArrayList<>();
         portPolioImageGalleryArrayList = new ArrayList<>();
 
@@ -523,7 +525,6 @@ public class PortFolioActivity extends AppCompatActivity {
         } else if (requestCode == 111) {
             if (resultCode == RESULT_OK) {
 //                String strEditText = data.getStringExtra("TextValue");
-                showPortFolioArrayList.clear();
                 showData();
             }
         }
@@ -683,6 +684,7 @@ public class PortFolioActivity extends AppCompatActivity {
     }
 
     public void showData() {
+        showPortFolioArrayList.clear();
         new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, ProConstant.portfoliolist, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
