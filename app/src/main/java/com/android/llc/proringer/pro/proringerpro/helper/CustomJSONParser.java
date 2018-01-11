@@ -208,8 +208,6 @@ public class CustomJSONParser {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-
                     } else {
                         customJSONResponse.onError(exception.getMessage() + "");
                     }

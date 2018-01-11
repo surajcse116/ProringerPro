@@ -24,6 +24,8 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTe
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 
 /**
@@ -117,7 +119,11 @@ public class RequestReviewFragment extends Fragment {
                                 Params.put("last_name", et_lname.getText().toString().trim());
                                 Params.put("email", et_email.getText().toString().trim());
                                 Params.put("conf_emailid", et_cemail.getText().toString().trim());
-                                Params.put("comment", et_comment.getText().toString().trim());
+                                try {
+                                    Params.put("comment", URLEncoder.encode(et_comment.getText().toString().trim(), "utf-8"));
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
                                 Logger.printMessage("parms", String.valueOf(Params));
 
                                 new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.replyreviw, Params, null, new CustomJSONParser.CustomJSONResponse() {

@@ -75,7 +75,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_selecter"
                 android:hint="Comment"
-                android:inputType="textEmailAddress"
+                android:inputType="textMultiLine"
                 android:padding="5dp"
                 android:gravity="top"
                 android:textColor="@color/colorTextDark"

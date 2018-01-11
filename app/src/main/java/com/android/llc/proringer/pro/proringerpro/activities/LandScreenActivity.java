@@ -36,7 +36,6 @@ import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.Availabili
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfriendFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.NotificationsFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.ProjectListFragment;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReplyFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.RequestReviewFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.SocialMediaFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.main_content.ProjectMessagingFragment;
