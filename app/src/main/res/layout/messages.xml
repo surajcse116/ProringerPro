@@ -21,6 +21,9 @@
             android:background="@drawable/background_white_with_border"
             android:paddingLeft="30dp"
             android:hint="Search"
+            android:inputType="text"
+            android:singleLine="true"
+            android:lines="1"
             android:textColorHint="@color/colorTextDark"
             android:textSize="14sp" />
 
