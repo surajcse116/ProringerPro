@@ -564,7 +564,7 @@ public class LandScreenActivity extends AppCompatActivity {
 
     private void transactRequestReview() {
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + RequestReviewFragment.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + QuickReplyFragment.class.getCanonicalName());
+            Logger.printMessage("back_stack", "Removed *****" + RequestReviewFragment.class.getCanonicalName());
 
             fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + RequestReviewFragment.class.getCanonicalName())).commit();
             fragmentManager.popBackStack("" + RequestReviewFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -722,7 +722,6 @@ public class LandScreenActivity extends AppCompatActivity {
 
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + MyProjectsFragment.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + MyProjectsFragment.class.getCanonicalName());
-
             fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + MyProjectsFragment.class.getCanonicalName())).commit();
             fragmentManager.popBackStack("" + MyProjectsFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
