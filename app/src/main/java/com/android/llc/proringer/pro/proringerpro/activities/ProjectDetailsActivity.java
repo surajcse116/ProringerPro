@@ -56,7 +56,7 @@ import java.util.HashMap;
  * Created by su on 8/18/17.
  */
 
-public class MyProjectDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ProjectDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
     int screenHeight;
     int screenWidth;
     String project_id = "", zip = "";
@@ -82,7 +82,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myload = new MyLoader(MyProjectDetailsActivity.this);
+        myload = new MyLoader(ProjectDetailsActivity.this);
 
         project_id = getIntent().getStringExtra("project_id");
 
@@ -99,7 +99,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
         mapview = (CustomMapView) findViewById(R.id.mapview);
         progressBar= (ProgressBar) findViewById(R.id.progressBar);
 
-        myLoader = new MyLoader(MyProjectDetailsActivity.this);
+        myLoader = new MyLoader(ProjectDetailsActivity.this);
 
         mapview.onCreate(Bundle.EMPTY);
         mapview.getMapAsync(this);
@@ -119,7 +119,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
 
                 if (img_likes.getTag().equals("0")){
                     CustomAlert customAlert = new CustomAlert();
-                    customAlert.getEventFromNormalAlert(MyProjectDetailsActivity.this, "", "Are you sure you want to add to watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
+                    customAlert.getEventFromNormalAlert(ProjectDetailsActivity.this, "", "Are you sure you want to add to watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
                         @Override
                         public void callBackOk() {
                             addOrRemoveWatchlist(project_id,"1");
@@ -132,7 +132,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
                     });
                 }else {
                     CustomAlert customAlert = new CustomAlert();
-                    customAlert.getEventFromNormalAlert(MyProjectDetailsActivity.this, "", "Are you sure you want to remove from watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
+                    customAlert.getEventFromNormalAlert(ProjectDetailsActivity.this, "", "Are you sure you want to remove from watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
                         @Override
                         public void callBackOk() {
                             addOrRemoveWatchlist(project_id,"0");
@@ -169,7 +169,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
         setGetAPI.setValues(project_id);
         arrayList.add(setGetAPI);
 
-        new CustomJSONParser().fireAPIForGetMethod(MyProjectDetailsActivity.this, ProConstant.app_pro_myproject_details, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(ProjectDetailsActivity.this, ProConstant.app_pro_myproject_details, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();
@@ -190,7 +190,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
                     ((ProRegularTextView) findViewById(R.id.tv_address)).setText(jsonObject.getString("address"));
 
                     progressBar.setVisibility(View.VISIBLE);
-                    Glide.with(MyProjectDetailsActivity.this).load(jsonObject.getString("project_image")).listener(new RequestListener<String, GlideDrawable>() {
+                    Glide.with(ProjectDetailsActivity.this).load(jsonObject.getString("project_image")).listener(new RequestListener<String, GlideDrawable>() {
                         @Override
                         public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                             progressBar.setVisibility(View.GONE);
@@ -224,11 +224,11 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
                     if (jsonObject.getString("add_favouite").equalsIgnoreCase("0")) {
                         img_likes.setImageResource(R.drawable.ic_unfavorite);
                         img_likes.setTag("0");
-//                        Glide.with(MyProjectDetailsActivity.this).load("").placeholder(R.drawable.ic_unfavorite).into(img_likes);
+//                        Glide.with(ProjectDetailsActivity.this).load("").placeholder(R.drawable.ic_unfavorite).into(img_likes);
                     } else {
                         img_likes.setImageResource(R.drawable.ic_favorite);
                         img_likes.setTag("1");
-//                        Glide.with(MyProjectDetailsActivity.this).load("").placeholder(R.drawable.ic_favorite).into(img_likes);
+//                        Glide.with(ProjectDetailsActivity.this).load("").placeholder(R.drawable.ic_favorite).into(img_likes);
                     }
                     showlatlong();
 
@@ -285,14 +285,14 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
         Logger.printMessage("PARAMS", String.valueOf(Params));
 
 
-        new CustomJSONParser().fireAPIForPostMethod(MyProjectDetailsActivity.this, ProConstant.app_pro_watchlist_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForPostMethod(ProjectDetailsActivity.this, ProConstant.app_pro_watchlist_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();
                 try {
                     JSONObject mainResponseObj = new JSONObject(result);
                     Logger.printMessage("message", mainResponseObj.getString("message"));
-                    Toast.makeText(MyProjectDetailsActivity.this, mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProjectDetailsActivity.this, mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
 
 
                     if (project_function.equals("1")) {
@@ -312,7 +312,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
             @Override
             public void onError(String error, String response) {
                 myLoader.dismissLoader();
-                new MYAlert(MyProjectDetailsActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                new MYAlert(ProjectDetailsActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
                     @Override
                     public void OnOk(boolean res) {
 
@@ -323,7 +323,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
             @Override
             public void onError(String error) {
                 myLoader.dismissLoader();
-                new MYAlert(MyProjectDetailsActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                new MYAlert(ProjectDetailsActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
                     @Override
                     public void OnOk(boolean res) {
 
@@ -370,7 +370,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
     }
 
     public void showlatlong() {
-        ProHelperClass.getInstance(MyProjectDetailsActivity.this).getlatlongAPI(new ProHelperClass.getApiProcessCallback() {
+        ProHelperClass.getInstance(ProjectDetailsActivity.this).getlatlongAPI(new ProHelperClass.getApiProcessCallback() {
             @Override
             public void onStart() {
 
@@ -450,10 +450,10 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(MyProjectDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+            if ((ContextCompat.checkSelfPermission(ProjectDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
                 mMap.setMyLocationEnabled(true);
             } else {
-                ActivityCompat.requestPermissions(MyProjectDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQ_PERMISSION);
+                ActivityCompat.requestPermissions(ProjectDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQ_PERMISSION);
             }
         }else {
             mMap.setMyLocationEnabled(true);
@@ -494,6 +494,6 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
     private boolean checkPermission() {
         Log.d("checkPermission-->", "checkPermission()");
         // Ask for permission if it wasn't granted yet
-        return (ContextCompat.checkSelfPermission(MyProjectDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED );
+        return (ContextCompat.checkSelfPermission(ProjectDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED );
     }
 }

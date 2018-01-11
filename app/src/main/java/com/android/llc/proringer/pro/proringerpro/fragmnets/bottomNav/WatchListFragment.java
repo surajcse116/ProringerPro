@@ -1,16 +1,14 @@
 package com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav;
 
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +21,7 @@ import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
-import com.android.llc.proringer.pro.proringerpro.activities.MyProjectDetailsActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.ProjectDetailsActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.WatchListAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
@@ -159,6 +157,7 @@ public class WatchListFragment extends Fragment {
 
     public interface onOptionSelected {
         void onItemPassed(int position, JSONObject jsonObject);
+        void onFavorite(int position, JSONObject jsonObject);
     }
 
     public void loadList() {
@@ -189,6 +188,17 @@ public class WatchListFragment extends Fragment {
                     watchListAdapter = new WatchListAdapter(getActivity(), info_array, new onOptionSelected() {
                         @Override
                         public void onItemPassed(int position, JSONObject jsonObject) {
+                            try {
+                                Intent intent = new Intent(getActivity(), ProjectDetailsActivity.class);
+                                intent.putExtra("project_id", jsonObject.getString("id"));
+                                getActivity().startActivity(intent);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFavorite(int position, JSONObject jsonObject) {
                             try {
                                 deleteWatchListItem(position, jsonObject.getString("id"));
                             } catch (JSONException e) {

@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
-import com.android.llc.proringer.pro.proringerpro.activities.MyProjectDetailsActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.ProjectDetailsActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.MyProjectListingAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
@@ -113,7 +113,7 @@ public class MyProjectsFragment extends Fragment {
                             public void onItemPassed(int position, JSONObject value) {
 
                                 try {
-                                    Intent intent = new Intent(getActivity(), MyProjectDetailsActivity.class);
+                                    Intent intent = new Intent(getActivity(), ProjectDetailsActivity.class);
                                     intent.putExtra("project_id", value.getString("project_id"));
                                     getActivity().startActivity(intent);
                                 } catch (JSONException e) {

@@ -136,14 +136,18 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
             holder.cardView_main_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    try {
+                        callback.onItemPassed(position,info_array.getJSONObject(position));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             holder.img_favorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     try {
-                        callback.onItemPassed(position,info_array.getJSONObject(position));
+                        callback.onFavorite(position,info_array.getJSONObject(position));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
