@@ -18,12 +18,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomMapView;
+import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
@@ -44,6 +46,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by su on 8/18/17.
@@ -62,6 +65,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
     double slat,slong,northlat,northlong;
     int REQ_PERMISSION=1000;
     ScrollView scrollView;
+    MyLoader myLoader;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,6 +93,8 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
         img_likes = (ImageView) findViewById(R.id.img_likes);
         mapview = (CustomMapView) findViewById(R.id.mapview);
 
+        myLoader = new MyLoader(MyProjectDetailsActivity.this);
+
         mapview.onCreate(Bundle.EMPTY);
         mapview.getMapAsync(this);
         MapsInitializer.initialize(this);
@@ -110,6 +116,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
                     customAlert.getEventFromNormalAlert(MyProjectDetailsActivity.this, "", "Are you sure you want to add to watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
                         @Override
                         public void callBackOk() {
+                            addOrRemoveWatchlist(project_id,"1");
                         }
 
                         @Override
@@ -122,7 +129,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
                     customAlert.getEventFromNormalAlert(MyProjectDetailsActivity.this, "", "Are you sure you want to remove from watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
                         @Override
                         public void callBackOk() {
-
+                            addOrRemoveWatchlist(project_id,"0");
                         }
 
                         @Override
@@ -194,13 +201,13 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
                     zip = jsonObject.getString("zip");
 
                     if (jsonObject.getString("add_favouite").equalsIgnoreCase("0")) {
-//                        img_likes.setImageResource(R.drawable.ic_unfavorite);
+                        img_likes.setImageResource(R.drawable.ic_unfavorite);
                         img_likes.setTag("0");
-                        Glide.with(MyProjectDetailsActivity.this).load("").placeholder(R.drawable.ic_unfavorite).into(img_likes);
+//                        Glide.with(MyProjectDetailsActivity.this).load("").placeholder(R.drawable.ic_unfavorite).into(img_likes);
                     } else {
-//                        img_likes.setImageResource(R.drawable.ic_favorite);
+                        img_likes.setImageResource(R.drawable.ic_favorite);
                         img_likes.setTag("1");
-                        Glide.with(MyProjectDetailsActivity.this).load("").placeholder(R.drawable.ic_favorite).into(img_likes);
+//                        Glide.with(MyProjectDetailsActivity.this).load("").placeholder(R.drawable.ic_favorite).into(img_likes);
                     }
                     showlatlong();
 
@@ -243,13 +250,79 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
         });
     }
 
+    public void addOrRemoveWatchlist(final String project_id, final String project_function){
+        HashMap<String, String> Params = new HashMap<>();
+
+        Params.put("user_id", ProApplication.getInstance().getUserId());
+        Params.put("project_id", project_id);
+        Params.put("project_function", project_function);
+
+        Logger.printMessage("user_id", ProApplication.getInstance().getUserId());
+        Logger.printMessage("project_id", project_id);
+        Logger.printMessage("project_function", project_function);
+
+        Logger.printMessage("PARAMS", String.valueOf(Params));
+
+
+        new CustomJSONParser().fireAPIForPostMethod(MyProjectDetailsActivity.this, ProConstant.app_pro_watchlist_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                myLoader.dismissLoader();
+                try {
+                    JSONObject mainResponseObj = new JSONObject(result);
+                    Logger.printMessage("message", mainResponseObj.getString("message"));
+                    Toast.makeText(MyProjectDetailsActivity.this, mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+
+
+                    if (project_function.equals("1")) {
+                        img_likes.setImageResource(R.drawable.ic_favorite);
+                        img_likes.setTag("1");
+                    }else {
+
+                        img_likes.setImageResource(R.drawable.ic_unfavorite);
+                        img_likes.setTag("0");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String error, String response) {
+                myLoader.dismissLoader();
+                new MYAlert(MyProjectDetailsActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                    @Override
+                    public void OnOk(boolean res) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+                myLoader.dismissLoader();
+                new MYAlert(MyProjectDetailsActivity.this).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                    @Override
+                    public void OnOk(boolean res) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onStart() {
+                myLoader.showLoader();
+            }
+        });
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         setUpMap();
     }
-
 
     @Override
     protected void onResume() {
