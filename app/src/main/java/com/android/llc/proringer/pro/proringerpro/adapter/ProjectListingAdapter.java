@@ -101,17 +101,17 @@ public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         viewHolderPending.tv_expire.setText("EXPIRED " + info_array.getJSONObject(position).getString("expiry_date"));
                     }
                     else if(currentYear<apiYear){
-                        viewHolderPending.tv_expire.setText("EXPIRE " + info_array.getJSONObject(position).getString("expiry_date"));
+                        viewHolderPending.tv_expire.setText("EXPIRES " + info_array.getJSONObject(position).getString("expiry_date"));
                     }else if(currentYear==apiYear){
                         if (currentMonth<apiMonth){
-                            viewHolderPending.tv_expire.setText("EXPIRE " + info_array.getJSONObject(position).getString("expiry_date"));
+                            viewHolderPending.tv_expire.setText("EXPIRES " + info_array.getJSONObject(position).getString("expiry_date"));
                         }else if(currentMonth>apiMonth){
                             viewHolderPending.tv_expire.setText("EXPIRED " + info_array.getJSONObject(position).getString("expiry_date"));
                         }else if(currentMonth==apiMonth){
                             if (currentDay<apiDay){
                                 viewHolderPending.tv_expire.setText("EXPIRED " + info_array.getJSONObject(position).getString("expiry_date"));
                             }else if(currentDay==apiDay){
-                                viewHolderPending.tv_expire.setText("EXPIRE " + info_array.getJSONObject(position).getString("expiry_date"));
+                                viewHolderPending.tv_expire.setText("EXPIRES " + info_array.getJSONObject(position).getString("expiry_date"));
                             }else if(currentDay>apiDay){
                                 viewHolderPending.tv_expire.setText("EXPIRED " + info_array.getJSONObject(position).getString("expiry_date"));
                             }

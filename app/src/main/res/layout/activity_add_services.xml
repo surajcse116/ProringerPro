@@ -49,7 +49,7 @@
             android:id="@+id/SplitLine_hor3"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_above="@+id/tv_continue_service_area"
+            android:layout_above="@+id/tv_save_service"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
