@@ -11,6 +11,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
@@ -31,6 +36,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
+import com.android.llc.proringer.pro.proringerpro.helper.ShowMyDialog;
 import com.android.llc.proringer.pro.proringerpro.helper.ViewHelper;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -170,6 +176,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         arrayList.add(setGetAPI);
 
         new CustomJSONParser().fireAPIForGetMethod(ProjectDetailsActivity.this, ProConstant.app_pro_myproject_details, arrayList, new CustomJSONParser.CustomJSONResponse() {
+            JSONObject jsonObject;
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();
@@ -177,7 +184,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 
                 try {
                     JSONArray info_array = new JSONObject(result).getJSONArray("info_array");
-                    JSONObject jsonObject = info_array.getJSONObject(0);
+                    jsonObject = info_array.getJSONObject(0);
 
                     String splitPostedBy[]=jsonObject.getString("posted_by").split(" ");
                     String name="";
@@ -210,7 +217,37 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                     ((ProRegularTextView) findViewById(R.id.tv_type_of_work)).setText(jsonObject.getString("type_of_work"));
                     ((ProRegularTextView) findViewById(R.id.tv_service)).setText(jsonObject.getString("service"));
                     ((ProRegularTextView) findViewById(R.id.tv_property)).setText(jsonObject.getString("property"));
-                    ((ProRegularTextView) findViewById(R.id.tv_phone)).setText(jsonObject.getString("phone"));
+//                    ((ProRegularTextView) findViewById(R.id.tv_phone)).setText(jsonObject.getString("phone"));
+
+
+                    ((ProRegularTextView) findViewById(R.id.tv_phone)).setMovementMethod(LinkMovementMethod.getInstance());
+                    String contactTextClick = "Click to View";
+                    Spannable word = new SpannableString(contactTextClick);
+
+                    final ClickableSpan myClickableSpan = new ClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+                            // There is the OnCLick. put your intent to Register class here
+                            widget.invalidate();
+                            Logger.printMessage("SpanHello", "click");
+
+                            try {
+                                new ShowMyDialog(ProjectDetailsActivity.this).showDescribetionDialog("Phone Number", jsonObject.getString("phone").trim());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            ds.setColor(getResources().getColor(R.color.colorAccent));
+                            ds.setUnderlineText(false);
+                        }
+                    };
+                    word.setSpan(myClickableSpan, 0, contactTextClick.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    ((ProRegularTextView) findViewById(R.id.tv_phone)).setText(word);
+
+
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         ((ProRegularTextView) findViewById(R.id.tv_describetion)).setText(Html.fromHtml(ViewHelper.SetParaAlign(jsonObject.getString("job_details"), ViewHelper.P_Justify), Html.FROM_HTML_MODE_LEGACY));

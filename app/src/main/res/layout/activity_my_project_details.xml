@@ -233,7 +233,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:id="@+id/tv_phone"
-                                android:text="Installation"
+                                android:text="View Phone Number"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
