@@ -32,7 +32,7 @@
         android:layout_height="match_parent">
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-            android:id="@+id/tv_continue_service_area"
+            android:id="@+id/tv_save_service"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:layout_alignParentBottom="true"

@@ -102,7 +102,7 @@ public class AddServicesActivity extends AppCompatActivity {
 
         category();
 
-        findViewById(R.id.tv_continue_service_area).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_save_service).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveServices();
