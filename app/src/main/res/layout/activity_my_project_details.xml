@@ -82,6 +82,12 @@
                         android:padding="15dp"
                         />
 
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
                 </RelativeLayout>
 
                 <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView

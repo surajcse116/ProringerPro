@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -34,6 +35,9 @@ import com.android.llc.proringer.pro.proringerpro.helper.ViewHelper;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
@@ -66,6 +70,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
     int REQ_PERMISSION=1000;
     ScrollView scrollView;
     MyLoader myLoader;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,6 +97,7 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
         img_project = (ImageView) findViewById(R.id.img_project);
         img_likes = (ImageView) findViewById(R.id.img_likes);
         mapview = (CustomMapView) findViewById(R.id.mapview);
+        progressBar= (ProgressBar) findViewById(R.id.progressBar);
 
         myLoader = new MyLoader(MyProjectDetailsActivity.this);
 
@@ -183,7 +189,22 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
                     ((ProRegularTextView) findViewById(R.id.tv_posted_date)).setText(jsonObject.getString("post_date"));
                     ((ProRegularTextView) findViewById(R.id.tv_address)).setText(jsonObject.getString("address"));
 
-                    Glide.with(MyProjectDetailsActivity.this).load(jsonObject.getString("project_image")).into(img_project);
+                    progressBar.setVisibility(View.VISIBLE);
+                    Glide.with(MyProjectDetailsActivity.this).load(jsonObject.getString("project_image")).listener(new RequestListener<String, GlideDrawable>() {
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            progressBar.setVisibility(View.GONE);
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            progressBar.setVisibility(View.GONE);
+                            return false;
+                        }
+                    }).into(img_project);
+
+
                     ((ProRegularTextView) findViewById(R.id.tv_project_title)).setText(jsonObject.getString("project_name"));
                     ((ProRegularTextView) findViewById(R.id.tv_project_title)).setText(jsonObject.getString("project_name"));
                     ((ProRegularTextView) findViewById(R.id.tv_type_of_work)).setText(jsonObject.getString("type_of_work"));
