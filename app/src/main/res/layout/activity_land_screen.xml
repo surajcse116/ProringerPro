@@ -217,6 +217,7 @@
             android:src="@drawable/icon" />
 
         <ImageView
+            android:id="@+id/search_local_pro_header_backTool"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical|right"

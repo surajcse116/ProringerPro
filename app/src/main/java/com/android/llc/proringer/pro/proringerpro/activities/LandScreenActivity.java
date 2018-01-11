@@ -64,7 +64,7 @@ public class LandScreenActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle = null;
     private FragmentManager fragmentManager = null;
     ProRegularTextView tv_title;
-    ImageView iv_pro_logo, search_local_pro_header;
+    ImageView iv_pro_logo, search_local_pro_header,search_local_pro_header_backTool;
     LinearLayout linear_buttombar;
     private ImageView dashboard_image, my_projects_image, messages_image, fav_pro_image;
     private ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
@@ -125,8 +125,17 @@ public class LandScreenActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         search_local_pro_header = (ImageView) findViewById(R.id.search_local_pro_header);
+        search_local_pro_header_backTool = (ImageView) findViewById(R.id.search_local_pro_header_backTool);
 
         search_local_pro_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavigationHandler.getInstance().highlightTag(NavigationHandler.FIND_LOCAL_PROJECT);
+                projectTransactAndSetView();
+            }
+        });
+
+        search_local_pro_header_backTool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavigationHandler.getInstance().highlightTag(NavigationHandler.FIND_LOCAL_PROJECT);
