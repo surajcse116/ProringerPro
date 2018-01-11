@@ -131,7 +131,13 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
                     JSONArray info_array = new JSONObject(result).getJSONArray("info_array");
                     JSONObject jsonObject = info_array.getJSONObject(0);
 
-                    ((ProRegularTextView) findViewById(R.id.tv_posted_by_value)).setText(jsonObject.getString("posted_by"));
+                    String splitPostedBy[]=jsonObject.getString("posted_by").split(" ");
+                    String name="";
+                    for (int i=0;i<splitPostedBy.length-1;i++){
+                        name=splitPostedBy[i].substring(0,1)+".";
+                    }
+                    ((ProRegularTextView) findViewById(R.id.tv_posted_by_value)).setText(name+splitPostedBy[splitPostedBy.length-1]);
+//                    ((ProRegularTextView) findViewById(R.id.tv_posted_by_value)).setText(jsonObject.getString("posted_by"));
                     ((ProRegularTextView) findViewById(R.id.tv_posted_date)).setText(jsonObject.getString("post_date"));
                     ((ProRegularTextView) findViewById(R.id.tv_address)).setText(jsonObject.getString("address"));
 
