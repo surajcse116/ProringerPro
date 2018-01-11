@@ -25,6 +25,12 @@
             android:background="@android:color/transparent"
             android:layout_weight="2">
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <ImageView
                 android:layout_width="45dp"
                 android:layout_height="65dp"

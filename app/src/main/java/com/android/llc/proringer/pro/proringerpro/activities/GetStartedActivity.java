@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.GetStartedTutorialPagerAdapter;
@@ -24,6 +25,9 @@ import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -76,6 +80,7 @@ public class GetStartedActivity extends AppCompatActivity implements
     Location mCurrentLocation;
     String mLastUpdateTime;
     String updatelocation;
+    ProgressBar progressBar;
 
 
     @Override
@@ -110,6 +115,7 @@ public class GetStartedActivity extends AppCompatActivity implements
 
         img_background = (ImageView) findViewById(R.id.img_background);
         img_pager = (ImageView) findViewById(R.id.img_pager);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         Glide.with(GetStartedActivity.this).load(R.drawable.welcome_intro_get_started).into(img_background);
 
@@ -135,9 +141,7 @@ public class GetStartedActivity extends AppCompatActivity implements
 //            }
 //        });
 //
-
-        Glide.with(GetStartedActivity.this).load("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/6l9WhMqUVS.jpg").into(img_pager);
-
+        showPhoneScreenImage("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/6l9WhMqUVS.jpg");
 
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,19 +213,19 @@ public class GetStartedActivity extends AppCompatActivity implements
         switch (position)
         {
             case 0:
-                  Glide.with(GetStartedActivity.this).load("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/6l9WhMqUVS.jpg").into(img_pager);
+                showPhoneScreenImage("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/6l9WhMqUVS.jpg");
 //                img_pager.setBackgroundColor(getResources().getColor(R.color.colorHeader));
                 break;
             case 1:
-                Glide.with(GetStartedActivity.this).load("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/dBY7IAcHF4.jpg").into(img_pager);
+                showPhoneScreenImage("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/dBY7IAcHF4.jpg");
 //                img_pager.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 break;
             case 2:
-                Glide.with(GetStartedActivity.this).load("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/BstMg3zkbw.jpg").into(img_pager);
+                showPhoneScreenImage("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/BstMg3zkbw.jpg");
 //                img_pager.setBackgroundColor(getResources().getColor(R.color.colorLightBrick));
                 break;
             case 3:
-                 Glide.with(GetStartedActivity.this).load("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/CGFeJbcS0P.jpg").into(img_pager);
+                showPhoneScreenImage("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/CGFeJbcS0P.jpg");
 //                img_pager.setBackgroundColor(getResources().getColor(R.color.colorSky));
                 break;
 //            case 4:
@@ -230,6 +234,24 @@ public class GetStartedActivity extends AppCompatActivity implements
 //                break;
         }
     }
+
+    public void showPhoneScreenImage(String url){
+        progressBar.setVisibility(View.VISIBLE);
+        Glide.with(GetStartedActivity.this).load(url).listener(new RequestListener<String, GlideDrawable>() {
+            @Override
+            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                progressBar.setVisibility(View.GONE);
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                progressBar.setVisibility(View.GONE);
+                return false;
+            }
+        }).into(img_pager);
+    }
+
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
