@@ -273,7 +273,7 @@
                     android:layout_below="@+id/view"
                     android:layout_marginBottom="10dp"
                     android:text="Looking for someone to km bkbvck vbckv bckbghg hhgh gjhgjgh vkvbkvbkbvkkbvkbkbb ghgnghjghjgjgjghjghjgjghj jghjghjhj g  jg jgjg jhnbc jhvfd fdfdd fgdfc jvcjvcj vcjvfdgcjvcjvcj"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 
