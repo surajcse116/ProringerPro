@@ -23,13 +23,13 @@ import java.util.Calendar;
  * Created by su on 8/12/17.
  */
 
-public class ProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyProjectListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context mcontext;
     MyProjectsFragment.onOptionSelected callback;
     JSONArray info_array;
     MyProjectsFragment myProjectsFragment;
 
-    public ProjectListingAdapter(Context mcontext, MyProjectsFragment myProjectsFragment, JSONArray info_array, MyProjectsFragment.onOptionSelected callback) {
+    public MyProjectListingAdapter(Context mcontext, MyProjectsFragment myProjectsFragment, JSONArray info_array, MyProjectsFragment.onOptionSelected callback) {
         this.mcontext = mcontext;
         this.myProjectsFragment = myProjectsFragment;
         this.info_array = info_array;

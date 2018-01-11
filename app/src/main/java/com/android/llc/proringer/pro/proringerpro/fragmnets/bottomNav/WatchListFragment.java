@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.MyProjectDetailsActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.WatchListAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
@@ -239,84 +240,65 @@ public class WatchListFragment extends Fragment {
 
     public void deleteWatchListItem(final int position, final String project_id) {
 
-        TextView title = new TextView(getActivity());
-        title.setText("Are you sure you want to remove from watchlist?");
-//                title.setBackgroundResource(R.drawable.gradient);
-        title.setPadding(10, 10, 10, 10);
-        title.setGravity(Gravity.CENTER);
-        title.setTextColor(getActivity().getResources().getColor(R.color.colorTextBlack));
-        title.setTextSize(14);
-
-        new AlertDialog.Builder((LandScreenActivity) getActivity())
-                .setCustomTitle(title)
-
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+        CustomAlert customAlert = new CustomAlert();
+        customAlert.getEventFromNormalAlert(getActivity(), "", "Are you sure you want to remove from watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
+            @Override
+            public void callBackOk() {
+                HashMap<String, String> Params = new HashMap<>();
+                Params.put("user_id", ProApplication.getInstance().getUserId());
+                Params.put("project_id", project_id);
+                Params.put("project_function", "0");
+                Logger.printMessage("PARAMS", String.valueOf(Params));
+                new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_watchlist_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        ///////////delete from watch list
+                    public void onSuccess(String result) {
+                        myLoader.dismissLoader();
+                        JSONObject mainResponseObj = null;
+                        try {
+                            mainResponseObj = new JSONObject(result);
+                            Logger.printMessage("message", mainResponseObj.getString("message"));
+                            Toast.makeText(getActivity(), mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
 
-                        HashMap<String, String> Params = new HashMap<>();
-                        Params.put("user_id", ProApplication.getInstance().getUserId());
-                        Params.put("project_id", project_id);
-                        Params.put("project_function", "0");
-                        Logger.printMessage("PARAMS", String.valueOf(Params));
-                        new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_watchlist_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                            info_array.remove(position);
+                            watchListAdapter.notifyDataSetChanged();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error, String response) {
+                        myLoader.dismissLoader();
+                        new MYAlert(getActivity()).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
                             @Override
-                            public void onSuccess(String result) {
-                                myLoader.dismissLoader();
-                                JSONObject mainResponseObj = null;
-                                try {
-                                    mainResponseObj = new JSONObject(result);
-                                    Logger.printMessage("message", mainResponseObj.getString("message"));
-                                    Toast.makeText(getActivity(), mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+                            public void OnOk(boolean res) {
 
-                                    info_array.remove(position);
-                                    watchListAdapter.notifyDataSetChanged();
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            @Override
-                            public void onError(String error, String response) {
-                                myLoader.dismissLoader();
-                                new MYAlert(getActivity()).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
-                                    @Override
-                                    public void OnOk(boolean res) {
-
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onError(String error) {
-                                myLoader.dismissLoader();
-                                new MYAlert(getActivity()).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
-                                    @Override
-                                    public void OnOk(boolean res) {
-
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onStart() {
-                                myLoader.showLoader();
                             }
                         });
+                    }
 
-                    }
-                })
-                .setCancelable(false)
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
+                    public void onError(String error) {
+                        myLoader.dismissLoader();
+                        new MYAlert(getActivity()).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
+                            @Override
+                            public void OnOk(boolean res) {
+
+                            }
+                        });
                     }
-                })
-                .show();
+                    @Override
+                    public void onStart() {
+                        myLoader.showLoader();
+                    }
+                });
+            }
+            @Override
+            public void callBackCancel() {
+
+            }
+        });
     }
 
     public void closeKeypad() {

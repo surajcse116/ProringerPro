@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.MyProjectDetailsActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProjectListAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.database.DatabaseHandler;
@@ -245,102 +246,99 @@ public class ProjectListFragment extends Fragment {
 
     public void addOrDeleteWatchListItem(final int position, final String project_id, final String project_function) {
 
-        TextView title = new TextView(getActivity());
+        if (project_function.equals("0")){
+            CustomAlert customAlert = new CustomAlert();
+            customAlert.getEventFromNormalAlert(getActivity(), "", "Are you sure you want to remove from watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
+                @Override
+                public void callBackOk() {
+                    addOrRemoveWatchlist(position,project_id,"0");
+                }
 
-        if (project_function.equals("1")) {
-            title.setText("Are you sure you want to Add to watchlist?");
+                @Override
+                public void callBackCancel() {
+
+                }
+            });
         }else {
-            title.setText("Are you sure you want to Delete from watchlist?");
+            CustomAlert customAlert = new CustomAlert();
+            customAlert.getEventFromNormalAlert(getActivity(), "", "Are you sure you want to add to watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
+                @Override
+                public void callBackOk() {
+                    addOrRemoveWatchlist(position,project_id,"1");
+                }
+
+                @Override
+                public void callBackCancel() {
+
+                }
+            });
         }
-//                title.setBackgroundResource(R.drawable.gradient);
-        title.setPadding(10, 10, 10, 10);
-        title.setGravity(Gravity.CENTER);
-        title.setTextColor(getActivity().getResources().getColor(R.color.colorTextBlack));
-        title.setTextSize(14);
+    }
 
-        new AlertDialog.Builder((LandScreenActivity) getActivity())
-                .setCustomTitle(title)
+    public void addOrRemoveWatchlist(final int position, final String project_id, final String project_function){
+        HashMap<String, String> Params = new HashMap<>();
 
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+        Params.put("user_id", ProApplication.getInstance().getUserId());
+        Params.put("project_id", project_id);
+        Params.put("project_function", project_function);
+
+        Logger.printMessage("user_id", ProApplication.getInstance().getUserId());
+        Logger.printMessage("project_id", project_id);
+        Logger.printMessage("project_function", project_function);
+
+        Logger.printMessage("PARAMS", String.valueOf(Params));
+
+
+        new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_watchlist_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                myLoader.dismissLoader();
+                try {
+                    JSONObject mainResponseObj = new JSONObject(result);
+                    Logger.printMessage("message", mainResponseObj.getString("message"));
+                    Toast.makeText(getActivity(), mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+
+
+                    if (project_function.equals("1")) {
+                        info_array.getJSONObject(position).put("watchlist_status", "1");
+                    }else {
+                        info_array.getJSONObject(position).put("watchlist_status", "0");
+                    }
+
+                    projectListAdapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String error, String response) {
+                myLoader.dismissLoader();
+                new MYAlert(getActivity()).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        ///////////delete from watch list
-
-                        HashMap<String, String> Params = new HashMap<>();
-
-                        Params.put("user_id", ProApplication.getInstance().getUserId());
-                        Params.put("project_id", project_id);
-                        Params.put("project_function", project_function);
-
-                        Logger.printMessage("user_id", ProApplication.getInstance().getUserId());
-                        Logger.printMessage("project_id", project_id);
-                        Logger.printMessage("project_function", project_function);
-
-                        Logger.printMessage("PARAMS", String.valueOf(Params));
-
-
-                        new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_watchlist_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
-                            @Override
-                            public void onSuccess(String result) {
-                                myLoader.dismissLoader();
-                                try {
-                                    JSONObject mainResponseObj = new JSONObject(result);
-                                    Logger.printMessage("message", mainResponseObj.getString("message"));
-                                    Toast.makeText(getActivity(), mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
-
-
-                                    if (project_function.equals("1")) {
-                                        info_array.getJSONObject(position).put("watchlist_status", "1");
-                                    }else {
-                                        info_array.getJSONObject(position).put("watchlist_status", "0");
-                                    }
-
-                                    projectListAdapter.notifyDataSetChanged();
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            @Override
-                            public void onError(String error, String response) {
-                                myLoader.dismissLoader();
-                                new MYAlert(getActivity()).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
-                                    @Override
-                                    public void OnOk(boolean res) {
-
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onError(String error) {
-                                myLoader.dismissLoader();
-                                new MYAlert(getActivity()).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
-                                    @Override
-                                    public void OnOk(boolean res) {
-
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onStart() {
-                                myLoader.showLoader();
-                            }
-                        });
+                    public void OnOk(boolean res) {
 
                     }
-                })
-                .setCancelable(false)
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+                myLoader.dismissLoader();
+                new MYAlert(getActivity()).AlertOkCancel(getResources().getString(R.string.LoginAlertTitle), error, new MYAlert.OnlyMessage() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
+                    public void OnOk(boolean res) {
+
                     }
-                })
-                .show();
+                });
+            }
+
+            @Override
+            public void onStart() {
+                myLoader.showLoader();
+            }
+        });
     }
 
     public void closeKeypad() {

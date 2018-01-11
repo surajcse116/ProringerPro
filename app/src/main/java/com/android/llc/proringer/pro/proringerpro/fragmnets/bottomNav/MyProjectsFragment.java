@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.MyProjectDetailsActivity;
-import com.android.llc.proringer.pro.proringerpro.adapter.ProjectListingAdapter;
+import com.android.llc.proringer.pro.proringerpro.adapter.MyProjectListingAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
@@ -57,7 +57,7 @@ public class MyProjectsFragment extends Fragment {
     ArrayList<SetGetAPI> arrayList = null;
     MyLoader myload;
     JSONArray info_array;
-    ProjectListingAdapter projectListingAdapter;
+    MyProjectListingAdapter myProjectListingAdapter;
 
     @Nullable
     @Override
@@ -108,7 +108,7 @@ public class MyProjectsFragment extends Fragment {
 
                         rcv_project_list.setVisibility(View.VISIBLE);
                         tv_empty_show.setVisibility(View.GONE);
-                        projectListingAdapter = new ProjectListingAdapter(getActivity(), MyProjectsFragment.this, info_array, new onOptionSelected() {
+                        myProjectListingAdapter = new MyProjectListingAdapter(getActivity(), MyProjectsFragment.this, info_array, new onOptionSelected() {
                             @Override
                             public void onItemPassed(int position, JSONObject value) {
 
@@ -126,7 +126,7 @@ public class MyProjectsFragment extends Fragment {
                                 ((LandScreenActivity)getActivity()).projectTransactAndSetView();
                             }
                         });
-                        rcv_project_list.setAdapter(projectListingAdapter);
+                        rcv_project_list.setAdapter(myProjectListingAdapter);
                     } else {
                         rcv_project_list.setVisibility(View.GONE);
                         tv_empty_show.setVisibility(View.VISIBLE);
@@ -184,7 +184,7 @@ public class MyProjectsFragment extends Fragment {
                 try {
                     if (new JSONObject(result).getBoolean("response")) {
                         info_array.remove(position);
-                        projectListingAdapter.notifyDataSetChanged();
+                        myProjectListingAdapter.notifyDataSetChanged();
                     }
                     Toast.makeText(getActivity(), "" + new JSONObject(result).getString("message"), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {

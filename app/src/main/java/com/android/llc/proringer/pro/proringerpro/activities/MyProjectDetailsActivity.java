@@ -14,12 +14,14 @@ import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomMapView;
 import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
@@ -98,6 +100,39 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
         mapview.getLayoutParams().height = (int) 2 * (screenWidth - 10) / 5;
 
         showData();
+
+        img_likes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (img_likes.getTag().equals("0")){
+                    CustomAlert customAlert = new CustomAlert();
+                    customAlert.getEventFromNormalAlert(MyProjectDetailsActivity.this, "", "Are you sure you want to add to watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
+                        @Override
+                        public void callBackOk() {
+                        }
+
+                        @Override
+                        public void callBackCancel() {
+
+                        }
+                    });
+                }else {
+                    CustomAlert customAlert = new CustomAlert();
+                    customAlert.getEventFromNormalAlert(MyProjectDetailsActivity.this, "", "Are you sure you want to remove from watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
+                        @Override
+                        public void callBackOk() {
+
+                        }
+
+                        @Override
+                        public void callBackCancel() {
+
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override
@@ -160,9 +195,11 @@ public class MyProjectDetailsActivity extends AppCompatActivity implements OnMap
 
                     if (jsonObject.getString("add_favouite").equalsIgnoreCase("0")) {
 //                        img_likes.setImageResource(R.drawable.ic_unfavorite);
+                        img_likes.setTag("0");
                         Glide.with(MyProjectDetailsActivity.this).load("").placeholder(R.drawable.ic_unfavorite).into(img_likes);
                     } else {
 //                        img_likes.setImageResource(R.drawable.ic_favorite);
+                        img_likes.setTag("1");
                         Glide.with(MyProjectDetailsActivity.this).load("").placeholder(R.drawable.ic_favorite).into(img_likes);
                     }
                     showlatlong();
