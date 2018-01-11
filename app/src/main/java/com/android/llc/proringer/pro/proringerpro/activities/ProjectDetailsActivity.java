@@ -232,7 +232,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                             Logger.printMessage("SpanHello", "click");
 
                             try {
-                                if (true) {
+                                if (jsonObject.getString("premium_status").trim().equals("2")) {
                                     new ShowMyDialog(ProjectDetailsActivity.this).showDescribetionDialog("Phone Number", jsonObject.getString("phone").trim());
                                 }else {
                                     Toast.makeText(ProjectDetailsActivity.this,"You have not a Premium User",Toast.LENGTH_SHORT).show();
