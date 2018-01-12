@@ -36,6 +36,7 @@ import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.Availabili
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfriendFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.NotificationsFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.ProjectListFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReplyFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.RequestReviewFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.SocialMediaFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.main_content.ProjectMessagingFragment;
@@ -130,7 +131,8 @@ public class LandScreenActivity extends AppCompatActivity {
         search_local_pro_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavigationHandler.getInstance().highlightTag(NavigationHandler.FIND_LOCAL_PROJECT);
+//                NavigationHandler.getInstance().highlightTag(NavigationHandler.FIND_LOCAL_PROJECT);
+                navigationHandler.highlightTag(NavigationHandler.FIND_LOCAL_PROJECT);
                 projectTransactAndSetView();
             }
         });
@@ -138,7 +140,8 @@ public class LandScreenActivity extends AppCompatActivity {
         search_local_pro_header_backTool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavigationHandler.getInstance().highlightTag(NavigationHandler.FIND_LOCAL_PROJECT);
+//                NavigationHandler.getInstance().highlightTag(NavigationHandler.FIND_LOCAL_PROJECT);
+                navigationHandler.highlightTag(NavigationHandler.FIND_LOCAL_PROJECT);
                 projectTransactAndSetView();
             }
         });
@@ -171,11 +174,12 @@ public class LandScreenActivity extends AppCompatActivity {
                         break;
                     case BottomNav.MY_PROJECTS:
                         toggleProMapSearch(false);
+                        closeDrawer();
                         transactMyProjects();
                         toolbar.setVisibility(View.VISIBLE);
                         iv_pro_logo.setVisibility(View.VISIBLE);
                         tv_title.setVisibility(View.GONE);
-                        closeDrawer();
+
                         break;
                     case BottomNav.MESSAGES:
                         toggleProMapSearch(false);
@@ -239,8 +243,15 @@ public class LandScreenActivity extends AppCompatActivity {
                 switch (tag) {
 
                     case NavigationHandler.FIND_LOCAL_PROJECT:
+
+                        toggleProMapSearch(false);
                         projectTransactAndSetView();
                         closeDrawer();
+
+                        toolbar.setVisibility(View.VISIBLE);
+                        iv_pro_logo.setVisibility(View.VISIBLE);
+                        tv_title.setVisibility(View.GONE);
+
                         break;
 
                     case NavigationHandler.ACCOUNT:
@@ -259,12 +270,11 @@ public class LandScreenActivity extends AppCompatActivity {
                     case NavigationHandler.QUICK_REPLY:
                         toggleProMapSearch(false);
                         closeDrawer();
+                        linear_buttombar.setVisibility(View.VISIBLE);
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("QUICK REPLY MESSAGE");
-                        // linear_buttombar.setVisibility(View.GONE);
-                        Intent i = new Intent(LandScreenActivity.this, QuickReplyActivity.class);
-                        startActivity(i);
+                        transactquickReply();
                         break;
 
                     case NavigationHandler.AVAILABILITY:
@@ -537,6 +547,27 @@ public class LandScreenActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container, new DashBoardFragment(), "" + DashBoardFragment.class.getCanonicalName());
         transaction.addToBackStack("" + DashBoardFragment.class.getCanonicalName());
+        transaction.commit();
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+    }
+
+
+
+    /**
+     * \
+     * Fragment transaction of DashBoardFragment
+     */
+    private void transactquickReply() {
+        toggleToolBar(false);
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + QuickReplyFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + QuickReplyFragment.class.getCanonicalName());
+
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + QuickReplyFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + QuickReplyFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new QuickReplyFragment(), "" + QuickReplyFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + QuickReplyFragment.class.getCanonicalName());
         transaction.commit();
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
     }
