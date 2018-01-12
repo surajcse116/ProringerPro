@@ -22,13 +22,12 @@
     </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
-        android:id="@+id/RLAddLicence"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-            android:id="@+id/tv_request_review"
+            android:id="@+id/tv_response_now"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:layout_alignParentBottom="true"
@@ -43,7 +42,7 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/tv_request_review"
+            android:layout_above="@+id/tv_response_now"
             android:fillViewport="true">
 
             <RelativeLayout

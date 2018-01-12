@@ -1,14 +1,18 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spannable;
@@ -18,15 +22,20 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.adapter.ResponseDialogMenuAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
@@ -39,6 +48,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.helper.ShowMyDialog;
 import com.android.llc.proringer.pro.proringerpro.helper.ViewHelper;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetgetmenuItem;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -77,6 +87,9 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
     ScrollView scrollView;
     MyLoader myLoader;
     ProgressBar progressBar;
+    PopupWindow popupWindow;
+    ArrayList<SetgetmenuItem> menu_item;
+    ProRegularTextView tv_response_now;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +100,13 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        menu_item=new ArrayList<>();
+
+        menu_item.add(new SetgetmenuItem("Mark as unread",R.drawable.ic_message_closed_envelope));
+        menu_item.add(new SetgetmenuItem("Mute conversation",R.drawable.ic_mute_volume));
+        menu_item.add(new SetgetmenuItem("Report as spam",R.drawable.ic_rubbish));
+        menu_item.add(new SetgetmenuItem("Delete conversation",R.drawable.ic_rounded_block_sign));
 
         myload = new MyLoader(ProjectDetailsActivity.this);
 
@@ -104,6 +124,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         img_likes = (ImageView) findViewById(R.id.img_likes);
         mapview = (CustomMapView) findViewById(R.id.mapview);
         progressBar= (ProgressBar) findViewById(R.id.progressBar);
+        tv_response_now= (ProRegularTextView) findViewById(R.id.tv_response_now);
 
         myLoader = new MyLoader(ProjectDetailsActivity.this);
 
@@ -150,6 +171,13 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                         }
                     });
                 }
+            }
+        });
+
+        tv_response_now.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialogResponseNow();
             }
         });
     }
@@ -537,4 +565,64 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         // Ask for permission if it wasn't granted yet
         return (ContextCompat.checkSelfPermission(ProjectDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED );
     }
+
+
+    private void alertDialogResponseNow() {
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+
+        final Dialog dialog = new Dialog(ProjectDetailsActivity.this, R.style.MyAlertDialogStyle);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(true);
+
+        dialog.setContentView(R.layout.response_dialog);
+        dialog.getWindow().setLayout((int) (width * .9), (int) (height * .5));
+        ImageView dialog_menu=dialog.findViewById(R.id.dialog_menu);
+        RecyclerView dialog_recycler=(RecyclerView)dialog.findViewById(R.id.dialog_recycler);
+        dialog_recycler.setLayoutManager(new LinearLayoutManager(ProjectDetailsActivity.this));
+        dialog_recycler.setAdapter(new ResponseDialogMenuAdapter(ProjectDetailsActivity.this,menu_item));
+
+
+//        Window window = dialog.getWindow();
+//        WindowManager.LayoutParams wlp = window.getAttributes();
+//
+//        wlp.gravity = Gravity.TOP;
+//        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+//        window.setAttributes(wlp);
+
+        dialog_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("menu_click","menu_click");
+
+                popupWindow = new PopupWindow(dialog.getContext());
+                // Closes the popup window when touch outside.
+                popupWindow.setOutsideTouchable(true);
+                // Removes default background.
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));
+                View dialogView = ProjectDetailsActivity.this.getLayoutInflater().inflate(R.layout.response_dialog_menu, null);
+
+                // some other visual settings
+                popupWindow.setFocusable(false);
+                popupWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+                popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+
+                // set the list view as pop up window content
+                popupWindow.setContentView(dialogView);
+                popupWindow.showAsDropDown(v, 5, 5);
+                popupWindow.getElevation();
+                RecyclerView rcv_ = (RecyclerView) dialogView.findViewById(R.id.rcv_);
+                rcv_.setLayoutManager(new LinearLayoutManager(ProjectDetailsActivity.this));
+                ResponseDialogMenuAdapter responseDialog_menu_adapter=new ResponseDialogMenuAdapter(ProjectDetailsActivity.this,menu_item);
+                rcv_.setAdapter(responseDialog_menu_adapter);
+            }
+        });
+
+        dialog.show();
+    }
+
 }

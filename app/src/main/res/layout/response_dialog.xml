@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_element"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary">
+
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+        android:id="@+id/top_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="11dp"
+        android:text="January,11 2018"
+        android:textColor="@color/colorTextBlack"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/dialog_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_button_of_three_squares" />
+
+    <View
+        android:id="@+id/v1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/top_date"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorDarkGray" />
+
+    <RelativeLayout
+        android:id="@+id/RLBottom"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary">
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText
+            android:id="@+id/et_message"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:inputType="textMultiLine"
+            android:padding="5dp"
+            android:textSize="14sp"
+            android:background="@drawable/edit_text_selecter"
+            android:hint="Write your message..." />
+
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_message">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/send_message"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_alignParentRight="true"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:text="SEND"
+                android:textColor="@color/colorPrimary" />
+
+            <CheckBox
+                android:id="@+id/press_enter_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/send_message"
+                android:text="press enter to send"
+                android:textColor="@color/colorDarkGray" />
+
+            <ImageView
+                android:id="@+id/iv_attachment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toLeftOf="@+id/press_enter_check"
+                android:background="@drawable/ic_attachment"
+                android:padding="6dp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_above="@+id/RLBottom"
+        android:id="@+id/dialog_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/v1" />
+
+</RelativeLayout>

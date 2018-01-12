@@ -52,4 +52,9 @@
     <!--<item name="android:src">@drawable/nav_toggle_icon</item>-->
     <!--</style>-->
 
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 </resources>
