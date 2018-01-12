@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary">
+
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/top_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Response"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorTextBlack"
+        android:textSize="16sp" />
+
+    <View
+        android:id="@+id/v1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/top_title"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorDarkGray" />
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText
+            android:layout_below="@+id/v1"
+            android:id="@+id/et_message"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:inputType="textMultiLine"
+            android:padding="5dp"
+            android:textSize="14sp"
+            android:background="@drawable/edit_text_selecter"
+            android:hint="Write your message..." />
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:layout_margin="5dp"
+            android:layout_below="@+id/et_message"
+            android:id="@+id/send_message"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="SEND"
+            android:textColor="@color/colorPrimary" />
+
+</RelativeLayout>

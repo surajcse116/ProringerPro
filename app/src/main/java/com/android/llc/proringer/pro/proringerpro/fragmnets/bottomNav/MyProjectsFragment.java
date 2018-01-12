@@ -115,6 +115,7 @@ public class MyProjectsFragment extends Fragment {
                                 try {
                                     Intent intent = new Intent(getActivity(), ProjectDetailsActivity.class);
                                     intent.putExtra("project_id", value.getString("project_id"));
+                                    intent.putExtra("homeowner_id", value.getString("homeowner_id"));
                                     getActivity().startActivity(intent);
                                 } catch (JSONException e) {
                                     e.printStackTrace();

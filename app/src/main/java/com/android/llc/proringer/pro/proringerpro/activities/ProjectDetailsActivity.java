@@ -4,15 +4,12 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spannable;
@@ -22,11 +19,9 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -35,7 +30,6 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.adapter.ResponseDialogMenuAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
@@ -49,6 +43,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.ShowMyDialog;
 import com.android.llc.proringer.pro.proringerpro.helper.ViewHelper;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetgetmenuItem;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -65,6 +60,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -75,15 +72,15 @@ import java.util.HashMap;
 public class ProjectDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
     int screenHeight;
     int screenWidth;
-    String project_id = "", zip = "";
+    String project_id = "",homeowner_id="", zip = "";
     ImageView img_project, img_likes;
     CustomMapView mapview;
     RelativeLayout RLImage;
     GoogleMap mMap;
     ArrayList<SetGetAPI> arrayList = null;
     MyLoader myload;
-    double slat,slong,northlat,northlong;
-    int REQ_PERMISSION=1000;
+    double slat, slong, northlat, northlong;
+    int REQ_PERMISSION = 1000;
     ScrollView scrollView;
     MyLoader myLoader;
     ProgressBar progressBar;
@@ -101,16 +98,17 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        menu_item=new ArrayList<>();
+        menu_item = new ArrayList<>();
 
-        menu_item.add(new SetgetmenuItem("Mark as unread",R.drawable.ic_message_closed_envelope));
-        menu_item.add(new SetgetmenuItem("Mute conversation",R.drawable.ic_mute_volume));
-        menu_item.add(new SetgetmenuItem("Report as spam",R.drawable.ic_rubbish));
-        menu_item.add(new SetgetmenuItem("Delete conversation",R.drawable.ic_rounded_block_sign));
+        menu_item.add(new SetgetmenuItem("Mark as unread", R.drawable.ic_message_closed_envelope));
+        menu_item.add(new SetgetmenuItem("Mute conversation", R.drawable.ic_mute_volume));
+        menu_item.add(new SetgetmenuItem("Report as spam", R.drawable.ic_rubbish));
+        menu_item.add(new SetgetmenuItem("Delete conversation", R.drawable.ic_rounded_block_sign));
 
         myload = new MyLoader(ProjectDetailsActivity.this);
 
         project_id = getIntent().getStringExtra("project_id");
+        homeowner_id = getIntent().getStringExtra("homeowner_id");
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -123,8 +121,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         img_project = (ImageView) findViewById(R.id.img_project);
         img_likes = (ImageView) findViewById(R.id.img_likes);
         mapview = (CustomMapView) findViewById(R.id.mapview);
-        progressBar= (ProgressBar) findViewById(R.id.progressBar);
-        tv_response_now= (ProRegularTextView) findViewById(R.id.tv_response_now);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        tv_response_now = (ProRegularTextView) findViewById(R.id.tv_response_now);
 
         myLoader = new MyLoader(ProjectDetailsActivity.this);
 
@@ -144,12 +142,12 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onClick(View v) {
 
-                if (img_likes.getTag().equals("0")){
+                if (img_likes.getTag().equals("0")) {
                     CustomAlert customAlert = new CustomAlert();
                     customAlert.getEventFromNormalAlert(ProjectDetailsActivity.this, "", "Are you sure you want to add to watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
                         @Override
                         public void callBackOk() {
-                            addOrRemoveWatchlist(project_id,"1");
+                            addOrRemoveWatchlist(project_id, "1");
                         }
 
                         @Override
@@ -157,12 +155,12 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 
                         }
                     });
-                }else {
+                } else {
                     CustomAlert customAlert = new CustomAlert();
                     customAlert.getEventFromNormalAlert(ProjectDetailsActivity.this, "", "Are you sure you want to remove from watchlist?", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
                         @Override
                         public void callBackOk() {
-                            addOrRemoveWatchlist(project_id,"0");
+                            addOrRemoveWatchlist(project_id, "0");
                         }
 
                         @Override
@@ -190,7 +188,6 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         return super.onOptionsItemSelected(item);
     }
 
-
     public void showData() {
         arrayList = new ArrayList<SetGetAPI>();
         SetGetAPI setGetAPI = new SetGetAPI();
@@ -205,6 +202,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 
         new CustomJSONParser().fireAPIForGetMethod(ProjectDetailsActivity.this, ProConstant.app_pro_myproject_details, arrayList, new CustomJSONParser.CustomJSONResponse() {
             JSONObject jsonObject;
+
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();
@@ -214,12 +212,12 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                     JSONArray info_array = new JSONObject(result).getJSONArray("info_array");
                     jsonObject = info_array.getJSONObject(0);
 
-                    String splitPostedBy[]=jsonObject.getString("posted_by").split(" ");
-                    String name="";
-                    for (int i=0;i<splitPostedBy.length-1;i++){
-                        name=splitPostedBy[i].substring(0,1)+".";
+                    String splitPostedBy[] = jsonObject.getString("posted_by").split(" ");
+                    String name = "";
+                    for (int i = 0; i < splitPostedBy.length - 1; i++) {
+                        name = splitPostedBy[i].substring(0, 1) + ".";
                     }
-                    ((ProRegularTextView) findViewById(R.id.tv_posted_by_value)).setText(name+splitPostedBy[splitPostedBy.length-1]);
+                    ((ProRegularTextView) findViewById(R.id.tv_posted_by_value)).setText(name + splitPostedBy[splitPostedBy.length - 1]);
 //                    ((ProRegularTextView) findViewById(R.id.tv_posted_by_value)).setText(jsonObject.getString("posted_by"));
                     ((ProRegularTextView) findViewById(R.id.tv_posted_date)).setText(jsonObject.getString("post_date"));
                     ((ProRegularTextView) findViewById(R.id.tv_address)).setText(jsonObject.getString("address"));
@@ -262,8 +260,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                             try {
                                 if (jsonObject.getString("premium_status").trim().equals("2")) {
                                     new ShowMyDialog(ProjectDetailsActivity.this).showDescribetionDialog("Phone Number", jsonObject.getString("phone").trim());
-                                }else {
-                                    Toast.makeText(ProjectDetailsActivity.this,"You have not a Premium User",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(ProjectDetailsActivity.this, "You have not a Premium User", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -278,7 +276,6 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                     };
                     word.setSpan(myClickableSpan, 0, contactTextClick.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     ((ProRegularTextView) findViewById(R.id.tv_phone)).setText(word);
-
 
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -340,7 +337,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         });
     }
 
-    public void addOrRemoveWatchlist(final String project_id, final String project_function){
+    public void addOrRemoveWatchlist(final String project_id, final String project_function) {
         HashMap<String, String> Params = new HashMap<>();
 
         Params.put("user_id", ProApplication.getInstance().getUserId());
@@ -367,7 +364,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                     if (project_function.equals("1")) {
                         img_likes.setImageResource(R.drawable.ic_favorite);
                         img_likes.setTag("1");
-                    }else {
+                    } else {
 
                         img_likes.setImageResource(R.drawable.ic_unfavorite);
                         img_likes.setTag("0");
@@ -524,7 +521,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
             } else {
                 ActivityCompat.requestPermissions(ProjectDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQ_PERMISSION);
             }
-        }else {
+        } else {
             mMap.setMyLocationEnabled(true);
         }
 
@@ -563,9 +560,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
     private boolean checkPermission() {
         Log.d("checkPermission-->", "checkPermission()");
         // Ask for permission if it wasn't granted yet
-        return (ContextCompat.checkSelfPermission(ProjectDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED );
+        return (ContextCompat.checkSelfPermission(ProjectDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
     }
-
 
     private void alertDialogResponseNow() {
 
@@ -579,12 +575,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(true);
 
-        dialog.setContentView(R.layout.response_dialog);
-        dialog.getWindow().setLayout((int) (width * .9), (int) (height * .5));
-        ImageView dialog_menu=dialog.findViewById(R.id.dialog_menu);
-        RecyclerView dialog_recycler=(RecyclerView)dialog.findViewById(R.id.dialog_recycler);
-        dialog_recycler.setLayoutManager(new LinearLayoutManager(ProjectDetailsActivity.this));
-        dialog_recycler.setAdapter(new ResponseDialogMenuAdapter(ProjectDetailsActivity.this,menu_item));
+        dialog.setContentView(R.layout.response_dialog_once);
+//        dialog.getWindow().setLayout((int) (width * .9), (int) (height * .5));
 
 
 //        Window window = dialog.getWindow();
@@ -594,35 +586,125 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 //        window.setAttributes(wlp);
 
-        dialog_menu.setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.send_message).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("menu_click","menu_click");
 
-                popupWindow = new PopupWindow(dialog.getContext());
-                // Closes the popup window when touch outside.
-                popupWindow.setOutsideTouchable(true);
-                // Removes default background.
-                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));
-                View dialogView = ProjectDetailsActivity.this.getLayoutInflater().inflate(R.layout.response_dialog_menu, null);
+                if (((ProRegularEditText) dialog.findViewById(R.id.et_message)).getText().toString().trim().equals("")) {
+                    ((ProRegularEditText) dialog.findViewById(R.id.et_message)).setError("Please enter something");
+                    ((ProRegularEditText) dialog.findViewById(R.id.et_message)).requestFocus();
+                } else {
+                    ((ProRegularEditText) dialog.findViewById(R.id.et_message)).setError(null);
+                    ((ProRegularEditText) dialog.findViewById(R.id.et_message)).clearFocus();
 
-                // some other visual settings
-                popupWindow.setFocusable(false);
-                popupWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
-                popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+                    HashMap<String, String> Params = new HashMap<>();
+                    Params.put("user_id", ProApplication.getInstance().getUserId());
+                    Params.put("project_owner_id", homeowner_id);
+                    Params.put("project_id", project_id);
+                    try {
+                        Params.put("job_response", URLEncoder.encode(((ProRegularEditText) dialog.findViewById(R.id.et_message)).getText().toString().trim(), "utf-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    Logger.printMessage("PARAMS", String.valueOf(Params));
 
-                // set the list view as pop up window content
-                popupWindow.setContentView(dialogView);
-                popupWindow.showAsDropDown(v, 5, 5);
-                popupWindow.getElevation();
-                RecyclerView rcv_ = (RecyclerView) dialogView.findViewById(R.id.rcv_);
-                rcv_.setLayoutManager(new LinearLayoutManager(ProjectDetailsActivity.this));
-                ResponseDialogMenuAdapter responseDialog_menu_adapter=new ResponseDialogMenuAdapter(ProjectDetailsActivity.this,menu_item);
-                rcv_.setAdapter(responseDialog_menu_adapter);
+//                    new CustomJSONParser().fireAPIForPostMethod(ProjectDetailsActivity.this, ProConstant.app_pro_respond_now, Params, null, new CustomJSONParser.CustomJSONResponse() {
+//                        @Override
+//                        public void onSuccess(String result) {
+//                            myLoader.dismissLoader();
+//                            try {
+//                                JSONObject mainResponseObj = new JSONObject(result);
+//                                Logger.printMessage("message", mainResponseObj.getString("message"));
+//                                Toast.makeText(ProjectDetailsActivity.this, mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+//                                dialog.dismiss();
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onError(String error, String response) {
+//                            myLoader.dismissLoader();
+//                            Toast.makeText(ProjectDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
+//                        }
+//
+//                        @Override
+//                        public void onError(String error) {
+//                            myLoader.dismissLoader();
+//                            Toast.makeText(ProjectDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
+//                        }
+//
+//                        @Override
+//                        public void onStart() {
+//                            myLoader.showLoader();
+//                        }
+//                    });
+                }
+
             }
         });
 
+
         dialog.show();
     }
+
+
+//    private void alertDialogResponseNow() {
+//
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//
+//        int width = metrics.widthPixels;
+//        int height = metrics.heightPixels;
+//
+//        final Dialog dialog = new Dialog(ProjectDetailsActivity.this, R.style.MyAlertDialogStyle);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setCanceledOnTouchOutside(true);
+//
+//        dialog.setContentView(R.layout.response_dialog);
+//        dialog.getWindow().setLayout((int) (width * .9), (int) (height * .5));
+//        ImageView dialog_menu=dialog.findViewById(R.id.dialog_menu);
+//        RecyclerView dialog_recycler=(RecyclerView)dialog.findViewById(R.id.dialog_recycler);
+//        dialog_recycler.setLayoutManager(new LinearLayoutManager(ProjectDetailsActivity.this));
+//        dialog_recycler.setAdapter(new ResponseDialogMenuAdapter(ProjectDetailsActivity.this,menu_item));
+//
+//
+////        Window window = dialog.getWindow();
+////        WindowManager.LayoutParams wlp = window.getAttributes();
+////
+////        wlp.gravity = Gravity.TOP;
+////        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+////        window.setAttributes(wlp);
+//
+//        dialog_menu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("menu_click","menu_click");
+//
+//                popupWindow = new PopupWindow(dialog.getContext());
+//                // Closes the popup window when touch outside.
+//                popupWindow.setOutsideTouchable(true);
+//                // Removes default background.
+//                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));
+//                View dialogView = ProjectDetailsActivity.this.getLayoutInflater().inflate(R.layout.response_dialog_menu, null);
+//
+//                // some other visual settings
+//                popupWindow.setFocusable(false);
+//                popupWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+//                popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+//
+//                // set the list view as pop up window content
+//                popupWindow.setContentView(dialogView);
+//                popupWindow.showAsDropDown(v, 5, 5);
+//                popupWindow.getElevation();
+//                RecyclerView rcv_ = (RecyclerView) dialogView.findViewById(R.id.rcv_);
+//                rcv_.setLayoutManager(new LinearLayoutManager(ProjectDetailsActivity.this));
+//                ResponseDialogMenuAdapter responseDialog_menu_adapter=new ResponseDialogMenuAdapter(ProjectDetailsActivity.this,menu_item);
+//                rcv_.setAdapter(responseDialog_menu_adapter);
+//            }
+//        });
+//
+//        dialog.show();
+//    }
 
 }

@@ -191,6 +191,7 @@ public class WatchListFragment extends Fragment {
                             try {
                                 Intent intent = new Intent(getActivity(), ProjectDetailsActivity.class);
                                 intent.putExtra("project_id", jsonObject.getString("id"));
+                                intent.putExtra("homeowner_id", jsonObject.getString("homeowner_id"));
                                 getActivity().startActivity(intent);
                             } catch (JSONException e) {
                                 e.printStackTrace();
