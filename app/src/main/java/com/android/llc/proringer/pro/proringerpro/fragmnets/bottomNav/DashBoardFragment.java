@@ -77,7 +77,9 @@ public class DashBoardFragment extends Fragment {
         profile_pic=(ImageView)view.findViewById(R.id.profile_pic);
         rbar=(RatingBar)view.findViewById(R.id.rbar);
         myload= new MyLoader(getActivity());
-        showdata();
+
+        loadAndShowData();
+
         tv_goto_premium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,7 +133,7 @@ public class DashBoardFragment extends Fragment {
         });
     }
 
-    public  void showdata()
+    public  void loadAndShowData()
     {
         arrayList=new ArrayList<SetGetAPI>();
         SetGetAPI setGetAPI =new SetGetAPI();
