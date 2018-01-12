@@ -494,6 +494,7 @@ public class LandScreenActivity extends AppCompatActivity {
     }
 
     private void drawerReset() {
+        closeKeypad();
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -777,16 +778,12 @@ public class LandScreenActivity extends AppCompatActivity {
                 /** Called when a drawer has settled in a completely closed state. */
                 public void onDrawerClosed(View view) {
                     super.onDrawerClosed(view);
-
-
+                    drawerReset();
                 }
 
                 /** Called when a drawer has settled in a completely open state. */
                 public void onDrawerOpened(View drawerView) {
                     super.onDrawerOpened(drawerView);
-
-                    closeKeypad();
-
                 }
             };
             mDrawer.addDrawerListener(toggle);
