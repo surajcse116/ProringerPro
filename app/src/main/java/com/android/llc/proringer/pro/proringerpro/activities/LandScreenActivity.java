@@ -94,14 +94,15 @@ public class LandScreenActivity extends AppCompatActivity {
         toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
+                Logger.printMessage("close-->","yes");
+                drawerReset();
                 super.onDrawerClosed(view);
-
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
+                Logger.printMessage("open-->","yes");
                 super.onDrawerOpened(drawerView);
-
             }
         };
 
@@ -488,7 +489,14 @@ public class LandScreenActivity extends AppCompatActivity {
             public void run() {
                 if (mDrawer != null)
                     mDrawer.closeDrawer(GravityCompat.START);
+            }
+        });
+    }
 
+    private void drawerReset() {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
                 navigationHandler.closeAndResetSideMenuDesign();
             }
         });
@@ -604,7 +612,6 @@ public class LandScreenActivity extends AppCompatActivity {
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
     }
 
-
     private void transactTimeAvailability() {
 
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + AvailabilityTimeSlotFragment.class.getCanonicalName()) != null) {
@@ -666,7 +673,6 @@ public class LandScreenActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * Fragment transaction for Watch List
      */
@@ -712,8 +718,6 @@ public class LandScreenActivity extends AppCompatActivity {
         }
     }
 
-
-
     /**
      * Fragment transaction for MyProject
      */
@@ -736,7 +740,6 @@ public class LandScreenActivity extends AppCompatActivity {
             Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
         }
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
