@@ -26,13 +26,15 @@
             android:layout_below="@+id/v1"
             android:id="@+id/et_message"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
+            android:lines="6"
+            android:gravity="top"
             android:layout_margin="5dp"
             android:inputType="textMultiLine"
             android:padding="5dp"
             android:textSize="14sp"
             android:background="@drawable/edit_text_selecter"
-            android:hint="Write your message..." />
+            android:hint="Increase your chances of getting hired by providing a professional and detailed response to this project" />
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
             android:layout_margin="5dp"

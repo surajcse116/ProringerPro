@@ -72,7 +72,7 @@ import java.util.HashMap;
 public class ProjectDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
     int screenHeight;
     int screenWidth;
-    String project_id = "",homeowner_id="", zip = "";
+    String project_id = "",homeowner_id="", zip = "",premium_status="",no_of_free_leads="",response_exists="";
     ImageView img_project, img_likes;
     CustomMapView mapview;
     RelativeLayout RLImage;
@@ -175,7 +175,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         tv_response_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialogResponseNow();
+                checkResponse();
             }
         });
     }
@@ -221,6 +221,12 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 //                    ((ProRegularTextView) findViewById(R.id.tv_posted_by_value)).setText(jsonObject.getString("posted_by"));
                     ((ProRegularTextView) findViewById(R.id.tv_posted_date)).setText(jsonObject.getString("post_date"));
                     ((ProRegularTextView) findViewById(R.id.tv_address)).setText(jsonObject.getString("address"));
+
+
+                    premium_status=jsonObject.getString("premium_status");
+                    no_of_free_leads=jsonObject.getString("no_of_free_leads");
+                    response_exists=jsonObject.getString("response_exists");
+
 
                     progressBar.setVisibility(View.VISIBLE);
                     Glide.with(ProjectDetailsActivity.this).load(jsonObject.getString("project_image")).listener(new RequestListener<String, GlideDrawable>() {
@@ -563,7 +569,31 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
         return (ContextCompat.checkSelfPermission(ProjectDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
     }
 
-    private void alertDialogResponseNow() {
+    private void checkResponse() {
+
+        if (premium_status.trim().equals("2")){
+
+            if (response_exists.trim().equals("0")){
+                alertDialogResponseNow();
+            }else {
+                Toast.makeText(ProjectDetailsActivity.this,"You have already response",Toast.LENGTH_SHORT).show();
+            }
+
+        }else {
+            if (!no_of_free_leads.trim().equals("0"))
+            {
+                if (response_exists.trim().equals("0")){
+                    alertDialogResponseNow();
+                }else {
+                    Toast.makeText(ProjectDetailsActivity.this,"You have already response",Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                Toast.makeText(ProjectDetailsActivity.this,"You have not any free leads to response",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void alertDialogResponseNow(){
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -608,37 +638,38 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                     }
                     Logger.printMessage("PARAMS", String.valueOf(Params));
 
-//                    new CustomJSONParser().fireAPIForPostMethod(ProjectDetailsActivity.this, ProConstant.app_pro_respond_now, Params, null, new CustomJSONParser.CustomJSONResponse() {
-//                        @Override
-//                        public void onSuccess(String result) {
-//                            myLoader.dismissLoader();
-//                            try {
-//                                JSONObject mainResponseObj = new JSONObject(result);
-//                                Logger.printMessage("message", mainResponseObj.getString("message"));
-//                                Toast.makeText(ProjectDetailsActivity.this, mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
-//                                dialog.dismiss();
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onError(String error, String response) {
-//                            myLoader.dismissLoader();
-//                            Toast.makeText(ProjectDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                        @Override
-//                        public void onError(String error) {
-//                            myLoader.dismissLoader();
-//                            Toast.makeText(ProjectDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                        @Override
-//                        public void onStart() {
-//                            myLoader.showLoader();
-//                        }
-//                    });
+                    new CustomJSONParser().fireAPIForPostMethod(ProjectDetailsActivity.this, ProConstant.app_pro_respond_now, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                        @Override
+                        public void onSuccess(String result) {
+                            myLoader.dismissLoader();
+                            try {
+                                JSONObject mainResponseObj = new JSONObject(result);
+                                Logger.printMessage("message", mainResponseObj.getString("message"));
+                                Toast.makeText(ProjectDetailsActivity.this, mainResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                                showData();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(String error, String response) {
+                            myLoader.dismissLoader();
+                            Toast.makeText(ProjectDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            myLoader.dismissLoader();
+                            Toast.makeText(ProjectDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onStart() {
+                            myLoader.showLoader();
+                        }
+                    });
                 }
 
             }
