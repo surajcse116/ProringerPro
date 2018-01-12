@@ -43,7 +43,7 @@ import java.util.ArrayList;
 
 public class DashBoardFragment extends Fragment {
 
-    ProSemiBoldTextView tv_userinfo, tv_goto_premium,tv_name,tv_rating;
+    ProSemiBoldTextView  tv_goto_premium,tv_name,tv_rating;
     TextView tv_active_projects;
     ProRegularTextView tv_address,tv_totalmessage,tv_favorite_pros;
     RelativeLayout userInformation, servicearea, service_setting, licence, login_settings, Protofolio;
