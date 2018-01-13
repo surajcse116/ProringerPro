@@ -110,7 +110,7 @@ public class DashBoardFragment extends Fragment {
                 }
                 else if (CASEAPPLY==3)
                 {
-                    Toast.makeText(getContext(),"Applied",Toast.LENGTH_SHORT).show();
+                    openGetVerifiedDialog();
                 }
 
                 else if (CASEAPPLY==4)
@@ -220,7 +220,7 @@ public class DashBoardFragment extends Fragment {
                         }
                         else if(pro_premium_status.equals("2") && Pro_verified.equals("A"))
                         {
-                            tv_goto_premium.setText("APPLIED");
+                            tv_goto_premium.setText("GET VERIFIED");
                             CASEAPPLY=3;
                         }
 
