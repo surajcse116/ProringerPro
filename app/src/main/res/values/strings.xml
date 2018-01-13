@@ -46,4 +46,10 @@
 
     <string name="title_location_permission">Location Permission</string>
 
+
+    <string name="get_verified_data2"><![CDATA[ We will send this code to the number we have on file:<b>(111) 111-2222</b>]]> .</string>
+    <string name="get_verified_data">By submitting your request you agree to the Terms of Use, including your consent to have ProRinger and our partners verify any information or documents or data you may submit or already have on file.during this process. If you change any information that was requested to verify your business after it has been verified, ProRinger may remove your verified seal.</string>
+    <string name="get_verified_data3">![CDATA[<b>(111) 111-2222</b>]]</string>
+    <string name="welcome_text"><![CDATA[<b>Note:</b> If the number above is not a phone number that can receive a text message you enter one below that can recieve this pin. Otherwise, leave this field blank.]]> .</string>
+
 </resources>
