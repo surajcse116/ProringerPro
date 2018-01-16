@@ -1,93 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-        android:background="@color/colorPrimary"
         android:id="@+id/tv_frag_title"
         android:layout_width="match_parent"
-        android:textSize="18sp"
-        android:padding="10dp"
-        android:textColor="@color/colorTextBlack"
         android:layout_height="wrap_content"
-        android:text="Verify Address Infomation"/>
-    <RelativeLayout
+        android:background="@color/colorPrimary"
         android:padding="10dp"
-        android:background="@color/dialogbackcolour"
-        android:layout_below="@id/tv_frag_title"
+        android:text="Verify Address Infomation"
+        android:textColor="@color/colorTextBlack"
+        android:textSize="18sp" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_frag_title"
+        android:background="@color/dialogbackcolour"
+        android:padding="10dp">
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-            android:textColor="@color/colorTextDark"
-            android:textSize="15sp"
             android:id="@+id/tv1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Verify that the information we have on file is the correct physical address for your business."/>
-<com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-    android:layout_height="45dp"
-    android:layout_marginTop="20dp"
-    android:layout_width="match_parent"
-    android:layout_below="@+id/tv1"
-    android:background="@drawable/edit_text_selecter"
-android:id="@+id/et_main_address"
+            android:text="Verify that the information we have on file is the correct physical address for your business."
+            android:textColor="@color/colorTextDark"
+            android:textSize="15sp" />
 
-    />
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+            android:id="@+id/et_main_address"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/tv1"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_selecter"
+
+            />
 
         <LinearLayout
             android:id="@+id/l1"
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/et_main_address"
-            android:orientation="horizontal"
-            android:weightSum="5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_main_address"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:layout_height="45dp"
+                android:id="@+id/et_place"
                 android:layout_width="0dp"
+                android:layout_height="45dp"
                 android:layout_weight="2.1"
                 android:background="@drawable/edit_text_selecter"
-                android:id="@+id/et_place"
-
-
+                android:hint="City"
+                android:padding="5dp"
+                android:textSize="14sp"
                 />
+
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                android:id="@+id/et_state"
+                android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_marginLeft="5dp"
-                android:layout_width="0dp"
                 android:layout_weight="1.1"
                 android:background="@drawable/edit_text_selecter"
-                android:id="@+id/et_state"
-                />
-            <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:layout_height="45dp"
-                android:layout_marginLeft="5dp"
-                android:layout_width="0dp"
-                android:layout_weight="1.8"
-                android:background="@drawable/edit_text_selecter"
-                android:id="@+id/et_pincode"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:hint="State"
                 />
 
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                android:id="@+id/et_pincode"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1.8"
+                android:background="@drawable/edit_text_selecter"
+                android:hint="Zip"
+                android:padding="5dp"
+                android:textSize="14sp" />
+
         </LinearLayout>
+
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-            android:textColor="@color/colorTextDark"
-            android:textSize="15sp"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/l1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You can update this information. It will automatically update your account. If this address corresponds with the business documents you provided it will speed up the process of getting your business verified."/>
+            android:layout_below="@+id/l1"
+            android:layout_marginTop="20dp"
+            android:text="You can update this information. It will automatically update your account. If this address corresponds with the business documents you provided it will speed up the process of getting your business verified."
+            android:textColor="@color/colorTextDark"
+            android:textSize="15sp" />
+
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-            android:layout_height="45dp"
-            android:background="@color/colorAccent"
-            android:text="confirm later and continue"
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:textAllCaps="true"
-            android:textColor="@color/colorPrimary"
+            android:layout_height="45dp"
             android:layout_alignParentBottom="true"
-            />
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="confirm later and continue"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary" />
     </RelativeLayout>
 
 </RelativeLayout>

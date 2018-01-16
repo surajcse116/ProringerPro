@@ -121,7 +121,7 @@ public class GetVerificationFirstFragment extends Fragment {
                 else
                 {
                    // callproverifiedVumber();
-                  ((GetVerificationActivity)getActivity()).CallVrificationFirstFragment(2);
+                  ((GetVerificationActivity)getActivity()).callVerificationFirstFragment(2);
                 }
 
 

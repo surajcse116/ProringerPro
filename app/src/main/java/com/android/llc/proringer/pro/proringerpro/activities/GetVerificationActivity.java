@@ -24,7 +24,6 @@ public class GetVerificationActivity extends AppCompatActivity {
     private InputMethodManager keyboard;
     private FragmentManager fragmentManager = null;
     ArrayList<String> fragmentPushList;
-    boolean back = false;
     Toolbar toolbar;
     private ProgressBar progress_get_verify;
     int progressStep = 0;
@@ -43,11 +42,11 @@ public class GetVerificationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progress_get_verify.setMax(4);
-        CallVrificationFirstFragment(1);
+        callVerificationFirstFragment(1);
 
     }
 
-    public void CallVrificationFirstFragment(int i) {
+    public void callVerificationFirstFragment(int i) {
         switch (i) {
             case 1:
 

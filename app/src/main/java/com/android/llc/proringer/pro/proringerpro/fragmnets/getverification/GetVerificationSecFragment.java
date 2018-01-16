@@ -20,8 +20,9 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTe
  * A simple {@link Fragment} subclass.
  */
 public class GetVerificationSecFragment extends Fragment {
-    ProRegularTextView tv3,tv_confier_later_continew,tv_conferm;
+    ProRegularTextView tv3, tv_confier_later_continew, tv_conferm;
     ProLightEditText et_confirmpin;
+
     public GetVerificationSecFragment() {
         // Required empty public constructor
     }
@@ -37,22 +38,21 @@ public class GetVerificationSecFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tv3=view.findViewById(R.id.tv3);
-        et_confirmpin=view.findViewById(R.id.et_confirmpin);
-        tv_conferm=view.findViewById(R.id.tv_conferm);
+        tv3 = view.findViewById(R.id.tv3);
+        et_confirmpin = view.findViewById(R.id.et_confirmpin);
+        tv_conferm = view.findViewById(R.id.tv_conferm);
         tv_conferm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (et_confirmpin.getText().toString().trim().equals("") || et_confirmpin.getText().toString().trim().length()<5)
-                {
+                if (et_confirmpin.getText().toString().trim().equals("") || et_confirmpin.getText().toString().trim().length() < 5) {
                     et_confirmpin.setError("Enter pin number");
                     et_confirmpin.requestFocus();
+                } else {
+                    ((GetVerificationActivity) getActivity()).callVerificationFirstFragment(3);
                 }
-                else {
-                    ((GetVerificationActivity)getActivity()).CallVrificationFirstFragment(3);}
             }
         });
-        tv_confier_later_continew=view.findViewById(R.id.tv_confier_later_continew);
+        tv_confier_later_continew = view.findViewById(R.id.tv_confier_later_continew);
 
         ((GetVerificationActivity) getActivity()).increaseStep();
 
@@ -60,15 +60,12 @@ public class GetVerificationSecFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ((GetVerificationActivity)getActivity()).CallVrificationFirstFragment(3);
+                ((GetVerificationActivity) getActivity()).callVerificationFirstFragment(3);
             }
         });
-        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.N)
-        {
-            tv3.setText(Html.fromHtml(getResources().getString(R.string.welcome_text),Html.FROM_HTML_MODE_COMPACT));
-        }
-        else
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            tv3.setText(Html.fromHtml(getResources().getString(R.string.welcome_text), Html.FROM_HTML_MODE_COMPACT));
+        } else {
             tv3.setText(Html.fromHtml(getResources().getString(R.string.welcome_text)));
         }
 
