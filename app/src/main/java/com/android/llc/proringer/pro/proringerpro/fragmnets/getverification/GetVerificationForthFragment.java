@@ -13,7 +13,7 @@ import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActi
  * Created by su on 15/1/18.
  */
 
-public class GetVerificationforthFragment extends Fragment{
+public class GetVerificationForthFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

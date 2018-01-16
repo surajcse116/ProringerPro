@@ -13,9 +13,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.getverification.GetVerificationFirstFragment;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.getverification.GetVerificationSecFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.getverification.GetVerificationSecondFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.getverification.GetVerificationThirdFragment;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.getverification.GetVerificationforthFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.getverification.GetVerificationForthFragment;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import java.util.ArrayList;
 
@@ -60,10 +60,10 @@ public class GetVerificationActivity extends AppCompatActivity {
                 break;
             case 2:
                 FragmentTransaction transaction2 = fragmentManager.beginTransaction();
-                transaction2.replace(R.id.fragment_container, new GetVerificationSecFragment(), "" + GetVerificationSecFragment.class.getCanonicalName());
-                transaction2.addToBackStack("" + GetVerificationSecFragment.class.getCanonicalName());
+                transaction2.replace(R.id.fragment_container, new GetVerificationSecondFragment(), "" + GetVerificationSecondFragment.class.getCanonicalName());
+                transaction2.addToBackStack("" + GetVerificationSecondFragment.class.getCanonicalName());
                 transaction2.commit();
-                fragmentPushList.add(GetVerificationSecFragment.class.getCanonicalName());
+                fragmentPushList.add(GetVerificationSecondFragment.class.getCanonicalName());
                 Log.d("fragmentPushList", "" + fragmentPushList.size());
                 break;
             case 3:
@@ -76,9 +76,9 @@ public class GetVerificationActivity extends AppCompatActivity {
                 break;
             case 4:
                 FragmentTransaction transaction4 = fragmentManager.beginTransaction();
-                transaction4.replace(R.id.fragment_container, new GetVerificationforthFragment(), "" + GetVerificationforthFragment.class.getCanonicalName());
-                transaction4.addToBackStack(GetVerificationforthFragment.class.getCanonicalName());
-                fragmentPushList.add(GetVerificationforthFragment.class.getCanonicalName());
+                transaction4.replace(R.id.fragment_container, new GetVerificationForthFragment(), "" + GetVerificationForthFragment.class.getCanonicalName());
+                transaction4.addToBackStack(GetVerificationForthFragment.class.getCanonicalName());
+                fragmentPushList.add(GetVerificationForthFragment.class.getCanonicalName());
                 transaction4.commit();
                 Log.d("fragmentPushList", "" + fragmentPushList.size());
                 break;

@@ -19,11 +19,11 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTe
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GetVerificationSecFragment extends Fragment {
+public class GetVerificationSecondFragment extends Fragment {
     ProRegularTextView tv3, tv_confier_later_continew, tv_conferm;
     ProLightEditText et_confirmpin;
 
-    public GetVerificationSecFragment() {
+    public GetVerificationSecondFragment() {
         // Required empty public constructor
     }
 
