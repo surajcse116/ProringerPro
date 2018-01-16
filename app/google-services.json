@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1054575454264",
+    "firebase_url": "https://proringerpro.firebaseio.com",
+    "project_id": "proringerpro",
+    "storage_bucket": "proringerpro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054575454264:android:4e20926ae90a3521",
+        "android_client_info": {
+          "package_name": "com.android.llc.proringer.pro.proringerpro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1054575454264-h924b90hbange8iipj1u5cihmh0uaqmv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.llc.proringer.pro.proringerpro",
+            "certificate_hash": "ea29578a62dcde6faeb6c2345237eb8008266251"
+          }
+        },
+        {
+          "client_id": "1054575454264-5r87aqheef2mr280glh5rid2893k83ua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaRUm7JYfCc_1gkt-cb3_zkN5KF8Aac2s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1054575454264-5r87aqheef2mr280glh5rid2893k83ua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
