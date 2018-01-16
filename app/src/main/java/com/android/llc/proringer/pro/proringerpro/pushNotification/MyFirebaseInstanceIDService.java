@@ -41,7 +41,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private void sendRegistrationToServer(String token) {
         HashMap<String, String> Params = new HashMap<>();
         Params.put("user_id",  ProApplication.getInstance().getUserId());
-        Params.put("anorid_device_id", token);
+        Params.put("device_token", token);
 
         new CustomJSONParser().fireAPIForPostMethod(getApplication(), ProConstant.BASEURL + "users_device_update", Params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
