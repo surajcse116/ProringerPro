@@ -61,7 +61,6 @@ public class GetVerificationActivity extends AppCompatActivity {
             case 2:
                 FragmentTransaction transaction2 = fragmentManager.beginTransaction();
                 transaction2.replace(R.id.fragment_container, new GetVerificationSecFragment(), "" + GetVerificationSecFragment.class.getCanonicalName());
-
                 transaction2.addToBackStack("" + GetVerificationSecFragment.class.getCanonicalName());
                 transaction2.commit();
                 fragmentPushList.add(GetVerificationSecFragment.class.getCanonicalName());

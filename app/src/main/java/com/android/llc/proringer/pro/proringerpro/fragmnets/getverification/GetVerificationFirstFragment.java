@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.Toast;
 
 
 import com.android.llc.proringer.pro.proringerpro.R;
@@ -36,11 +38,13 @@ import java.util.HashMap;
  */
 public class GetVerificationFirstFragment extends Fragment {
     ProLightEditText et_confirmphoneno;
-    ProRegularTextView send_now,ph_field;
-    int textLength=0;
+    ProRegularTextView send_now, ph_field;
+    int textLength = 0;
     String text;
     String user_phone_number;
-    ArrayList<SetGetAPI> arrayList=null;
+    ArrayList<SetGetAPI> arrayList = null;
+    CheckBox cb;
+
     public GetVerificationFirstFragment() {
         // Required empty public constructor
     }
@@ -56,14 +60,18 @@ public class GetVerificationFirstFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        send_now= (ProRegularTextView) view.findViewById(R.id.send_now);
-        et_confirmphoneno=view.findViewById(R.id.et_confirmphoneno);
-        ProRegularTextView tv3=view.findViewById(R.id.tv3);
-        ProRegularTextView tv4=view.findViewById(R.id.tv4);
-        ph_field=view.findViewById(R.id.ph_field);
-        ProRegularTextView txt_note=view.findViewById(R.id.txt_note);
+        send_now = (ProRegularTextView) view.findViewById(R.id.send_now);
+        et_confirmphoneno = view.findViewById(R.id.et_confirmphoneno);
+        cb = (CheckBox) view.findViewById(R.id.cb);
+        ProRegularTextView tv3 = (ProRegularTextView)view.findViewById(R.id.tv3);
+        ProRegularTextView tv4 = (ProRegularTextView)view.findViewById(R.id.tv4);
+        ph_field = (ProRegularTextView)view.findViewById(R.id.ph_field);
+        ProRegularTextView txt_note = (ProRegularTextView)view.findViewById(R.id.txt_note);
+
         getUserinfoList();
+
         ((GetVerificationActivity) getActivity()).increaseStep();
+
         et_confirmphoneno.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -72,7 +80,7 @@ public class GetVerificationFirstFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                 text = et_confirmphoneno.getText().toString();
+                text = et_confirmphoneno.getText().toString();
                 textLength = et_confirmphoneno.getText().length();
 
                 if (text.endsWith("-") || text.endsWith(" ") || text.endsWith(" "))
@@ -113,18 +121,17 @@ public class GetVerificationFirstFragment extends Fragment {
         send_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (et_confirmphoneno.getText().toString().trim().equals("") || et_confirmphoneno.getText().toString().trim().length() < 14)
-                {
-                    et_confirmphoneno.setError("enter number");
-                    et_confirmphoneno.requestFocus();
+                if (cb.isChecked()) {
+                    if (et_confirmphoneno.getText().toString().trim().equals("") || et_confirmphoneno.getText().toString().trim().length() < 14) {
+                        et_confirmphoneno.setError("enter number");
+                        et_confirmphoneno.requestFocus();
+                    } else {
+                        // callproverifiedVumber();
+                        ((GetVerificationActivity) getActivity()).callVerificationFirstFragment(2);
+                    }
+                }else {
+                    Toast.makeText(getActivity(),"Please Checked",Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-                   // callproverifiedVumber();
-                  ((GetVerificationActivity)getActivity()).callVerificationFirstFragment(2);
-                }
-
-
             }
         });
         tv4.setText(getResources().getString(R.string.get_verified_data));
@@ -133,10 +140,8 @@ public class GetVerificationFirstFragment extends Fragment {
 
             tv3.setText(" We will send this code to the number we have on file:");
             // txt_note.setText(getResources().getString(R.string.get_verified_data));
-            txt_note.setText(Html.fromHtml(getResources().getString(R.string.welcome_text),Html.FROM_HTML_MODE_COMPACT));
-        }
-        else
-        {
+            txt_note.setText(Html.fromHtml(getResources().getString(R.string.welcome_text), Html.FROM_HTML_MODE_COMPACT));
+        } else {
 //            tv3.setText(Html.fromHtml(getResources().getString(R.string.get_verified_data2)+" "+"<b>(111) 111-2222</b>"));
             //tv3.setText(Html.fromHtml(getResources().getString(R.string.get_verified_data2)));
             tv3.setText(" We will send this code to the number we have on file:");
@@ -146,13 +151,13 @@ public class GetVerificationFirstFragment extends Fragment {
     }
 
     private void callproverifiedVumber() {
-        HashMap<String,String> params=new HashMap<>();
-        params.put("user_id",ProApplication.getInstance().getUserId());
-        params.put("pros_ph_no",et_confirmphoneno.getText().toString().trim());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("user_id", ProApplication.getInstance().getUserId());
+        params.put("pros_ph_no", et_confirmphoneno.getText().toString().trim());
         new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_verified_number, params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-                Log.d("result",result);
+                Log.d("result", result);
 
             }
 
@@ -176,24 +181,23 @@ public class GetVerificationFirstFragment extends Fragment {
 
 
     private void getUserinfoList() {
-        arrayList=new ArrayList<SetGetAPI>();
-        SetGetAPI setGetAPI=new SetGetAPI();
+        arrayList = new ArrayList<SetGetAPI>();
+        SetGetAPI setGetAPI = new SetGetAPI();
         setGetAPI.setPARAMS("user_id");
         setGetAPI.setValues(ProApplication.getInstance().getUserId());
         arrayList.add(setGetAPI);
         new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_prouserinfo_list, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-                Log.d("response_phonenumber",result);
+                Log.d("response_phonenumber", result);
                 try {
-                    JSONObject prouserInfojobj=new JSONObject(result);
-                    JSONArray infoarr=prouserInfojobj.getJSONArray("info_array");
-                    for (int i=0;i<infoarr.length();i++)
-                    {
-                        JSONObject jo= infoarr.getJSONObject(i);
-                        user_phone_number=jo.getString("phone");
-                        Log.d("ph_no",user_phone_number);
-                      ph_field.setText(user_phone_number);
+                    JSONObject prouserInfojobj = new JSONObject(result);
+                    JSONArray infoarr = prouserInfojobj.getJSONArray("info_array");
+                    for (int i = 0; i < infoarr.length(); i++) {
+                        JSONObject jo = infoarr.getJSONObject(i);
+                        user_phone_number = jo.getString("phone");
+                        Log.d("ph_no", user_phone_number);
+                        ph_field.setText(user_phone_number);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
