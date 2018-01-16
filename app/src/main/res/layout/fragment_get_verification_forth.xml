@@ -9,8 +9,9 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:padding="10dp"
+        android:gravity="center"
         android:text="Verify Address Infomation"
-        android:textColor="@color/colorTextBlack"
+        android:textColor="@color/colorTextDark"
         android:textSize="18sp" />
 
     <RelativeLayout

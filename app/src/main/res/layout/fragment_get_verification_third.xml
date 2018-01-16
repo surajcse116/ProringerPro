@@ -5,11 +5,12 @@
 
     <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
         android:id="@+id/tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:padding="5dp"
+        android:gravity="center"
         android:text="Verify Business Filings"
-        android:textColor="@color/colorTextBlack"
+        android:textColor="@color/colorTextDark"
         android:textSize="18sp" />
 
     <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
@@ -25,11 +26,11 @@
         android:textSize="14sp" />
 
     <android.support.v4.widget.NestedScrollView
-        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/tv_continew"
-        android:layout_below="@id/tv1">
+        android:layout_below="@id/tv1"
+        android:scrollbars="none">
 
 
         <RelativeLayout
@@ -69,7 +70,6 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-
                             android:id="@+id/rb_yes_one"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -88,18 +88,21 @@
                 </RelativeLayout>
 
 
-
-                    <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:paddingLeft="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/edit_text_selecter"
-                        android:gravity="center_vertical"
-                        android:hint="12-3456789"
-
-                        android:id="@+id/pin_number"
-                      />
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                    android:id="@+id/pin_number"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/edit_text_selecter"
+                    android:gravity="center_vertical"
+                    android:hint="12-3456789"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLength="10"
+                    android:padding="5dp"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
 
 
             </LinearLayout>
@@ -152,18 +155,16 @@
                 </RelativeLayout>
 
 
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
 
-
-                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-
-                        android:background="@color/colorAccent"
-                        android:gravity="center"
-                        android:text="add document"
-                        android:textAllCaps="true"
-                        android:layout_weight="1"
-                        android:textColor="@color/colorPrimary" />
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    android:gravity="center"
+                    android:text="add document"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary" />
 
 
             </LinearLayout>
@@ -188,8 +189,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/question3"
                         android:textColor="@color/colorTextDark"
-                        android:textSize="13sp"
-                        />
+                        android:textSize="13sp" />
 
                     <RadioGroup
                         android:layout_width="wrap_content"
@@ -215,17 +215,15 @@
                 </RelativeLayout>
 
 
-
-
-                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:background="@color/colorAccent"
-                        android:gravity="center"
-                        android:text="add document"
-                        android:textAllCaps="true"
-                        android:layout_weight="1"
-                        android:textColor="@color/colorPrimary" />
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    android:gravity="center"
+                    android:text="add document"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary" />
 
 
             </LinearLayout>
@@ -278,17 +276,15 @@
                 </RelativeLayout>
 
 
-
-
-                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:background="@color/colorAccent"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:text="add document"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorPrimary" />
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    android:gravity="center"
+                    android:text="add document"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
 
@@ -340,17 +336,15 @@
                 </RelativeLayout>
 
 
-
-
-                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorAccent"
-                        android:gravity="center"
-                        android:text="add document"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorPrimary" />
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    android:gravity="center"
+                    android:text="add document"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
         </RelativeLayout>
