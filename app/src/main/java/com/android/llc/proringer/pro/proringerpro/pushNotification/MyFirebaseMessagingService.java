@@ -3,12 +3,10 @@ package com.android.llc.proringer.pro.proringerpro.pushNotification;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.android.llc.proringer.pro.proringerpro.R;
@@ -77,6 +75,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //        // message, here is where that should be initiated. See sendNotification method below.
 
         Logger.printMessage("@@@ PUSH", remoteMessage.getData().toString());
+
         try {
             JSONObject Object = new JSONObject(remoteMessage.getData().get("body"));
 
@@ -137,7 +136,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             bigText.setBigContentTitle(messageBody);
 
 
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,"M_CH_ID")
                     .setLargeIcon(icon)
                     .setSmallIcon(R.mipmap.ic_launcher_pro)
                     .setContentTitle("ProringerPro")
