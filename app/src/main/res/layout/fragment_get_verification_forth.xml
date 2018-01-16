@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+        android:background="@color/colorPrimary"
+        android:id="@+id/tv_frag_title"
+        android:layout_width="match_parent"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:textColor="@color/colorTextBlack"
+        android:layout_height="wrap_content"
+        android:text="Verify Address Infomation"/>
+    <RelativeLayout
+        android:padding="10dp"
+        android:background="@color/dialogbackcolour"
+        android:layout_below="@id/tv_frag_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:textColor="@color/colorTextDark"
+            android:textSize="15sp"
+            android:id="@+id/tv1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verify that the information we have on file is the correct physical address for your business."/>
+<com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+    android:layout_height="45dp"
+    android:layout_marginTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_below="@+id/tv1"
+    android:background="@drawable/edit_text_selecter"
+android:id="@+id/et_main_address"
+
+    />
+
+        <LinearLayout
+            android:id="@+id/l1"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/et_main_address"
+            android:orientation="horizontal"
+            android:weightSum="5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                android:layout_height="45dp"
+                android:layout_width="0dp"
+                android:layout_weight="2.1"
+                android:background="@drawable/edit_text_selecter"
+                android:id="@+id/et_place"
+
+
+                />
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1.1"
+                android:background="@drawable/edit_text_selecter"
+                android:id="@+id/et_state"
+                />
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1.8"
+                android:background="@drawable/edit_text_selecter"
+                android:id="@+id/et_pincode"
+                />
+
+        </LinearLayout>
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:textColor="@color/colorTextDark"
+            android:textSize="15sp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/l1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You can update this information. It will automatically update your account. If this address corresponds with the business documents you provided it will speed up the process of getting your business verified."/>
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:layout_height="45dp"
+            android:background="@color/colorAccent"
+            android:text="confirm later and continue"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

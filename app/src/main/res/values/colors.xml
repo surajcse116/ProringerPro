@@ -17,4 +17,6 @@
     <color name="colorSky">#2ab3ef</color>
     <color name="colorYellow">#EEE989</color>
     <color name="colorLightOrange">#ffce93</color>
+
+    <color name="dialogbackcolour">#f4ebe9</color>
 </resources>

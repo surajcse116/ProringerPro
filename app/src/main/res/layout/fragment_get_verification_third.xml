@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Verify Business Filings"
+        android:textColor="@color/colorTextBlack"
+        android:textSize="18sp" />
+
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+        android:id="@+id/tv_continew"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorDarkGray"
+        android:gravity="center"
+        android:text="confirm later and continue"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_continew"
+        android:layout_below="@id/tv1">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv1"
+            android:background="@color/dialogbackcolour"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/l1"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:id="@+id/ques1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/question1"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="13sp"
+
+                        />
+
+                    <RadioGroup
+                        android:id="@+id/radio_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ques1"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+
+                            android:id="@+id/rb_yes_one"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ques1"
+                            android:text="Yes" />
+
+                        <RadioButton
+
+                            android:id="@+id/rb_no_one"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ques1"
+                            android:text="No" />
+                    </RadioGroup>
+
+                </RelativeLayout>
+
+
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:paddingLeft="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/edit_text_selecter"
+                        android:gravity="center_vertical"
+                        android:hint="12-3456789"
+
+                        android:id="@+id/pin_number"
+                      />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/l2"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/l1"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:id="@+id/ques2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/question2"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="13sp"
+
+
+                        />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ques2"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_yes_two"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ques1"
+                            android:text="Yes" />
+
+                        <RadioButton
+                            android:id="@+id/rb_no_two"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ques1"
+                            android:text="No" />
+                    </RadioGroup>
+
+                </RelativeLayout>
+
+
+
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+
+                        android:background="@color/colorAccent"
+                        android:gravity="center"
+                        android:text="add document"
+                        android:textAllCaps="true"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorPrimary" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:id="@+id/l3"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/l2"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:id="@+id/ques3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/question3"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="13sp"
+                        />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ques3"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_yes_three"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ques1"
+                            android:text="Yes" />
+
+                        <RadioButton
+                            android:id="@+id/rb_no_three"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ques1"
+                            android:text="No" />
+                    </RadioGroup>
+
+                </RelativeLayout>
+
+
+
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:background="@color/colorAccent"
+                        android:gravity="center"
+                        android:text="add document"
+                        android:textAllCaps="true"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorPrimary" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/l4"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/l3"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:id="@+id/ques4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/question3"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="13sp"
+
+
+                        />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ques4"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_yes_four"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ques1"
+                            android:text="Yes" />
+
+                        <RadioButton
+                            android:id="@+id/rb_no_four"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ques1"
+                            android:text="No" />
+                    </RadioGroup>
+
+                </RelativeLayout>
+
+
+
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:background="@color/colorAccent"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:text="add document"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/l4"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:id="@+id/ques5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/question3"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="13sp"
+
+
+                        />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ques5"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_yes_five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ques1"
+                            android:text="Yes" />
+
+                        <RadioButton
+                            android:id="@+id/rb_no_five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ques1"
+                            android:text="No" />
+                    </RadioGroup>
+
+                </RelativeLayout>
+
+
+
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorAccent"
+                        android:gravity="center"
+                        android:text="add document"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

@@ -52,4 +52,13 @@
     <string name="get_verified_data3">![CDATA[<b>(111) 111-2222</b>]]</string>
     <string name="welcome_text"><![CDATA[<b>Note:</b> If the number above is not a phone number that can receive a text message you enter one below that can recieve this pin. Otherwise, leave this field blank.]]> .</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="question1">Do you have an EIN Number?</string>
+    <string name="question2">Are you licensed or certified in your field?</string>
+    <string name="question3">Do you have a legel buisness name filed in your state?</string>
+    <string name="question4"></string>
+    <string name="question5">Is your business insured?</string>
+
+
 </resources>

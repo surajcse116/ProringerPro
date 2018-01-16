@@ -24,6 +24,7 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.AddServiceAreaActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.AddServicesActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.CompanyProfileActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.LicenceListActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PortFolioActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PremiumActivity;
@@ -101,7 +102,9 @@ public class DashBoardFragment extends Fragment {
                 //openGetVerifiedDialog();
                 if (CASEAPPLY==1)
                 {
-                    openGetVerifiedDialog();
+                    //openGetVerifiedDialog();
+                    Intent intent=new Intent(getActivity(), GetVerificationActivity.class);
+                    startActivityForResult(intent,1111);
                 }
                 else if (CASEAPPLY==2)
                 {
@@ -109,7 +112,9 @@ public class DashBoardFragment extends Fragment {
                 }
                 else if (CASEAPPLY==3)
                 {
-                    openGetVerifiedDialog();
+                    //openGetVerifiedDialog();
+                    Intent intent=new Intent(getActivity(), GetVerificationActivity.class);
+                    startActivityForResult(intent,1111);
                 }
 
                 else if (CASEAPPLY==4)

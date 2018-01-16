@@ -67,6 +67,9 @@ public class ProConstant {
     public static String app_email_checking = BASEURL + "app_email_checking";
     public static String app_pro_respond_now = BASEURL + "app_pro_respond_now";
 
+    public static String app_prouserinfo_list=BASEURL+"app_prouserinfo_list?";
+    public static String app_pro_verified_number=BASEURL+"app_pro_verified_number?";
+
 
     public static String latitude = "";
     public static String longtitude = "";
