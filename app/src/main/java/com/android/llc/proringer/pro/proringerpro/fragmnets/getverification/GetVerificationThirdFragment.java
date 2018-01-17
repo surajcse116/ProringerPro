@@ -2,13 +2,9 @@ package com.android.llc.proringer.pro.proringerpro.fragmnets.getverification;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -53,7 +49,6 @@ public class GetVerificationThirdFragment extends Fragment {
     String mCurrentPhotoPath_one="";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     int flag=0;
-    RadioButton rb;
 
     ArrayList<String> image_docarrayList;
     @Nullable
@@ -61,14 +56,25 @@ public class GetVerificationThirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_get_verification_third, container, false);
     }
+
+
+
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((GetVerificationActivity) getActivity()).increaseStep();
         image_docarrayList=new ArrayList<>();
+
         RL_one=view.findViewById(R.id.RL_one);
         RL_two=view.findViewById(R.id.RL_two);
         RL_three=view.findViewById(R.id.RL_three);
+
+        RL_one.setVisibility(View.GONE);
+        RL_two.setVisibility(View.GONE);
+        RL_three.setVisibility(View.GONE);
+
+
         image_one_close=view.findViewById(R.id.image_one_close);
         image_two_close=view.findViewById(R.id.image_two_close);
         image_three_close=view.findViewById(R.id.image_three_close);

@@ -57,8 +57,8 @@
     <string name="question1">Do you have an EIN Number?</string>
     <string name="question2">Are you licensed or certified in your field?</string>
     <string name="question3">Do you have a legel buisness name filed in your state?</string>
-    <string name="question4"></string>
-    <string name="question5">Is your business insured?</string>
+    <string name="question4">Is your business insured?</string>
+
 
 
 </resources>
