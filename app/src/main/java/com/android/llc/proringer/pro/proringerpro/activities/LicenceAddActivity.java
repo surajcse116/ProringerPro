@@ -37,6 +37,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
@@ -83,7 +84,7 @@ public class LicenceAddActivity extends AppCompatActivity {
     int month, date,year;
 
     MyLoader myLoader;
-    JSONArray categoryJsonArray;
+    JSONArray categoryJsonArray=null;
     PopupWindow popupWindow;
     CustomListAdapterDialogCategory custom = null;
 
@@ -137,7 +138,11 @@ public class LicenceAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 relative_dropdown.setBackgroundResource(R.drawable.background_solidorange_border);
-                showDialogCategory(view, categoryJsonArray);
+                if (categoryJsonArray.length()>0) {
+                    showDialogCategory(view, categoryJsonArray);
+                }else {
+                    Toast.makeText(LicenceAddActivity.this,"Please add service in service page",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -399,14 +404,37 @@ public class LicenceAddActivity extends AppCompatActivity {
     }
 
     public void category() {
-        new CustomJSONParser().fireAPIForGetMethod(LicenceAddActivity.this, ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
+
+        ArrayList<SetGetAPI> setGetAPIArrayList = new ArrayList<>();
+
+        SetGetAPI setGetAPI = new SetGetAPI();
+        setGetAPI.setPARAMS("user_id");
+        setGetAPI.setValues(ProApplication.getInstance().getUserId());
+
+        setGetAPIArrayList.add(setGetAPI);
+
+        new CustomJSONParser().fireAPIForGetMethod(LicenceAddActivity.this, ProConstant.app_pro_services, setGetAPIArrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 // Log.d("responese",result);
                 myLoader.dismissLoader();
                 try {
                     JSONObject job = new JSONObject(result);
-                    categoryJsonArray = job.getJSONArray("info_array");
+
+                    categoryJsonArray=new JSONArray();
+
+                    for (int i=0;i<job.getJSONArray("info_array").length();i++){
+
+                        for (int j=0;j<job.getJSONArray("info_array").getJSONObject(i).getJSONArray("getSubcategory").length();j++){
+
+                            if (job.getJSONArray("info_array").getJSONObject(i).getJSONArray("getSubcategory").getJSONObject(j).getInt("cat_selected")==1){
+
+                                categoryJsonArray.put(job.getJSONArray("info_array").getJSONObject(i).getJSONArray("getSubcategory").getJSONObject(j));
+                            }
+
+                        }
+                    }
+                    //categoryJsonArray = job.getJSONArray("info_array");
                     Logger.printMessage("CategoryArray", String.valueOf(categoryJsonArray));
 
                 } catch (JSONException e) {
