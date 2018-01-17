@@ -123,11 +123,11 @@ public class GetVerificationFirstFragment extends Fragment {
             public void onClick(View v) {
                 if (cb.isChecked()) {
                     if (et_confirmphoneno.getText().toString().trim().equals("") || et_confirmphoneno.getText().toString().trim().length() < 14) {
-                        et_confirmphoneno.setError("enter number");
+                        et_confirmphoneno.setError("enter us format phone number");
                         et_confirmphoneno.requestFocus();
                     } else {
                         // callproverifiedVumber();
-                        ((GetVerificationActivity) getActivity()).callVerificationFirstFragment(2);
+                        ((GetVerificationActivity) getActivity()).callVerificationFragments(2);
                     }
                 }else {
                     Toast.makeText(getActivity(),"Please Checked",Toast.LENGTH_SHORT).show();

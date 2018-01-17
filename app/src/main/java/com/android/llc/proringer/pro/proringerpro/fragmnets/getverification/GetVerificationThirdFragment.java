@@ -1,9 +1,14 @@
 package com.android.llc.proringer.pro.proringerpro.fragmnets.getverification;
 
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -25,6 +30,7 @@ import com.android.llc.proringer.pro.proringerpro.cropImagePackage.CropImageView
 import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
+import java.util.ArrayList;
 
 
 import static android.app.Activity.RESULT_OK;
@@ -46,8 +52,10 @@ public class GetVerificationThirdFragment extends Fragment {
     private  String mCurrentPhotoPath_two="";
     String mCurrentPhotoPath_one="";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int REQUEST_IMAGE_CAPTURE_ONE = 2;
     int flag=0;
+    RadioButton rb;
+
+    ArrayList<String> image_docarrayList;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,7 +65,7 @@ public class GetVerificationThirdFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((GetVerificationActivity) getActivity()).increaseStep();
-
+        image_docarrayList=new ArrayList<>();
         RL_one=view.findViewById(R.id.RL_one);
         RL_two=view.findViewById(R.id.RL_two);
         RL_three=view.findViewById(R.id.RL_three);
@@ -72,14 +80,12 @@ public class GetVerificationThirdFragment extends Fragment {
         add_document_one=view.findViewById(R.id.add_document_one);
         add_document_two=view.findViewById(R.id.add_document_two);
         add_document_three=view.findViewById(R.id.add_document_three);
-
         image_three_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RL_three.setVisibility(View.GONE);
             }
         });
-
         image_two_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,10 +173,14 @@ public class GetVerificationThirdFragment extends Fragment {
         tv_continew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((GetVerificationActivity)getActivity()).callVerificationFirstFragment(4);
+                Log.d("tv_continew","tv_continew");
+                ((GetVerificationActivity)getActivity()).callVerificationFragments(4);
+                ((GetVerificationActivity)getActivity()).increaseStep();
+
             }
         });
     }
+
 
     public void onActivityResult(final int requestCode, int resultCode, final Intent data)  {
         super.onActivityResult(requestCode, resultCode, data);
@@ -188,6 +198,7 @@ public class GetVerificationThirdFragment extends Fragment {
                     Log.d("mCurrentPhotoPath",mCurrentPhotoPath);
                     RL_one.setVisibility(View.VISIBLE);
                     image1.setImageURI(Uri.parse(mCurrentPhotoPath));
+                    image_docarrayList.add(mCurrentPhotoPath);
                 }
                 if (flag==2)
                 {
@@ -196,6 +207,7 @@ public class GetVerificationThirdFragment extends Fragment {
                     Log.d("mCurrentPhotoPath",mCurrentPhotoPath_one);
                     RL_two.setVisibility(View.VISIBLE);
                     image2.setImageURI(Uri.parse(mCurrentPhotoPath_one));
+                    image_docarrayList.add(mCurrentPhotoPath_one);
                 }
                 if (flag==3)
                 {
@@ -204,10 +216,8 @@ public class GetVerificationThirdFragment extends Fragment {
                     Log.d("mCurrentPhotoPath",mCurrentPhotoPath_two);
                     RL_three.setVisibility(View.VISIBLE);
                     image3.setImageURI(Uri.parse(mCurrentPhotoPath_two));
+                    image_docarrayList.add(mCurrentPhotoPath_two);
                 }
-
-
-
             }
         }
         else if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)

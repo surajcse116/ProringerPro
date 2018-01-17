@@ -48,7 +48,7 @@ public class GetVerificationSecondFragment extends Fragment {
                     et_confirmpin.setError("Enter pin number");
                     et_confirmpin.requestFocus();
                 } else {
-                    ((GetVerificationActivity) getActivity()).callVerificationFirstFragment(3);
+                    ((GetVerificationActivity) getActivity()).callVerificationFragments(3);
                 }
             }
         });
@@ -60,7 +60,7 @@ public class GetVerificationSecondFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ((GetVerificationActivity) getActivity()).callVerificationFirstFragment(3);
+                ((GetVerificationActivity) getActivity()).callVerificationFragments(3);
             }
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

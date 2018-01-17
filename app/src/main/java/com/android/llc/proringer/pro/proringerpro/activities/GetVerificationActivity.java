@@ -1,7 +1,6 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
 
-
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -42,11 +41,11 @@ public class GetVerificationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progress_get_verify.setMax(4);
-        callVerificationFirstFragment(1);
+        callVerificationFragments(1);
 
     }
 
-    public void callVerificationFirstFragment(int i) {
+    public void callVerificationFragments(int i) {
         switch (i) {
             case 1:
 

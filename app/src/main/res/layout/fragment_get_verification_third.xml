@@ -5,10 +5,9 @@
 
     <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
         android:id="@+id/tv1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:gravity="center"
         android:text="Verify Business Filings"
         android:textColor="@color/colorTextBlack"
         android:textSize="18sp" />
