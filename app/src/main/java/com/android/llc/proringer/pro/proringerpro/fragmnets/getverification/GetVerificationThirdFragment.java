@@ -26,7 +26,6 @@ import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
-import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -216,10 +215,6 @@ public class GetVerificationThirdFragment extends Fragment {
             Log.d("frag_first_else_if","first_else_if");
             startCropImageActivity(null);
         }
-
-
-
-
     }
     /**
      * Start crop image activity for the given image.
