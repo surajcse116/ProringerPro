@@ -15,7 +15,6 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.LocationActivity;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
-import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 /**
