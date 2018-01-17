@@ -8,9 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:padding="10dp"
         android:gravity="center"
-        android:text="Verify Address Infomation"
+        android:padding="10dp"
+        android:text="Verify Address Information"
         android:textColor="@color/colorTextDark"
         android:textSize="18sp" />
 
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tv_frag_title"
-        android:background="@color/dialogbackcolour"
+        android:background="@color/colorBGblueShade"
         android:padding="10dp">
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
@@ -29,58 +29,92 @@
             android:textColor="@color/colorTextDark"
             android:textSize="15sp" />
 
-        <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-            android:id="@+id/et_main_address"
+        <!--<com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText-->
+        <!--android:id="@+id/et_main_address"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:layout_below="@+id/et_address"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:background="@drawable/edit_text_selecter"-->
+        <!--android:padding="5dp"-->
+        <!--android:textSize="14sp"-->
+        <!--/>-->
+
+        <RelativeLayout
+            android:id="@+id/RL_address"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@+id/tv1"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_selecter"
-            android:padding="5dp"
-            android:textSize="14sp"
-            />
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_selecter">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/txt_address"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:height="45dp"
+                android:background="@drawable/edit_text_selecter"
+                android:hint="Address"
+                android:paddingLeft="10dp"
+                android:paddingRight="24dp"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/l1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_main_address"
+            android:layout_height="45dp"
+            android:layout_below="@id/RL_address"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            android:weightSum="5">
+            android:weightSum="9">
 
-            <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:id="@+id/et_place"
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/txt_place"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_weight="2.1"
-                android:background="@drawable/edit_text_selecter"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
                 android:hint="City"
+                android:gravity="center_vertical"
+                android:background="@color/colorPrimary"
                 android:padding="5dp"
-                android:textSize="14sp"
-                />
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
 
-            <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:id="@+id/et_state"
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/txt_state"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
-                android:layout_weight="1.1"
-                android:background="@drawable/edit_text_selecter"
-                android:padding="5dp"
-                android:textSize="14sp"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:background="@color/colorPrimary"
                 android:hint="State"
-                />
+                android:padding="5dp"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
 
-            <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-                android:id="@+id/et_pincode"
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/txt_pincode"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
-                android:layout_weight="1.8"
-                android:background="@drawable/edit_text_selecter"
+                android:gravity="center_vertical"
+                android:layout_weight="3"
+                android:background="@color/colorPrimary"
                 android:hint="Zip"
                 android:padding="5dp"
+                android:textColor="@color/colorTextDark"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -95,6 +129,7 @@
             android:textSize="15sp" />
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:id="@+id/tv_confirmlater"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_alignParentBottom="true"

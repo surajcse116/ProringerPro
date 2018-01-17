@@ -92,7 +92,7 @@
                 android:buttonTint="@color/colorAccent"
                 android:gravity="top"
                 android:text="I would like to start the verification process for my business"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                 android:id="@+id/tv4"
