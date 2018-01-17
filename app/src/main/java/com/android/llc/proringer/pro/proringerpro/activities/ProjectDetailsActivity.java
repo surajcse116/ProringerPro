@@ -213,11 +213,12 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                     jsonObject = info_array.getJSONObject(0);
 
                     String splitPostedBy[] = jsonObject.getString("posted_by").split(" ");
-                    String name = "";
-                    for (int i = 0; i < splitPostedBy.length - 1; i++) {
-                        name = splitPostedBy[i].substring(0, 1) + ".";
+                    String name = splitPostedBy[0];
+                    for (int i = 1; i <=splitPostedBy.length - 1; i++) {
+                        name = name+" "+splitPostedBy[i].substring(0, 1);
                     }
-                    ((ProRegularTextView) findViewById(R.id.tv_posted_by_value)).setText(name + splitPostedBy[splitPostedBy.length - 1]);
+
+                    ((ProRegularTextView) findViewById(R.id.tv_posted_by_value)).setText(name);
 //                    ((ProRegularTextView) findViewById(R.id.tv_posted_by_value)).setText(jsonObject.getString("posted_by"));
                     ((ProRegularTextView) findViewById(R.id.tv_posted_date)).setText(jsonObject.getString("post_date"));
                     ((ProRegularTextView) findViewById(R.id.tv_address)).setText(jsonObject.getString("address"));
@@ -471,6 +472,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 //                            Logger.printMessage("locationlong", String.valueOf(locationlong));
                             JSONObject view = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("viewport");
                             Logger.printMessage("view", String.valueOf(view));
+
                             JSONObject north = view.getJSONObject("northeast");
                             northlat = Double.parseDouble(north.getString("lat"));
                             northlong = Double.parseDouble(north.getString("lng"));
@@ -478,12 +480,15 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
                             // mMap.addMarker(new MarkerOptions().position(new LatLng(locationlat,locationlong)).title("service area"));
                             Logger.printMessage("northlat", String.valueOf(northlat));
                             Logger.printMessage("northlong", String.valueOf(northlong));
+
                             JSONObject sw = view.getJSONObject("southwest");
                             slat = Double.parseDouble(sw.getString("lat"));
                             slong = Double.parseDouble(sw.getString("lng"));
 
+
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                    new LatLng(northlat, northlong), 9));
+                                    new LatLng((slat + northlat)/2 , (slong + northlong)/2), 11));
+
 
                             Logger.printMessage("slat", String.valueOf(slat));
                             Logger.printMessage("slong", String.valueOf(slong));
