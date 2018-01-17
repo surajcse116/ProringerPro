@@ -86,7 +86,10 @@ public class WatchListFragment extends Fragment {
 
         rcv_watch_list = (RecyclerView) view.findViewById(R.id.rcv_watch_list);
         tv_empty_show = (ProRegularTextView) view.findViewById(R.id.tv_empty_show);
+
         edt_search = (ProRegularEditText) view.findViewById(R.id.edt_search);
+        edt_search.setHint("Search Watchlist");
+
         img_clear = (ImageView) view.findViewById(R.id.img_clear);
         img_clear.setVisibility(View.GONE);
 

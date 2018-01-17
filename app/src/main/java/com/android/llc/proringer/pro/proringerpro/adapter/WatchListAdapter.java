@@ -38,9 +38,9 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
     Context mcontext;
     JSONArray info_array;
 
-    public WatchListAdapter(Context mcontext,JSONArray info_array, WatchListFragment.onOptionSelected callback) {
+    public WatchListAdapter(Context mcontext, JSONArray info_array, WatchListFragment.onOptionSelected callback) {
         this.mcontext = mcontext;
-        this.info_array=info_array;
+        this.info_array = info_array;
         this.callback = callback;
     }
 
@@ -53,24 +53,29 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
     public void onBindViewHolder(final WatchListAdapter.MyViewHolder holder, final int position) {
 //        callback.onItemPassed(position, jsonInfoArray.getJSONObject(position).getString("pros_id"));
 
-        if (position==info_array.length()-1){
+        if (position == info_array.length() - 1) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             float density = mcontext.getResources().getDisplayMetrics().density;
-            params.setMargins(0, 0, 0, dpToPx(mcontext,10));
+            params.setMargins(0, 0, 0, dpToPx(mcontext, 10));
             holder.LL_Main.setLayoutParams(params);
         }
 
 //        if(position==0){
 //            holder.find_local_pros.setVisibility(View.VISIBLE);
 //        }else {
-            holder.find_local_pros.setVisibility(View.GONE);
+        holder.find_local_pros.setVisibility(View.GONE);
 //        }
 
         try {
             Glide.with(mcontext).load(info_array.getJSONObject(position).getString("prjct_img").trim()).into(holder.img_project);
             holder.tv_pros_company_name.setText(info_array.getJSONObject(position).getString("prjct_name").trim());
-            holder.tv_category_name.setText(info_array.getJSONObject(position).getString("category_name").trim());
-            holder.tv_address.setText(info_array.getJSONObject(position).getString("city").trim()+", "+info_array.getJSONObject(position).getString("state").trim()+" "+info_array.getJSONObject(position).getString("zip").trim());
+            holder.tv_category_name.setText(
+                    info_array.getJSONObject(position).getString("category_name").trim());
+            holder.tv_address.setText(
+//                    info_array.getJSONObject(position).getString("city").trim() + ", " +
+//                    info_array.getJSONObject(position).getString("state").trim() + " " +
+                    info_array.getJSONObject(position).getString("zip").trim());
+
             holder.tv_category_service_name.setText(info_array.getJSONObject(position).getString("category_service_name").trim());
             holder.tv_service_look_type.setText(info_array.getJSONObject(position).getString("service_look_type").trim());
 
@@ -137,7 +142,7 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
                 @Override
                 public void onClick(View v) {
                     try {
-                        callback.onItemPassed(position,info_array.getJSONObject(position));
+                        callback.onItemPassed(position, info_array.getJSONObject(position));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -147,7 +152,7 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
                 @Override
                 public void onClick(View v) {
                     try {
-                        callback.onFavorite(position,info_array.getJSONObject(position));
+                        callback.onFavorite(position, info_array.getJSONObject(position));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -164,38 +169,38 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
     }
 
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout find_local_pros,LL_Main;
+        LinearLayout find_local_pros, LL_Main;
         CardView cardView_main_container;
-        ImageView img_project,img_favorite;
+        ImageView img_project, img_favorite;
         ProSemiBoldTextView tv_pros_company_name;
-        ProRegularTextView tv_category_name,tv_address,tv_category_service_name,tv_service_look_type,tv_job_details;
+        ProRegularTextView tv_category_name, tv_address, tv_category_service_name, tv_service_look_type, tv_job_details;
         ProLightTextView tv_post_time;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             find_local_pros = (LinearLayout) itemView.findViewById(R.id.find_local_pros);
             LL_Main = (LinearLayout) itemView.findViewById(R.id.LL_Main);
             cardView_main_container = (CardView) itemView.findViewById(R.id.cardView_main_container);
 
-            tv_pros_company_name=(ProSemiBoldTextView)itemView.findViewById(R.id.tv_pros_company_name);
-            tv_category_name=(ProRegularTextView)itemView.findViewById(R.id.tv_category_name);
-            tv_address=(ProRegularTextView)itemView.findViewById(R.id.tv_address);
-            tv_category_service_name=(ProRegularTextView)itemView.findViewById(R.id.tv_category_service_name);
-            tv_service_look_type=(ProRegularTextView)itemView.findViewById(R.id.tv_service_look_type);
+            tv_pros_company_name = (ProSemiBoldTextView) itemView.findViewById(R.id.tv_pros_company_name);
+            tv_category_name = (ProRegularTextView) itemView.findViewById(R.id.tv_category_name);
+            tv_address = (ProRegularTextView) itemView.findViewById(R.id.tv_address);
+            tv_category_service_name = (ProRegularTextView) itemView.findViewById(R.id.tv_category_service_name);
+            tv_service_look_type = (ProRegularTextView) itemView.findViewById(R.id.tv_service_look_type);
 
-            tv_job_details=(ProRegularTextView)itemView.findViewById(R.id.tv_job_details);
+            tv_job_details = (ProRegularTextView) itemView.findViewById(R.id.tv_job_details);
             tv_job_details.setMovementMethod(LinkMovementMethod.getInstance());
 
 
-            tv_post_time=(ProLightTextView) itemView.findViewById(R.id.tv_post_time);
+            tv_post_time = (ProLightTextView) itemView.findViewById(R.id.tv_post_time);
 
-            img_project=(ImageView)itemView.findViewById(R.id.img_project);
-            img_favorite=(ImageView)itemView.findViewById(R.id.img_favorite);
+            img_project = (ImageView) itemView.findViewById(R.id.img_project);
+            img_favorite = (ImageView) itemView.findViewById(R.id.img_favorite);
         }
     }
 
-    public static int dpToPx(Context context,int dp) {
+    public static int dpToPx(Context context, int dp) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }

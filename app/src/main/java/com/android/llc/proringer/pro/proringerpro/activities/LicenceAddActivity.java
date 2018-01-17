@@ -491,8 +491,8 @@ public class LicenceAddActivity extends AppCompatActivity {
                 LLEdit.setVisibility(View.VISIBLE);
                 img_licence_file.setImageResource(android.R.color.transparent);
                 Glide.with(getApplicationContext()).load(mycurrentphotopath).into(img_licence_file);
-                ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
-                Toast.makeText(LicenceAddActivity.this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
+//                ((ProRegularTextView) findViewById(R.id.tv_file_name)).setText(file.getName());
+                //Toast.makeText(LicenceAddActivity.this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Toast.makeText(LicenceAddActivity.this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
             }
