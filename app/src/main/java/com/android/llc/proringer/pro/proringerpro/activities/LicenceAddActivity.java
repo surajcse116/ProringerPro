@@ -73,7 +73,6 @@ public class LicenceAddActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 3;
 
     File file = null;
-    Dialog dialog = null;
 
     RelativeLayout relative_dropdown;
 
@@ -84,6 +83,7 @@ public class LicenceAddActivity extends AppCompatActivity {
     int month, date,year;
 
     MyLoader myLoader;
+
     JSONArray categoryJsonArray=null;
     PopupWindow popupWindow;
     CustomListAdapterDialogCategory custom = null;
@@ -425,14 +425,16 @@ public class LicenceAddActivity extends AppCompatActivity {
 
                     for (int i=0;i<job.getJSONArray("info_array").length();i++){
 
-                        for (int j=0;j<job.getJSONArray("info_array").getJSONObject(i).getJSONArray("getSubcategory").length();j++){
+                        categoryJsonArray.put(job.getJSONArray("info_array").getJSONObject(i));
 
-                            if (job.getJSONArray("info_array").getJSONObject(i).getJSONArray("getSubcategory").getJSONObject(j).getInt("cat_selected")==1){
-
-                                categoryJsonArray.put(job.getJSONArray("info_array").getJSONObject(i).getJSONArray("getSubcategory").getJSONObject(j));
-                            }
-
-                        }
+//                        for (int j=0;j<job.getJSONArray("info_array").getJSONObject(i).getJSONArray("getSubcategory").length();j++){
+//
+//                            if (job.getJSONArray("info_array").getJSONObject(i).getJSONArray("getSubcategory").getJSONObject(j).getInt("cat_selected")==1){
+//
+//                                categoryJsonArray.put(job.getJSONArray("info_array").getJSONObject(i).getJSONArray("getSubcategory").getJSONObject(j));
+//                            }
+//
+//                        }
                     }
                     //categoryJsonArray = job.getJSONArray("info_array");
                     Logger.printMessage("CategoryArray", String.valueOf(categoryJsonArray));
