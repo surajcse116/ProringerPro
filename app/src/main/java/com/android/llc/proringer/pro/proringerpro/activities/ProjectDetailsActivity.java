@@ -487,7 +487,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 
 
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                    new LatLng((slat + northlat)/2 , (slong + northlong)/2), 11));
+                                    new LatLng((slat + northlat)/2 , (slong + northlong)/2), 10));
 
 
                             Logger.printMessage("slat", String.valueOf(slat));
