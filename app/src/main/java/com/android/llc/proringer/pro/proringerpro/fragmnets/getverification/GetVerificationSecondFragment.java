@@ -6,14 +6,25 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActivity;
+import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
+import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 
 /**
@@ -22,7 +33,7 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTe
 public class GetVerificationSecondFragment extends Fragment {
     ProRegularTextView tv3, tv_confier_later_continew, tv_conferm;
     ProLightEditText et_confirmpin;
-
+    MyLoader myload;
     public GetVerificationSecondFragment() {
         // Required empty public constructor
     }
@@ -39,16 +50,19 @@ public class GetVerificationSecondFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tv3 = view.findViewById(R.id.tv3);
+        myload= new MyLoader(getActivity());
         et_confirmpin = view.findViewById(R.id.et_confirmpin);
         tv_conferm = view.findViewById(R.id.tv_conferm);
         tv_conferm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (et_confirmpin.getText().toString().trim().equals("") || et_confirmpin.getText().toString().trim().length() < 5) {
                     et_confirmpin.setError("Enter pin number");
                     et_confirmpin.requestFocus();
                 } else {
-                    ((GetVerificationActivity) getActivity()).callVerificationFragments(3);
+                    CallVerifiedPin();
+
                 }
             }
         });
@@ -69,5 +83,53 @@ public class GetVerificationSecondFragment extends Fragment {
             tv3.setText(Html.fromHtml(getResources().getString(R.string.welcome_text)));
         }
 
+    }
+
+    private void CallVerifiedPin() {
+        Log.d("CallVerifiedPin","CallVerifiedPin");
+        HashMap<String, String> params = new HashMap<>();
+        params.put("user_id", ProApplication.getInstance().getUserId());
+        params.put("verify_pin_code", et_confirmpin.getText().toString().trim());
+        new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_verified_pin, params, null, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
+                myload.dismissLoader();
+                Log.d("onSuccess","onSuccess");
+                Log.d("verifyPin------>",result);
+                JSONObject object= null;
+                try {
+                    object = new JSONObject(result);
+                    if (object.getString("response").equals("true"))
+                    {
+                        ((GetVerificationActivity) getActivity()).callVerificationFragments(3);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+               //
+            }
+
+            @Override
+            public void onError(String error, String response) {
+                myload.dismissLoader();
+                try {
+                    Toast.makeText(getActivity(), new JSONObject(response).getString("message"),Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+
+            @Override
+            public void onStart() {
+                myload.showLoader();
+            }
+        });
     }
 }

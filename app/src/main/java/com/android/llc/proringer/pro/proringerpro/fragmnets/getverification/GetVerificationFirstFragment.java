@@ -20,6 +20,7 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActivity;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
@@ -44,6 +45,7 @@ public class GetVerificationFirstFragment extends Fragment {
     String user_phone_number;
     ArrayList<SetGetAPI> arrayList = null;
     CheckBox cb;
+    MyLoader myload;
 
     public GetVerificationFirstFragment() {
         // Required empty public constructor
@@ -63,6 +65,7 @@ public class GetVerificationFirstFragment extends Fragment {
         send_now = (ProRegularTextView) view.findViewById(R.id.send_now);
         et_confirmphoneno = view.findViewById(R.id.et_confirmphoneno);
         cb = (CheckBox) view.findViewById(R.id.cb);
+        myload= new MyLoader(getActivity());
         ProRegularTextView tv3 = (ProRegularTextView)view.findViewById(R.id.tv3);
         ProRegularTextView tv4 = (ProRegularTextView)view.findViewById(R.id.tv4);
         ph_field = (ProRegularTextView)view.findViewById(R.id.ph_field);
@@ -121,17 +124,19 @@ public class GetVerificationFirstFragment extends Fragment {
         send_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cb.isChecked()) {
+                ((GetVerificationActivity) getActivity()).callVerificationFragments(2);
+               /* if (cb.isChecked()) {
                     if (et_confirmphoneno.getText().toString().trim().equals("") || et_confirmphoneno.getText().toString().trim().length() < 14) {
                         et_confirmphoneno.setError("enter us format phone number");
                         et_confirmphoneno.requestFocus();
                     } else {
-                        // callproverifiedVumber();
-                        ((GetVerificationActivity) getActivity()).callVerificationFragments(2);
+                         callproverifiedVumber();
+                        myload.showLoader();
+
                     }
                 }else {
                     Toast.makeText(getActivity(),"Please Checked",Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
         tv4.setText(getResources().getString(R.string.get_verified_data));
@@ -157,13 +162,33 @@ public class GetVerificationFirstFragment extends Fragment {
         new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_verified_number, params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
+                myload.dismissLoader();
+                Log.d("onSuccess","onSuccess");
                 Log.d("result", result);
+                try {
+                    JSONObject object=new JSONObject(result);
+                    if (object.getString("response").equals("true"))
+                    {
+                        ((GetVerificationActivity) getActivity()).callVerificationFragments(2);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 
             }
 
             @Override
             public void onError(String error, String response) {
-
+                Log.d("onError",response);
+                myload.dismissLoader();
+                try {
+                    Toast.makeText(getActivity(), new JSONObject(response).getString("message"),Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -173,6 +198,7 @@ public class GetVerificationFirstFragment extends Fragment {
 
             @Override
             public void onStart() {
+                Log.d("onStart","onStart");
 
             }
         });

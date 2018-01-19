@@ -2,9 +2,15 @@ package com.android.llc.proringer.pro.proringerpro.fragmnets.getverification;
 
 
 import android.app.Activity;
+
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -23,11 +29,31 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActivity;
 import com.android.llc.proringer.pro.proringerpro.cropImagePackage.CropImage;
 import com.android.llc.proringer.pro.proringerpro.cropImagePackage.CropImageView;
+import com.android.llc.proringer.pro.proringerpro.helper.ImageCompressor;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
+import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
-import java.util.ArrayList;
 
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -49,6 +75,13 @@ public class GetVerificationThirdFragment extends Fragment {
     String mCurrentPhotoPath_one="";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     int flag=0;
+    RadioButton rb;
+    File fileimage;
+    MyLoader myload;
+    File fileimage_one;
+    File fileimage_two;
+    File fileimage_three;
+    RadioButton rb_yes_one,rb_no_one;
 
     ArrayList<String> image_docarrayList;
     @Nullable
@@ -56,25 +89,14 @@ public class GetVerificationThirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_get_verification_third, container, false);
     }
-
-
-
-
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((GetVerificationActivity) getActivity()).increaseStep();
         image_docarrayList=new ArrayList<>();
-
         RL_one=view.findViewById(R.id.RL_one);
         RL_two=view.findViewById(R.id.RL_two);
         RL_three=view.findViewById(R.id.RL_three);
-
-        RL_one.setVisibility(View.GONE);
-        RL_two.setVisibility(View.GONE);
-        RL_three.setVisibility(View.GONE);
-
-
         image_one_close=view.findViewById(R.id.image_one_close);
         image_two_close=view.findViewById(R.id.image_two_close);
         image_three_close=view.findViewById(R.id.image_three_close);
@@ -167,22 +189,45 @@ public class GetVerificationThirdFragment extends Fragment {
 
             }
         });
-        radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Log.d("Radio Button","Radio Button");
-                RadioButton rb = (RadioButton) group.findViewById(checkedId);
-                Toast.makeText(getActivity(), rb.getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
+
+
+
         tv_continew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("tv_continew","tv_continew");
-                ((GetVerificationActivity)getActivity()).callVerificationFragments(4);
-                ((GetVerificationActivity)getActivity()).increaseStep();
+                Log.d("tv_continew", "tv_continew");
+                if (!pin_number.getText().toString().trim().equals(""))
+                {
+                    getdata obj=new getdata();
+                    obj.execute();
+                }
+                else
+                {
+                    pin_number.setError("Enter EIN pin");
+                    pin_number.requestFocus();
+                }
 
+              //  CallDoc();
+                /*if (!rb_no_one.isChecked() && !rb_yes_one.isChecked()) {
+
+                    if (!rb_no_one.isChecked()) {
+                        ((GetVerificationActivity) getActivity()).callVerificationFragments(4);
+
+                    } else {
+                        if (pin_number.getText().toString().trim().equals("")) {
+                            pin_number.setError("Enter EIN pin");
+                            pin_number.requestFocus();
+                        } else {
+                            CallDoc();
+                        }
+                    }
+                }
+                else
+                {
+                    pin_number.setError("Enter EIN pin");
+                    pin_number.requestFocus();
+
+                }*/
             }
         });
     }
@@ -204,7 +249,14 @@ public class GetVerificationThirdFragment extends Fragment {
                     Log.d("mCurrentPhotoPath",mCurrentPhotoPath);
                     RL_one.setVisibility(View.VISIBLE);
                     image1.setImageURI(Uri.parse(mCurrentPhotoPath));
-                    image_docarrayList.add(mCurrentPhotoPath);
+                   /* String[] filepath = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getActivity().getContentResolver().query(Uri.parse(mCurrentPhotoPath), filepath, null, null, null);
+                   cursor.moveToFirst();
+                    int column_index = cursor.getColumnIndex(filepath[0]);
+                    String imgpath = cursor.getString(column_index);*/
+
+
+                    fileimage_one=new File(mCurrentPhotoPath);
                 }
                 if (flag==2)
                 {
@@ -213,7 +265,8 @@ public class GetVerificationThirdFragment extends Fragment {
                     Log.d("mCurrentPhotoPath",mCurrentPhotoPath_one);
                     RL_two.setVisibility(View.VISIBLE);
                     image2.setImageURI(Uri.parse(mCurrentPhotoPath_one));
-                    image_docarrayList.add(mCurrentPhotoPath_one);
+
+                    fileimage_two=new File(mCurrentPhotoPath_one);
                 }
                 if (flag==3)
                 {
@@ -222,7 +275,8 @@ public class GetVerificationThirdFragment extends Fragment {
                     Log.d("mCurrentPhotoPath",mCurrentPhotoPath_two);
                     RL_three.setVisibility(View.VISIBLE);
                     image3.setImageURI(Uri.parse(mCurrentPhotoPath_two));
-                    image_docarrayList.add(mCurrentPhotoPath_two);
+
+                    fileimage_three=new File(mCurrentPhotoPath_two);
                 }
             }
         }
@@ -242,7 +296,132 @@ public class GetVerificationThirdFragment extends Fragment {
                 .setAspectRatio(4,3)
                 .getIntent(getActivity());
         startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
-        // updateImageSend();
 
     }
+
+
+
+    public class getdata extends AsyncTask<String, Void, String>
+    {
+        String docurl="http://esolz.co.in/lab6/proringer_latest/app_pro_verify_business_doc";
+
+        File upload_temp;
+        File upload_temp1;
+        File upload_temp2;
+        String exception = "";
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            try {
+                OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
+
+
+                if (!mCurrentPhotoPath.equals("")&&!mCurrentPhotoPath_one.equals("")&&!mCurrentPhotoPath_two.equals("")) {
+                    try {
+                        Bitmap bmp = ImageCompressor.with(getActivity()).compressBitmap(mCurrentPhotoPath);
+                        Bitmap bmp1 = ImageCompressor.with(getActivity()).compressBitmap(mCurrentPhotoPath);
+                        Logger.printMessage("*****", "%% Bitmap size:: " + (bmp.getByteCount() / 1024) + " kb");
+                        upload_temp = new File(getActivity().getCacheDir(), "" + System.currentTimeMillis() + ".png");
+                        upload_temp1=new File(getActivity().getCacheDir(), "" + System.currentTimeMillis() + ".png");
+                        upload_temp2=new File(getActivity().getCacheDir(), "" + System.currentTimeMillis() + ".png");
+                        upload_temp.createNewFile();
+                        upload_temp1.createNewFile();
+                        upload_temp2.createNewFile();
+                        ///for first doc
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                        byte[] bitmapdata = bos.toByteArray();
+
+                        FileOutputStream fos = new FileOutputStream(upload_temp);
+                        fos.write(bitmapdata);
+                        fos.flush();
+                        fos.close();
+                        ///for 2nd doc
+                        ByteArrayOutputStream bos1 = new ByteArrayOutputStream();
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                        byte[] bitmapdata1 = bos1.toByteArray();
+
+                        FileOutputStream fos1 = new FileOutputStream(upload_temp1);
+                        fos1.write(bitmapdata1);
+                        fos1.flush();
+                        fos1.close();
+                        //for 3rd doc
+                        ByteArrayOutputStream bos2 = new ByteArrayOutputStream();
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                        byte[] bitmapdata2 = bos2.toByteArray();
+
+                        FileOutputStream fos2 = new FileOutputStream(upload_temp2);
+                        fos2.write(bitmapdata2);
+                        fos2.flush();
+                        fos2.close();
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return e.getMessage();
+                    }
+                }
+                final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/*");
+
+                MultipartBody.Builder requestBody = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                .addFormDataPart("user_id", ProApplication.getInstance().getUserId())
+                        .addFormDataPart("ein_no",text_et)
+                       // .addFormDataPart("licensed_certified",upload_temp.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, upload_temp))
+                        .addFormDataPart("business_filed","")
+                        .addFormDataPart("business_insured", "");
+                if (upload_temp != null) {
+                    Log.d("path*****", "" + upload_temp.getAbsolutePath());
+                    requestBody.addFormDataPart("licensed_certified", upload_temp.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, upload_temp));
+                    requestBody.addFormDataPart("business_filed",upload_temp1.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, upload_temp1));
+                    requestBody.addFormDataPart("business_insured",upload_temp2.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, upload_temp2));
+                } else {
+                    requestBody.addFormDataPart("licensed_certified", "");
+                    requestBody.addFormDataPart("business_filed", "");
+                    requestBody.addFormDataPart("business_insured", "");
+                }
+
+
+                Request request = new Request.Builder()
+                        .url(docurl)
+                        .post(requestBody.build())
+                        .build();
+
+                Response response = okHttpClient.newCall(request).execute();
+
+                String responseString = response.body().string();
+                Logger.printMessage("responseInfo", responseString);
+                JSONObject respo = new JSONObject(responseString);
+                Logger.printMessage("response-->", String.valueOf(respo.getBoolean("response")));
+
+                if (respo.getBoolean("response")) {
+                    Logger.printMessage("message-->", respo.getString("message"));
+                    return respo.getString("message");
+                } else {
+                    exception = respo.getString("message");
+                    return exception;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                exception = e.getMessage();
+                return exception;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d("doc_res---------->",s);
+            ((GetVerificationActivity)getActivity()).callVerificationFragments(4);
+
+        }
+    }
+
+
 }
