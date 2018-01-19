@@ -66,8 +66,7 @@ public class GetVerificationForthFragment extends Fragment{
         tv_confirmlater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // validation();
-                ((GetVerificationActivity)getActivity()).callVerificationFragments(5);
+                validation();
             }
         });
 

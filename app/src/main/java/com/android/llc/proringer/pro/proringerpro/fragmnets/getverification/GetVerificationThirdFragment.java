@@ -94,10 +94,10 @@ public class GetVerificationThirdFragment extends Fragment {
     RadioGroup radio_group_business;
 
 
-    boolean pinNumberRadioCheck = false;
-    boolean licenceOrCertifiedRadioCheck = false;
-    boolean legalBusinessNameRadioCheck = false;
-    boolean businessInsureRadioCheck = false;
+    boolean pinNumberRadioCheck = true;
+    boolean licenceOrCertifiedRadioCheck = true;
+    boolean legalBusinessNameRadioCheck = true;
+    boolean businessInsureRadioCheck = true;
 
 
     @Nullable
@@ -125,6 +125,9 @@ public class GetVerificationThirdFragment extends Fragment {
         add_document_one = view.findViewById(R.id.add_document_one);
         add_document_two = view.findViewById(R.id.add_document_two);
         add_document_three = view.findViewById(R.id.add_document_three);
+
+        myLoader=new MyLoader(getActivity());
+
         image_three_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +151,6 @@ public class GetVerificationThirdFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PermissionController.class);
                 intent.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
-                Log.d("i_if", "chooser");
                 startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
                 flag = 3;
             }
@@ -158,7 +160,6 @@ public class GetVerificationThirdFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PermissionController.class);
                 intent.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
-                Log.d("i_if", "chooser");
                 startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
                 flag = 2;
 
@@ -167,11 +168,9 @@ public class GetVerificationThirdFragment extends Fragment {
         add_document_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("frag_First----------->", "chooser");
                 Intent intent1 = new Intent(getActivity(), PermissionController.class);
                 //Intent intent = new Intent(getActivity(), PermissionController.class);
                 intent1.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
-                Log.d("i_if", "chooser");
                 startActivityForResult(intent1, REQUEST_IMAGE_CAPTURE);
                 flag = 1;
 
@@ -187,9 +186,6 @@ public class GetVerificationThirdFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 text_et = pin_number.getText().toString();
                 text_et_length = pin_number.getText().toString().length();
-                Log.d("text_et", text_et);
-                Log.d("text_et_length", "" + text_et_length);
-                Log.d("char", "" + s);
                 if (text_et_length == 3) {
                     if (!text_et.contains("-")) {
                         pin_number.setText(new StringBuilder(text_et).insert(text_et.length() - 1, "-").toString());
@@ -220,11 +216,12 @@ public class GetVerificationThirdFragment extends Fragment {
                     case R.id.rb_yes_one:
                         // do operations specific to this selection
                         pinNumberRadioCheck = true;
-
+                        Logger.printMessage("pinNumberRadioCheck-->", ""+pinNumberRadioCheck);
                         break;
                     case R.id.rb_no_one:
                         // do operations specific to this selection
                         pinNumberRadioCheck = false;
+                        Logger.printMessage("pinNumberRadioCheck-->", ""+pinNumberRadioCheck);
                         break;
                 }
             }
@@ -238,10 +235,12 @@ public class GetVerificationThirdFragment extends Fragment {
                     case R.id.rb_yes_two:
                         // do operations specific to this selection
                         licenceOrCertifiedRadioCheck = true;
+                        Logger.printMessage("licenceOrCertifiedRadioCheck-->", ""+licenceOrCertifiedRadioCheck);
                         break;
                     case R.id.rb_no_two:
                         // do operations specific to this selection
                         licenceOrCertifiedRadioCheck = false;
+                        Logger.printMessage("licenceOrCertifiedRadioCheck-->", ""+licenceOrCertifiedRadioCheck);
                         break;
                 }
             }
@@ -255,10 +254,13 @@ public class GetVerificationThirdFragment extends Fragment {
                     case R.id.rb_yes_three:
                         // do operations specific to this selection
                         legalBusinessNameRadioCheck = true;
+                        Logger.printMessage("legalBusinessNameRadioCheck-->", ""+legalBusinessNameRadioCheck);
                         break;
                     case R.id.rb_no_three:
                         // do operations specific to this selection
                         legalBusinessNameRadioCheck = false;
+                        Logger.printMessage("legalBusinessNameRadioCheck-->", ""+legalBusinessNameRadioCheck);
+
                         break;
                 }
             }
@@ -272,10 +274,12 @@ public class GetVerificationThirdFragment extends Fragment {
                     case R.id.rb_yes_four:
                         // do operations specific to this selection
                         businessInsureRadioCheck = true;
+                        Logger.printMessage("businessInsureRadioCheck-->", ""+businessInsureRadioCheck);
                         break;
                     case R.id.rb_no_four:
                         // do operations specific to this selection
-                        businessInsureRadioCheck = true;
+                        businessInsureRadioCheck = false;
+                        Logger.printMessage("businessInsureRadioCheck-->", ""+businessInsureRadioCheck);
                         break;
                 }
             }
@@ -380,7 +384,16 @@ public class GetVerificationThirdFragment extends Fragment {
                             } else {
                                 pin_number.setError(null);
                                 pin_number.clearFocus();
-                                afterEinCheck();
+
+                                if (pin_number.getText().toString().trim().length()<8) {
+                                    pin_number.setError("Enter Correct EIN Number");
+                                    pin_number.requestFocus();
+                                } else {
+                                    pin_number.setError(null);
+                                    pin_number.clearFocus();
+
+                                    afterEinCheck();
+                                }
                             }
                         } else {
                             afterEinCheck();
@@ -462,38 +475,51 @@ public class GetVerificationThirdFragment extends Fragment {
 
     public void afterEinCheck(){
         if (licenceOrCertifiedRadioCheck) {
+            Logger.printMessage("licenceOrCertifiedRadioCheck1-->",""+licenceOrCertifiedRadioCheck);
+            Logger.printMessage("fileimage_one1-->",""+fileimage_one);
+
             if (fileimage_one == null) {
                 Toast.makeText(getActivity(), "Please Choose licence or certified file", Toast.LENGTH_SHORT).show();
             } else {
                 afterLicenceOrCertified();
             }
         } else {
+            Logger.printMessage("licenceOrCertifiedRadioCheck2-->",""+licenceOrCertifiedRadioCheck);
+            Logger.printMessage("fileimage_one2-->",""+fileimage_one);
             afterLicenceOrCertified();
         }
     }
 
     public void afterLicenceOrCertified(){
         if (legalBusinessNameRadioCheck) {
+
+            Logger.printMessage("legalBusinessNameRadioCheck1-->",""+legalBusinessNameRadioCheck);
+            Logger.printMessage("fileimage_two1-->",""+fileimage_two);
+
             if (fileimage_two == null) {
                 Toast.makeText(getActivity(), "Please Choose legal business name field", Toast.LENGTH_SHORT).show();
             } else {
-                if (businessInsureRadioCheck) {
-                    if (fileimage_three == null) {
-                        Toast.makeText(getActivity(), "Please Choose business insured file", Toast.LENGTH_SHORT).show();
-                    } else {
-                        fireDocumentSubmit();
-                    }
-                }
+                afterLegalBusiness();
             }
 
         }else {
-            if (businessInsureRadioCheck) {
-                if (fileimage_three == null) {
-                    Toast.makeText(getActivity(), "Please Choose business insured file", Toast.LENGTH_SHORT).show();
-                } else {
-                    fireDocumentSubmit();
-                }
+            Logger.printMessage("legalBusinessNameRadioCheck2-->",""+legalBusinessNameRadioCheck);
+            Logger.printMessage("fileimage_two2-->",""+fileimage_two);
+            afterLegalBusiness();
+        }
+    }
+
+    public void afterLegalBusiness(){
+        if(businessInsureRadioCheck){
+            if (fileimage_three==null){
+                Toast.makeText(getActivity(),"please choose business insured",Toast.LENGTH_SHORT).show();
+            }else {
+                Logger.printMessage("fire1-->","yes");
+                fireDocumentSubmit();
             }
+        }else {
+            Logger.printMessage("fire2-->","yes");
+            fireDocumentSubmit();
         }
     }
 }

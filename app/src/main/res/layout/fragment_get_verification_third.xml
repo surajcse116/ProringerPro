@@ -70,7 +70,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ques1"
-                            android:text="Yes" />
+                            android:text="Yes"
+                            android:checked="true"/>
 
                         <RadioButton
                             android:id="@+id/rb_no_one"
@@ -129,7 +130,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ques1"
-                            android:text="Yes" />
+                            android:text="Yes"
+                            android:checked="true"/>
 
                         <RadioButton
                             android:id="@+id/rb_no_two"
@@ -211,7 +213,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ques1"
-                            android:text="Yes" />
+                            android:text="Yes"
+                            android:checked="true"/>
 
                         <RadioButton
                             android:id="@+id/rb_no_three"
@@ -292,7 +295,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ques1"
-                            android:text="Yes" />
+                            android:text="Yes"
+                            android:checked="true"/>
 
                         <RadioButton
                             android:id="@+id/rb_no_four"
