@@ -115,7 +115,7 @@ public class DashBoardFragment extends Fragment {
                     //openGetVerifiedDialog();
 //                    Intent intent=new Intent(getActivity(), GetVerificationActivity.class);
 //                    startActivityForResult(intent,1111);
-                    Toast.makeText(getContext(),"alredy applied to verify",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"already applied to verify",Toast.LENGTH_SHORT).show();
                 }
 
                 else if (CASEAPPLY==4)
