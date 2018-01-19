@@ -74,6 +74,9 @@ public class ProConstant {
     public static String app_pro_verified_confirm=BASEURL+"app_pro_verified_confirm";
 
 
+    public static String app_pro_verify_business_doc=BASEURL+"app_pro_verify_business_doc";
+
+
     public static String latitude = "";
     public static String longtitude = "";
     public static String f_name = "";

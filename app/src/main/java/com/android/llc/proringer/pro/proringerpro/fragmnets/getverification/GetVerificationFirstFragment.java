@@ -65,13 +65,13 @@ public class GetVerificationFirstFragment extends Fragment {
         send_now = (ProRegularTextView) view.findViewById(R.id.send_now);
         et_confirmphoneno = view.findViewById(R.id.et_confirmphoneno);
         cb = (CheckBox) view.findViewById(R.id.cb);
-        myload= new MyLoader(getActivity());
-        ProRegularTextView tv3 = (ProRegularTextView)view.findViewById(R.id.tv3);
-        ProRegularTextView tv4 = (ProRegularTextView)view.findViewById(R.id.tv4);
-        ph_field = (ProRegularTextView)view.findViewById(R.id.ph_field);
-        ProRegularTextView txt_note = (ProRegularTextView)view.findViewById(R.id.txt_note);
+        myload = new MyLoader(getActivity());
+        ProRegularTextView tv3 = (ProRegularTextView) view.findViewById(R.id.tv3);
+        ProRegularTextView tv4 = (ProRegularTextView) view.findViewById(R.id.tv4);
+        ph_field = (ProRegularTextView) view.findViewById(R.id.ph_field);
+        ProRegularTextView txt_note = (ProRegularTextView) view.findViewById(R.id.txt_note);
 
-        getUserinfoList();
+        getUserInfoList();
 
         ((GetVerificationActivity) getActivity()).increaseStep();
 
@@ -124,19 +124,18 @@ public class GetVerificationFirstFragment extends Fragment {
         send_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((GetVerificationActivity) getActivity()).callVerificationFragments(2);
-               /* if (cb.isChecked()) {
-                    if (et_confirmphoneno.getText().toString().trim().equals("") || et_confirmphoneno.getText().toString().trim().length() < 14) {
-                        et_confirmphoneno.setError("enter us format phone number");
+                if (cb.isChecked()) {
+                    if (!et_confirmphoneno.getText().toString().trim().equals("") && et_confirmphoneno.getText().toString().trim().length() < 14) {
+                        et_confirmphoneno.setError("enter correct us format phone number");
                         et_confirmphoneno.requestFocus();
-                    } else {
-                         callproverifiedVumber();
-                        myload.showLoader();
-
+                    } else if (!et_confirmphoneno.getText().toString().trim().equals("") && et_confirmphoneno.getText().toString().trim().length() == 14) {
+                        callProVerifiedNumber();
+                    }else {
+                        ((GetVerificationActivity) getActivity()).callVerificationFragments(2);
                     }
-                }else {
-                    Toast.makeText(getActivity(),"Please Checked",Toast.LENGTH_SHORT).show();
-                }*/
+                } else {
+                    Toast.makeText(getActivity(), "Please Checked", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         tv4.setText(getResources().getString(R.string.get_verified_data));
@@ -155,7 +154,7 @@ public class GetVerificationFirstFragment extends Fragment {
         }
     }
 
-    private void callproverifiedVumber() {
+    private void callProVerifiedNumber() {
         HashMap<String, String> params = new HashMap<>();
         params.put("user_id", ProApplication.getInstance().getUserId());
         params.put("pros_ph_no", et_confirmphoneno.getText().toString().trim());
@@ -163,29 +162,24 @@ public class GetVerificationFirstFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();
-                Log.d("onSuccess","onSuccess");
+                Log.d("onSuccess", "onSuccess");
                 Log.d("result", result);
                 try {
-                    JSONObject object=new JSONObject(result);
-                    if (object.getString("response").equals("true"))
-                    {
+                    JSONObject object = new JSONObject(result);
+                    if (object.getString("response").equals("true")) {
                         ((GetVerificationActivity) getActivity()).callVerificationFragments(2);
                     }
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
             public void onError(String error, String response) {
-                Log.d("onError",response);
+                Log.d("onError", response);
                 myload.dismissLoader();
                 try {
-                    Toast.makeText(getActivity(), new JSONObject(response).getString("message"),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), new JSONObject(response).getString("message"), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -193,20 +187,20 @@ public class GetVerificationFirstFragment extends Fragment {
 
             @Override
             public void onError(String error) {
-
+                myload.dismissLoader();
             }
 
             @Override
             public void onStart() {
-                Log.d("onStart","onStart");
-
+                Log.d("onStart", "onStart");
+                myload.showLoader();
             }
         });
 
     }
 
 
-    private void getUserinfoList() {
+    private void getUserInfoList() {
         arrayList = new ArrayList<SetGetAPI>();
         SetGetAPI setGetAPI = new SetGetAPI();
         setGetAPI.setPARAMS("user_id");
@@ -215,6 +209,9 @@ public class GetVerificationFirstFragment extends Fragment {
         new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_prouserinfo_list, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
+
+                myload.dismissLoader();
+
                 Log.d("response_phonenumber", result);
                 try {
                     JSONObject prouserInfojobj = new JSONObject(result);
@@ -233,17 +230,17 @@ public class GetVerificationFirstFragment extends Fragment {
 
             @Override
             public void onError(String error, String response) {
-
+                myload.dismissLoader();
             }
 
             @Override
             public void onError(String error) {
-
+                myload.dismissLoader();
             }
 
             @Override
             public void onStart() {
-
+                myload.showLoader();
             }
         });
     }

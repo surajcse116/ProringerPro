@@ -18,6 +18,7 @@ import com.android.llc.proringer.pro.proringerpro.activities.LocationActivity;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
@@ -32,6 +33,7 @@ public class GetVerificationForthFragment extends Fragment{
     @Nullable
     RelativeLayout RL_address;
     ProRegularTextView tv_confirmlater,txt_address,txt_place,txt_state,txt_pincode;
+    MyLoader myLoader;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,12 +45,13 @@ public class GetVerificationForthFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         RL_address=(RelativeLayout)view.findViewById(R.id.RL_address);
-
         txt_place=(ProRegularTextView)view.findViewById(R.id.txt_place);
         txt_state=(ProRegularTextView)view.findViewById(R.id.txt_state);
         txt_pincode=(ProRegularTextView)view.findViewById(R.id.txt_pincode);
         txt_address=(ProRegularTextView) view.findViewById(R.id.txt_address);
-        tv_confirmlater=(ProRegularTextView)view.findViewById(R.id.tv_confirmlater) ;
+        tv_confirmlater=(ProRegularTextView)view.findViewById(R.id.tv_confirmlater);
+
+        myLoader=new MyLoader(getActivity());
 
 
         RL_address.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +145,7 @@ public class GetVerificationForthFragment extends Fragment{
         HashMap<String,String> params=new HashMap<>();
         params.put("user_id", ProApplication.getInstance().getUserId());
         params.put("verify_country",ProConstant.Country);
-        params.put("verify_address", address);
+        params.put("verify_address", address.trim().split(",")[0]);
         params.put("verify_city",city);
         params.put("verify_state",state);
         params.put("verify_zip",zip);
@@ -151,23 +154,24 @@ public class GetVerificationForthFragment extends Fragment{
         new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_verified_address, params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
+                myLoader.dismissLoader();
                 Log.d("resultDoc",result);
                 ((GetVerificationActivity)getActivity()).callVerificationFragments(5);
             }
 
             @Override
             public void onError(String error, String response) {
-
+                myLoader.dismissLoader();
             }
 
             @Override
             public void onError(String error) {
-
+                myLoader.dismissLoader();
             }
 
             @Override
             public void onStart() {
-
+                myLoader.showLoader();
             }
         });
         Log.d("user_id",ProApplication.getInstance().getUserId());

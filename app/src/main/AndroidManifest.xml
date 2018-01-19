@@ -200,11 +200,6 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".activities.GetVerificationActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.PremiumActivity"

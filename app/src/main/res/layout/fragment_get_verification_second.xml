@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -5,88 +6,101 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-
     <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
         android:id="@+id/tv1"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:text="Verify PIN Code"
-        android:padding="5dp"
-        android:gravity="center"
         android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Verify PIN Code"
         android:textColor="@color/colorTextDark"
         android:textSize="18sp" />
 
-    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-        android:id="@+id/tv2"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv1"
-        android:layout_marginTop="30dp"
-        android:text="The pin code has been sent. You should receive it shortly."
-        android:textSize="14sp" />
-
-    <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
-        android:id="@+id/et_confirmpin"
-        android:layout_width="200dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_height="45dp"
-        android:layout_below="@id/tv2"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/edit_text_selecter"
-        android:hint="Enter Pin"
-        android:inputType="number"
-        android:maxLength="6"
-        android:textSize="14sp"
-        android:lines="1"
-        android:paddingLeft="5dp"
-        android:singleLine="true">
-
-
-    </com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText>
-
-    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-        android:id="@+id/tv3"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_confirmpin"
-        android:layout_marginTop="20dp"
-        android:text="@string/welcome_text"
-        android:textSize="14sp" />
-
-    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-        android:id="@+id/tv_conferm"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@id/tv3"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorDarkGray"
-        android:gravity="center"
-        android:text="CONFIRM"
-        android:layout_marginLeft="10dp"
-        android:textSize="14sp"
-        android:layout_marginRight="10dp"
-        android:textColor="@color/colorPrimary" />
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_below="@+id/tv1">
 
-    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-        android:id="@+id/tv_confier_later_continew"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorAccent"
-        android:gravity="center"
-        android:text="confirm later and continue"
-        android:textAllCaps="true"
-        android:textSize="14sp"
-        android:textColor="@color/colorPrimary" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv_confier_later_continew"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:text="confirm later and continue"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="The pin code has been sent. You should receive it shortly."
+                android:textSize="14sp" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+                android:id="@+id/et_confirmpin"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_below="@id/tv2"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edit_text_selecter"
+                android:hint="Enter Pin"
+                android:inputType="number"
+                android:lines="1"
+                android:maxLength="6"
+                android:paddingLeft="5dp"
+                android:singleLine="true"
+                android:textSize="14sp">
+
+
+            </com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText>
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_confirmpin"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/welcome_text"
+                android:textSize="14sp" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv_conferm"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@id/tv3"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorDarkGray"
+                android:gravity="center"
+                android:text="CONFIRM"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
+
+        </RelativeLayout>
+    </ScrollView>
 
 
 </RelativeLayout>

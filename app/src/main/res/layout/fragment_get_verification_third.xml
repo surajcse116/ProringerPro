@@ -59,7 +59,7 @@
                         android:textSize="13sp" />
 
                     <RadioGroup
-                        android:id="@+id/radio_group"
+                        android:id="@+id/radio_group_pin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ques1"
@@ -118,6 +118,7 @@
                         android:textSize="13sp" />
 
                     <RadioGroup
+                        android:id="@+id/radio_group_licence"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ques2"
@@ -199,6 +200,7 @@
                         android:textSize="13sp" />
 
                     <RadioGroup
+                        android:id="@+id/radio_group_business_field"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ques3"
@@ -279,6 +281,7 @@
                         android:textSize="13sp" />
 
                     <RadioGroup
+                        android:id="@+id/radio_group_business"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ques4"

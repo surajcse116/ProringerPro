@@ -224,7 +224,7 @@ public class DashBoardFragment extends Fragment {
                         }
                         else if(pro_premium_status.equals("2") && Pro_verified.equals("A"))
                         {
-                            tv_goto_premium.setText("GET VERIFIED");
+                            tv_goto_premium.setText("Already Verified");
                             CASEAPPLY=3;
                         }
 

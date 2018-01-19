@@ -62,7 +62,6 @@ public class GetVerificationSecondFragment extends Fragment {
                     et_confirmpin.requestFocus();
                 } else {
                     CallVerifiedPin();
-
                 }
             }
         });

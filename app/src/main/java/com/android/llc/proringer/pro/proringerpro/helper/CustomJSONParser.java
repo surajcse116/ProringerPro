@@ -409,6 +409,119 @@ public class CustomJSONParser {
         }
     }
 
+
+
+    public void APIForWithPhotoPostMethodMultipleKeyImageParams(final Context context, final String URL, final ArrayList<SetGetAPIPostData> apiPostDataArrayList,final ArrayList<String> stringArrayListPhotos, final ArrayList<File> Photos, final CustomJSONResponse customJSONResponse) {
+        if (NetworkUtil.getInstance().isNetworkAvailable(context)) {
+            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/*");
+
+            new AsyncTask<Void, Void, Void>() {
+
+                private String responseString = null;
+                private Exception exception = null;
+                MultipartBody.Builder builderNew;
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+
+                    customJSONResponse.onStart();
+
+                    Logger.printMessage("@@ POST URL- ", URL);
+
+                    builderNew = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                    for (SetGetAPIPostData data : apiPostDataArrayList) {
+                        builderNew.addFormDataPart("" + data.getPARAMS(), data.getValues());
+                        Logger.printMessage(data.getPARAMS(), data.getValues());
+                    }
+
+                    if (Photos!=null) {
+                        int count=0;
+                        for (File file : Photos) {
+                            try {
+                                Bitmap bmp = ImageCompressor.with(context).compressBitmap(file.getAbsolutePath());
+                                Logger.printMessage("*****", "%% Bitmap size:: " + (bmp.getByteCount() / 1024) + " kb");
+                                File upload_temp = new File(context.getCacheDir(), "" + System.currentTimeMillis() + ".png");
+                                upload_temp.createNewFile();
+                                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                                bmp.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                                byte[] bitmapdata = bos.toByteArray();
+
+                                FileOutputStream fos = new FileOutputStream(upload_temp);
+                                fos.write(bitmapdata);
+                                fos.flush();
+                                fos.close();
+
+                                Logger.printMessage("fileUploadingKey-->",stringArrayListPhotos.get(count));
+                                Logger.printMessage("fileUploadingValue-->",""+upload_temp.getAbsolutePath());
+
+                                builderNew.addFormDataPart(stringArrayListPhotos.get(count), upload_temp.getName() + "", RequestBody.create(MEDIA_TYPE_PNG, upload_temp));
+
+                                count++;
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    try {
+                        if (!isCancelled()) {
+
+                            MultipartBody requestBody = builderNew.build();
+                            OkHttpClient client = new OkHttpClient.Builder().retryOnConnectionFailure(true).connectTimeout(6000, TimeUnit.MILLISECONDS).build();
+                            Request request = new Request.Builder().url(URL).method("POST", RequestBody.create(null, new byte[0]))
+                                    .post(requestBody).build();
+                            Response response = client.newCall(request).execute();
+
+
+                            responseString = response.body().string();
+
+                            Logger.printMessage("response", "response_::" + responseString);
+                            Logger.printMessage("response", "response_ww_message::" + response.message());
+                            Logger.printMessage("response", "response_ww_headers::" + response.headers());
+                            Logger.printMessage("response", "response_ww_isRedirect::" + response.isRedirect());
+//                       Loger.MSG("response", "response_ww_body::" + response.body().string());
+                        }
+                    } catch (Exception e) {
+                        this.exception = e;
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    if (!isCancelled() && exception == null) {
+
+                        try {
+                            if (new JSONObject(responseString).getBoolean("response")) {
+                                customJSONResponse.onSuccess(responseString);
+                            } else {
+                                customJSONResponse.onError(new JSONObject(responseString).getString("message") + "", responseString);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    } else {
+                        customJSONResponse.onError(exception.getMessage() + "");
+                    }
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            customJSONResponse.onError(context.getResources().getString(R.string.please_check_your_internet_connection));
+        }
+    }
+
+
+
+
     public interface CustomJSONResponse {
         void onSuccess(String result);
 

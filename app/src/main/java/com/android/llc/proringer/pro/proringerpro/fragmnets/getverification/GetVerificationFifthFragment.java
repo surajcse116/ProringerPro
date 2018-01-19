@@ -13,6 +13,7 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActivity;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -29,6 +30,7 @@ import java.util.HashMap;
 public class GetVerificationFifthFragment extends Fragment{
     ProLightEditText et_pin_number;
     ProRegularTextView tv_confirm,tv_close;
+    MyLoader myLoader;
 
     @Nullable
     @Override
@@ -42,6 +44,7 @@ public class GetVerificationFifthFragment extends Fragment{
         et_pin_number=view.findViewById(R.id.et_pin_number);
         tv_confirm=view.findViewById(R.id.tv_confirm_fifth);
         tv_close=view.findViewById(R.id.tv_close);
+        myLoader=new MyLoader(getActivity());
         ((GetVerificationActivity) getActivity()).increaseStep();
         tv_close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +64,6 @@ public class GetVerificationFifthFragment extends Fragment{
                 {
                     callVerifiedConfirmedpin();
                 }
-
             }
         });
     }
@@ -73,6 +75,7 @@ public class GetVerificationFifthFragment extends Fragment{
         new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_verified_confirm, params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
+                myLoader.dismissLoader();
                 Log.d("appproverifiedconfirm->",result);
                 try {
                     JSONObject object=new JSONObject(result);
@@ -84,28 +87,26 @@ public class GetVerificationFifthFragment extends Fragment{
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
             public void onError(String error, String response) {
-
+                myLoader.dismissLoader();
                 try {
                     Toast.makeText(getActivity(), new JSONObject(response).getString("message"),Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
             public void onError(String error) {
-
+                myLoader.dismissLoader();
             }
 
             @Override
             public void onStart() {
-
+                myLoader.showLoader();
             }
         });
     }
