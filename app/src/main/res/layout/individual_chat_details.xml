@@ -2,69 +2,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-    <android.support.design.widget.CollapsingToolbarLayout
-        android:id="@+id/collapsing_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:contentScrim="?attr/colorPrimary"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        >
 
         <RelativeLayout
             android:id="@+id/RLToolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/colorPrimary"
-            app:layout_collapseMode="pin">
+            android:layout_height="match_parent"
+            >
 
-            <ImageView
-                android:id="@+id/img_back"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
-                android:padding="15dp"
-                android:src="@drawable/ic_keyboard_arrow_left_black_24px" />
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                 android:id="@+id/tv_toolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:gravity="center_vertical"
                 android:text="Projects"
-                android:textSize="14sp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="39dp"></com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView>
-                <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:id="@+id/iv_pic"
-                    android:layout_marginTop="14dp"
-                    android:background="@color/colorDarkGray"
-                    android:layout_marginStart="120dp"
-                    android:paddingRight="40dp"/>
+                android:textSize="14sp"/>
 
-                 <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_toRightOf="@+id/iv_pic"
-                     android:layout_marginStart="10dp"
-                     android:layout_marginTop="16dp"
-                     android:text="jared Halloway"
-                     android:textSize="16sp"
-                     android:gravity="center_vertical"/>
+            <ImageView
+                android:layout_toRightOf="@+id/tv_toolbar"
+                android:id="@+id/iv_pic"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
+                android:background="@color/colorDarkGray"
+                android:paddingRight="40dp"/>
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/iv_pic"
+                android:gravity="center_vertical"
+                android:text="jared Halloway"
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
 
-    </android.support.design.widget.CollapsingToolbarLayout>
-
-
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -73,7 +59,8 @@
         <ImageView
             android:id="@+id/img_background"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/chat_list"
@@ -118,4 +105,5 @@
 
         </RelativeLayout>
     </RelativeLayout>
+
 </LinearLayout>
