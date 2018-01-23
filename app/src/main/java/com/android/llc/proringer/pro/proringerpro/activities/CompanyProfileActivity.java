@@ -358,7 +358,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, ProConstant.companybusinessoptionapi, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-                //Log.d("business",result);
+                //Logger.printMessage("business",result);
                 try {
                     JSONObject job = new JSONObject(result);
                     btype = job.getJSONArray("business");

@@ -534,7 +534,7 @@ public class PortFolioActivity extends AppCompatActivity {
         new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-                // Log.d("responese",result);
+                // Logger.printMessage("responese",result);
                 myLoader.dismissLoader();
                 try {
                     JSONObject job = new JSONObject(result);

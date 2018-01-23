@@ -416,7 +416,7 @@ public class LicenceAddActivity extends AppCompatActivity {
         new CustomJSONParser().fireAPIForGetMethod(LicenceAddActivity.this, ProConstant.app_pro_services, setGetAPIArrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-                // Log.d("responese",result);
+                // Logger.printMessage("responese",result);
                 myLoader.dismissLoader();
                 try {
                     JSONObject job = new JSONObject(result);

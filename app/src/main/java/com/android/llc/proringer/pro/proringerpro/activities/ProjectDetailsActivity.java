@@ -549,7 +549,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        Log.d("Permission-->", "onRequestPermissionsResult()");
+        Logger.printMessage("Permission-->", "onRequestPermissionsResult()");
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case 1000: {
@@ -569,7 +569,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 
     // Check for permission to access Location
     private boolean checkPermission() {
-        Log.d("checkPermission-->", "checkPermission()");
+        Logger.printMessage("checkPermission-->", "checkPermission()");
         // Ask for permission if it wasn't granted yet
         return (ContextCompat.checkSelfPermission(ProjectDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
     }
@@ -715,7 +715,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements OnMapRe
 //        dialog_menu.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Log.d("menu_click","menu_click");
+//                Logger.printMessage("menu_click","menu_click");
 //
 //                popupWindow = new PopupWindow(dialog.getContext());
 //                // Closes the popup window when touch outside.

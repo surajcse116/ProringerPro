@@ -15,6 +15,7 @@ import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActi
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
@@ -83,7 +84,7 @@ public class GetVerificationFifthFragment extends Fragment{
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();
-                Log.d("appproverifiedconfirm->",result);
+                Logger.printMessage("appproverifiedconfirm->",result);
                 try {
                     JSONObject object=new JSONObject(result);
                     if (object.getString("response").equals("true"))

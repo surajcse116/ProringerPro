@@ -16,6 +16,7 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActivity;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
@@ -85,7 +86,7 @@ public class GetVerificationSecondFragment extends Fragment {
     }
 
     private void CallVerifiedPin() {
-        Log.d("CallVerifiedPin","CallVerifiedPin");
+        Logger.printMessage("CallVerifiedPin","CallVerifiedPin");
         HashMap<String, String> params = new HashMap<>();
         params.put("user_id", ProApplication.getInstance().getUserId());
         params.put("verify_pin_code", et_confirmpin.getText().toString().trim());
@@ -93,8 +94,8 @@ public class GetVerificationSecondFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();
-                Log.d("onSuccess","onSuccess");
-                Log.d("verifyPin------>",result);
+                Logger.printMessage("onSuccess","onSuccess");
+                Logger.printMessage("verifyPin------>",result);
                 JSONObject object= null;
                 try {
                     object = new JSONObject(result);

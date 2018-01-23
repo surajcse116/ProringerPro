@@ -292,14 +292,14 @@ public class GetVerificationThirdFragment extends Fragment {
     public void onActivityResult(final int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            Log.d("frag_first_if_exc", "first_if_exc");
+            Logger.printMessage("frag_first_if_exc", "first_if_exc");
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == Activity.RESULT_OK) {
                 if (flag == 1) {
-                    Log.d("frag_2nd_if_exc", "2nd_if_exc");
+                    Logger.printMessage("frag_2nd_if_exc", "2nd_if_exc");
                     // startCropImageActivity(null);
                     mCurrentPhotoPath = result.getUri().toString();
-                    Log.d("mCurrentPhotoPath", mCurrentPhotoPath);
+                    Logger.printMessage("mCurrentPhotoPath", mCurrentPhotoPath);
                     RL_one.setVisibility(View.VISIBLE);
                     image1.setImageURI(Uri.parse(mCurrentPhotoPath));
                    /* String[] filepath = {MediaStore.Images.Media.DATA};
@@ -314,7 +314,7 @@ public class GetVerificationThirdFragment extends Fragment {
                 if (flag == 2) {
 
                     mCurrentPhotoPath_one = result.getUri().toString();
-                    Log.d("mCurrentPhotoPath", mCurrentPhotoPath_one);
+                    Logger.printMessage("mCurrentPhotoPath", mCurrentPhotoPath_one);
                     RL_two.setVisibility(View.VISIBLE);
                     image2.setImageURI(Uri.parse(mCurrentPhotoPath_one));
 
@@ -323,7 +323,7 @@ public class GetVerificationThirdFragment extends Fragment {
                 if (flag == 3) {
 
                     mCurrentPhotoPath_two = result.getUri().toString();
-                    Log.d("mCurrentPhotoPath", mCurrentPhotoPath_two);
+                    Logger.printMessage("mCurrentPhotoPath", mCurrentPhotoPath_two);
                     RL_three.setVisibility(View.VISIBLE);
                     image3.setImageURI(Uri.parse(mCurrentPhotoPath_two));
 
@@ -331,7 +331,7 @@ public class GetVerificationThirdFragment extends Fragment {
                 }
             }
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Log.d("frag_first_else_if", "first_else_if");
+            Logger.printMessage("frag_first_else_if", "first_else_if");
             startCropImageActivity(null);
         }
     }

@@ -279,7 +279,7 @@ public class AddServicesActivity extends AppCompatActivity {
         new CustomJSONParser().fireAPIForGetMethod(AddServicesActivity.this, ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-                // Log.d("responese",result);
+                // Logger.printMessage("responese",result);
 
                 try {
                     JSONObject job = new JSONObject(result);

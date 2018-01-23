@@ -121,7 +121,7 @@ public class LogInActivity extends AppCompatActivity {
                                 new CustomJSONParser().fireAPIForGetMethod(LogInActivity.this, ProConstant.dashboard, arrayList, new CustomJSONParser.CustomJSONResponse() {
                                     @Override
                                     public void onSuccess(String result) {
-                                        //Log.d("business",result);
+                                        //Logger.printMessage("business",result);
                                         try {
                                             JSONObject job = new JSONObject(result);
                                             Logger.printMessage("array",""+job);

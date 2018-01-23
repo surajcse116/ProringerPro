@@ -87,7 +87,7 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
                 public void onGlobalLayout() {
                     holder.tv_job_details.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     int lineCount = holder.tv_job_details.getLineCount();
-                    Log.d("count", "Number of lines is " + lineCount);
+                    Logger.printMessage("count", "Number of lines is " + lineCount);
 
                     if (lineCount > 1) {
 

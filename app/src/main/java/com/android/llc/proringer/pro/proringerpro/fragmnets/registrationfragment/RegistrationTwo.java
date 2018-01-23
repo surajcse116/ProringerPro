@@ -360,7 +360,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
         new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-                // Log.d("responese",result);
+                // Logger.printMessage("responese",result);
                 try {
                     JSONObject job = new JSONObject(result);
                     catagory = job.getJSONArray("info_array");

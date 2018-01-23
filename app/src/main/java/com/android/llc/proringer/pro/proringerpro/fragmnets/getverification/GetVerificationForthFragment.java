@@ -154,7 +154,7 @@ public class GetVerificationForthFragment extends Fragment{
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();
-                Log.d("resultDoc",result);
+                Logger.printMessage("resultDoc",result);
                 ((GetVerificationActivity)getActivity()).callVerificationFragments(5);
             }
 
@@ -173,11 +173,11 @@ public class GetVerificationForthFragment extends Fragment{
                 myLoader.showLoader();
             }
         });
-        Log.d("user_id",ProApplication.getInstance().getUserId());
-        Log.d("verify_country",ProConstant.Country);
-        Log.d("verify_address",address);
-        Log.d("verify_city",city);
-        Log.d("verify_state",state);
-        Log.d("verify_zip",zip);
+        Logger.printMessage("user_id",ProApplication.getInstance().getUserId());
+        Logger.printMessage("verify_country",ProConstant.Country);
+        Logger.printMessage("verify_address",address);
+        Logger.printMessage("verify_city",city);
+        Logger.printMessage("verify_state",state);
+        Logger.printMessage("verify_zip",zip);
     }
 }

@@ -55,7 +55,7 @@ public class GetVerificationActivity extends AppCompatActivity {
                 // transaction.addToBackStack("" + GetVerificationFirstFragment.class.getCanonicalName());
                 transaction.commit();
                 fragmentPushList.add(GetVerificationFirstFragment.class.getCanonicalName());
-                Log.d("fragmentPushList", "" + fragmentPushList.size());
+                Logger.printMessage("fragmentPushList", "" + fragmentPushList.size());
 
                 break;
             case 2:
@@ -64,7 +64,7 @@ public class GetVerificationActivity extends AppCompatActivity {
                 transaction2.addToBackStack("" + GetVerificationSecondFragment.class.getCanonicalName());
                 transaction2.commit();
                 fragmentPushList.add(GetVerificationSecondFragment.class.getCanonicalName());
-                Log.d("fragmentPushList", "" + fragmentPushList.size());
+                Logger.printMessage("fragmentPushList", "" + fragmentPushList.size());
                 break;
             case 3:
                 FragmentTransaction transaction3 = fragmentManager.beginTransaction();
@@ -72,7 +72,7 @@ public class GetVerificationActivity extends AppCompatActivity {
                 transaction3.addToBackStack(GetVerificationThirdFragment.class.getCanonicalName());
                 transaction3.commit();
                 fragmentPushList.add(GetVerificationThirdFragment.class.getCanonicalName());
-                Log.d("fragmentPushList", "" + fragmentPushList.size());
+                Logger.printMessage("fragmentPushList", "" + fragmentPushList.size());
                 break;
             case 4:
                 FragmentTransaction transaction4 = fragmentManager.beginTransaction();
@@ -80,7 +80,7 @@ public class GetVerificationActivity extends AppCompatActivity {
                 transaction4.addToBackStack(GetVerificationForthFragment.class.getCanonicalName());
                 fragmentPushList.add(GetVerificationForthFragment.class.getCanonicalName());
                 transaction4.commit();
-                Log.d("fragmentPushList", "" + fragmentPushList.size());
+                Logger.printMessage("fragmentPushList", "" + fragmentPushList.size());
                 break;
             case 5:
                 FragmentTransaction transaction5=fragmentManager.beginTransaction();

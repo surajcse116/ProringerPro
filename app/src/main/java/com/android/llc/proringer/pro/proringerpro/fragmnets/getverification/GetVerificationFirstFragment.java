@@ -20,6 +20,7 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActivity;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
@@ -162,8 +163,8 @@ public class GetVerificationFirstFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();
-                Log.d("onSuccess", "onSuccess");
-                Log.d("result", result);
+                Logger.printMessage("onSuccess", "onSuccess");
+                Logger.printMessage("result", result);
                 try {
                     JSONObject object = new JSONObject(result);
                     if (object.getString("response").equals("true")) {
@@ -176,7 +177,7 @@ public class GetVerificationFirstFragment extends Fragment {
 
             @Override
             public void onError(String error, String response) {
-                Log.d("onError", response);
+                Logger.printMessage("onError", response);
                 myload.dismissLoader();
                 try {
                     Toast.makeText(getActivity(), new JSONObject(response).getString("message"), Toast.LENGTH_SHORT).show();
@@ -192,7 +193,7 @@ public class GetVerificationFirstFragment extends Fragment {
 
             @Override
             public void onStart() {
-                Log.d("onStart", "onStart");
+                Logger.printMessage("onStart", "onStart");
                 myload.showLoader();
             }
         });
@@ -212,14 +213,14 @@ public class GetVerificationFirstFragment extends Fragment {
 
                 myload.dismissLoader();
 
-                Log.d("response_phonenumber", result);
+                Logger.printMessage("response_phonenumber", result);
                 try {
                     JSONObject prouserInfojobj = new JSONObject(result);
                     JSONArray infoarr = prouserInfojobj.getJSONArray("info_array");
                     for (int i = 0; i < infoarr.length(); i++) {
                         JSONObject jo = infoarr.getJSONObject(i);
                         user_phone_number = jo.getString("phone");
-                        Log.d("ph_no", user_phone_number);
+                        Logger.printMessage("ph_no", user_phone_number);
                         ph_field.setText(user_phone_number);
                     }
                 } catch (JSONException e) {
