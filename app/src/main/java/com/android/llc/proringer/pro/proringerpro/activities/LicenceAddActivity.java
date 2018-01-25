@@ -516,7 +516,7 @@ public class LicenceAddActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 mycurrentphotopath = result.getUri().toString();
-                Log.i("path-->", mycurrentphotopath);
+                Logger.printMessage("path-->", mycurrentphotopath);
                 file=new File(mycurrentphotopath);
                 LLEdit.setVisibility(View.VISIBLE);
                 img_licence_file.setImageResource(android.R.color.transparent);

@@ -90,9 +90,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/edit_text_selecter"
                     android:gravity="center_vertical"
-                    android:hint="12-3456789"
+                    android:hint="12-34567890"
                     android:inputType="number"
-                    android:maxLength="9"
+                    android:maxLength="10"
                     android:paddingLeft="5dp" />
 
             </LinearLayout>

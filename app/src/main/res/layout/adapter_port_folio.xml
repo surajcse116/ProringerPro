@@ -41,7 +41,6 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp"
             android:text="April 2017"/>
 
 
@@ -51,7 +50,7 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp"
+
             android:text="10 photos"/>
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
@@ -59,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
+            android:paddingTop="5dp"
             android:text="10 photos"/>
 
     </LinearLayout>

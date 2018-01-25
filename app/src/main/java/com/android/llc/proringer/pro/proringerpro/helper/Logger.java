@@ -22,6 +22,6 @@ import android.util.Log;
 
 public class Logger {
     public static void printMessage(String tag, String message) {
-        Log.i(tag, message);
+        Log.d(tag, message);
     }
 }
