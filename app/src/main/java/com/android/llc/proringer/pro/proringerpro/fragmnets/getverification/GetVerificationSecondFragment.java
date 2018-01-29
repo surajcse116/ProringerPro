@@ -5,7 +5,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +56,34 @@ public class GetVerificationSecondFragment extends Fragment {
         myload= new MyLoader(getActivity());
         et_confirmpin = view.findViewById(R.id.et_confirmpin);
         tv_conferm = view.findViewById(R.id.tv_conferm);
+
+
+        et_confirmpin.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (et_confirmpin.getText().toString().trim().equals("") || et_confirmpin.getText().toString().trim().length() < 6) {
+                    tv_conferm.setBackgroundColor(getResources().getColor(R.color.colorDarkGray));
+                    tv_confier_later_continew.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                }
+                else
+                {
+                    tv_conferm.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    tv_confier_later_continew.setBackgroundColor(getResources().getColor(R.color.colorDarkGray));
+                }
+            }
+        });
+
+
         tv_conferm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

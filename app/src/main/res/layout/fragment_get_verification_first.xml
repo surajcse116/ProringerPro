@@ -65,7 +65,7 @@
                 android:layout_below="@id/txt_note"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_selecter"
-                android:hint="Phone number"
+                android:hint="(111)111-2222"
                 android:inputType="number"
                 android:maxLength="14"
                 android:paddingLeft="5dp"
@@ -78,7 +78,7 @@
                 android:layout_height="40dp"
                 android:layout_below="@id/et_confirmphoneno"
                 android:layout_marginTop="20dp"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPrimaryDark"
                 android:gravity="center"
                 android:text="SEND NOW"
                 android:textColor="@color/colorPrimary" />

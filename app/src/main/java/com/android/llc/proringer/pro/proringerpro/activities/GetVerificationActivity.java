@@ -26,6 +26,7 @@ public class GetVerificationActivity extends AppCompatActivity {
     ArrayList<String> fragmentPushList;
     Toolbar toolbar;
     private ProgressBar progress_get_verify;
+    public  boolean verifyPin;
     int progressStep = 0;
 
     @Override

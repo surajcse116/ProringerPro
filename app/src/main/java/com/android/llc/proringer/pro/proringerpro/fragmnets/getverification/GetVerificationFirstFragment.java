@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 
@@ -76,6 +77,20 @@ public class GetVerificationFirstFragment extends Fragment {
 
         ((GetVerificationActivity) getActivity()).increaseStep();
 
+        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (cb.isChecked())
+                {
+                    send_now.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                }
+                else
+                {
+                    send_now.setBackgroundColor(getResources().getColor(R.color.colorDarkGray));
+                }
+            }
+        });
+
         et_confirmphoneno.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -131,9 +146,10 @@ public class GetVerificationFirstFragment extends Fragment {
                         et_confirmphoneno.requestFocus();
                     } else if (!et_confirmphoneno.getText().toString().trim().equals("") && et_confirmphoneno.getText().toString().trim().length() == 14) {
                         callProVerifiedNumber();
-                    }else {
-                        ((GetVerificationActivity) getActivity()).callVerificationFragments(2);
                     }
+//                    else {
+//                        ((GetVerificationActivity) getActivity()).callVerificationFragments(2);
+//                    }
                 } else {
                     Toast.makeText(getActivity(), "Please Checked", Toast.LENGTH_SHORT).show();
                 }
