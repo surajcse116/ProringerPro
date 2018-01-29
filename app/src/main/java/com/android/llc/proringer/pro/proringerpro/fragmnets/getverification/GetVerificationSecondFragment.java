@@ -130,6 +130,7 @@ public class GetVerificationSecondFragment extends Fragment {
                 JSONObject object= null;
                 try {
                     object = new JSONObject(result);
+                    ((GetVerificationActivity)getActivity()).verifyPin=Boolean.valueOf(object.getString("response"));
                     if (object.getString("response").equals("true"))
                     {
                         ((GetVerificationActivity) getActivity()).callVerificationFragments(3);
@@ -145,6 +146,7 @@ public class GetVerificationSecondFragment extends Fragment {
             public void onError(String error, String response) {
                 myload.dismissLoader();
                 try {
+                    ((GetVerificationActivity)getActivity()).verifyPin=Boolean.valueOf( new JSONObject(response).getString("response"));
                     Toast.makeText(getActivity(), new JSONObject(response).getString("message"),Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -154,7 +156,7 @@ public class GetVerificationSecondFragment extends Fragment {
 
             @Override
             public void onError(String error) {
-
+                ((GetVerificationActivity)getActivity()).verifyPin=false;
             }
 
             @Override

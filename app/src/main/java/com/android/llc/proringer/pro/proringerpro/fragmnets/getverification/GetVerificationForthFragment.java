@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.LocationActivity;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
@@ -72,7 +73,14 @@ public class GetVerificationForthFragment extends Fragment{
                 if (confirmOrNot) {
                     validation();
                 }else {
-                    ((GetVerificationActivity)getActivity()).callVerificationFragments(5);
+                    if (!((GetVerificationActivity)getActivity()).verifyPin) {
+                        ((GetVerificationActivity) getActivity()).callVerificationFragments(5);
+                    }else {
+                        Intent intent = new Intent(getActivity(), LandScreenActivity.class);
+                        // set the new task and clear flags
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -179,7 +187,14 @@ public class GetVerificationForthFragment extends Fragment{
             public void onSuccess(String result) {
                 myLoader.dismissLoader();
                 Logger.printMessage("resultDoc",result);
-                ((GetVerificationActivity)getActivity()).callVerificationFragments(5);
+                if (!((GetVerificationActivity)getActivity()).verifyPin) {
+                    ((GetVerificationActivity) getActivity()).callVerificationFragments(5);
+                }else {
+                    Intent intent = new Intent(getActivity(), LandScreenActivity.class);
+                    // set the new task and clear flags
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
             }
 
             @Override
