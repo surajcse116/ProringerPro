@@ -70,10 +70,12 @@ public class GetVerificationThirdFragment extends Fragment {
     RadioGroup radio_group_business;
 
 
-    boolean pinNumberRadioCheck = true;
-    boolean licenceOrCertifiedRadioCheck = true;
-    boolean legalBusinessNameRadioCheck = true;
-    boolean businessInsureRadioCheck = true;
+    boolean pinNumberRadioCheck = false;
+    boolean licenceOrCertifiedRadioCheck = false;
+    boolean legalBusinessNameRadioCheck = false;
+    boolean businessInsureRadioCheck = false;
+
+    boolean confirmNowOrLaterValue=false;
 
 
     @Nullable
@@ -125,30 +127,36 @@ public class GetVerificationThirdFragment extends Fragment {
         add_document_three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PermissionController.class);
-                intent.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
-                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-                flag = 3;
+                if (businessInsureRadioCheck) {
+                    Intent intent = new Intent(getActivity(), PermissionController.class);
+                    intent.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
+                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                    flag = 3;
+                }
             }
         });
         add_document_two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PermissionController.class);
-                intent.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
-                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-                flag = 2;
+                if (legalBusinessNameRadioCheck) {
+                    Intent intent = new Intent(getActivity(), PermissionController.class);
+                    intent.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
+                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                    flag = 2;
+                }
 
             }
         });
         add_document_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(getActivity(), PermissionController.class);
-                //Intent intent = new Intent(getActivity(), PermissionController.class);
-                intent1.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
-                startActivityForResult(intent1, REQUEST_IMAGE_CAPTURE);
-                flag = 1;
+                if (licenceOrCertifiedRadioCheck) {
+                    Intent intent1 = new Intent(getActivity(), PermissionController.class);
+                    //Intent intent = new Intent(getActivity(), PermissionController.class);
+                    intent1.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
+                    startActivityForResult(intent1, REQUEST_IMAGE_CAPTURE);
+                    flag = 1;
+                }
 
             }
         });
@@ -180,7 +188,12 @@ public class GetVerificationThirdFragment extends Fragment {
         tv_continew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validationCheck();
+                if (confirmNowOrLaterValue) {
+                    validationCheck();
+                }
+                else {
+                    ((GetVerificationActivity)getActivity()).callVerificationFragments(4);
+                }
             }
         });
 
@@ -192,14 +205,24 @@ public class GetVerificationThirdFragment extends Fragment {
                     case R.id.rb_yes_one:
                         // do operations specific to this selection
                         pinNumberRadioCheck = true;
+                        pin_number.setEnabled(true);
+                        pin_number.setClickable(true);
+                        pin_number.setBackgroundResource(R.drawable.background_solidorange_border);
                         Logger.printMessage("pinNumberRadioCheck-->", ""+pinNumberRadioCheck);
                         break;
                     case R.id.rb_no_one:
                         // do operations specific to this selection
                         pinNumberRadioCheck = false;
+                        pin_number.setText("");
+                        pin_number.setError(null);
+                        pin_number.clearFocus();
+                        pin_number.setEnabled(false);
+                        pin_number.setClickable(false);
+                        pin_number.setBackgroundResource(R.drawable.background_disable_inputtext);
                         Logger.printMessage("pinNumberRadioCheck-->", ""+pinNumberRadioCheck);
                         break;
                 }
+                confirmNowOrLater();
             }
         });
 
@@ -216,9 +239,12 @@ public class GetVerificationThirdFragment extends Fragment {
                     case R.id.rb_no_two:
                         // do operations specific to this selection
                         licenceOrCertifiedRadioCheck = false;
+                        RL_one.setVisibility(View.GONE);
+                        fileimage_one=null;
                         Logger.printMessage("licenceOrCertifiedRadioCheck-->", ""+licenceOrCertifiedRadioCheck);
                         break;
                 }
+                confirmNowOrLater();
             }
         });
 
@@ -235,10 +261,12 @@ public class GetVerificationThirdFragment extends Fragment {
                     case R.id.rb_no_three:
                         // do operations specific to this selection
                         legalBusinessNameRadioCheck = false;
+                        RL_two.setVisibility(View.GONE);
+                        fileimage_two=null;
                         Logger.printMessage("legalBusinessNameRadioCheck-->", ""+legalBusinessNameRadioCheck);
-
                         break;
                 }
+                confirmNowOrLater();
             }
         });
 
@@ -255,9 +283,12 @@ public class GetVerificationThirdFragment extends Fragment {
                     case R.id.rb_no_four:
                         // do operations specific to this selection
                         businessInsureRadioCheck = false;
+                        RL_three.setVisibility(View.GONE);
+                        fileimage_three=null;
                         Logger.printMessage("businessInsureRadioCheck-->", ""+businessInsureRadioCheck);
                         break;
                 }
+                confirmNowOrLater();
             }
         });
 
@@ -496,6 +527,18 @@ public class GetVerificationThirdFragment extends Fragment {
         }else {
             Logger.printMessage("fire2-->","yes");
             fireDocumentSubmit();
+        }
+    }
+
+    public void confirmNowOrLater(){
+        if (pinNumberRadioCheck||licenceOrCertifiedRadioCheck||legalBusinessNameRadioCheck||businessInsureRadioCheck){
+            confirmNowOrLaterValue=true;
+            tv_continew.setText("confirm and continue");
+            tv_continew.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        }else {
+            confirmNowOrLaterValue=false;
+            tv_continew.setText("confirm later and continue");
+            tv_continew.setBackgroundColor(getResources().getColor(R.color.colorDarkGray));
         }
     }
 }

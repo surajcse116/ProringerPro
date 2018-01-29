@@ -71,14 +71,15 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ques1"
                             android:text="Yes"
-                            android:checked="true"/>
+                           />
 
                         <RadioButton
                             android:id="@+id/rb_no_one"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ques1"
-                            android:text="No" />
+                            android:text="No"
+                            android:checked="true"/>
                     </RadioGroup>
 
                 </RelativeLayout>
@@ -138,7 +139,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ques1"
-                            android:text="No" />
+                            android:text="No"
+                            android:checked="true"/>
                     </RadioGroup>
 
                 </RelativeLayout>
@@ -172,7 +174,6 @@
 
                 <ImageView
                     android:id="@+id/image_one_close"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -221,7 +222,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ques1"
-                            android:text="No" />
+                            android:text="No"
+                            android:checked="true"/>
                     </RadioGroup>
 
                 </RelativeLayout>
@@ -303,7 +305,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ques1"
-                            android:text="No" />
+                            android:text="No"
+                            android:checked="true"/>
                     </RadioGroup>
 
                 </RelativeLayout>
