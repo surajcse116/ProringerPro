@@ -26,7 +26,8 @@
             android:lines="1"
             android:paddingLeft="30dp"
             android:textColorHint="@color/colorTextDark"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:id="@+id/et_search"/>
 
         <ImageView
             android:layout_width="30dp"

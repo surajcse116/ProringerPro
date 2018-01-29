@@ -20,13 +20,16 @@
             android:layout_centerVertical="true"
             android:background="@drawable/background_white_with_border"
             android:paddingLeft="30dp"
-            android:hint="Search"
+            android:hint="Search message"
+            android:textColorHint="@color/colorHeader"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:singleLine="true"
             android:lines="1"
-            android:textColorHint="@color/colorTextDark"
-            android:textSize="14sp" />
+
+            android:textSize="14sp"
+            android:id="@+id/et_proj_search"/>
+
 
         <ImageView
             android:layout_width="30dp"
@@ -34,7 +37,31 @@
             android:padding="2dp"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_search_orange" />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/img_clear"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="6dp"
+            android:src="@drawable/ic_cross_circle" />
     </RelativeLayout>
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+        android:id="@+id/tv_empty_show"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorLightBrick"
+        android:gravity="center"
+        android:text="No Results Found"
+        android:textColor="@color/colorTextDark"
+        android:textSize="14sp" />
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/message_list"

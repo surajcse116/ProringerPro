@@ -1,18 +1,28 @@
 package com.android.llc.proringer.pro.proringerpro.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFragment;
 import com.android.llc.proringer.pro.proringerpro.helper.onItemClick;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetProjectMessage;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
+import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 
@@ -37,14 +47,15 @@ import java.util.ArrayList;
 
 public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAdapter.ViewHolder> {
     private Context mcontext;
-    private onItemClick listener;
+    private MessageFragment.onOptionSelected listener;
     ArrayList<SetGetProjectMessage> setGetProjectMessageArrayList;
     private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 
-    public ProjectMessageAdapter(Context mcontext, ArrayList<SetGetProjectMessage> setGetProjectMessageArrayList, onItemClick calback) {
+    public ProjectMessageAdapter(Context mcontext, ArrayList<SetGetProjectMessage> setGetProjectMessageArrayList, MessageFragment.onOptionSelected calback) {
         this.mcontext = mcontext;
         listener = calback;
         this.setGetProjectMessageArrayList = setGetProjectMessageArrayList;
+        Log.d("a_messageListSiz",""+setGetProjectMessageArrayList.size());
     }
 
     @Override
@@ -56,14 +67,48 @@ public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAd
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         if (setGetProjectMessageArrayList != null && 0 <= position && position < setGetProjectMessageArrayList.size()) {
-            final String data = setGetProjectMessageArrayList.get(position).getTagName();
+
+            //final String data = setGetProjectMessageArrayList.get(position).getTagName();
 
             // Use ViewBindHelper to restore and save the open/close state of the SwipeRevealView
             // put an unique string id as value, can be any string which uniquely define the data
-            binderHelper.bind(holder.swipe_layout, data);
+          //  binderHelper.bind(holder.swipe_layout, data);
 
             // Bind your data here
-            holder.bind(data);
+
+
+
+            SetGetProjectMessage setGetProjectMessage = setGetProjectMessageArrayList.get(position);
+            holder.bind(position,setGetProjectMessage);
+            holder.project_name.setText(setGetProjectMessage.getProj_name());
+            holder.tv_date.setText(setGetProjectMessage.getProject_applied_date());
+            Glide.with(mcontext).load(setGetProjectMessage.getProj_image())
+                    .placeholder(R.drawable.plumber)
+                    .into(new GlideDrawableImageViewTarget(holder.project_type_img) {
+                        /**
+                         * {@inheritDoc}
+                         * If no {@link GlideAnimation} is given or if the animation does not set the
+                         * {@link Drawable} on the view, the drawable is set using
+                         * {@link ImageView#setImageDrawable(Drawable)}.
+                         *
+                         * @param resource  {@inheritDoc}
+                         * @param animation {@inheritDoc}
+                         */
+                        @Override
+                        public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                            super.onResourceReady(resource, animation);
+                        }
+                    });
+            if (setGetProjectMessageArrayList.get(position).getProject_status().equals("A"))
+            {
+                holder.status.setVisibility(View.VISIBLE);
+                holder.status.setText("Active");
+            }
+            else
+            {
+                holder.status.setVisibility(View.GONE);
+            }
+
         }
 
 
@@ -73,12 +118,7 @@ public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAd
             holder.flag.setVisibility(View.INVISIBLE);
         }
 
-        holder.main_container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClick(position);
-            }
-        });
+
     }
 
     @Override
@@ -86,6 +126,7 @@ public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAd
         if (setGetProjectMessageArrayList == null) {
             return 0;
         } else {
+            Log.d("messageListSize", ""+setGetProjectMessageArrayList.size());
             return setGetProjectMessageArrayList.size();
         }
     }
@@ -95,17 +136,28 @@ public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAd
         SwipeRevealLayout swipe_layout;
         RelativeLayout main_container;
         LinearLayout delete_layout;
+        ProSemiBoldTextView project_name;
+        ProRegularTextView tv_date;
+
+        ImageView project_type_img;
+        ProSemiBoldTextView status;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            status=itemView.findViewById(R.id.status);
+            tv_date=itemView.findViewById(R.id.tv_date);
+            project_name=itemView.findViewById(R.id.project_name);
             flag = (View) itemView.findViewById(R.id.flag);
+            project_type_img=itemView.findViewById(R.id.project_type_img);
             swipe_layout = (SwipeRevealLayout) itemView.findViewById(R.id.swipe_layout);
             main_container = (RelativeLayout) itemView.findViewById(R.id.main_container);
             delete_layout = (LinearLayout) itemView.findViewById(R.id.delete_layout);
         }
 
 
-        public void bind(String data) {
+
+        public void bind(final int position, final SetGetProjectMessage setGetProjectMessage) {
+
             delete_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -115,6 +167,12 @@ public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAd
             });
 
             //textView.setText(data);
+            main_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(position,setGetProjectMessage.getProj_id());
+                }
+            });
         }
     }
 
