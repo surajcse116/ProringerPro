@@ -144,7 +144,7 @@ public class GetVerificationFirstFragment extends Fragment {
                     if (!et_confirmphoneno.getText().toString().trim().equals("") && et_confirmphoneno.getText().toString().trim().length() < 14) {
                         et_confirmphoneno.setError("enter correct us format phone number");
                         et_confirmphoneno.requestFocus();
-                    } else if (!et_confirmphoneno.getText().toString().trim().equals("") && et_confirmphoneno.getText().toString().trim().length() == 14) {
+                    } else if (et_confirmphoneno.getText().toString().trim().length() == 14) {
                         callProVerifiedNumber();
                     }
                     else if (et_confirmphoneno.getText().toString().trim().equals("")){
