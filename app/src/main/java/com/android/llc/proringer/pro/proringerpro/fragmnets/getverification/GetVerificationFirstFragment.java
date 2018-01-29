@@ -147,9 +147,9 @@ public class GetVerificationFirstFragment extends Fragment {
                     } else if (!et_confirmphoneno.getText().toString().trim().equals("") && et_confirmphoneno.getText().toString().trim().length() == 14) {
                         callProVerifiedNumber();
                     }
-//                    else {
-//                        ((GetVerificationActivity) getActivity()).callVerificationFragments(2);
-//                    }
+                    else if (et_confirmphoneno.getText().toString().trim().equals("")){
+                        ((GetVerificationActivity) getActivity()).callVerificationFragments(2);
+                    }
                 } else {
                     Toast.makeText(getActivity(), "Please Checked", Toast.LENGTH_SHORT).show();
                 }
