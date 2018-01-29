@@ -106,6 +106,12 @@ public class GetVerificationThirdFragment extends Fragment {
 
         myLoader=new MyLoader(getActivity());
 
+
+        pin_number.setEnabled(false);
+        pin_number.setClickable(false);
+        pin_number.setBackgroundResource(R.drawable.background_disable_inputtext);
+
+
         image_three_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -396,7 +402,7 @@ public class GetVerificationThirdFragment extends Fragment {
                                 pin_number.setError(null);
                                 pin_number.clearFocus();
 
-                                if (pin_number.getText().toString().trim().length()<8) {
+                                if (pin_number.getText().toString().trim().length()<10) {
                                     pin_number.setError("Enter Correct EIN Number");
                                     pin_number.requestFocus();
                                 } else {
