@@ -51,9 +51,9 @@ public class GetVerificationThirdFragment extends Fragment {
     ProLightEditText pin_number;
     String text_et;
     int text_et_length = 0;
-    private String mCurrentPhotoPath = "";
-    private String mCurrentPhotoPath_two = "";
-    private String mCurrentPhotoPath_one = "";
+    private String mCurrentPhotoPathOne = "";
+    private String mCurrentPhotoPathThree = "";
+    private String mCurrentPhotoPathTwo = "";
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     int flag = 0;
     MyLoader myLoader;
@@ -240,7 +240,10 @@ public class GetVerificationThirdFragment extends Fragment {
                         // do operations specific to this selection
                         licenceOrCertifiedRadioCheck = false;
                         RL_one.setVisibility(View.GONE);
+
                         fileimage_one=null;
+                        mCurrentPhotoPathOne = "";
+
                         Logger.printMessage("licenceOrCertifiedRadioCheck-->", ""+licenceOrCertifiedRadioCheck);
                         break;
                 }
@@ -263,6 +266,7 @@ public class GetVerificationThirdFragment extends Fragment {
                         legalBusinessNameRadioCheck = false;
                         RL_two.setVisibility(View.GONE);
                         fileimage_two=null;
+                        mCurrentPhotoPathTwo = "";
                         Logger.printMessage("legalBusinessNameRadioCheck-->", ""+legalBusinessNameRadioCheck);
                         break;
                 }
@@ -285,6 +289,7 @@ public class GetVerificationThirdFragment extends Fragment {
                         businessInsureRadioCheck = false;
                         RL_three.setVisibility(View.GONE);
                         fileimage_three=null;
+                        mCurrentPhotoPathThree = "";
                         Logger.printMessage("businessInsureRadioCheck-->", ""+businessInsureRadioCheck);
                         break;
                 }
@@ -305,36 +310,35 @@ public class GetVerificationThirdFragment extends Fragment {
                 if (flag == 1) {
                     Logger.printMessage("frag_2nd_if_exc", "2nd_if_exc");
                     // startCropImageActivity(null);
-                    mCurrentPhotoPath = result.getUri().toString();
-                    Logger.printMessage("mCurrentPhotoPath", mCurrentPhotoPath);
+                    mCurrentPhotoPathOne = result.getUri().toString();
+                    Logger.printMessage("mCurrentPhotoPathOne", mCurrentPhotoPathOne);
                     RL_one.setVisibility(View.VISIBLE);
-                    image1.setImageURI(Uri.parse(mCurrentPhotoPath));
+                    image1.setImageURI(Uri.parse(mCurrentPhotoPathOne));
                    /* String[] filepath = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getActivity().getContentResolver().query(Uri.parse(mCurrentPhotoPath), filepath, null, null, null);
+                    Cursor cursor = getActivity().getContentResolver().query(Uri.parse(mCurrentPhotoPathOne), filepath, null, null, null);
                    cursor.moveToFirst();
                     int column_index = cursor.getColumnIndex(filepath[0]);
                     String imgpath = cursor.getString(column_index);*/
 
 
-                    fileimage_one = new File(mCurrentPhotoPath);
+                    fileimage_one = new File(mCurrentPhotoPathOne);
                 }
                 if (flag == 2) {
 
-                    mCurrentPhotoPath_one = result.getUri().toString();
-                    Logger.printMessage("mCurrentPhotoPath", mCurrentPhotoPath_one);
+                    mCurrentPhotoPathTwo = result.getUri().toString();
+                    Logger.printMessage("mCurrentPhotoPath", mCurrentPhotoPathTwo);
                     RL_two.setVisibility(View.VISIBLE);
-                    image2.setImageURI(Uri.parse(mCurrentPhotoPath_one));
+                    image2.setImageURI(Uri.parse(mCurrentPhotoPathTwo));
 
-                    fileimage_two = new File(mCurrentPhotoPath_one);
+                    fileimage_two = new File(mCurrentPhotoPathTwo);
                 }
                 if (flag == 3) {
 
-                    mCurrentPhotoPath_two = result.getUri().toString();
-                    Logger.printMessage("mCurrentPhotoPath", mCurrentPhotoPath_two);
+                    mCurrentPhotoPathThree = result.getUri().toString();
+                    Logger.printMessage("mCurrentPhotoPath", mCurrentPhotoPathThree);
                     RL_three.setVisibility(View.VISIBLE);
-                    image3.setImageURI(Uri.parse(mCurrentPhotoPath_two));
-
-                    fileimage_three = new File(mCurrentPhotoPath_two);
+                    image3.setImageURI(Uri.parse(mCurrentPhotoPathThree));
+                    fileimage_three = new File(mCurrentPhotoPathThree);
                 }
             }
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -540,5 +544,27 @@ public class GetVerificationThirdFragment extends Fragment {
             tv_continew.setText("confirm later and continue");
             tv_continew.setBackgroundColor(getResources().getColor(R.color.colorDarkGray));
         }
+    }
+
+    public void loadPreviousVisibleValues(){
+        if(fileimage_three!=null){
+            RL_three.setVisibility(View.VISIBLE);
+            image3.setImageURI(Uri.parse(mCurrentPhotoPathThree));
+        }
+        else if(fileimage_two!=null){
+            RL_two.setVisibility(View.VISIBLE);
+            image2.setImageURI(Uri.parse(mCurrentPhotoPathTwo));
+        }
+        else if(fileimage_one!=null){
+            RL_one.setVisibility(View.VISIBLE);
+            image1.setImageURI(Uri.parse(mCurrentPhotoPathOne));
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPreviousVisibleValues();
     }
 }
