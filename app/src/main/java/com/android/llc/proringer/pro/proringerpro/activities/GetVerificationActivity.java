@@ -28,6 +28,7 @@ public class GetVerificationActivity extends AppCompatActivity {
     private ProgressBar progress_get_verify;
     public  boolean verifyPin;
     int progressStep = 0;
+    public String phoneNumberPinSent="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

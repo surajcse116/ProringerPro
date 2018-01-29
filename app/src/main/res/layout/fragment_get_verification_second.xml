@@ -50,7 +50,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:text="The pin code has been sent.You should receive it shortly,but it shouldn't happen pretty much instantly."
+                android:text=""
                 android:textSize="14sp" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText

@@ -32,8 +32,9 @@ public class GetVerificationForthFragment extends Fragment{
     String address,city,state,zip;
     @Nullable
     RelativeLayout RL_address;
-    ProRegularTextView tv_confirmlater,txt_address,txt_place,txt_state,txt_pincode;
+    ProRegularTextView tv_confirmlater,txt_address,txt_city,txt_state,txt_pincode;
     MyLoader myLoader;
+    boolean confirmOrNot=false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,14 +46,13 @@ public class GetVerificationForthFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         RL_address=(RelativeLayout)view.findViewById(R.id.RL_address);
-        txt_place=(ProRegularTextView)view.findViewById(R.id.txt_place);
+        txt_city=(ProRegularTextView)view.findViewById(R.id.txt_city);
         txt_state=(ProRegularTextView)view.findViewById(R.id.txt_state);
         txt_pincode=(ProRegularTextView)view.findViewById(R.id.txt_pincode);
         txt_address=(ProRegularTextView) view.findViewById(R.id.txt_address);
         tv_confirmlater=(ProRegularTextView)view.findViewById(R.id.tv_confirmlater);
 
         myLoader=new MyLoader(getActivity());
-
 
         RL_address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,10 +63,17 @@ public class GetVerificationForthFragment extends Fragment{
 
             }
         });
+
+
+
         tv_confirmlater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validation();
+                if (confirmOrNot) {
+                    validation();
+                }else {
+                    ((GetVerificationActivity)getActivity()).callVerificationFragments(5);
+                }
             }
         });
 
@@ -97,11 +104,28 @@ public class GetVerificationForthFragment extends Fragment{
 //                        address.setText(extras.getString("selectedPlace").substring(0, extras.getString("selectedPlace").indexOf(",")));
                     }
                     txt_pincode.setText(extras.getString("zip"));
-                    txt_place.setText(extras.getString("city"));
+                    txt_city.setText(extras.getString("city"));
                     txt_state.setText(extras.getString("state"));
 //                    String servicearea = extras.getString("city") + ", " + extras.getString("state");
 //                    Logger.printMessage("ServiceArea-->", servicearea);
 //                    tv_service_area.setText(servicearea);
+
+
+                    if (!txt_city.getText().toString().trim().equals("")
+                            ||!txt_state.getText().toString().equals("")
+                            ||!txt_pincode.getText().toString().equals("")
+                            )
+                    {
+                        tv_confirmlater.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                        tv_confirmlater.setText("continue to confirm your account");
+                        confirmOrNot=true;
+                    }
+                    else
+                    {
+                        tv_confirmlater.setBackgroundColor(getResources().getColor(R.color.colorDarkGray));
+                        tv_confirmlater.setText("confirm later and continue");
+                        confirmOrNot=false;
+                    }
                 }
             }
         }
@@ -115,7 +139,7 @@ public class GetVerificationForthFragment extends Fragment{
         }
         else
         {
-            if (txt_place.getText().toString().trim().equals(""))
+            if (txt_city.getText().toString().trim().equals(""))
             {
                 Toast.makeText(getActivity(), "Please select address which have city,state and pin code", Toast.LENGTH_SHORT).show();
             }
@@ -131,9 +155,9 @@ public class GetVerificationForthFragment extends Fragment{
                     if (txt_pincode.getText().toString().trim().equals(""))
                     {
                         Toast.makeText(getActivity(), "Please select address which have city,state and pin code", Toast.LENGTH_SHORT).show();
-                    }
-
+                    }else {
                         callVerifiedAddress();
+                    }
                 }
             }
 

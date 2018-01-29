@@ -184,6 +184,7 @@ public class GetVerificationFirstFragment extends Fragment {
                 try {
                     JSONObject object = new JSONObject(result);
                     if (object.getString("response").equals("true")) {
+                        ((GetVerificationActivity) getActivity()).phoneNumberPinSent=et_confirmphoneno.getText().toString().trim();
                         ((GetVerificationActivity) getActivity()).callVerificationFragments(2);
                     }
                 } catch (JSONException e) {
@@ -238,6 +239,7 @@ public class GetVerificationFirstFragment extends Fragment {
                         user_phone_number = jo.getString("phone");
                         Logger.printMessage("ph_no", user_phone_number);
                         ph_field.setText(user_phone_number);
+                        ((GetVerificationActivity)getActivity()).phoneNumberPinSent=user_phone_number;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

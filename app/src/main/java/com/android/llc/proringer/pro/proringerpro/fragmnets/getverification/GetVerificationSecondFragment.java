@@ -57,6 +57,7 @@ public class GetVerificationSecondFragment extends Fragment {
         et_confirmpin = view.findViewById(R.id.et_confirmpin);
         tv_conferm = view.findViewById(R.id.tv_conferm);
 
+        ((ProRegularTextView)view.findViewById(R.id.tv2)).setText("The pin code has been sent to "+((GetVerificationActivity)getActivity()).phoneNumberPinSent+".You should receive it shortly,but it shouldn't happen pretty much instantly.");
 
         et_confirmpin.addTextChangedListener(new TextWatcher() {
             @Override

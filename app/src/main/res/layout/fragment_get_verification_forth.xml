@@ -80,7 +80,7 @@
             android:weightSum="9">
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                android:id="@+id/txt_place"
+                android:id="@+id/txt_city"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
@@ -133,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:gravity="center"
             android:text="confirm later and continue"
             android:textAllCaps="true"
