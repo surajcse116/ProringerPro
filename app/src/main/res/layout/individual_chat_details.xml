@@ -55,13 +55,11 @@
 
     </android.support.v7.widget.Toolbar>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-            android:background="@drawable/chat_background"
             android:id="@+id/img_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

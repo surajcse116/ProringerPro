@@ -85,10 +85,10 @@ public class IndividualMessageActivity extends AppCompatActivity {
 
         img_background = (ImageView) findViewById(R.id.img_background);
 
-      /*  Glide.with(this)
+        Glide.with(this)
                 .load(R.drawable.chat_background)
                 .into(img_background);
-*/
+
 
         java.util.Calendar calendar = java.util.Calendar.getInstance();
         calendar.setTime(new Date());
