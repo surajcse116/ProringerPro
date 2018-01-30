@@ -31,7 +31,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
@@ -51,7 +51,7 @@ public class ProjectListFragment extends Fragment {
     private RecyclerView rcv_watch_list;
     ProjectListAdapter projectListAdapter;
     ProRegularTextView tv_empty_show;
-    ArrayList<SetGetAPI> arrayList = null;
+    ArrayList<SetGetAPIPostData> arrayList = null;
     MyLoader myLoader;
     ProRegularEditText edt_search;
     TextWatcher mySearchTextWatcher;
@@ -153,26 +153,26 @@ public class ProjectListFragment extends Fragment {
     }
 
     public void loadList() {
-        arrayList = new ArrayList<SetGetAPI>();
-        SetGetAPI setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("user_id");
-        setGetAPI.setValues(ProApplication.getInstance().getUserId());
-        arrayList.add(setGetAPI);
+        arrayList = new ArrayList<SetGetAPIPostData>();
+        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPIPostData);
 
-        setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("category_search");
-        setGetAPI.setValues(category_search);
-        arrayList.add(setGetAPI);
+        setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("category_search");
+        setGetAPIPostData.setValues(category_search);
+        arrayList.add(setGetAPIPostData);
 
-        setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("zip_search");
-        setGetAPI.setValues(((LandScreenActivity) getActivity()).local_project_search_zip);
-        arrayList.add(setGetAPI);
+        setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("zip_search");
+        setGetAPIPostData.setValues(((LandScreenActivity) getActivity()).local_project_search_zip);
+        arrayList.add(setGetAPIPostData);
 
-        setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("allservice");
-        setGetAPI.setValues("1");
-        arrayList.add(setGetAPI);
+        setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("allservice");
+        setGetAPIPostData.setValues("1");
+        arrayList.add(setGetAPIPostData);
 
         new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_pro_project_search, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override

@@ -22,7 +22,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 import org.json.JSONArray;
@@ -54,7 +54,7 @@ public class MyProjectsFragment extends Fragment {
     RecyclerView rcv_project_list;
     LinearLayout LLNetworkDisconnection, LL_Main;
     ProRegularTextView tv_empty_show;
-    ArrayList<SetGetAPI> arrayList = null;
+    ArrayList<SetGetAPIPostData> arrayList = null;
     MyLoader myload;
     JSONArray info_array;
     MyProjectListingAdapter myProjectListingAdapter;
@@ -91,11 +91,11 @@ public class MyProjectsFragment extends Fragment {
     }
 
     public void showData() {
-        arrayList = new ArrayList<SetGetAPI>();
-        SetGetAPI setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("user_id");
-        setGetAPI.setValues(ProApplication.getInstance().getUserId());
-        arrayList.add(setGetAPI);
+        arrayList = new ArrayList<SetGetAPIPostData>();
+        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPIPostData);
 
         new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_pro_myproject, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override

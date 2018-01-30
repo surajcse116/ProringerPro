@@ -33,7 +33,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -70,7 +70,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
     ProRegularTextView et_busineestype, tv_save;
     ScrollView ScrollViewMAin;
     MyLoader myLoader;
-    ArrayList<SetGetAPI> arrayList = null;
+    ArrayList<SetGetAPIPostData> arrayList = null;
     CustomListAdapterDialog customListAdapterDialog = null;
     PopupWindow popupWindow;
     JSONArray btype;
@@ -237,8 +237,8 @@ public class CompanyProfileActivity extends AppCompatActivity implements
     }
 
     public void getData() {
-        arrayList = new ArrayList<SetGetAPI>();
-        SetGetAPI setGetAPI = new SetGetAPI();
+        arrayList = new ArrayList<SetGetAPIPostData>();
+        SetGetAPIPostData setGetAPI = new SetGetAPIPostData();
         setGetAPI.setPARAMS("user_id");
         setGetAPI.setValues(ProApplication.getInstance().getUserId());
         arrayList.add(setGetAPI);

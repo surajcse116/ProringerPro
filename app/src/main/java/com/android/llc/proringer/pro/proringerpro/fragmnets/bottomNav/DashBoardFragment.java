@@ -35,7 +35,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
@@ -59,7 +59,7 @@ public class DashBoardFragment extends Fragment {
     RelativeLayout userInformation, servicearea, service_setting, licence, login_settings, Protofolio;
     RatingBar rbar;
     ImageView profile_pic;
-    ArrayList<SetGetAPI> arrayList=null;
+    ArrayList<SetGetAPIPostData> arrayList=null;
     MyLoader myload;
 
     String pro_premium_status="";
@@ -179,11 +179,11 @@ public class DashBoardFragment extends Fragment {
 
     public  void loadAndShowData()
     {
-        arrayList=new ArrayList<SetGetAPI>();
-        SetGetAPI setGetAPI =new SetGetAPI();
-        setGetAPI.setPARAMS("user_id");
-        setGetAPI.setValues(ProApplication.getInstance().getUserId());
-        arrayList.add(setGetAPI);
+        arrayList=new ArrayList<SetGetAPIPostData>();
+        SetGetAPIPostData setGetAPIPostData =new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPIPostData);
 
         new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.dashboard, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override

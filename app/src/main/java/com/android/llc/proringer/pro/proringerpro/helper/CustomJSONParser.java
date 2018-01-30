@@ -3,10 +3,8 @@ package com.android.llc.proringer.pro.proringerpro.helper;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.utils.NetworkUtil;
 
@@ -144,7 +142,7 @@ public class CustomJSONParser {
         }
     }
 
-    public void fireAPIForGetMethod(Context mcontext, final String URL, final ArrayList<SetGetAPI> setGetData, final CustomJSONResponse customJSONResponse) {
+    public void fireAPIForGetMethod(Context mcontext, final String URL, final ArrayList<SetGetAPIPostData> setGetData, final CustomJSONResponse customJSONResponse) {
 
         Logger.printMessage("URLGet", URL);
 
@@ -164,7 +162,7 @@ public class CustomJSONParser {
 
                     if (setGetData != null && setGetData.size() > 0) {
 //                        PARAMS = "&";
-                        for (SetGetAPI data : setGetData) {
+                        for (SetGetAPIPostData data : setGetData) {
                             PARAMS = PARAMS + data.getPARAMS() + "=" + data.getValues() + "&";
                         }
                         Logger.printMessage("url", "" + URL + PARAMS);

@@ -29,7 +29,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 import org.json.JSONException;
@@ -84,7 +84,7 @@ public class TermsPrivacyActivity extends AppCompatActivity {
 
     public void loadDataTermsOfUse() {
 
-        new CustomJSONParser().fireAPIForGetMethod(TermsPrivacyActivity.this, ProConstant.app_term, new ArrayList<SetGetAPI>(), new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(TermsPrivacyActivity.this, ProConstant.app_term, new ArrayList<SetGetAPIPostData>(), new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 if (myLoader != null && myLoader.isMyLoaderShowing())
@@ -233,7 +233,7 @@ public class TermsPrivacyActivity extends AppCompatActivity {
 
     public void loadPrivacyPolicy() {
 
-        new CustomJSONParser().fireAPIForGetMethod(TermsPrivacyActivity.this, ProConstant.app_privacy_policy, new ArrayList<SetGetAPI>(), new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(TermsPrivacyActivity.this, ProConstant.app_privacy_policy, new ArrayList<SetGetAPIPostData>(), new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 if (myLoader != null && myLoader.isMyLoaderShowing())

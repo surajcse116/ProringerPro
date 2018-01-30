@@ -21,7 +21,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetShowLicence;
 
 import org.json.JSONArray;
@@ -42,7 +42,7 @@ public class LicenceListActivity extends AppCompatActivity {
     LicenceAdapter licenceAdapter;
     MyLoader myLoader;
 
-    ArrayList<SetGetAPI> arrayList = null;
+    ArrayList<SetGetAPIPostData> arrayList = null;
     ArrayList<SetGetShowLicence> setGetShowLicenceArrayList;
     ImageView img_add_licence;
 
@@ -63,11 +63,11 @@ public class LicenceListActivity extends AppCompatActivity {
 
         myLoader = new MyLoader(LicenceListActivity.this);
 
-        arrayList = new ArrayList<SetGetAPI>();
-        SetGetAPI setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("user_id");
-        setGetAPI.setValues(ProApplication.getInstance().getUserId());
-        arrayList.add(setGetAPI);
+        arrayList = new ArrayList<SetGetAPIPostData>();
+        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPIPostData);
 
         setGetShowLicenceArrayList = new ArrayList<>();
 

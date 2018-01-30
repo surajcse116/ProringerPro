@@ -29,7 +29,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.helper.onItemClick;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetProjectMessage;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -62,7 +62,7 @@ public class MessageFragment extends Fragment {
     private ProjectMessageAdapter adapter;
     ArrayList<SetGetProjectMessage> setGetProjectMessageArrayList;
     ProRegularEditText et_proj_search;
-    ArrayList<SetGetAPI> arrayList;
+    ArrayList<SetGetAPIPostData> arrayList;
     MyLoader myLoader = null;
     TextWatcher mySearchTextWatcher;
     String search_key="";
@@ -99,9 +99,7 @@ public class MessageFragment extends Fragment {
         et_proj_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.d("event----------->",""+event);
-                Log.d("actionId------------->",""+actionId);
-                Log.d("textview",""+v);
+
                 if (event!=null &&(event.getKeyCode()==KeyEvent.KEYCODE_ENTER) || (actionId == EditorInfo.IME_ACTION_DONE))
                 {
                     Logger.printMessage("search_category", et_proj_search.getText().toString());
@@ -157,24 +155,24 @@ public class MessageFragment extends Fragment {
 
     private void LoadnadShowData() {
         setGetProjectMessageArrayList.clear();
-        Log.d("LoadnadShowData","LoadnadShowData");
-        arrayList=new ArrayList<SetGetAPI>();
-        SetGetAPI setGetAPI =new SetGetAPI();
-        setGetAPI.setPARAMS("user_id");
-        setGetAPI.setValues(ProApplication.getInstance().getUserId()); setGetAPI.setPARAMS("user_id");
-        arrayList.add(setGetAPI);
 
-        setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("list_search");
-        setGetAPI.setValues(search_key);
-        arrayList.add(setGetAPI);
+        arrayList=new ArrayList<SetGetAPIPostData>();
+        SetGetAPIPostData setGetAPIPostData =new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPIPostData);
+
+        setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("list_search");
+        setGetAPIPostData.setValues(search_key);
+        arrayList.add(setGetAPIPostData);
 
 
         new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_pro_project_message, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-                Log.d("onSuccess","onSuccess");
-                Log.d("project_list",result);
+
+                Logger.printMessage("onSuccess",result);
 
                 myLoader.dismissLoader();
                 try {
@@ -209,7 +207,7 @@ public class MessageFragment extends Fragment {
                                         Intent intent=new Intent(getActivity(),IndividualMessageActivity.class);
                                         intent.putExtra("project_id",value);
                                         startActivity(intent);
-                                        Log.d("project_id",value);
+                                        Logger.printMessage("project_id",value);
 
                                     }
                                 });
@@ -228,13 +226,11 @@ public class MessageFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
             public void onError(String error, String response) {
-                Log.d("onError---->","onError");
+                Logger.printMessage("onError-->",response);
                 tv_empty_show.setVisibility(View.VISIBLE);
                 project_message_list.setVisibility(View.GONE);
             }
@@ -247,7 +243,6 @@ public class MessageFragment extends Fragment {
             @Override
             public void onStart() {
                 myLoader.showLoader();
-                Log.d("onStart","onStart");
             }
         });
 

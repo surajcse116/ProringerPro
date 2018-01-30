@@ -30,7 +30,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
@@ -164,16 +164,16 @@ public class WatchListFragment extends Fragment {
     }
 
     public void loadList() {
-        ArrayList<SetGetAPI> arrayList = new ArrayList<SetGetAPI>();
-        SetGetAPI setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("user_id");
-        setGetAPI.setValues(ProApplication.getInstance().getUserId());
-        arrayList.add(setGetAPI);
+        ArrayList<SetGetAPIPostData> arrayList = new ArrayList<SetGetAPIPostData>();
+        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPIPostData);
 
-        setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("search_field");
-        setGetAPI.setValues(search_field);
-        arrayList.add(setGetAPI);
+        setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("search_field");
+        setGetAPIPostData.setValues(search_field);
+        arrayList.add(setGetAPIPostData);
 
         new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_pro_watchlist, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override

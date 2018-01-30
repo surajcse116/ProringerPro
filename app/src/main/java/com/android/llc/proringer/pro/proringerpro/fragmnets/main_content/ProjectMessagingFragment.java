@@ -17,9 +17,10 @@ import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProjectDetailedMessageAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetProjectMessageDetails;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText;
 
@@ -50,7 +51,7 @@ public class ProjectMessagingFragment extends Fragment {
     MyLoader myLoader;
     ArrayList<SetGetProjectMessageDetails> setGetProjectMessageDetailsArrayList;
     ProjectDetailedMessageAdapter projectDetailedMessageAdapter;
-    ArrayList<SetGetAPI> arrayList;
+    ArrayList<SetGetAPIPostData> arrayList;
     static String mypojectid="";
     ProRegularEditText et_search;
 
@@ -71,7 +72,7 @@ public class ProjectMessagingFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //        mypojectid = getArguments().getString("project_id");
-        Log.d("mypojectid------>",mypojectid);
+        Logger.printMessage("mypojectid------>",mypojectid);
         et_search=view.findViewById(R.id.et_search);
         setGetProjectMessageDetailsArrayList =new ArrayList<>();
         myLoader=new MyLoader(getActivity());
@@ -84,27 +85,28 @@ public class ProjectMessagingFragment extends Fragment {
     }
 
     private void LoadandShowUserMessageList() {
-        Log.d("LoadandShow--------->","LoadandShowUserMessageList");
+
         arrayList=new ArrayList<>();
-        SetGetAPI setGetAPI=new SetGetAPI();
-        setGetAPI.setPARAMS("user_id");
-        setGetAPI.setValues(ProApplication.getInstance().getUserId()); setGetAPI.setPARAMS("user_id");
-        arrayList.add(setGetAPI);
+        SetGetAPIPostData setGetAPIPostData=new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPIPostData);
 
-        setGetAPI=new SetGetAPI();
-        setGetAPI.setPARAMS("project_id");
-        setGetAPI.setValues(mypojectid);
-        arrayList.add(setGetAPI);
+        setGetAPIPostData=new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("project_id");
+        setGetAPIPostData.setValues(mypojectid);
+        arrayList.add(setGetAPIPostData);
 
-        setGetAPI=new SetGetAPI();
-        setGetAPI.setPARAMS("list_search");
-        setGetAPI.setValues(et_search.getText().toString().trim());
+//        setGetAPIPostData=new SetGetAPIPostData();
+//        setGetAPIPostData.setPARAMS("list_search");
+//        setGetAPIPostData.setValues(et_search.getText().toString().trim());
+//        arrayList.add(setGetAPIPostData);
+
         new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_pro_project_message, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();
-                Log.d("onSuccess","onSuccess");
-                Log.d("user_result",result);
+                Logger.printMessage("onSuccess",result);
                 try {
                     JSONObject jsonObject=new JSONObject(result);
                     if (jsonObject.has("info_array"))
@@ -116,7 +118,7 @@ public class ProjectMessagingFragment extends Fragment {
                                 SetGetProjectMessageDetails setgetProjectMessageDetails=new SetGetProjectMessageDetails();
                                 setgetProjectMessageDetails.setProj_img_active(jsonObject.getJSONArray("info_array").getJSONObject(i).getString("proj_img_active"));
                                 setgetProjectMessageDetails.setProject_name_active(jsonObject.getJSONArray("info_array").getJSONObject(i).getString("project_name_active"));
-                                Log.d("name---------->",jsonObject.getJSONArray("info_array").getJSONObject(i).getString("project_name_active"));
+                                Logger.printMessage("name---------->",jsonObject.getJSONArray("info_array").getJSONObject(i).getString("project_name_active"));
                                 setgetProjectMessageDetails.setProj_id_active(jsonObject.getJSONArray("info_array").getJSONObject(i).getString("proj_id_active"));
                                 setGetProjectMessageDetailsArrayList.add(setgetProjectMessageDetails);
                             }
@@ -142,18 +144,14 @@ public class ProjectMessagingFragment extends Fragment {
 
             @Override
             public void onError(String error, String response) {
-                Log.d("onError","onError");
-
             }
 
             @Override
             public void onError(String error) {
-
             }
 
             @Override
             public void onStart() {
-                Log.d("onStart","onStart");
                 myLoader.showLoader();
             }
         });

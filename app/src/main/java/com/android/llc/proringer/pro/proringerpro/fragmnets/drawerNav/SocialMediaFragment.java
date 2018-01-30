@@ -15,7 +15,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
@@ -34,7 +34,7 @@ public class SocialMediaFragment extends Fragment {
 
     ProLightEditText et_facebook, et_twitter, et_google, et_linkedin, et_youtube, et_pinterest, et_instagram, et_skype;
     ProRegularTextView tv_save;
-    ArrayList<SetGetAPI> arrayList = null;
+    ArrayList<SetGetAPIPostData> arrayList = null;
     MyLoader myload;
     String paypal = "";
 
@@ -275,12 +275,13 @@ public class SocialMediaFragment extends Fragment {
 
     public void showData() {
 
-        arrayList = new ArrayList<SetGetAPI>();
-        SetGetAPI setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("user_id");
-        setGetAPI.setValues(ProApplication.getInstance().getUserId());
-        arrayList.add(setGetAPI);
-        Logger.printMessage("hgdgfd", String.valueOf(arrayList));
+        arrayList = new ArrayList<SetGetAPIPostData>();
+        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPIPostData);
+
+
         new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.socialmedia, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {

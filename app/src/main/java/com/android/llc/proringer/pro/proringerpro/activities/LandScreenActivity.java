@@ -44,7 +44,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.BottomNav;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.NavigationHandler;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -70,7 +70,7 @@ public class LandScreenActivity extends AppCompatActivity {
     LinearLayout linear_buttombar;
     private ImageView dashboard_image, my_projects_image, messages_image, fav_pro_image;
     private ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
-    ArrayList<SetGetAPI> arrayList = null;
+    ArrayList<SetGetAPIPostData> arrayList = null;
     public MyLoader myLoader = null;
     public String local_project_search_zip="";
 
@@ -338,21 +338,21 @@ public class LandScreenActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 myLoader.showLoader();
-                                arrayList = new ArrayList<SetGetAPI>();
-                                SetGetAPI setGetAPI = new SetGetAPI();
-                                setGetAPI.setPARAMS("user_id");
-                                setGetAPI.setValues(ProApplication.getInstance().getUserId());
-                                arrayList.add(setGetAPI);
+                                arrayList = new ArrayList<SetGetAPIPostData>();
+                                SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+                                setGetAPIPostData.setPARAMS("user_id");
+                                setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+                                arrayList.add(setGetAPIPostData);
 
-                                setGetAPI = new SetGetAPI();
-                                setGetAPI.setPARAMS("anorid_status");
-                                setGetAPI.setValues("1");
-                                arrayList.add(setGetAPI);
+                                setGetAPIPostData = new SetGetAPIPostData();
+                                setGetAPIPostData.setPARAMS("anorid_status");
+                                setGetAPIPostData.setValues("1");
+                                arrayList.add(setGetAPIPostData);
 
-                                setGetAPI = new SetGetAPI();
-                                setGetAPI.setPARAMS("ios_status");
-                                setGetAPI.setValues("1");
-                                arrayList.add(setGetAPI);
+                                setGetAPIPostData = new SetGetAPIPostData();
+                                setGetAPIPostData.setPARAMS("ios_status");
+                                setGetAPIPostData.setValues("1");
+                                arrayList.add(setGetAPIPostData);
 
                                 new CustomJSONParser().fireAPIForGetMethod(LandScreenActivity.this, ProConstant.Logout, arrayList, new CustomJSONParser.CustomJSONResponse() {
                                     @Override

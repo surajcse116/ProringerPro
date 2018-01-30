@@ -14,7 +14,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.SwitchHelper;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ import java.util.ArrayList;
 
 public class NotificationsFragment extends Fragment {
     private SwitchHelper email_newsletter, email_chat_msg, email_tips_artcl, email_project_replies, mobile_newsletter, email_newreviw, account_achivement, mobile_chat_msg, mobile_tips_artcl, mobile_project_replies, mobileaccountachivement, mobilereview;
-    ArrayList<SetGetAPI> arrayList = null;
+    ArrayList<SetGetAPIPostData> arrayList = null;
     String set_email_newsletter, set_email_chat_msg, set_email_tips_artcl, set_email_prjct_rspnse, set_mobile_newsletter, set_email_newreviw, set_account_achivement, set_mobile_chat_msg, set_mobile_tips_artcl, set_mobile_prjct_rspnse, set_mobileaccountachivement, set_mobilereview;
     MyLoader myLoader;
     ScrollView ScrollViewMAin;
@@ -66,12 +66,12 @@ public class NotificationsFragment extends Fragment {
         mobile_project_replies = (SwitchHelper) view.findViewById(R.id.mobile_project_replies);
         mobileaccountachivement = (SwitchHelper) view.findViewById(R.id.mobileaccountachivement);
         mobilereview = (SwitchHelper) view.findViewById(R.id.mobilereview);
-        arrayList = new ArrayList<SetGetAPI>();
+        arrayList = new ArrayList<SetGetAPIPostData>();
 
-        SetGetAPI setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("user_id");
-        setGetAPI.setValues(ProApplication.getInstance().getUserId());
-        arrayList.add(setGetAPI);
+        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPIPostData);
 
 
         myLoader = new MyLoader(getActivity());

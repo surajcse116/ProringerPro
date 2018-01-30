@@ -39,7 +39,6 @@ import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetShowPortFolio;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
@@ -80,7 +79,7 @@ public class PortFolioActivity extends AppCompatActivity {
     CustomListAdapterDialogMonthYear customListAdapterDialogMonthYear = null;
     PortFolioAdapter portfolio;
     ArrayList<String> portPolioImageGalleryArrayList = null;
-    ArrayList<SetGetAPI> arrayList = null;
+    ArrayList<SetGetAPIPostData> arrayList = null;
     ArrayList<SetGetShowPortFolio> showPortFolioArrayList = null;
     private String mCurrentPhotoPath = "";
     RelativeLayout relative_category_dropdown, relative_month_dropdown, relative_year_dropdown;
@@ -109,11 +108,11 @@ public class PortFolioActivity extends AppCompatActivity {
 
         myLoader = new MyLoader(PortFolioActivity.this);
 
-        arrayList = new ArrayList<SetGetAPI>();
-        SetGetAPI setGetAPI = new SetGetAPI();
-        setGetAPI.setValues(ProApplication.getInstance().getUserId());
-        setGetAPI.setPARAMS("user_id");
-        arrayList.add(setGetAPI);
+        arrayList = new ArrayList<SetGetAPIPostData>();
+        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        setGetAPIPostData.setPARAMS("user_id");
+        arrayList.add(setGetAPIPostData);
 
         showPortFolioArrayList = new ArrayList<>();
         portPolioImageGalleryArrayList = new ArrayList<>();

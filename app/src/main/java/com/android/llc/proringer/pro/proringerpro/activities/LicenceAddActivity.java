@@ -37,7 +37,6 @@ import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
@@ -405,13 +404,13 @@ public class LicenceAddActivity extends AppCompatActivity {
 
     public void category() {
 
-        ArrayList<SetGetAPI> setGetAPIArrayList = new ArrayList<>();
+        ArrayList<SetGetAPIPostData> setGetAPIArrayList = new ArrayList<>();
 
-        SetGetAPI setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("user_id");
-        setGetAPI.setValues(ProApplication.getInstance().getUserId());
+        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
 
-        setGetAPIArrayList.add(setGetAPI);
+        setGetAPIArrayList.add(setGetAPIPostData);
 
         new CustomJSONParser().fireAPIForGetMethod(LicenceAddActivity.this, ProConstant.app_pro_services, setGetAPIArrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override

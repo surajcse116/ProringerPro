@@ -17,8 +17,9 @@ import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.IndividualChatAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetChatPojo;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -53,7 +54,7 @@ public class IndividualMessageActivity extends AppCompatActivity {
     RecyclerView chat_list;
     ImageView img_background;
     String project_id = "";
-    ArrayList<SetGetAPI> arrayList;
+    ArrayList<SetGetAPIPostData> arrayList;
     ArrayList<SetGetChatPojo> prochatList;
     IndividualChatAdapter individualChatAdapter;
     ImageView iv_pic, msg_send_button;
@@ -76,7 +77,7 @@ public class IndividualMessageActivity extends AppCompatActivity {
         et_send_msg = findViewById(R.id.et_send_msg);
 
         project_id = getIntent().getExtras().getString("project_id");
-        Log.d("project_id--->", project_id);
+        Logger.printMessage("project_id--->", project_id);
         arrayList = new ArrayList<>();
 
         chat_list = (RecyclerView) findViewById(R.id.chat_list);
@@ -112,20 +113,20 @@ public class IndividualMessageActivity extends AppCompatActivity {
     private void LoadChatDetails() {
         prochatList.clear();
         arrayList = new ArrayList<>();
-        SetGetAPI setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("user_id");
-        setGetAPI.setValues(ProApplication.getInstance().getUserId());
-        arrayList.add(setGetAPI);
+        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPIPostData);
 
-        setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("project_id");
-        setGetAPI.setValues(project_id);
-        arrayList.add(setGetAPI);
+        setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("project_id");
+        setGetAPIPostData.setValues(project_id);
+        arrayList.add(setGetAPIPostData);
 
         new CustomJSONParser().fireAPIForGetMethod(this, ProConstant.app_pro_project_message, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-                Log.d("chat_result", result);
+                Logger.printMessage("chat_result", result);
                 JSONObject object = null;
 
                 try {
@@ -160,30 +161,28 @@ public class IndividualMessageActivity extends AppCompatActivity {
                                             chatPojo.setUser(msg_list.getJSONObject(j).getJSONArray("info").getJSONObject(k).getString("user"));
 
                                             chatPojo.setSender_id(msg_list.getJSONObject(j).getJSONArray("info").getJSONObject(k).getString("sender_id"));
-                                            Log.d("sender_id", chatPojo.getSender_id());
+                                            Logger.printMessage("sender_id", chatPojo.getSender_id());
                                             chatPojo.setReceiver_id(msg_list.getJSONObject(j).getJSONArray("info").getJSONObject(k).getString("receiver_id"));
-                                            Log.d("Receiver_id", chatPojo.getReceiver_id());
+                                            Logger.printMessage("Receiver_id", chatPojo.getReceiver_id());
                                             chatPojo.setMessage_id(msg_list.getJSONObject(j).getJSONArray("info").getJSONObject(k).getString("message_id"));
-                                            Log.d("Message_id", chatPojo.getMessage_id());
+                                            Logger.printMessage("Message_id", chatPojo.getMessage_id());
                                             chatPojo.setProject_id(msg_list.getJSONObject(j).getJSONArray("info").getJSONObject(k).getString("project_id"));
-                                            Log.d("Project_id", chatPojo.getProject_id());
+                                            Logger.printMessage("Project_id", chatPojo.getProject_id());
                                             chatPojo.setMessage_info(msg_list.getJSONObject(j).getJSONArray("info").getJSONObject(k).getString("message_info"));
-                                            Log.d("Message_info", chatPojo.getMessage_info());
+                                            Logger.printMessage("Message_info", chatPojo.getMessage_info());
                                             chatPojo.setOther_file_type(msg_list.getJSONObject(j).getJSONArray("info").getJSONObject(k).getString("other_file_type"));
-                                            Log.d("Other_file_type", chatPojo.getOther_file_type());
+                                            Logger.printMessage("Other_file_type", chatPojo.getOther_file_type());
                                             chatPojo.setMsg_attachment(msg_list.getJSONObject(j).getJSONArray("info").getJSONObject(k).getString("msg_attachment"));
-                                            Log.d("Msg_attachment", chatPojo.getMsg_attachment());
+                                            Logger.printMessage("Msg_attachment", chatPojo.getMsg_attachment());
                                             chatPojo.setTime_status(msg_list.getJSONObject(j).getJSONArray("info").getJSONObject(k).getString("time_status"));
-                                            Log.d("Time_status", chatPojo.getTime_status());
+                                            Logger.printMessage("Time_status", chatPojo.getTime_status());
                                             chatPojo.setTime_show(msg_list.getJSONObject(j).getJSONArray("info").getJSONObject(k).getString("time_show"));
-                                            Log.d("Time_show", chatPojo.getTime_show());
+                                            Logger.printMessage("Time_show", chatPojo.getTime_show());
                                             chatPojo.setUser_name(msg_list.getJSONObject(j).getJSONArray("info").getJSONObject(k).getString("user_name"));
-                                            Log.d("user_name", chatPojo.getUser_name());
+                                            Logger.printMessage("user_name", chatPojo.getUser_name());
                                             chatPojo.setUsersimage(msg_list.getJSONObject(j).getJSONArray("info").getJSONObject(k).getString("usersimage"));
-                                            Log.d("userimage", chatPojo.getUsersimage());
+                                            Logger.printMessage("userimage", chatPojo.getUsersimage());
                                             prochatList.add(chatPojo);
-
-
                                         }
                                     }
 

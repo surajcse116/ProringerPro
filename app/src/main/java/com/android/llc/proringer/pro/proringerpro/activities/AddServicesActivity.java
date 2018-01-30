@@ -29,7 +29,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetServicePojo;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
@@ -315,13 +315,13 @@ public class AddServicesActivity extends AppCompatActivity {
 
         setGetServicePojoArrayList = new ArrayList<>();
 
-        ArrayList<SetGetAPI> setGetAPIArrayList = new ArrayList<>();
+        ArrayList<SetGetAPIPostData> setGetAPIArrayList = new ArrayList<>();
 
-        SetGetAPI setGetAPI = new SetGetAPI();
-        setGetAPI.setPARAMS("user_id");
-        setGetAPI.setValues(ProApplication.getInstance().getUserId());
+        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
 
-        setGetAPIArrayList.add(setGetAPI);
+        setGetAPIArrayList.add(setGetAPIPostData);
 
         new CustomJSONParser().fireAPIForGetMethod(AddServicesActivity.this, ProConstant.app_pro_services, setGetAPIArrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
@@ -391,13 +391,13 @@ public class AddServicesActivity extends AppCompatActivity {
 
         if (!check) {
 
-            ArrayList<SetGetAPI> setGetAPIArrayList = new ArrayList<>();
+            ArrayList<SetGetAPIPostData> setGetAPIArrayList = new ArrayList<>();
 
-            SetGetAPI setGetAPI = new SetGetAPI();
-            setGetAPI.setPARAMS("parent_category");
-            setGetAPI.setValues(parent_category_id);
+            SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+            setGetAPIPostData.setPARAMS("parent_category");
+            setGetAPIPostData.setValues(parent_category_id);
 
-            setGetAPIArrayList.add(setGetAPI);
+            setGetAPIArrayList.add(setGetAPIPostData);
 
             new CustomJSONParser().fireAPIForGetMethod(AddServicesActivity.this, ProConstant.app_catrgoryservice_list, setGetAPIArrayList, new CustomJSONParser.CustomJSONResponse() {
                 @Override

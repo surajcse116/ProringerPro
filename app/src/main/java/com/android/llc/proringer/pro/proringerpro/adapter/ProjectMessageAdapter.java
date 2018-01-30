@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFragment;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.onItemClick;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetProjectMessage;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -55,7 +56,7 @@ public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAd
         this.mcontext = mcontext;
         listener = calback;
         this.setGetProjectMessageArrayList = setGetProjectMessageArrayList;
-        Log.d("a_messageListSiz",""+setGetProjectMessageArrayList.size());
+        Logger.printMessage("a_messageListSiz",""+setGetProjectMessageArrayList.size());
     }
 
     @Override
@@ -126,7 +127,7 @@ public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAd
         if (setGetProjectMessageArrayList == null) {
             return 0;
         } else {
-            Log.d("messageListSize", ""+setGetProjectMessageArrayList.size());
+            Logger.printMessage("messageListSize", ""+setGetProjectMessageArrayList.size());
             return setGetProjectMessageArrayList.size();
         }
     }

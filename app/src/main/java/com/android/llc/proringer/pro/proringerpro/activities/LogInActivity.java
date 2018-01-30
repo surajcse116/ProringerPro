@@ -20,7 +20,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.MYAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
-import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPI;
+import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 
@@ -112,11 +112,11 @@ public class LogInActivity extends AppCompatActivity {
                                 ProApplication.getInstance().setUserPreference(jsonInfo.getString("user_id"), jsonInfo.getString("user_type"), jsonInfo.getString("first_name"), jsonInfo.getString("last_name"));
                                 ProApplication.getInstance().setUserEmail(email.getText().toString().trim());
 
-                                ArrayList arrayList=new ArrayList<SetGetAPI>();
-                                SetGetAPI setGetAPI =new SetGetAPI();
-                                setGetAPI.setPARAMS("user_id");
-                                setGetAPI.setValues(ProApplication.getInstance().getUserId());
-                                arrayList.add(setGetAPI);
+                                ArrayList arrayList=new ArrayList<SetGetAPIPostData>();
+                                SetGetAPIPostData setGetAPIPostData =new SetGetAPIPostData();
+                                setGetAPIPostData.setPARAMS("user_id");
+                                setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+                                arrayList.add(setGetAPIPostData);
 
                                 new CustomJSONParser().fireAPIForGetMethod(LogInActivity.this, ProConstant.dashboard, arrayList, new CustomJSONParser.CustomJSONResponse() {
                                     @Override
