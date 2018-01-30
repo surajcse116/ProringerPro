@@ -36,7 +36,7 @@
                 android:layout_height="45dp"
                 android:layout_marginLeft="5dp"
                 android:layout_centerVertical="true"
-                android:background="@color/colorDarkGray"
+                android:scaleType="fitXY"
                 />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView

@@ -195,12 +195,8 @@ public class IndividualMessageActivity extends AppCompatActivity {
                                     } else {
                                         individualChatAdapter.notifyDataSetChanged();
                                     }
-
                                 }
-
-
                             }
-
                         }
                     }
 
