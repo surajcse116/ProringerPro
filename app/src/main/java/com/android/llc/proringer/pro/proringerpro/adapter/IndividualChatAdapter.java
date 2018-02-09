@@ -1,7 +1,9 @@
 package com.android.llc.proringer.pro.proringerpro.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.activities.IndividualMessageActivity;
+import com.android.llc.proringer.pro.proringerpro.helper.Downloadandshowfile;
+import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetChatPojo;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
@@ -38,6 +43,7 @@ import java.util.Date;
 public class IndividualChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mcontext;
     private ArrayList<SetGetChatPojo> dataList;
+    String MsgItemTouch;
 
     public IndividualChatAdapter(Context mcontext, ArrayList<SetGetChatPojo> list) {
         this.mcontext = mcontext;
@@ -57,7 +63,7 @@ public class IndividualChatAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         switch (holder.getItemViewType()) {
             case 1:
@@ -89,6 +95,34 @@ public class IndividualChatAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     viewHolderReceiver.receiver_message.setVisibility(View.GONE);
                     viewHolderReceiver.receiver_image_cont.setVisibility(View.VISIBLE);
                     Glide.with(mcontext).load(dataList.get(position).getMsg_attachment()).centerCrop().into(viewHolderReceiver.receiver_image);
+                    viewHolderReceiver.imv_download.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (dataList.get(position).getMsg_attachment().equals(""))
+                            {
+                                Log.d("This is text","This is text");
+                            }
+                            else {
+                                MsgItemTouch = "";
+                                MsgItemTouch = dataList.get(position).getMsg_attachment();
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                                    Logger.printMessage("mshdg",MsgItemTouch);
+                                    if (((IndividualMessageActivity)mcontext).checkPermissions())
+                                        // ((IndividualMessageActivity)mcontext).DownloadImage(dataList.get(position).getMsg_attachment());
+                                        Log.d("This is message", "This is Image");
+                                    // viewHolderSender.download_image.setVisibility(View.GONE);
+                                    //((IndividualMessageActivity)mcontext).showImagePortFolioDialog(dataList.get(position).getMsg_attachment());
+                                    DownloadAndShow();
+                                } else {
+                                    DownloadAndShow();
+                                }
+
+                            }
+
+
+                        }
+                    });
 
                 }
 
@@ -123,9 +157,33 @@ public class IndividualChatAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     viewHolderSender.sender_image_cont.setVisibility(View.VISIBLE);
                     viewHolderSender.sender_message.setVisibility(View.GONE);
                     Glide.with(mcontext).load(dataList.get(position).getMsg_attachment()).centerCrop().into(viewHolderSender.sender_image);
+                    viewHolderSender.imv_download.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (dataList.get(position).getMsg_attachment().equals(""))
+                            {
+                                Log.d("This is text","This is text");
+                            }
+                            else {
+                                MsgItemTouch = "";
+                                MsgItemTouch = dataList.get(position).getMsg_attachment();
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                                    Logger.printMessage("mshdg",MsgItemTouch);
+                                    if (((IndividualMessageActivity)mcontext).checkPermissions())
+                                        // ((IndividualMessageActivity)mcontext).DownloadImage(dataList.get(position).getMsg_attachment());
+                                        Log.d("This is message", "This is Image");
+                                    // viewHolderSender.download_image.setVisibility(View.GONE);
+                                    //((IndividualMessageActivity)mcontext).showImagePortFolioDialog(dataList.get(position).getMsg_attachment());
+                                    DownloadAndShow();
+                                } else {
+                                    DownloadAndShow();
+                                }
+
+                            }
+                        }
+                    });
                 }
-
-
 
                 break;
         }
@@ -139,6 +197,7 @@ public class IndividualChatAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     class ViewHolderReceiver extends RecyclerView.ViewHolder {
         ProRegularTextView date_header, receiver_message, receiver_image_date,recever_msg_time;
         ImageView receiver_image;
+        ImageView imv_download;
         RelativeLayout receiver_image_cont;
 
         public ViewHolderReceiver(View itemView) {
@@ -147,6 +206,7 @@ public class IndividualChatAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             date_header = (ProRegularTextView) itemView.findViewById(R.id.date_header);
             receiver_message = (ProRegularTextView) itemView.findViewById(R.id.receiver_message);
             receiver_image_date = (ProRegularTextView) itemView.findViewById(R.id.receiver_image_date);
+            imv_download=(ImageView)itemView.findViewById(R.id.imv_download);
             receiver_image = (ImageView) itemView.findViewById(R.id.receiver_image);
             receiver_image_cont = (RelativeLayout) itemView.findViewById(R.id.receiver_image_cont);
         }
@@ -155,6 +215,7 @@ public class IndividualChatAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     class ViewHolderSender extends RecyclerView.ViewHolder {
         ProRegularTextView date_header, sender_message, sender_image_time,sender_msg_time;
         ImageView sender_image;
+        ImageView imv_download;
         RelativeLayout sender_image_cont;
 
         public ViewHolderSender(View itemView) {
@@ -163,10 +224,31 @@ public class IndividualChatAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             date_header = (ProRegularTextView) itemView.findViewById(R.id.date_header);
             sender_message = (ProRegularTextView) itemView.findViewById(R.id.sender_message);
             sender_image_time = (ProRegularTextView) itemView.findViewById(R.id.sender_image_time);
+            imv_download=(ImageView)itemView.findViewById(R.id.imv_download);
             sender_image = (ImageView) itemView.findViewById(R.id.sender_image);
             sender_image_cont = (RelativeLayout) itemView.findViewById(R.id.sender_image_cont);
 
         }
+    }
+    public void DownloadAndShow(){
+        Downloadandshowfile.downloadAndOpenPDF(mcontext,MsgItemTouch);
+
+//        final String filename = MsgItemTouch.substring( MsgItemTouch.lastIndexOf( "/" ) + 1 );
+//
+//        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(MsgItemTouch));
+//        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+//        request.setAllowedOverRoaming(false);
+//        request.setTitle("Attached File Downloading " + filename);
+//        request.setDescription("Downloading " + filename);
+//        request.setVisibleInDownloadsUi(true);
+//        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/HappyWanNyan/"  + "/" + filename);
+//
+//
+//        refid = downloadManager.enqueue(request);
+//
+//        Loger.MSG("OUT", "" + refid);
+//
+//        list.add(refid);
     }
 
 

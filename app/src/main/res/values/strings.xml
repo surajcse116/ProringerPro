@@ -60,5 +60,14 @@
     <string name="question4">Is your business insured?</string>
 
 
+    <string name="pdf_show_local_progress_title">Downloading...</string>
+    <string name="pdf_show_online_dialog_title">Open</string>
+    <string name="pdf_show_online_dialog_question">Are you want to open file?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="pdf_show_local_progress_content">File</string>
+
+
+
 
 </resources>

@@ -44,7 +44,6 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/recever_msg_time"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-10dp"
                 android:paddingBottom="4dp"
                 android:layout_gravity="end"
                 android:paddingRight="10dp"
@@ -65,6 +64,7 @@
                 android:layout_height="match_parent" />
 
             <ImageView
+                android:id="@+id/imv_download"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerInParent="true"

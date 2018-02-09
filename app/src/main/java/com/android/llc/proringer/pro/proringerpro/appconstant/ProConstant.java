@@ -78,6 +78,8 @@ public class ProConstant {
 
     public static String app_pro_project_message=BASEURL+"app_pro_project_message?";
 
+    public static  String send_message=BASEURL+"app_pro_project_message_send";
+
 
     public static String latitude = "";
     public static String longtitude = "";

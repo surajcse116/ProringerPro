@@ -23,37 +23,39 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:orientation="vertical"
-            android:background="@color/colorLightOrange">
-        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-            android:id="@+id/sender_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:background="@color/colorLightOrange"
-            android:maxWidth="250dp"
-            android:padding="10dp"
-            android:text="blah blah blah blah blaaaahhhhh... blaaa . bla bla bla blahhh bla bla bla bla blaaaaaaa.. aa blahh blah and blahhhk."
-            android:textColor="@color/colorTextDark"
-            android:textSize="14sp"
-            android:visibility="visible" />
+            android:orientation="vertical">
+
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/sender_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@color/colorLightOrange"
+                android:maxWidth="250dp"
+                android:padding="10dp"
+                android:text="blah blah blah blah blaaaahhhhh... blaaa . bla bla bla blahhh bla bla bla bla blaaaaaaa.. aa blahh blah and blahhhk."
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/sender_msg_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginTop="-10dp"
-                android:text="9.16PM"
-                android:id="@+id/sender_msg_time"
                 android:paddingBottom="4dp"
                 android:paddingRight="10dp"
-                android:textSize="10sp"
-                ></com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView>
+                android:text="9.16PM"
+                android:textSize="10sp" />
 
-</LinearLayout>
+        </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/sender_image_cont"
             android:layout_width="180dp"
@@ -65,6 +67,16 @@
                 android:id="@+id/sender_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+
+            <ImageView
+                android:id="@+id/imv_download"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerInParent="true"
+                android:alpha="0.9"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_download" />
 
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView

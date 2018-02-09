@@ -84,7 +84,7 @@ public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAd
             holder.project_name.setText(setGetProjectMessage.getProj_name());
             holder.tv_date.setText(setGetProjectMessage.getProject_applied_date());
             Glide.with(mcontext).load(setGetProjectMessage.getProj_image())
-                    .placeholder(R.drawable.plumber)
+//                    .placeholder(R.drawable.plumber)
                     .into(new GlideDrawableImageViewTarget(holder.project_type_img) {
                         /**
                          * {@inheritDoc}

@@ -84,14 +84,15 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:padding="10dp"
-                android:src="@drawable/ic_upoad" />
+                android:src="@drawable/ic_upload" />
 
             <ImageView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_alignParentRight="true"
                 android:padding="10dp"
-                android:src="@drawable/ic_camera" />
+                android:id="@+id/imv_selectpic"
+                android:src="@drawable/ic_camere" />
 
             <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
                 android:layout_width="match_parent"
@@ -103,7 +104,6 @@
                 android:gravity="center_vertical"
                 android:hint="Type here"
                 android:id="@+id/et_send_msg"
-
                 android:inputType="textAutoCorrect"
                 android:paddingLeft="5dp"
                 android:textSize="14sp" />
@@ -111,3 +111,4 @@
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
+
