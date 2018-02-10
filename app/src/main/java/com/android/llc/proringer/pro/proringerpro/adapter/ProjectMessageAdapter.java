@@ -16,11 +16,11 @@ import android.widget.RelativeLayout;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFragment;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
-import com.android.llc.proringer.pro.proringerpro.helper.onItemClick;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetProjectMessage;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 import com.bumptech.glide.Glide;
+
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
@@ -56,7 +56,7 @@ public class ProjectMessageAdapter extends RecyclerView.Adapter<ProjectMessageAd
         this.mcontext = mcontext;
         listener = calback;
         this.setGetProjectMessageArrayList = setGetProjectMessageArrayList;
-        Logger.printMessage("a_messageListSiz",""+setGetProjectMessageArrayList.size());
+        Logger.printMessage("messageListSize",""+setGetProjectMessageArrayList.size());
     }
 
     @Override
