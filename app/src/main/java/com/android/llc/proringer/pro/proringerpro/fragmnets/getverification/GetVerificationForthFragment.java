@@ -28,13 +28,13 @@ import java.util.HashMap;
  * Created by su on 15/1/18.
  */
 
-public class GetVerificationForthFragment extends Fragment{
-    String address,city,state,zip;
+public class GetVerificationForthFragment extends Fragment {
+
     @Nullable
     RelativeLayout RL_address;
-    ProRegularTextView tv_confirmlater,txt_address,txt_city,txt_state,txt_pincode;
+    ProRegularTextView tv_confirmlater, txt_address, txt_city, txt_state, txt_pincode;
     MyLoader myLoader;
-    boolean confirmOrNot=false;
+    boolean confirmOrNot = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,31 +45,48 @@ public class GetVerificationForthFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RL_address=(RelativeLayout)view.findViewById(R.id.RL_address);
-        txt_city=(ProRegularTextView)view.findViewById(R.id.txt_city);
-        txt_state=(ProRegularTextView)view.findViewById(R.id.txt_state);
-        txt_pincode=(ProRegularTextView)view.findViewById(R.id.txt_pincode);
-        txt_address=(ProRegularTextView) view.findViewById(R.id.txt_address);
-        tv_confirmlater=(ProRegularTextView)view.findViewById(R.id.tv_confirmlater);
+        RL_address = (RelativeLayout) view.findViewById(R.id.RL_address);
+        txt_city = (ProRegularTextView) view.findViewById(R.id.txt_city);
+        txt_state = (ProRegularTextView) view.findViewById(R.id.txt_state);
+        txt_pincode = (ProRegularTextView) view.findViewById(R.id.txt_pincode);
+        txt_address = (ProRegularTextView) view.findViewById(R.id.txt_address);
+        tv_confirmlater = (ProRegularTextView) view.findViewById(R.id.tv_confirmlater);
 
 
-        txt_city.setText(((GetVerificationActivity)getActivity()).city);
-        txt_state.setText(((GetVerificationActivity)getActivity()).state);
-        txt_pincode.setText(((GetVerificationActivity)getActivity()).zip);
-        txt_address.setText(((GetVerificationActivity)getActivity()).address);
+        txt_city.setText(((GetVerificationActivity) getActivity()).city);
+        txt_state.setText(((GetVerificationActivity) getActivity()).state);
+        txt_pincode.setText(((GetVerificationActivity) getActivity()).zip);
+        txt_address.setText(((GetVerificationActivity) getActivity()).address);
 
-        myLoader=new MyLoader(getActivity());
+
+        if (!txt_city.getText().toString().trim().equals("")
+                && !txt_state.getText().toString().trim().equals("")
+                && !txt_pincode.getText().toString().trim().equals("")
+                && !txt_address.getText().toString().trim().equals("")) {
+
+            tv_confirmlater.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            tv_confirmlater.setText("continue to confirm your account");
+
+            confirmOrNot = true;
+        } else {
+
+            tv_confirmlater.setBackgroundColor(getResources().getColor(R.color.colorDarkGray));
+            tv_confirmlater.setText("confirm later and continue");
+            confirmOrNot = false;
+        }
+
+
+        myLoader = new MyLoader(getActivity());
 
         RL_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //  et_main_address.setBackgroundResource(R.drawable.background_solidorange_border);
-                Intent intent= new Intent( getActivity(),LocationActivity.class);
-                startActivityForResult(intent,1);
+                Intent intent = new Intent(getActivity(), LocationActivity.class);
+                startActivityForResult(intent, 1);
 
             }
         });
-
 
 
         tv_confirmlater.setOnClickListener(new View.OnClickListener() {
@@ -77,10 +94,10 @@ public class GetVerificationForthFragment extends Fragment{
             public void onClick(View view) {
                 if (confirmOrNot) {
                     validation();
-                }else {
-                    if (!((GetVerificationActivity)getActivity()).verifyPin) {
+                } else {
+                    if (!((GetVerificationActivity) getActivity()).verifyPin) {
                         ((GetVerificationActivity) getActivity()).callVerificationFragments(5);
-                    }else {
+                    } else {
                         Intent intent = new Intent(getActivity(), LandScreenActivity.class);
                         // set the new task and clear flags
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -108,10 +125,14 @@ public class GetVerificationForthFragment extends Fragment{
                     Logger.printMessage("city", "--->" + extras.getString("city"));
                     Logger.printMessage("state", "--->" + extras.getString("state"));
 
-                    address=extras.getString("selectedPlace");
-                    city=extras.getString("city");
-                    state= extras.getString("state");
-                    zip=extras.getString("zip");
+
+
+                    txt_city.setText(extras.getString("city"));
+                    txt_state.setText(extras.getString("state"));
+                    txt_pincode.setText(extras.getString("zip"));
+                    txt_address.setText(extras.getString("selectedPlace"));
+
+
 
                     if (!extras.getString("selectedPlace").equals("")) {
                         txt_address.setText(extras.getString("selectedPlace").substring(0, extras.getString("selectedPlace").indexOf(",")));
@@ -125,51 +146,38 @@ public class GetVerificationForthFragment extends Fragment{
 //                    tv_service_area.setText(servicearea);
 
 
-                    if (!txt_city.getText().toString().trim().equals("")
-                            ||!txt_state.getText().toString().equals("")
-                            ||!txt_pincode.getText().toString().equals("")
-                            )
-                    {
+                    if (!txt_address.getText().toString().trim().equals("") ||
+                            !txt_city.getText().toString().trim().equals("")
+                            || !txt_state.getText().toString().equals("")
+                            || !txt_pincode.getText().toString().equals("")
+                            ) {
                         tv_confirmlater.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                         tv_confirmlater.setText("continue to confirm your account");
-                        confirmOrNot=true;
-                    }
-                    else
-                    {
+                        confirmOrNot = true;
+                    } else {
                         tv_confirmlater.setBackgroundColor(getResources().getColor(R.color.colorDarkGray));
                         tv_confirmlater.setText("confirm later and continue");
-                        confirmOrNot=false;
+                        confirmOrNot = false;
                     }
                 }
             }
         }
     }
 
-    public void validation()
-    {
-        if (txt_address.getText().toString().trim().equals(""))
-        {
+    public void validation() {
+        if (txt_address.getText().toString().trim().equals("")) {
             Toast.makeText(getActivity(), "Please choose address", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            if (txt_city.getText().toString().trim().equals(""))
-            {
+        } else {
+            if (txt_city.getText().toString().trim().equals("")) {
                 Toast.makeText(getActivity(), "Please select address which have city,state and pin code", Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                if (txt_state.getText().toString().trim().equals(""))
-                {
+            } else {
+                if (txt_state.getText().toString().trim().equals("")) {
                     Toast.makeText(getActivity(), "Please select address which have city,state and pin code", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     ///ggggggggggggggggggggggggggggggggg
-                    if (txt_pincode.getText().toString().trim().equals(""))
-                    {
+                    if (txt_pincode.getText().toString().trim().equals("")) {
                         Toast.makeText(getActivity(), "Please select address which have city,state and pin code", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         callVerifiedAddress();
                     }
                 }
@@ -179,23 +187,32 @@ public class GetVerificationForthFragment extends Fragment{
     }
 
     private void callVerifiedAddress() {
-        HashMap<String,String> params=new HashMap<>();
+
+        Logger.printMessage("user_id", ProApplication.getInstance().getUserId());
+        Logger.printMessage("verify_country",  getActivity().getResources().getConfiguration().locale.getCountry());
+        Logger.printMessage("verify_address", txt_address.getText().toString().trim());
+        Logger.printMessage("verify_city", txt_city.getText().toString().trim());
+        Logger.printMessage("verify_state", txt_state.getText().toString().trim());
+        Logger.printMessage("verify_zip", txt_pincode.getText().toString().trim());
+
+        HashMap<String, String> params = new HashMap<>();
         params.put("user_id", ProApplication.getInstance().getUserId());
-        params.put("verify_country",ProConstant.Country);
-        params.put("verify_address", address.trim().split(",")[0]);
-        params.put("verify_city",city.trim());
-        params.put("verify_state",state.trim());
-        params.put("verify_zip",zip.trim());
-        params.put("verify_latitude","");
-        params.put("verify_longitude","");
+        params.put("verify_country",  getActivity().getResources().getConfiguration().locale.getCountry());
+        params.put("verify_address", txt_address.getText().toString().trim().split(",")[0]);
+        params.put("verify_city", txt_city.getText().toString().trim());
+        params.put("verify_state", txt_state.getText().toString().trim());
+        params.put("verify_zip", txt_pincode.getText().toString().trim());
+        params.put("verify_latitude", "");
+        params.put("verify_longitude", "");
+
         new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_verified_address, params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();
-                Logger.printMessage("resultDoc",result);
-                if (!((GetVerificationActivity)getActivity()).verifyPin) {
+                Logger.printMessage("resultDoc", result);
+                if (!((GetVerificationActivity) getActivity()).verifyPin) {
                     ((GetVerificationActivity) getActivity()).callVerificationFragments(5);
-                }else {
+                } else {
                     Intent intent = new Intent(getActivity(), LandScreenActivity.class);
                     // set the new task and clear flags
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -218,11 +235,6 @@ public class GetVerificationForthFragment extends Fragment{
                 myLoader.showLoader();
             }
         });
-        Logger.printMessage("user_id",ProApplication.getInstance().getUserId());
-        Logger.printMessage("verify_country",ProConstant.Country);
-        Logger.printMessage("verify_address",address);
-        Logger.printMessage("verify_city",city);
-        Logger.printMessage("verify_state",state);
-        Logger.printMessage("verify_zip",zip);
+
     }
 }

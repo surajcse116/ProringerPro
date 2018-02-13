@@ -84,7 +84,6 @@ public class ProConstant {
     public static String email = "";
     public static String phone = "";
     public static String password = "";
-    public static String Country = "";
     public static String city = "";
     public static String state = "";
     public static String country1 = "";

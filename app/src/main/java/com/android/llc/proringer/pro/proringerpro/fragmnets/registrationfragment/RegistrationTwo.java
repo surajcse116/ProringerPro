@@ -468,7 +468,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                                 Logger.printMessage("servicearea", tv_service_area.getText().toString().trim());
                                                 Logger.printMessage("latittuted", ProConstant.latitude);
                                                 Logger.printMessage("Logtitude", ProConstant.longtitude);
-                                                Logger.printMessage("country", ProConstant.Country);
+                                                Logger.printMessage("country", getActivity().getResources().getConfiguration().locale.getCountry());
 
                                                 HashMap<String, String> Params1 = new HashMap<>();
                                                 Params1.put("contact_f_name", ProConstant.f_name);
@@ -481,7 +481,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                                 Params1.put("city", edt_city.getText().toString().trim());
                                                 Params1.put("state", edt_State.getText().toString().trim());
                                                 Params1.put("zipcode", edt_zip.getText().toString().trim());
-                                                Params1.put("country", ProConstant.Country);
+                                                Params1.put("country", getActivity().getResources().getConfiguration().locale.getCountry());
                                                 Params1.put("alt_phone", edt_phone.getText().toString().trim());
                                                 Params1.put("com_email", edt_email.getText().toString().trim());
                                                 Params1.put("primary_category", pros_contact_service);
