@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +51,12 @@ public class GetVerificationForthFragment extends Fragment{
         txt_pincode=(ProRegularTextView)view.findViewById(R.id.txt_pincode);
         txt_address=(ProRegularTextView) view.findViewById(R.id.txt_address);
         tv_confirmlater=(ProRegularTextView)view.findViewById(R.id.tv_confirmlater);
+
+
+        txt_city.setText(((GetVerificationActivity)getActivity()).city);
+        txt_state.setText(((GetVerificationActivity)getActivity()).state);
+        txt_pincode.setText(((GetVerificationActivity)getActivity()).zip);
+        txt_address.setText(((GetVerificationActivity)getActivity()).address);
 
         myLoader=new MyLoader(getActivity());
 
@@ -102,6 +107,7 @@ public class GetVerificationForthFragment extends Fragment{
                     Logger.printMessage("zip", "--->" + extras.getString("zip"));
                     Logger.printMessage("city", "--->" + extras.getString("city"));
                     Logger.printMessage("state", "--->" + extras.getString("state"));
+
                     address=extras.getString("selectedPlace");
                     city=extras.getString("city");
                     state= extras.getString("state");
@@ -177,11 +183,11 @@ public class GetVerificationForthFragment extends Fragment{
         params.put("user_id", ProApplication.getInstance().getUserId());
         params.put("verify_country",ProConstant.Country);
         params.put("verify_address", address.trim().split(",")[0]);
-        params.put("verify_city",city);
-        params.put("verify_state",state);
-        params.put("verify_zip",zip);
-        params.put("verify_latitude",ProConstant.latitude);
-        params.put("verify_longitude",ProConstant.longtitude);
+        params.put("verify_city",city.trim());
+        params.put("verify_state",state.trim());
+        params.put("verify_zip",zip.trim());
+        params.put("verify_latitude","");
+        params.put("verify_longitude","");
         new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_verified_address, params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {

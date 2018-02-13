@@ -21,7 +21,8 @@ package com.android.llc.proringer.pro.proringerpro.appconstant;
 public class ProConstant {
     public static boolean cameraRequested = false;
 
-    public static String BASEURL = "http://esolz.co.in/lab6/proringer_latest/";
+//    public static String BASEURL = "http://esolz.co.in/lab6/proringer_latest/";
+    public static String BASEURL = "http://111.93.181.155/lab6/proringer_latest/";
 
     public static String Login = BASEURL + "app_pro_login";
     public static String Logout = BASEURL + "app_logout?";
@@ -66,18 +67,13 @@ public class ProConstant {
 
     public static String app_email_checking = BASEURL + "app_email_checking";
     public static String app_pro_respond_now = BASEURL + "app_pro_respond_now";
-
     public static String app_prouserinfo_list=BASEURL+"app_prouserinfo_list?";
     public static String app_pro_verified_number=BASEURL+"app_pro_verified_number?";
     public static String app_pro_verified_pin=BASEURL+"app_pro_verified_pin";
     public static  String app_pro_verified_address=BASEURL+"app_pro_verified_address";
     public static String app_pro_verified_confirm=BASEURL+"app_pro_verified_confirm";
-
-
     public static String app_pro_verify_business_doc=BASEURL+"app_pro_verify_business_doc";
-
     public static String app_pro_project_message=BASEURL+"app_pro_project_message?";
-
     public static  String send_message=BASEURL+"app_pro_project_message_send";
 
 

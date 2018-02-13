@@ -68,6 +68,8 @@ public class DashBoardFragment extends Fragment {
     int CASEAPPLY=0;
     String text;
 
+    String city="",state="",zip="",address="";
+
 
     @Nullable
     @Override
@@ -103,7 +105,12 @@ public class DashBoardFragment extends Fragment {
                 if (CASEAPPLY==1)
                 {
                     //openGetVerifiedDialog();
+
                     Intent intent=new Intent(getActivity(), GetVerificationActivity.class);
+                    intent.putExtra("city",city);
+                    intent.putExtra("state",state);
+                    intent.putExtra("zip",zip);
+                    intent.putExtra("address",address);
                     startActivityForResult(intent,1111);
                 }
                 else if (CASEAPPLY==2)
@@ -114,6 +121,10 @@ public class DashBoardFragment extends Fragment {
                 {
                     //openGetVerifiedDialog();
                     Intent intent=new Intent(getActivity(), GetVerificationActivity.class);
+                    intent.putExtra("city",city);
+                    intent.putExtra("state",state);
+                    intent.putExtra("zip",zip);
+                    intent.putExtra("address",address);
                     startActivityForResult(intent,1111);
 //                    Toast.makeText(getContext(),"already applied to verify",Toast.LENGTH_SHORT).show();
                 }
@@ -122,10 +133,6 @@ public class DashBoardFragment extends Fragment {
                 {
                     Intent i = new Intent(getActivity(), PremiumActivity.class);
                     startActivity(i);
-                }
-                else
-                {
-
                 }
             }
         });
@@ -196,8 +203,6 @@ public class DashBoardFragment extends Fragment {
                     JSONArray jarr= job.getJSONArray("info_array");
 
 
-
-
                     for (int i=0;i<jarr.length();i++)
                     {
                         JSONObject jo= jarr.getJSONObject(i);
@@ -236,8 +241,12 @@ public class DashBoardFragment extends Fragment {
                         }
 
 
-                        String address=jo.getString("city")+","+jo.getString("state")+jo.getString("zipcode");
-                        tv_address.setText(address);
+                        city=jo.getString("city");
+                        state=jo.getString("state");
+                        zip=jo.getString("zipcode");
+                        address=jo.getString("address");
+
+                        tv_address.setText(jo.getString("city")+","+jo.getString("state")+jo.getString("zipcode"));
                         rbar.setStepSize((float) 0.5);
                         rbar.setRating(Float.parseFloat(jo.getString("avg_rating")));
                     }

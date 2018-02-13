@@ -29,6 +29,7 @@ public class GetVerificationActivity extends AppCompatActivity {
     public  boolean verifyPin;
     int progressStep = 0;
     public String phoneNumberPinSent="";
+    public String city="",state="",zip="",address="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +40,15 @@ public class GetVerificationActivity extends AppCompatActivity {
         fragmentPushList = new ArrayList<>();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         progress_get_verify = (ProgressBar) findViewById(R.id.progress_get_verify);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Verification");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        city=getIntent().getStringExtra("city");
+        state=getIntent().getStringExtra("state");
+        zip=getIntent().getStringExtra("zip");
+        address=getIntent().getStringExtra("address");
 
         progress_get_verify.setMax(5);
         callVerificationFragments(1);
