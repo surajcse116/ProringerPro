@@ -26,7 +26,7 @@ public class GetVerificationActivity extends AppCompatActivity {
     ArrayList<String> fragmentPushList;
     Toolbar toolbar;
     private ProgressBar progress_get_verify;
-    public  boolean verifyPin;
+    public  boolean verifyPin=false;
     int progressStep = 0;
     public String phoneNumberPinSent="";
     public String city="",state="",zip="",address="";
