@@ -98,6 +98,12 @@ public class GetVerificationFirstFragment extends Fragment {
                 text = et_confirmphoneno.getText().toString();
                 textLength = et_confirmphoneno.getText().length();
 
+                if(textLength>0){
+                    send_now.setText("SEND NOW");
+                }else if (textLength==0){
+                    send_now.setText("CONTINUE");
+                }
+
                 if (text.endsWith("-") || text.endsWith(" ") || text.endsWith(" "))
                     return;
 
