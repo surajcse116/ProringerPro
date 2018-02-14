@@ -3,6 +3,7 @@ package com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,10 @@ import android.view.ViewGroup;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProLightTextView;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 
 /**
@@ -33,10 +38,12 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTe
 public class TutorialOne extends Fragment {
     ProRegularTextView header_text;
     ProLightTextView description;
-
+    String url;
+    AppCompatImageView img;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        url=this.getArguments().getString("url");
         return inflater.inflate(R.layout.getstarted_tutorial_pager, container, false);
     }
 
@@ -46,9 +53,22 @@ public class TutorialOne extends Fragment {
 
         header_text = (ProRegularTextView) view.findViewById(R.id.header_text);
         description = (ProLightTextView) view.findViewById(R.id.description);
+        img = (AppCompatImageView) view.findViewById(R.id.img);
+        Glide.with(getActivity()).load(url).listener(new RequestListener<String, GlideDrawable>() {
+            @Override
+            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                return false;
+            }
+        }).into(img);
 
         header_text.setText("NEVER MISS A MESSAGE");
         description.setText("Stay in touch with your clients\nthrough in-app messaging");
+
 
     }
 }

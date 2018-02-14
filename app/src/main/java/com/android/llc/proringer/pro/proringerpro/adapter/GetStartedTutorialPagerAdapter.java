@@ -1,14 +1,18 @@
 package com.android.llc.proringer.pro.proringerpro.adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
 
+import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.ScreenSlidePageFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialFour;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialOne;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialThree;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialTwo;
+
+import java.util.ArrayList;
 
 
 /**
@@ -30,8 +34,10 @@ import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialT
  */
 
 public class GetStartedTutorialPagerAdapter extends FragmentPagerAdapter {
-    public GetStartedTutorialPagerAdapter(FragmentManager fm) {
+    ArrayList<String> stringArrayList;
+    public GetStartedTutorialPagerAdapter(FragmentManager fm,ArrayList<String> stringArrayList) {
         super(fm);
+        this.stringArrayList=stringArrayList;
     }
 
     @Override
@@ -62,15 +68,39 @@ public class GetStartedTutorialPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new TutorialOne();
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("url", stringArrayList.get(position));
+                TutorialOne tutorialOne=new TutorialOne();
+                tutorialOne.setArguments(bundle1);
+                return tutorialOne;
             case 1:
-                return new TutorialTwo();
+
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("url", stringArrayList.get(position));
+                TutorialTwo tutorialTwo=new TutorialTwo();
+                tutorialTwo.setArguments(bundle2);
+                return tutorialTwo;
+
             case 2:
-                return new TutorialThree();
+                Bundle bundle3 = new Bundle();
+                bundle3.putString("url", stringArrayList.get(position));
+                TutorialThree tutorialThree=new TutorialThree();
+                tutorialThree.setArguments(bundle3);
+                return tutorialThree;
+
             case 3:
-                return new TutorialFour();
+                Bundle bundle4 = new Bundle();
+                bundle4.putString("url", stringArrayList.get(position));
+                TutorialFour tutorialFour=new TutorialFour();
+                tutorialFour.setArguments(bundle4);
+                return tutorialFour;
+
             default:
-                return new TutorialOne();
+                Bundle bundle5 = new Bundle();
+                bundle5.putString("url", stringArrayList.get(position));
+                TutorialOne  tutorialOne1 =new TutorialOne();
+                tutorialOne1.setArguments(bundle5);
+                return tutorialOne1;
         }
     }
 
@@ -79,6 +109,6 @@ public class GetStartedTutorialPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return 4;
+        return stringArrayList.size();
     }
 }

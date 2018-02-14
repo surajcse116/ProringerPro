@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.adapter.GetStartedTutorialPagerAdapter;
+import com.android.llc.proringer.pro.proringerpro.adapter.ScreenSlidePagerAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
@@ -38,6 +39,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -64,14 +66,14 @@ public class GetStartedActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private ViewPager get_started_pager;
+    private ViewPager get_started_pager,img_pager;
     private GetStartedTutorialPagerAdapter adapter;
     private ImageView pager_dot_one, pager_dot_two, pager_dot_three, pager_dot_four, slide_left, slide_right;
-    private ProRegularTextView get_started, sign_in;
+    private ProRegularTextView  sign_in;
     public static final int LOG_IN_REQUEST = 1;
     //RelativeLayout RLBottom;
     public static final int SIGN_UP_REQUEST = 2;
-    ImageView img_background,img_pager;
+    ImageView img_background;
     private static final String TAG = "LocationActivity";
     private static final long INTERVAL = 1000 * 10;
     private static final long FASTEST_INTERVAL = 1000 * 1;
@@ -81,6 +83,8 @@ public class GetStartedActivity extends AppCompatActivity implements
     String mLastUpdateTime;
     String updatelocation;
     ProgressBar progressBar;
+    ArrayList<String> stringArrayList;
+    ScreenSlidePagerAdapter screenSlidePagerAdapter;
 
 
     @Override
@@ -91,6 +95,13 @@ public class GetStartedActivity extends AppCompatActivity implements
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_get_started);
+
+
+        stringArrayList=new ArrayList<>();
+        stringArrayList.add("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/6l9WhMqUVS.jpg");
+        stringArrayList.add("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/dBY7IAcHF4.jpg");
+        stringArrayList.add("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/BstMg3zkbw.jpg");
+        stringArrayList.add("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/CGFeJbcS0P.jpg");
 
         Logger.printMessage(TAG, "onCreate ...............................");
         if (!isGooglePlayServicesAvailable()) {
@@ -114,7 +125,7 @@ public class GetStartedActivity extends AppCompatActivity implements
         int width = displayMetrics.widthPixels;
 
         img_background = (ImageView) findViewById(R.id.img_background);
-        img_pager = (ImageView) findViewById(R.id.img_pager);
+        img_pager = (ViewPager) findViewById(R.id.img_pager);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         Glide.with(GetStartedActivity.this).load(R.drawable.welcome_intro_get_started).into(img_background);
@@ -141,7 +152,7 @@ public class GetStartedActivity extends AppCompatActivity implements
 //            }
 //        });
 //
-        showPhoneScreenImage("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/6l9WhMqUVS.jpg");
+
 
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,9 +162,12 @@ public class GetStartedActivity extends AppCompatActivity implements
         });
 
 
-        adapter = new GetStartedTutorialPagerAdapter(getSupportFragmentManager());
-
+        adapter = new GetStartedTutorialPagerAdapter(getSupportFragmentManager(),stringArrayList);
         get_started_pager.setAdapter(adapter);
+
+
+        screenSlidePagerAdapter=new ScreenSlidePagerAdapter(getSupportFragmentManager(),stringArrayList);
+        img_pager.setAdapter(screenSlidePagerAdapter);
 
         get_started_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -164,7 +178,7 @@ public class GetStartedActivity extends AppCompatActivity implements
             @Override
             public void onPageSelected(int position) {
                 manageDots(position);
-                managePositionImage(position);
+                img_pager.setCurrentItem(position);
             }
 
             @Override
@@ -208,49 +222,8 @@ public class GetStartedActivity extends AppCompatActivity implements
 //                break;
         }
     }
-    private void managePositionImage(int position)
-    {
-        switch (position)
-        {
-            case 0:
-                showPhoneScreenImage("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/6l9WhMqUVS.jpg");
-//                img_pager.setBackgroundColor(getResources().getColor(R.color.colorHeader));
-                break;
-            case 1:
-                showPhoneScreenImage("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/dBY7IAcHF4.jpg");
-//                img_pager.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                break;
-            case 2:
-                showPhoneScreenImage("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/BstMg3zkbw.jpg");
-//                img_pager.setBackgroundColor(getResources().getColor(R.color.colorLightBrick));
-                break;
-            case 3:
-                showPhoneScreenImage("http://esolz.co.in/lab6/proringer_latest/assets/upload/property_image/CGFeJbcS0P.jpg");
-//                img_pager.setBackgroundColor(getResources().getColor(R.color.colorSky));
-                break;
-//            case 4:
-//                //Glide.with(GetStartedActivity.this).load(R.color.colorHeader).into(img_pager);
-//                img_pager.setBackgroundColor(getResources().getColor(R.color.colorHeader));
-//                break;
-        }
-    }
 
-    public void showPhoneScreenImage(String url){
-        progressBar.setVisibility(View.VISIBLE);
-        Glide.with(GetStartedActivity.this).load(url).listener(new RequestListener<String, GlideDrawable>() {
-            @Override
-            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                progressBar.setVisibility(View.GONE);
-                return false;
-            }
 
-            @Override
-            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                progressBar.setVisibility(View.GONE);
-                return false;
-            }
-        }).into(img_pager);
-    }
 
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
