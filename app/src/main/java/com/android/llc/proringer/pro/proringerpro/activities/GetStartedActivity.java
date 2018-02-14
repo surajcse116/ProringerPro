@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -168,6 +169,14 @@ public class GetStartedActivity extends AppCompatActivity implements
 
         screenSlidePagerAdapter=new ScreenSlidePagerAdapter(getSupportFragmentManager(),stringArrayList);
         img_pager.setAdapter(screenSlidePagerAdapter);
+        img_pager.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                return true;
+            }
+        });
 
         get_started_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
