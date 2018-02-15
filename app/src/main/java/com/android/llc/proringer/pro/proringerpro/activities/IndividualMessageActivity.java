@@ -133,19 +133,14 @@ public class IndividualMessageActivity extends AppCompatActivity {
         msg_send_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 if (et_send_msg.getText().toString().trim().equals(""))
                 {
                     Toast.makeText(IndividualMessageActivity.this, "Please type your message", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    senttextmessage();
+                    sendTextMessage();
                 }
-
-
-
             }
         });
     }
@@ -275,7 +270,6 @@ public class IndividualMessageActivity extends AppCompatActivity {
                                         }
                                     }
 
-
                                     Collections.reverse(prochatList);
                                     if (individualChatAdapter == null) {
                                         individualChatAdapter = new IndividualChatAdapter(IndividualMessageActivity.this, prochatList);
@@ -291,7 +285,6 @@ public class IndividualMessageActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -312,9 +305,8 @@ public class IndividualMessageActivity extends AppCompatActivity {
 
 
     }
-    public void senttextmessage()
+    public void sendTextMessage()
     {
-
         HashMap<String, String> Params = new HashMap<>();
         Params.put("user_id",chatPojo.getSender_id());
         Params.put("project_id",chatPojo.getProject_id());
@@ -338,10 +330,6 @@ public class IndividualMessageActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-
-
             }
 
             @Override
@@ -360,8 +348,6 @@ public class IndividualMessageActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
     public void senmessageimage()
     {
@@ -408,10 +394,6 @@ public class IndividualMessageActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-
-
             }
 
             @Override
@@ -429,7 +411,6 @@ public class IndividualMessageActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
 
