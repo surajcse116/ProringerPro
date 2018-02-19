@@ -38,6 +38,10 @@ public class NavigationHandler {
             SHARE_PROFILE = "share_profile",
             REQUEST_REVIEW = "request_review",
             INVITE_FRIEND = "invite_friend",
+            My_Profile = "my_profile",
+            TRANSACTION_HISTORY = "transaction_history",
+            CAMPAIGNS_SUMMARY = "campaigns_summary",
+            ANALYTICS = "analytics",
             LOGOUT = "log_out",
 
     SUPPORT = "support",
@@ -55,7 +59,7 @@ public class NavigationHandler {
     private ImageView find_local_projects_img, account_img, support_img, about_img;
     private ProBoldTextView find_local_projects_text, account_text, support_text, about_text;
     private RelativeLayout RLNotification, RLQuick_Reply, RLAvailability, RL_Social_Media, RL_Share_Profile, RL_Request_Review, RLInvite_friend, RLLog_out,
-            RLEmailSupport, RLFaq, RLProvideFeedback, RLTermsOfService, RLPrivacyPolicy;
+            RLEmailSupport, RLFaq, RLProvideFeedback, RLTermsOfService, RLPrivacyPolicy, RLTransactionHistory, RLCampaignSummary, RLMyProfile, RLAnalytics;
 
     private NavigationHandler() {
     }
@@ -99,6 +103,10 @@ public class NavigationHandler {
         RLProvideFeedback = (RelativeLayout) view.findViewById(R.id.RLProvideFeedback);
         RLTermsOfService = (RelativeLayout) view.findViewById(R.id.RLTermsOfService);
         RLPrivacyPolicy = (RelativeLayout) view.findViewById(R.id.RLPrivacyPolicy);
+        RLMyProfile = (RelativeLayout) view.findViewById(R.id.RLMyProfile);
+        RLTransactionHistory = (RelativeLayout) view.findViewById(R.id.RLTransactionHistory);
+        RLCampaignSummary = (RelativeLayout) view.findViewById(R.id.RLCampaignSummary);
+        RLAnalytics = (RelativeLayout) view.findViewById(R.id.RLAnalytics);
 
         LLAccount = (LinearLayout) view.findViewById(R.id.LLAccount);
         LLSupport = (LinearLayout) view.findViewById(R.id.LLSupport);
@@ -216,6 +224,33 @@ public class NavigationHandler {
             @Override
             public void onClick(View v) {
                 highlightTag(PRIVACY_POLICY);
+            }
+        });
+
+        RLMyProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                highlightTag(My_Profile);
+            }
+        });
+        RLTransactionHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                highlightTag(TRANSACTION_HISTORY);
+            }
+        });
+
+        RLCampaignSummary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                highlightTag(CAMPAIGNS_SUMMARY);
+            }
+        });
+
+        RLAnalytics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                highlightTag(ANALYTICS);
             }
         });
 
@@ -350,6 +385,27 @@ public class NavigationHandler {
             case INVITE_FRIEND:
                 listener.onClickItem(INVITE_FRIEND);
                 RLInvite_friend.setBackgroundColor(Color.parseColor("#656565"));
+                break;
+
+            case My_Profile:
+                listener.onClickItem(My_Profile);
+                RLMyProfile.setBackgroundColor(Color.parseColor("#656565"));
+                break;
+
+            case TRANSACTION_HISTORY:
+                listener.onClickItem(TRANSACTION_HISTORY);
+                RLTransactionHistory.setBackgroundColor(Color.parseColor("#656565"));
+                break;
+
+
+            case CAMPAIGNS_SUMMARY:
+                listener.onClickItem(CAMPAIGNS_SUMMARY);
+                RLCampaignSummary.setBackgroundColor(Color.parseColor("#656565"));
+                break;
+
+            case ANALYTICS:
+                listener.onClickItem(ANALYTICS);
+                RLAnalytics.setBackgroundColor(Color.parseColor("#656565"));
                 break;
 
             case LOGOUT:
@@ -520,7 +576,10 @@ public class NavigationHandler {
         RLProvideFeedback.setBackgroundColor(Color.TRANSPARENT);
         RLTermsOfService.setBackgroundColor(Color.TRANSPARENT);
         RLPrivacyPolicy.setBackgroundColor(Color.TRANSPARENT);
-
+        RLMyProfile.setBackgroundColor(Color.TRANSPARENT);
+        RLTransactionHistory.setBackgroundColor(Color.TRANSPARENT);
+        RLCampaignSummary.setBackgroundColor(Color.TRANSPARENT);
+        RLAnalytics.setBackgroundColor(Color.TRANSPARENT);
     }
 
 

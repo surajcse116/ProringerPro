@@ -21,8 +21,8 @@ package com.android.llc.proringer.pro.proringerpro.appconstant;
 public class ProConstant {
     public static boolean cameraRequested = false;
 
-//    public static String BASEURL = "http://esolz.co.in/lab6/proringer_latest/";
-    public static String BASEURL = "http://111.93.181.155/lab6/proringer_latest/";
+    public static String BASEURL = "http://esolz.co.in/lab6/proringer_latest/";
+//    public static String BASEURL = "http://111.93.181.155/lab6/proringer_latest/";
 
     public static String Login = BASEURL + "app_pro_login";
     public static String Logout = BASEURL + "app_logout?";

@@ -48,13 +48,11 @@ import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.BottomNav;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.NavigationHandler;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class LandScreenActivity extends AppCompatActivity {
@@ -325,6 +323,45 @@ public class LandScreenActivity extends AppCompatActivity {
                         tv_title.setText("INVITE FRIEND");
                         break;
 
+                    case NavigationHandler.My_Profile:
+                        toggleProMapSearch(false);
+                        closeDrawer();
+
+                        Intent intent=new Intent(LandScreenActivity.this,MyProfileActivity.class);
+                        startActivity(intent);
+
+                        break;
+
+                        case NavigationHandler.TRANSACTION_HISTORY:
+                        toggleProMapSearch(false);
+                        closeDrawer();
+                        transactSocialMedia();
+                        linear_buttombar.setVisibility(View.VISIBLE);
+                        iv_pro_logo.setVisibility(View.GONE);
+                        tv_title.setVisibility(View.VISIBLE);
+                        tv_title.setText("TRANSACTION HISTORY");
+                        break;
+
+                    case NavigationHandler.CAMPAIGNS_SUMMARY:
+                        toggleProMapSearch(false);
+                        closeDrawer();
+                        transactSocialMedia();
+                        linear_buttombar.setVisibility(View.VISIBLE);
+                        iv_pro_logo.setVisibility(View.GONE);
+                        tv_title.setVisibility(View.VISIBLE);
+                        tv_title.setText("CAMPAIGNS SUMMARY");
+                        break;
+
+                        case NavigationHandler.ANALYTICS:
+                        toggleProMapSearch(false);
+                        closeDrawer();
+                        transactSocialMedia();
+                        linear_buttombar.setVisibility(View.VISIBLE);
+                        iv_pro_logo.setVisibility(View.GONE);
+                        tv_title.setVisibility(View.VISIBLE);
+                        tv_title.setText("ANALYTICS");
+                        break;
+
                     case NavigationHandler.LOGOUT:
                         toggleProMapSearch(false);
                         closeDrawer();
@@ -471,35 +508,35 @@ public class LandScreenActivity extends AppCompatActivity {
         redirectToDashBoard();
 
 
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Logger.printMessage(getClass().getName(), "Refreshed token: " + refreshedToken);
+        //String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        //Logger.printMessage("Refresh_token", "-->" + refreshedToken);
 
 
-        HashMap<String, String> Params = new HashMap<>();
-        Params.put("user_id",  ProApplication.getInstance().getUserId());
-        Params.put("device_token", refreshedToken);
+//        HashMap<String, String> Params = new HashMap<>();
+//        Params.put("user_id",  ProApplication.getInstance().getUserId());
+//        Params.put("device_token", refreshedToken);
 
-        new CustomJSONParser().fireAPIForPostMethod(getApplication(), ProConstant.BASEURL + "users_device_update", Params, null, new CustomJSONParser.CustomJSONResponse() {
-            @Override
-            public void onSuccess(String result) {
-
-            }
-
-            @Override
-            public void onError(String error, String response) {
-
-            }
-
-            @Override
-            public void onError(String error) {
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-        });
+//        new CustomJSONParser().fireAPIForPostMethod(getApplication(), ProConstant.BASEURL + "users_device_update", Params, null, new CustomJSONParser.CustomJSONResponse() {
+//            @Override
+//            public void onSuccess(String result) {
+//
+//            }
+//
+//            @Override
+//            public void onError(String error, String response) {
+//
+//            }
+//
+//            @Override
+//            public void onError(String error) {
+//
+//            }
+//
+//            @Override
+//            public void onStart() {
+//
+//            }
+//        });
     }
 
     @Override
@@ -736,6 +773,7 @@ public class LandScreenActivity extends AppCompatActivity {
             Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
         }
     }
+
 
     /**
      * Fragment transaction for Watch List

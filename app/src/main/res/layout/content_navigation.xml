@@ -244,6 +244,98 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/RLMyProfile"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp">
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="My Profile"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_chevron_right_white" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RLTransactionHistory"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp">
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Transaction History"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_chevron_right_white" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RLCampaignSummary"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp">
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Campaign Summary"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_chevron_right_white" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RLAnalytics"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp">
+
+                <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Analytics"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_chevron_right_white" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/RLLog_out"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
