@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBGblueShade"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:text="Current Compaign"
+            android:textAllCaps="true"
+            android:textColor="@color/colorTextDark"
+            android:textSize="12sp" />
+
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="10dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp"
+            android:text="Current Compaign"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary">
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:text="Manage Compaign"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp" />
+
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="10dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp"
+            android:text="Manage Payment"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:id="@+id/LL_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                android:id="@+id/tv_level_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingBottom="10dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp"
+                android:text="Date"
+                android:textColor="@color/colorTextBlack"
+                android:textSize="16sp" />
+
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Transaction"
+                android:textColor="@color/colorTextBlack"
+                android:textSize="16sp" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+                android:id="@+id/tv_level_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingBottom="10dp"
+                android:paddingRight="5dp"
+                android:paddingTop="10dp"
+                android:text="Amount"
+                android:gravity="right"
+                android:textColor="@color/colorTextBlack"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcv_transaction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/LL_level" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

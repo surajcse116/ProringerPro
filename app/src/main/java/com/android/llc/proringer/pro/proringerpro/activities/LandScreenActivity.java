@@ -33,12 +33,15 @@ import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFra
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MyProjectsFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.WatchListFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.AvailabilityTimeSlotFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.CampaignsSummary;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfriendFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.NotificationsFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.ProjectListFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReplyFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.RequestReviewFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.SocialMediaFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.AccountAnalytics;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.TransactionHistory;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.main_content.ProjectMessagingFragment;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
@@ -64,13 +67,13 @@ public class LandScreenActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle = null;
     private FragmentManager fragmentManager = null;
     ProRegularTextView tv_title;
-    ImageView iv_pro_logo, search_local_pro_header,search_local_pro_header_backTool;
+    ImageView iv_pro_logo, search_local_pro_header, search_local_pro_header_backTool;
     LinearLayout linear_buttombar;
     private ImageView dashboard_image, my_projects_image, messages_image, fav_pro_image;
     private ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
     ArrayList<SetGetAPIPostData> arrayList = null;
     public MyLoader myLoader = null;
-    public String local_project_search_zip="";
+    public String local_project_search_zip = "";
 
     NavigationHandler navigationHandler = null;
 
@@ -92,17 +95,17 @@ public class LandScreenActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+        toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
-                Logger.printMessage("close-->","yes");
+                Logger.printMessage("close-->", "yes");
                 drawerReset();
                 super.onDrawerClosed(view);
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
-                Logger.printMessage("open-->","yes");
+                Logger.printMessage("open-->", "yes");
                 super.onDrawerOpened(drawerView);
             }
         };
@@ -145,7 +148,6 @@ public class LandScreenActivity extends AppCompatActivity {
                 projectTransactAndSetView();
             }
         });
-
 
 
         toggle.syncState();
@@ -327,15 +329,15 @@ public class LandScreenActivity extends AppCompatActivity {
                         toggleProMapSearch(false);
                         closeDrawer();
 
-                        Intent intent=new Intent(LandScreenActivity.this,MyProfileActivity.class);
+                        Intent intent = new Intent(LandScreenActivity.this, MyProfileActivity.class);
                         startActivity(intent);
 
                         break;
 
-                        case NavigationHandler.TRANSACTION_HISTORY:
+                    case NavigationHandler.TRANSACTION_HISTORY:
                         toggleProMapSearch(false);
                         closeDrawer();
-                        transactSocialMedia();
+                        transactTransactionHistory();
                         linear_buttombar.setVisibility(View.VISIBLE);
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
@@ -345,17 +347,17 @@ public class LandScreenActivity extends AppCompatActivity {
                     case NavigationHandler.CAMPAIGNS_SUMMARY:
                         toggleProMapSearch(false);
                         closeDrawer();
-                        transactSocialMedia();
+                        transactCampaignsSummary();
                         linear_buttombar.setVisibility(View.VISIBLE);
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("CAMPAIGNS SUMMARY");
                         break;
 
-                        case NavigationHandler.ANALYTICS:
+                    case NavigationHandler.ANALYTICS:
                         toggleProMapSearch(false);
                         closeDrawer();
-                        transactSocialMedia();
+                        transactAccountAnalytics();
                         linear_buttombar.setVisibility(View.VISIBLE);
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
@@ -621,7 +623,6 @@ public class LandScreenActivity extends AppCompatActivity {
     }
 
 
-
     /**
      * \
      * Fragment transaction of DashBoardFragment
@@ -797,7 +798,6 @@ public class LandScreenActivity extends AppCompatActivity {
     }
 
 
-
     /**
      * Fragment transaction for Watch List
      */
@@ -843,6 +843,77 @@ public class LandScreenActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Fragment transaction for Transaction History
+     */
+    public void transactTransactionHistory() {
+        toggleToolBar(false);
+
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + TransactionHistory.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + TransactionHistory.class.getCanonicalName());
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + TransactionHistory.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + TransactionHistory.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new TransactionHistory(), "" + TransactionHistory.class.getCanonicalName());
+        transaction.addToBackStack("" + TransactionHistory.class.getCanonicalName());
+        transaction.commit();
+
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
+        }
+    }
+
+
+    /**
+     * Fragment transaction for Campaigns Summary
+     */
+    public void transactCampaignsSummary() {
+        toggleToolBar(false);
+
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + CampaignsSummary.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + CampaignsSummary.class.getCanonicalName());
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + CampaignsSummary.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + CampaignsSummary.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new CampaignsSummary(), "" + CampaignsSummary.class.getCanonicalName());
+        transaction.addToBackStack("" + CampaignsSummary.class.getCanonicalName());
+        transaction.commit();
+
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
+        }
+    }
+
+
+  /**
+     * Fragment transaction for transact Analytics
+     */
+    public void transactAccountAnalytics() {
+        toggleToolBar(false);
+
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + AccountAnalytics.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + AccountAnalytics.class.getCanonicalName());
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + AccountAnalytics.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + AccountAnalytics.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new AccountAnalytics(), "" + AccountAnalytics.class.getCanonicalName());
+        transaction.addToBackStack("" + AccountAnalytics.class.getCanonicalName());
+        transaction.commit();
+
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Logger.printMessage("home_click", "-->yes");
@@ -875,7 +946,7 @@ public class LandScreenActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("");
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
                 /** Called when a drawer has settled in a completely closed state. */
                 public void onDrawerClosed(View view) {
                     super.onDrawerClosed(view);
@@ -947,7 +1018,8 @@ public class LandScreenActivity extends AppCompatActivity {
             }
         }
     }
-    public void projectTransactAndSetView(){
+
+    public void projectTransactAndSetView() {
         toggleProMapSearch(true);
         bottomNavInstance.highLightSelected(BottomNav.CREATE_PROJECT);
         transactProjectList();
