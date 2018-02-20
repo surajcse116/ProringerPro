@@ -39,12 +39,22 @@
                         android:background="@color/colorLightGray"
                         android:padding="2dp">
 
+
                         <ImageView
                             android:id="@+id/profile_pic"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/colorPrimary"
-                            android:src="@color/colorHeader" />
+                            android:background="@color/colorPrimary" />
+
+                        <ImageView
+                            android:id="@+id/img_upload"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:src="@drawable/ic_photo_camera_upload"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:alpha="0.6"/>
+
 
                     </RelativeLayout>
 

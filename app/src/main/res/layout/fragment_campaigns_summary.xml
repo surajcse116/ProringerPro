@@ -1,6 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBGblueShade">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Campaign"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="14sp" />
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:id="@+id/tv_premium_monthly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Premium Monthly"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="14sp" />
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:id="@+id/tv_remaining_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_premium_monthly"
+            android:layout_centerHorizontal="true"
+            android:text="17"
+            android:textColor="@color/colorAccent"
+            android:textSize="28sp" />
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:id="@+id/level_remaining_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_remaining_day"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="Days Remaining"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:id="@+id/RL_Free_Premium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/level_remaining_day"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/img_free_premium"
+                android:layout_margin="5dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/free_campaign"/>
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv1"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/img_free_premium"
+                android:text="Free(Very Limited)"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/img_free_premium"
+                android:text="Free business listing with no marketing cost"
+                android:textColor="@color/colorTextDark"
+                android:textSize="10sp" />
+
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv111"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv11"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/img_free_premium"
+                android:text="Very basic business listing with limited access to account features. Customize your listing and browse available projects posted in your area."
+                android:textColor="@color/colorTextDark"
+                android:textSize="8sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RL_Premium_monthly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RL_Free_Premium"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/img_premium_monthly"
+                android:layout_margin="5dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/premium_campaign"/>
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv2"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/img_premium_monthly"
+                android:text="Premium Monthly"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv2"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/img_premium_monthly"
+                android:text="Unlock your accounts for potential on a month to month basis"
+                android:textColor="@color/colorTextDark"
+                android:textSize="10sp" />
+
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv222"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv22"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/img_premium_monthly"
+                android:text="Get your business verified. Unlock important analytical data on how your listing is performing, receive instant notifications on posted jobs and homeowner request, offer exclusive deals, add your licenses / certificates, higher business placement in searchs and never pay for an individual lead. Unlimited leads for as long as you are a premium user"
+                android:textColor="@color/colorTextDark"
+                android:textSize="8sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RL_Premium_annually"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RL_Premium_monthly"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/img_premium_annually"
+                android:layout_margin="5dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/premium_campaign"/>
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv3"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/img_premium_annually"
+                android:text="Premium Annually"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv3"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/img_premium_annually"
+                android:text="Save big when you choose an annually premium subscription"
+                android:textColor="@color/colorTextDark"
+                android:textSize="10sp" />
+
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv333"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv33"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/img_premium_annually"
+                android:text="Get your business verified. Unlock important analytical data on how your listing is performing, receive instant notifications on posted jobs and homeowner request, offer exclusive deals, add your licenses / certificates, higher business placement in searchs and never pay for an individual lead. Unlimited leads for as long as you are a premium user"
+                android:textColor="@color/colorTextDark"
+                android:textSize="8sp" />
+
+
+        </RelativeLayout>
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="12sp"
+            android:id="@+id/tv_upgrade_level"
+            android:textColor="@color/colorTextDark"
+            android:layout_below="@+id/RL_Premium_annually"
+            android:text="Consider upgrading from the monthly subscription to an annual subscription and save big. Based on the days remaining on your current monthly subscription we calculate that if you upgrade to premuim service today your prorated amount due is reflected below."/>
+
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProBoldEditText
+            android:id="@+id/et_member_money"
+            android:layout_below="@+id/tv_upgrade_level"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_selecter"
+            android:hint="$343.33"
+            android:inputType="text"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="14sp" />
+
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:textSize="12sp"
+            android:id="@+id/tv_cancel_member"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorAccent"
+            android:layout_below="@+id/et_member_money"
+            android:text="Cancel Membership"/>
+
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:textSize="16sp"
+            android:id="@+id/tv_save"
+            android:textColor="@color/colorPrimary"
+            android:layout_below="@+id/tv_cancel_member"
+            android:text="save"
+            android:gravity="center"
+            android:background="@color/colorAccent"
+            android:textAllCaps="true"/>
+
+    </RelativeLayout>
+
+</ScrollView>

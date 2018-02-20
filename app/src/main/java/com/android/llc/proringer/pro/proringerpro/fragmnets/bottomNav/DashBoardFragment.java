@@ -2,6 +2,7 @@ package com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,17 +26,22 @@ import com.android.llc.proringer.pro.proringerpro.activities.AddServiceAreaActiv
 import com.android.llc.proringer.pro.proringerpro.activities.AddServicesActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.CompanyProfileActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.LicenceAddActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.LicenceListActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PortFolioActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PremiumActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.UserInformationActivity;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.cropImagePackage.CropImage;
+import com.android.llc.proringer.pro.proringerpro.cropImagePackage.CropImageView;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
+import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
@@ -45,7 +51,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by su on 9/22/17.
@@ -66,9 +75,8 @@ public class DashBoardFragment extends Fragment {
     String Pro_verified="";
     //PopupWindow popupWindow;
     int CASEAPPLY=0;
-    String text;
 
-    String city="",state="",zip="",address="";
+    String city="",state="",zip="",address="",mCurrentPhotoPath,text;
 
 
     @Nullable
@@ -137,8 +145,6 @@ public class DashBoardFragment extends Fragment {
             }
         });
 
-        loadAndShowData();
-
         userInformation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,6 +188,19 @@ public class DashBoardFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        view.findViewById(R.id.profile_pic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getActivity(), PermissionController.class);
+                intent.setAction(PermissionController.ACTION_READ_STORAGE_PERMISSION);
+                startActivityForResult(intent, 200);
+                //showUploadImage();
+            }
+        });
+
+        loadAndShowData();
     }
 
     public  void loadAndShowData()
@@ -395,5 +414,98 @@ public class DashBoardFragment extends Fragment {
 
         dialog.show();
     }
+
+    public void onActivityResult(final int requestCode, int resultCode, final Intent data) {
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+
+                mCurrentPhotoPath = result.getUri().toString();
+
+                loadProfileImage();
+
+                Logger.printMessage("path-->", mCurrentPhotoPath);
+
+                Toast.makeText(getActivity(), "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(getActivity(), "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
+            }
+        } else if (requestCode == 200 && resultCode == RESULT_OK) {
+//                showImagePickerOption();
+            startCropImageActivity(null);
+        }
+    }
+
+
+
+    /**
+     * Start crop image activity for the given image.
+     */
+    private void startCropImageActivity(Uri imageUri) {
+        Intent intent = CropImage.activity(imageUri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(false)
+                .setAspectRatio(1,1)
+                .getIntent(getActivity());
+        startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
+
+    public void loadProfileImage() {
+        if (mCurrentPhotoPath.trim().equals("")) {
+            Toast.makeText(getActivity(), "Please choose Image", Toast.LENGTH_SHORT).show();
+        } else {
+            ArrayList<SetGetAPIPostData> arrayListPostParamsValues = new ArrayList<>();
+
+
+            SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+            setGetAPIPostData.setPARAMS("user_id");
+            setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+            arrayListPostParamsValues.add(setGetAPIPostData);
+
+            ArrayList<File> filesImages = new ArrayList<>();
+            File file=new File(mCurrentPhotoPath);
+            filesImages.add(file);
+
+
+            CustomJSONParser.ImageParam = "profile_image";
+
+            new CustomJSONParser().APIForWithPhotoPostMethod(getActivity(), ProConstant.profileImageAPI, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
+                @Override
+                public void onSuccess(String result) {
+                    Logger.printMessage("result", result);
+                    myload.dismissLoader();
+                    try {
+                        JSONObject jo = new JSONObject(result);
+                        String msg = jo.getString("message");
+                        Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
+
+                        loadAndShowData();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(String error, String response) {
+                    myload.dismissLoader();
+                }
+
+                @Override
+                public void onError(String error) {
+                    myload.dismissLoader();
+                }
+
+                @Override
+                public void onStart() {
+                    myload.showLoader();
+                }
+            });
+
+        }
+    }
+
 
 }

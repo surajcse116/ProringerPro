@@ -607,7 +607,7 @@ public class LandScreenActivity extends AppCompatActivity {
      * \
      * Fragment transaction of DashBoardFragment
      */
-    private void transactDashBoard() {
+    public void transactDashBoard() {
         toggleToolBar(false);
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + DashBoardFragment.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + DashBoardFragment.class.getCanonicalName());
