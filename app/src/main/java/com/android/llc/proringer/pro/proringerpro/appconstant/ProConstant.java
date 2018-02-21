@@ -79,6 +79,8 @@ public class ProConstant {
     public static String app_pro_profile_img = BASEURL + "app_pro_profile_img";
     public static String app_pro_myprofile = BASEURL + "app_pro_myprofile?";
 
+    public static String app_individual_portfolio_image = BASEURL + "app_individual_portfolio_image?";
+
 
     public static String latitude = "";
     public static String longtitude = "";

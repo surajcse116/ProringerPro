@@ -1,8 +1,10 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,16 +18,22 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.adapter.ProDetailsServiceAreaAdapter;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProDetailsServiceAreaDialogAdapter;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProDetailsServiceDialogAdapter;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProsDetailsBusinessHourAdapter;
+import com.android.llc.proringer.pro.proringerpro.adapter.ProsDetailsImageAdapter;
+import com.android.llc.proringer.pro.proringerpro.adapter.ProsDetailsLicenseAdapter;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProsDetailsServiceAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
+import com.android.llc.proringer.pro.proringerpro.graphics.ImageViewTouch;
+import com.android.llc.proringer.pro.proringerpro.graphics.ImageViewTouchBase;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
+import com.android.llc.proringer.pro.proringerpro.helper.ShowMyDialog;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -46,10 +54,13 @@ public class MyProfileActivity extends AppCompatActivity {
     MyLoader myload;
     JSONObject infoArrayJsonObject = null;
     JSONObject infoJsonObject = null;
-    ImageView img_top, img_profile;
+    ImageView img_top, img_profile,img_achievements;
     ProsDetailsServiceAdapter proDetailsService;
     ProsDetailsBusinessHourAdapter prosDetailsBusinessHourAdapter;
-    RecyclerView rcv_service,rcv_business_hour,rcv_service_area,rcv_license;
+    ProsDetailsLicenseAdapter prosDetailsLicenseAdapter;
+    ProsDetailsImageAdapter prosDetailsImageAdapter;
+
+    RecyclerView rcv_service,rcv_business_hour,rcv_service_area,rcv_license,rcv_project_gallery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +68,7 @@ public class MyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_profile);
         img_top = (ImageView) findViewById(R.id.img_top);
         img_profile = (ImageView)findViewById(R.id.img_profile);
+        img_achievements = (ImageView) findViewById(R.id.img_achievements);
 
         rcv_service = (RecyclerView) findViewById(R.id.rcv_service);
         rcv_service.setLayoutManager(new GridLayoutManager(MyProfileActivity.this, 2));
@@ -70,6 +82,10 @@ public class MyProfileActivity extends AppCompatActivity {
         rcv_license = (RecyclerView) findViewById(R.id.rcv_license);
         rcv_license.setLayoutManager(new GridLayoutManager(MyProfileActivity.this, 2));
 
+        rcv_project_gallery = (RecyclerView) findViewById(R.id.rcv_project_gallery);
+        rcv_project_gallery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+
         findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +94,29 @@ public class MyProfileActivity extends AppCompatActivity {
         });
 
         myload = new MyLoader(MyProfileActivity.this);
+
+        findViewById(R.id.tv_show_more_describetion).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    if (infoArrayJsonObject != null && !infoArrayJsonObject.getJSONObject("about").getString("description").trim().equals("")) {
+
+                        // showDescribetionDialog(infoArrayJsonObject.getJSONObject("about").getString("description"));
+                        new ShowMyDialog(MyProfileActivity.this).showDescribetionDialog("About", infoArrayJsonObject.getJSONObject("about").getString("description"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        findViewById(R.id.tv_view_all).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         loadAndShowData();
     }
 
@@ -115,6 +154,8 @@ public class MyProfileActivity extends AppCompatActivity {
                         ((ProRegularTextView) findViewById(R.id.tv_contact_pro_btn_unverified)).setVisibility(View.VISIBLE);
                     }
 
+
+                    ((ProRegularTextView) findViewById(R.id.tv_toolbar)).setText(infoJsonObject.getString("company_name"));
                     ((ProRegularTextView) findViewById(R.id.tv_company_name)).setText(infoJsonObject.getString("company_name"));
                     ((ProRegularTextView) findViewById(R.id.tv_user_name)).setText(infoJsonObject.getString("user_name"));
                     ((ProRegularTextView) findViewById(R.id.tv_designation)).setText(infoJsonObject.getString("designation"));
@@ -193,7 +234,54 @@ public class MyProfileActivity extends AppCompatActivity {
                         }
                     });
 
+                    ProDetailsServiceAreaAdapter proDetailsServiceAreaAdapter = new ProDetailsServiceAreaAdapter(MyProfileActivity.this, infoArrayJsonObject.getJSONArray("service_area"), new onOptionSelected() {
+                        @Override
+                        public void onItemPassed(int position, String value) {
+                            try {
+                                if (value.equalsIgnoreCase("more")) {
 
+                                    showServiceAreaDialog(infoArrayJsonObject.getJSONArray("service_area"));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    rcv_service_area.setAdapter(proDetailsServiceAreaAdapter);
+
+
+                    prosDetailsLicenseAdapter = new ProsDetailsLicenseAdapter(MyProfileActivity.this, infoArrayJsonObject.getJSONArray("licence"));
+                    rcv_license.setAdapter(prosDetailsLicenseAdapter);
+
+
+
+                    JSONObject company_infoJsonOBJ = infoArrayJsonObject.getJSONObject("company_info");
+
+                    ((ProRegularTextView) findViewById(R.id.tv_business_since)).setText(company_infoJsonOBJ.getString("business_since"));
+                    ((ProRegularTextView) findViewById(R.id.tv_no_of_employee)).setText(company_infoJsonOBJ.getString("no_of_employee"));
+                    ((ProRegularTextView) findViewById(R.id.tv_proringer_awarded)).setText(company_infoJsonOBJ.getString("proringer_awarded"));
+                    ((ProRegularTextView) findViewById(R.id.tv_business_review)).setText(company_infoJsonOBJ.getString("business_review"));
+                    ((ProRegularTextView) findViewById(R.id.tv_last_verified_on)).setText(company_infoJsonOBJ.getString("last_verified_on"));
+
+
+
+                    ((ProRegularTextView) findViewById(R.id.tv_no_of_project_value)).setText(infoArrayJsonObject.getString("total_project"));
+                    ((ProRegularTextView) findViewById(R.id.tv_no_of_picture_value)).setText(infoArrayJsonObject.getString("total_picture"));
+
+                    prosDetailsImageAdapter = new ProsDetailsImageAdapter(MyProfileActivity.this, infoArrayJsonObject.getJSONArray("project_gallery"), new onOptionSelected() {
+                        @Override
+                        public void onItemPassed(int position, String value) {
+                            Intent intent = new Intent(MyProfileActivity.this, ProsProjectGalleryActivity.class);
+                            intent.putExtra("portfolio_id", value);
+                            startActivity(intent);
+                        }
+                    });
+                    rcv_project_gallery.setAdapter(prosDetailsImageAdapter);
+
+                    if (!infoArrayJsonObject.getString("achievement").equals(""))
+                        Glide.with(MyProfileActivity.this).load(infoArrayJsonObject.getString("achievement"))
+//                                                                                                                          .centerCrop()
+                                .into(img_achievements);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -295,5 +383,67 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public interface onOptionSelected {
         void onItemPassed(int position, String value);
+    }
+
+    public void showImageProsLicenceDialog(String url) {
+
+        Logger.printMessage("url", url);
+        final Dialog dialog = new Dialog(MyProfileActivity.this, android.R.style.Theme_Light);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_dialogbox_portfolio);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        dialog.findViewById(R.id.RelativeMainLL).getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(MyProfileActivity.this)[1]);
+        dialog.findViewById(R.id.RelativeMainLL).getLayoutParams().height = MethodsUtils.getScreenHeightAndWidth(MyProfileActivity.this)[0];
+
+
+        dialog.findViewById(R.id.img_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+
+        ImageViewTouch mImage = (ImageViewTouch) dialog.findViewById(R.id.imageview_dialog);
+
+        // set the default image display type
+        mImage.setDisplayType(ImageViewTouchBase.DisplayType.FIT_WIDTH);
+        Glide.with(MyProfileActivity.this).load(url).into(mImage);
+
+
+        mImage.setSingleTapListener(
+                new ImageViewTouch.OnImageViewTouchSingleTapListener() {
+
+                    @Override
+                    public void onSingleTapConfirmed() {
+                        Logger.printMessage("onSingleTapConfirmed", "onSingleTapConfirmed");
+                    }
+                }
+        );
+
+
+        mImage.setDoubleTapListener(
+                new ImageViewTouch.OnImageViewTouchDoubleTapListener() {
+
+                    @Override
+                    public void onDoubleTap() {
+                        Logger.printMessage("onDoubleTap", "onDoubleTap");
+                    }
+                }
+        );
+
+        mImage.setOnDrawableChangedListener(
+                new ImageViewTouchBase.OnDrawableChangeListener() {
+
+                    @Override
+                    public void onDrawableChanged(Drawable drawable) {
+                        Logger.printMessage("onBitmapChanged", "onBitmapChanged: " + drawable);
+                    }
+                }
+        );
+
+
+        dialog.show();
     }
 }

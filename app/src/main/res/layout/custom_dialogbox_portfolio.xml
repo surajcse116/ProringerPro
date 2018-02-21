@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeMainLL"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <com.android.llc.proringer.pro.proringerpro.graphics.ImageViewTouch
+        android:id="@+id/imageview_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <ImageView
+        android:id="@+id/img_close"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:padding="10dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_cross_circle" />
+
+</RelativeLayout>
+
+
+
