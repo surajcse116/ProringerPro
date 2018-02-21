@@ -8,13 +8,13 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"/>
+        android:layout_height="5dp" />
 
     <android.support.v7.widget.CardView
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         card_view:cardElevation="3dp">
 
         <LinearLayout
@@ -44,25 +44,42 @@
                     android:layout_toRightOf="@+id/img_profile">
 
 
-                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                        android:id="@+id/tv_report"
-                        android:layout_width="54dp"
-                        android:layout_height="54dp"
+                    <LinearLayout
+                        android:id="@+id/LL_Reply_Report"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
                         android:layout_alignParentRight="true"
-                        android:text="Report"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="12sp"/>
+                        android:orientation="horizontal">
+
+                        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                            android:id="@+id/tv_reply"
+                            android:layout_width="45dp"
+                            android:layout_height="match_parent"
+                            android:text="Reply"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="12sp" />
+
+                        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                            android:id="@+id/tv_report"
+                            android:layout_width="45dp"
+                            android:layout_height="match_parent"
+                            android:text="Report"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="12sp" />
+
+
+                    </LinearLayout>
 
 
                     <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                        android:layout_marginTop="10dp"
                         android:id="@+id/tv_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/tv_report"
+                        android:layout_marginTop="10dp"
+                        android:layout_toLeftOf="@+id/LL_Reply_Report"
                         android:text="Terry Belley"
                         android:textColor="@color/colorTextDark"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
 
 
                     <RatingBar
@@ -97,8 +114,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/img_profile"
-                android:padding="10dp"
                 android:maxLines="2"
+                android:padding="10dp"
                 android:text="hbhf huidsbfgnkfri ioreurj kirenr gvsdhr fnjfmn jerjhr jndnj rnjrnjrnrnjr j jrjrjr hbjhfhfhfhb jfjhf"
                 android:textSize="12sp" />
 
@@ -108,63 +125,63 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/CardViewReply"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="1dp"
         card_view:cardElevation="3dp">
 
         <LinearLayout
-            android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_marginTop="10dp"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
+                android:layout_marginTop="10dp"
                 android:padding="2dp"
                 android:src="@drawable/ic_reply_review" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
                     android:id="@+id/tv_review_reply_by"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
-                    android:paddingBottom="5dp"
                     android:text="gvsgsgsgsg"
                     android:textColor="@color/colorTextBlack"
                     android:textSize="12sp" />
 
 
                 <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                    android:layout_toRightOf="@+id/tv_review_reply_by"
                     android:id="@+id/tv_review_reply_on_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:paddingTop="10dp"
+                    android:layout_toRightOf="@+id/tv_review_reply_by"
                     android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
                     android:text="gvsgsgsgsg"
                     android:textSize="12sp" />
 
                 <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-                    android:layout_below="@+id/tv_review_reply_by"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp"
                     android:id="@+id/tv_review_reply"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_review_reply_by"
                     android:maxLines="2"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:text="hbhf huidsbfgnkfri ioreurj kirenr gvsdhr fnjfmn jerjhr jndnj rnjrnjrnrnjr j jrjrjr hbjhfhfhfhb jfjhf"
                     android:textSize="12sp" />
 
@@ -176,6 +193,6 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"/>
+        android:layout_height="5dp" />
 
 </LinearLayout>

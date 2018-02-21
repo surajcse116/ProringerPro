@@ -18,7 +18,10 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.activities.ProjectDetailsActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.ProsReportAbuseActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.ProsReviewAllListActivity;
+import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.ShowMyDialog;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -31,7 +34,7 @@ import org.json.JSONException;
  * Created by su on 2/21/18.
  */
 
-public class ProsReviewAllAdapter extends RecyclerView.Adapter<ProsReviewAllAdapter.MyViewHolder>{
+public class ProsReviewAllAdapter extends RecyclerView.Adapter<ProsReviewAllAdapter.MyViewHolder> {
     Context context;
     JSONArray jsonInfoArray;
 
@@ -65,7 +68,42 @@ public class ProsReviewAllAdapter extends RecyclerView.Adapter<ProsReviewAllAdap
                 holder.tv_report.setVisibility(View.GONE);
             }
 
+            if (jsonInfoArray.getJSONObject(position).getInt("review_reply")==0) {
+                holder.tv_reply.setVisibility(View.VISIBLE);
+            } else {
+                holder.tv_reply.setVisibility(View.GONE);
+            }
+
             holder.tv_report.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        if (jsonInfoArray.getJSONObject(position).getString("review_report_status").trim().equals("0")) {
+                            Intent intent = new Intent(context, ProsReportAbuseActivity.class);
+                            intent.putExtra("review_report_id", jsonInfoArray.getJSONObject(position).getString("id"));
+                            context.startActivity(intent);
+                        } else {
+
+                            CustomAlert customAlert = new CustomAlert();
+                            customAlert.getEventFromNormalAlert(context, "Contact Us", "Sorry! You have already added a report for this review", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
+                                @Override
+                                public void callBackOk() {
+
+                                }
+
+                                @Override
+                                public void callBackCancel() {
+
+                                }
+                            });
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+
+            holder.tv_reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -194,8 +232,6 @@ public class ProsReviewAllAdapter extends RecyclerView.Adapter<ProsReviewAllAdap
                         }
                     }
                 });
-
-
             }
 
             if (position == jsonInfoArray.length() - 1) {
@@ -214,7 +250,7 @@ public class ProsReviewAllAdapter extends RecyclerView.Adapter<ProsReviewAllAdap
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ProRegularTextView tv_name, tv_review_date, tv_report, tv_review_comment, tv_review_reply, tv_review_reply_by, tv_review_reply_on_date;
+        ProRegularTextView tv_name, tv_review_date, tv_report, tv_review_comment, tv_review_reply, tv_review_reply_by, tv_review_reply_on_date, tv_reply;
         RatingBar rbar;
         ImageView img_profile;
         CardView CardViewReply;
@@ -227,6 +263,7 @@ public class ProsReviewAllAdapter extends RecyclerView.Adapter<ProsReviewAllAdap
             tv_name = (ProRegularTextView) itemView.findViewById(R.id.tv_name);
             tv_review_date = (ProRegularTextView) itemView.findViewById(R.id.tv_review_date);
             tv_report = (ProRegularTextView) itemView.findViewById(R.id.tv_report);
+            tv_reply = (ProRegularTextView) itemView.findViewById(R.id.tv_reply);
 
             tv_review_comment = (ProRegularTextView) itemView.findViewById(R.id.tv_review_comment);
             tv_review_comment.setMovementMethod(LinkMovementMethod.getInstance());

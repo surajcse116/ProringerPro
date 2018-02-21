@@ -139,7 +139,6 @@ public class ProsReviewAllListActivity extends AppCompatActivity {
         apiPostDataArrayList.add(setGetAPIPostData);
 
 
-
         new CustomJSONParser().fireAPIForGetMethod(ProsReviewAllListActivity.this, ProConstant.app_homeowner_allreview, apiPostDataArrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
