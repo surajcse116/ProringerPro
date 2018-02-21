@@ -113,7 +113,21 @@ public class MyProfileActivity extends AppCompatActivity {
         findViewById(R.id.tv_view_all).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try {
+                    if (infoJsonObject!=null) {
+                        Logger.printMessage("pros_id", "-->" + ProApplication.getInstance().getUserId());
+                        Intent intent = new Intent(MyProfileActivity.this, ProsReviewAllListActivity.class);
+                        intent.putExtra("pros_company_name", infoJsonObject.getString("company_name"));
+                        intent.putExtra("pros_id", ProApplication.getInstance().getUserId());
+                        intent.putExtra("total_avg_review", infoArrayJsonObject.getString("total_avg_review"));
+                        intent.putExtra("img", infoJsonObject.getString("profile_image"));
+                        intent.putExtra("total_review", infoArrayJsonObject.getString("total_review"));
+                        startActivity(intent);
+                    }
 
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 

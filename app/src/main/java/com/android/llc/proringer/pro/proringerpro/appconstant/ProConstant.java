@@ -80,6 +80,7 @@ public class ProConstant {
     public static String app_pro_myprofile = BASEURL + "app_pro_myprofile?";
 
     public static String app_individual_portfolio_image = BASEURL + "app_individual_portfolio_image?";
+    public static String app_homeowner_allreview = BASEURL + "app_homeowner_allreview?";
 
 
     public static String latitude = "";

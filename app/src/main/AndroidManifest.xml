@@ -249,6 +249,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
+        <activity android:name=".activities.ProsReviewAllListActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
 
         <activity android:name=".cropImagePackage.CropImageActivity"/>
 
