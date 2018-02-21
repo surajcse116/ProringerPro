@@ -10,16 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.adapter.ProDetailsServiceAreaAdapter;
-import com.android.llc.proringer.pro.proringerpro.adapter.ProsDetailsBusinessHourAdapter;
-import com.android.llc.proringer.pro.proringerpro.adapter.ProsDetailsImageAdapter;
-import com.android.llc.proringer.pro.proringerpro.adapter.ProsDetailsLicenseAdapter;
-import com.android.llc.proringer.pro.proringerpro.adapter.ProsDetailsServiceAdapter;
 import com.android.llc.proringer.pro.proringerpro.adapter.ProsReviewAllAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
