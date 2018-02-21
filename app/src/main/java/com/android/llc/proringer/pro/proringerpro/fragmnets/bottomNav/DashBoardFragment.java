@@ -471,7 +471,7 @@ public class DashBoardFragment extends Fragment {
 
             CustomJSONParser.ImageParam = "profile_image";
 
-            new CustomJSONParser().APIForWithPhotoPostMethod(getActivity(), ProConstant.profileImageAPI, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
+            new CustomJSONParser().APIForWithPhotoPostMethod(getActivity(), ProConstant.app_pro_profile_img, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
                 @Override
                 public void onSuccess(String result) {
                     Logger.printMessage("result", result);
