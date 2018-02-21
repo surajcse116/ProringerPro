@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.activities.ProjectDetailsActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.ProReplyReviewActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.ProsReportAbuseActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.ProsReviewAllListActivity;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
@@ -106,7 +106,29 @@ public class ProsReviewAllAdapter extends RecyclerView.Adapter<ProsReviewAllAdap
             holder.tv_reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    try {
+                        if (jsonInfoArray.getJSONObject(position).getInt("review_reply")==0) {
+                            Intent intent = new Intent(context, ProReplyReviewActivity.class);
+                            intent.putExtra("review_reply_id", jsonInfoArray.getJSONObject(position).getString("id"));
+                            context.startActivity(intent);
+                        } else {
 
+                            CustomAlert customAlert = new CustomAlert();
+                            customAlert.getEventFromNormalAlert(context, "Contact Us", "Sorry! You have already added a reply for this review", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
+                                @Override
+                                public void callBackOk() {
+
+                                }
+
+                                @Override
+                                public void callBackCancel() {
+
+                                }
+                            });
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
             });
 

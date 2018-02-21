@@ -1,13 +1,13 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
@@ -18,26 +18,23 @@ import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
-
 /**
- * Created by su on 8/4/17.
+ * Created by su on 2/21/18.
  */
 
-public class ProsReportAbuseActivity extends AppCompatActivity {
-    String review_report_id = "";
+public class ProReplyReviewActivity extends AppCompatActivity {
+    String review_reply_id = "";
     MyLoader myLoader = null;
 
     ProRegularEditText pro_review_description_text;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pro_report_abuse_review);
+        setContentView(R.layout.activity_reply_review);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -45,13 +42,13 @@ public class ProsReportAbuseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         pro_review_description_text = (ProRegularEditText) findViewById(R.id.pro_review_description_text);
 
-        myLoader = new MyLoader(ProsReportAbuseActivity.this);
+        myLoader = new MyLoader(ProReplyReviewActivity.this);
 
         if (getIntent().getExtras() != null) {
-            review_report_id = getIntent().getExtras().getString("review_report_id");
+            review_reply_id = getIntent().getExtras().getString("review_reply_id");
         }
 
-        findViewById(R.id.pro_review_report_continue).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.pro_reply_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -59,10 +56,10 @@ public class ProsReportAbuseActivity extends AppCompatActivity {
 
                 if ((text.length() >= 30)) {
 //                    ((ProRegularEditText) findViewById(R.id.pro_review_description_text)).setError("Please enter report abuse description");
-                    submitReviewReport();
+                    submitReviewReply();
                 } else {
                     CustomAlert customAlert = new CustomAlert();
-                    customAlert.getEventFromNormalAlert(ProsReportAbuseActivity.this, "Report Abuse", "Please tell us more Must be over 30 characters.", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
+                    customAlert.getEventFromNormalAlert(ProReplyReviewActivity.this, "Report Abuse", "Please tell us more Must be over 30 characters.", "ok", "cancel", new CustomAlert.MyCustomAlertListener() {
                         @Override
                         public void callBackOk() {
 
@@ -78,6 +75,7 @@ public class ProsReportAbuseActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home)
@@ -91,14 +89,14 @@ public class ProsReportAbuseActivity extends AppCompatActivity {
         finish();
     }
 
-    public void submitReviewReport() {
-
+    public void submitReviewReply(){
         HashMap<String, String> Params = new HashMap<>();
         Params.put("user_id", ProApplication.getInstance().getUserId());
-        Params.put("review_report_id", review_report_id);
+        Params.put("pro_id", ProApplication.getInstance().getUserId());
+        Params.put("review_reply_id", review_reply_id);
         Params.put("report_comment", (((ProRegularEditText) findViewById(R.id.pro_review_description_text)).getText().toString().trim()));
 
-        new CustomJSONParser().fireAPIForPostMethod(ProsReportAbuseActivity.this, ProConstant.app_homeowner_reportreview, Params, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForPostMethod(ProReplyReviewActivity.this, ProConstant.app_homeowner_replyreview, Params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
 
@@ -110,7 +108,7 @@ public class ProsReportAbuseActivity extends AppCompatActivity {
                     JSONObject jsonObject=new JSONObject(result);
 
                     CustomAlert customAlert = new CustomAlert();
-                    customAlert.getOkEventFromNormalAlert(ProsReportAbuseActivity.this, "Pros Report Abuse", "" + jsonObject.getString("message"), new CustomAlert.MyCustomAlertListener() {
+                    customAlert.getOkEventFromNormalAlert(ProReplyReviewActivity.this, "Pros Review Reply", "" + jsonObject.getString("message"), new CustomAlert.MyCustomAlertListener() {
                         @Override
                         public void callBackOk() {
                             finish();
@@ -134,7 +132,7 @@ public class ProsReportAbuseActivity extends AppCompatActivity {
 
 
                 CustomAlert customAlert = new CustomAlert();
-                customAlert.getOkEventFromNormalAlert(ProsReportAbuseActivity.this, "Pros Report Abuse", "" + error, new CustomAlert.MyCustomAlertListener() {
+                customAlert.getOkEventFromNormalAlert(ProReplyReviewActivity.this, "Pros Review Reply", "" + error, new CustomAlert.MyCustomAlertListener() {
                     @Override
                     public void callBackOk() {
                         finish();
@@ -145,17 +143,16 @@ public class ProsReportAbuseActivity extends AppCompatActivity {
 
                     }
                 });
-
             }
 
             @Override
             public void onError(String error) {
                 if (myLoader != null && myLoader.isMyLoaderShowing())
-                myLoader.dismissLoader();
+                    myLoader.dismissLoader();
 
 
                 CustomAlert customAlert = new CustomAlert();
-                customAlert.getOkEventFromNormalAlert(ProsReportAbuseActivity.this, "Pros Report Abuse", "" + error, new CustomAlert.MyCustomAlertListener() {
+                customAlert.getOkEventFromNormalAlert(ProReplyReviewActivity.this, "Pros Review Reply", "" + error, new CustomAlert.MyCustomAlertListener() {
                     @Override
                     public void callBackOk() {
                         finish();
@@ -166,7 +163,6 @@ public class ProsReportAbuseActivity extends AppCompatActivity {
 
                     }
                 });
-
             }
 
             @Override
