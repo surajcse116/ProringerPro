@@ -61,7 +61,7 @@
                 android:id="@+id/SplitLine_hor1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#b6b6b3" />
+                android:background="@color/colorTextDark" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -96,7 +96,7 @@
                     android:padding="10dp"
                     android:textColorHint="@color/colorDarkGray"
                     android:textSize="14sp"
-                    android:background="#ffffff"
+                    android:background="@color/colorPrimary"
                     android:hint=" Hi, Thanks for submitting your project request with ProRinger. We would love to speak with you about your projection. When is a good time for us to call to discuss the details? "
                     />
             </LinearLayout>

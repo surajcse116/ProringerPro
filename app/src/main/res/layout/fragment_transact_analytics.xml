@@ -1,6 +1,431 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBGblueShade"
+    android:fillViewport="true"
+    android:padding="10dp">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Lifetime views"
+                android:textColor="@color/colorTextDark"
+                android:textSize="10sp" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv_visits_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="2555,36"
+                android:textColor="@color/colorAccent"
+                android:textSize="30sp" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                android:id="@+id/tv_visits_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_visits_count"
+                android:text="Profile visits"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.HighRegularTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_visits_level"
+                android:layout_marginTop="10dp"
+                android:text="Total only reflects unique visits(does not include multiple visits in the same day)"
+                android:textColor="@color/colorTextDark"
+                android:textSize="8sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp">
+
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                android:id="@+id/tv_level_profile_view_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Profile views per month"
+                android:textColor="@color/colorTextDark"
+                android:textSize="10sp" />
+
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv_profile_view_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_level_profile_view_month"
+                android:layout_marginLeft="5dp"
+                android:text="482"
+                android:textSize="24sp" />
+
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                android:id="@+id/tv_profile_view_12_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_profile_view_month"
+                android:text="Profile views per month"
+                android:textColor="@color/colorTextDark"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/tv_profile_view_12_month" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                android:id="@+id/tv_level_year_profile_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Year over year comparision for profile views"
+                android:textColor="@color/colorTextDark"
+                android:textSize="10sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_level_year_profile_view"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="820"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="25sp" />
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="Last 12 months"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="652"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="25sp" />
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="Previous 12 months"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="+168"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="25sp" />
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="Year over year"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                android:id="@+id/tv_level_people_favorite_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Currently in people favorites list"
+                android:textColor="@color/colorTextDark"
+                android:textSize="10sp" />
+
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="2555,36"
+                android:textColor="@color/colorAccent"
+                android:textSize="30sp" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                android:id="@+id/tv_tv_favorite_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_favorite"
+                android:text="Favorite"
+                android:textColor="@color/colorTextDark"
+                android:textSize="14sp" />
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.HighRegularTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_tv_favorite_level"
+                android:layout_marginTop="10dp"
+                android:text="Total reflects the number of people that have added you to thier favorites list"
+                android:textColor="@color/colorTextDark"
+                android:textSize="8sp" />
+
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                android:id="@+id/tv_level_fav_change"
+                android:layout_below="@+id/tv_level_people_favorite_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Change in last 30 days"
+                android:textColor="@color/colorTextDark"
+                android:textSize="10sp" />
+
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                android:id="@+id/tv_fav_change_value"
+                android:layout_toRightOf="@+id/tv_level_fav_change"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@+id/tv_level_people_favorite_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-5"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp">
+
+            <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                android:id="@+id/tv_level_leads_receive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Total number of leads received"
+                android:textColor="@color/colorTextDark"
+                android:textSize="10sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_level_leads_receive"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="820"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="25sp" />
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="Profile leads"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="652"
+                        android:textColor="@color/colorSky"
+                        android:textSize="25sp" />
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="Emailed leads"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="100"
+                        android:textColor="@color/colorSky"
+                        android:textSize="25sp" />
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="Project responses"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="1572"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="25sp" />
+
+                    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="Total leads"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

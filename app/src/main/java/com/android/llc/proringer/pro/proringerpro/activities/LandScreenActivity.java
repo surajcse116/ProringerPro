@@ -234,6 +234,7 @@ public class LandScreenActivity extends AppCompatActivity {
                 dashboard_text.setTextColor(Color.parseColor("#505050"));
 
                 my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
                 my_projects_text.setTextColor(Color.parseColor("#505050"));
 
                 messages_image.setBackgroundResource(R.drawable.ic_message);
@@ -361,7 +362,7 @@ public class LandScreenActivity extends AppCompatActivity {
                         linear_buttombar.setVisibility(View.VISIBLE);
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
-                        tv_title.setText("ANALYTICS");
+                        tv_title.setText("ACCOUNT ANALYTICS");
                         break;
 
                     case NavigationHandler.LOGOUT:

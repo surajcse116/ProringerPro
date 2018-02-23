@@ -54,7 +54,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="15dp"></android.support.v7.widget.RecyclerView>
+            android:layout_marginTop="15dp"/>
 
     </LinearLayout>
         <View
@@ -64,7 +64,7 @@
             android:id="@+id/SplitLine_hor1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#c7c7c4" />
+            android:background="@color/colorTextDark" />
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
             android:id="@+id/tv_submit"
             android:layout_width="match_parent"

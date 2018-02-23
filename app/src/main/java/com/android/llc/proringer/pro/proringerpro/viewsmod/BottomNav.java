@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 
@@ -112,6 +113,7 @@ public class BottomNav {
         switch (selcted) {
             case DASHBOARD:
                 dashboard_image.setBackgroundResource(R.drawable.ic_dashboard_selected);
+//                dashboard_text.setTextColor(((LandScreenActivity)mContext).getColor(R.color.colorAccent));
                 dashboard_text.setTextColor(Color.parseColor("#f1592a"));
 
                 my_projects_image.setBackgroundResource(R.drawable.ic_my_project);

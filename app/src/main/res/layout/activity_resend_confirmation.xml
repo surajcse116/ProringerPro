@@ -165,7 +165,7 @@
             android:background="@color/colorAccent"
             android:gravity="center"
             android:text="SUBMIT"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
 
         <LinearLayout
