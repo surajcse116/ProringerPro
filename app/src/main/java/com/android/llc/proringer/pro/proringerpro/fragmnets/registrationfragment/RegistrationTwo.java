@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,7 @@ import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.llc.proringer.pro.proringerpro.R;
+import com.android.llc.proringer.pro.proringerpro.activities.CompanyProfileActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.LocationActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.SignupCompleteActivity;
@@ -46,7 +50,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Bodhidipta on 24/07/17.
@@ -67,7 +74,6 @@ import java.util.HashMap;
 
 public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
 
-
     ProLightEditText edt_businessname, edt_city, edt_State, edt_zip, edt_phone, edt_email;
     ProRegularTextView protv_com, tv_service,tv_prolight_address,tv_service_area;
     public MyLoader myload = null;
@@ -76,7 +82,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
     ProLightTextView terms_and_condition;
     PopupWindow popupWindow;
     CustomListAdapterDialogCategory custom = null;
-    String pros_contact_service = "";
+    String pros_contact_service = "",latitude="",longitude="",countryCod="";
     int textLength = 0;
 
     @Nullable
@@ -197,7 +203,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), LocationActivity.class);
-                startActivityForResult(i, 1);
+                startActivityForResult(i, 1000);
             }
         });
 
@@ -266,7 +272,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
         super.onActivityResult(requestCode, resultCode, data);
         Logger.printMessage("data", String.valueOf(data));
 
-        if (requestCode == 1) {
+        if (requestCode == 1000) {
             if (resultCode == Activity.RESULT_OK) {
 
                 Bundle extras = data.getBundleExtra("data");
@@ -287,6 +293,11 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                     String servicearea = extras.getString("city") + ", " + extras.getString("state");
                     Logger.printMessage("ServiceArea-->", servicearea);
                     tv_service_area.setText(servicearea);
+
+
+                    latitude = extras.getString("lattitude");
+                    longitude = extras.getString("longttitude");
+                    getAddress(Double.valueOf(latitude), Double.valueOf(longitude));
                 }
             }
         }
@@ -369,7 +380,6 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -466,36 +476,41 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                                 Logger.printMessage("phonenumber", edt_phone.getText().toString().trim());
                                                 Logger.printMessage("primaryservice", tv_service.getText().toString().trim());
                                                 Logger.printMessage("servicearea", tv_service_area.getText().toString().trim());
-                                                Logger.printMessage("latittuted", ProConstant.latitude);
-                                                Logger.printMessage("Logtitude", ProConstant.longtitude);
-                                                Logger.printMessage("country", getActivity().getResources().getConfiguration().locale.getCountry());
+                                                Logger.printMessage("latitude", latitude);
+                                                Logger.printMessage("longitude", longitude);
+                                                Logger.printMessage("country",countryCod );
 
-                                                HashMap<String, String> Params1 = new HashMap<>();
-                                                Params1.put("contact_f_name", ProConstant.f_name);
-                                                Params1.put("contact_l_name", ProConstant.l_name);
-                                                Params1.put("pro_email", ProConstant.email);
-                                                Params1.put("pro_phone", ProConstant.phone);
-                                                Params1.put("pro_password", ProConstant.password);
-                                                Params1.put("com_name", edt_businessname.getText().toString().trim());
-                                                Params1.put("com_address", tv_prolight_address.getText().toString().trim());
-                                                Params1.put("city", edt_city.getText().toString().trim());
-                                                Params1.put("state", edt_State.getText().toString().trim());
-                                                Params1.put("zipcode", edt_zip.getText().toString().trim());
-                                                Params1.put("country", getActivity().getResources().getConfiguration().locale.getCountry());
-                                                Params1.put("alt_phone", edt_phone.getText().toString().trim());
-                                                Params1.put("com_email", edt_email.getText().toString().trim());
-                                                Params1.put("primary_category", pros_contact_service);
-                                                Params1.put("service_area", tv_service_area.getText().toString().trim());
-                                                Params1.put("latitude", ProConstant.latitude);
-                                                Params1.put("longitude", ProConstant.longtitude);
-                                                Params1.put("device_type", "A");
+                                                HashMap<String, String> Params = new HashMap<>();
+                                                Params.put("contact_f_name", ProConstant.f_name);
+                                                Params.put("contact_l_name", ProConstant.l_name);
+                                                Params.put("pro_email", ProConstant.email);
+                                                Params.put("pro_phone", ProConstant.phone);
+                                                Params.put("pro_password", ProConstant.password);
 
-                                                Logger.printMessage("PARAMS", String.valueOf(Params1));
+
+                                                Params.put("com_name", edt_businessname.getText().toString().trim());
+                                                Params.put("com_address", tv_prolight_address.getText().toString().trim());
+                                                Params.put("city", edt_city.getText().toString().trim());
+                                                Params.put("state", edt_State.getText().toString().trim());
+                                                Params.put("zipcode", edt_zip.getText().toString().trim());
+
+                                                Params.put("alt_phone", edt_phone.getText().toString().trim());
+                                                Params.put("com_email", edt_email.getText().toString().trim());
+                                                Params.put("primary_category", pros_contact_service);
+
+
+                                                Params.put("service_area", tv_service_area.getText().toString().trim());
+                                                Params.put("latitude",latitude );
+                                                Params.put("longitude",longitude);
+                                                Params.put("country",countryCod);
+                                                Params.put("device_type", "A");
+
+                                                Logger.printMessage("PARAMS", String.valueOf(Params));
 
                                                 myload.showLoader();
 
 
-                                                new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.Signup, Params1, null, new CustomJSONParser.CustomJSONResponse() {
+                                                new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.Signup, Params, null, new CustomJSONParser.CustomJSONResponse() {
                                                     @Override
                                                     public void onSuccess(String result) {
                                                         myload.dismissLoader();
@@ -556,6 +571,40 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
 
     @Override
     public void callbackForAlert(String result, int i) {
+
+    }
+
+    public void getAddress(Double lat, Double lng) {
+        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(lat, lng, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Address obj = addresses.get(0);
+        String add = obj.getAddressLine(0);
+        String currentAddress = obj.getSubAdminArea() + ","
+                + obj.getAdminArea();
+        String latitude = String.valueOf(obj.getLatitude());
+        String longitude = String.valueOf(obj.getLongitude());
+        String currentCity = obj.getSubAdminArea();
+        String currentState = obj.getAdminArea();
+        add = add + "\n" + obj.getCountryName();
+        add = add + "\n" + obj.getCountryCode();
+        countryCod = obj.getCountryCode();
+        Logger.printMessage("countrycod", countryCod);
+        add = add + "\n" + obj.getAdminArea();
+        add = add + "\n" + obj.getPostalCode();
+        add = add + "\n" + obj.getSubAdminArea();
+        add = add + "\n" + obj.getLocality();
+        add = add + "\n" + obj.getSubThoroughfare();
+
+        Log.v("IGA", "Address" + add);
+        // Toast.makeText(this, "Address=>" + add,
+        // Toast.LENGTH_SHORT).show();
+
+        // TennisAppActivity.showDialog(add);
 
     }
 }

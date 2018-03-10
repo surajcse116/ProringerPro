@@ -170,6 +170,7 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="45dp"
                             android:paddingTop="10dp"
+                            android:hint="select"
                             android:paddingBottom="10dp"
                             android:textColor="@color/colorTextDark"
                             android:textSize="14sp" />
