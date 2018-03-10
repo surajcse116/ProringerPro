@@ -27,7 +27,7 @@ public class MethodsUtils {
         if (target == null) {
             return false;
         } else {
-            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+            return Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
     }
 
@@ -41,7 +41,7 @@ public class MethodsUtils {
         if (url == null) {
             return false;
         } else {
-            return android.util.Patterns.WEB_URL.matcher(url).matches();
+            return Patterns.WEB_URL.matcher(url).matches();
         }
     }
 

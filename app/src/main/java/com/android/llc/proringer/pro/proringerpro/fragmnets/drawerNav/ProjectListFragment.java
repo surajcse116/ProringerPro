@@ -149,7 +149,7 @@ public class ProjectListFragment extends Fragment {
 
     public interface onOptionSelected {
         void onItemPassed(int position, JSONObject jsonObject);
-        void onFavorite(int position, JSONObject jsonObject,String addOrDelete);
+        void onFavorite(int position, JSONObject jsonObject, String addOrDelete);
     }
 
     public void loadList() {
@@ -186,7 +186,7 @@ public class ProjectListFragment extends Fragment {
                     rcv_watch_list.setVisibility(View.VISIBLE);
                     tv_empty_show.setVisibility(View.GONE);
 
-                    projectListAdapter = new ProjectListAdapter(getActivity(), info_array, new ProjectListFragment.onOptionSelected() {
+                    projectListAdapter = new ProjectListAdapter(getActivity(), info_array, new onOptionSelected() {
                         @Override
                         public void onItemPassed(int position, JSONObject jsonObject) {
                             try {

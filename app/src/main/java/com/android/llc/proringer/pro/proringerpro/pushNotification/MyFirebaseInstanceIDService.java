@@ -30,7 +30,14 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         // Get updated InstanceID token.
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Logger.printMessage("@@ ", "Refreshed token: " + refreshedToken);
+       // Logger.printMessage("@@ ", "Refreshedtoken: " + refreshedToken);
+        Logger.printMessage("token",refreshedToken);
+
+        if (refreshedToken!=null)
+        {
+            ProApplication.getInstance().putdevicetoken(refreshedToken);
+        }
+
 
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
@@ -47,7 +54,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         new CustomJSONParser().fireAPIForPostMethod(getApplication(), ProConstant.BASEURL + "users_device_update", Params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
-
+              Logger.printMessage("devicetoken",result);
             }
 
             @Override

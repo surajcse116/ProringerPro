@@ -175,7 +175,7 @@ final class BitmapCroppingWorkerTask extends AsyncTask<Void, Void, BitmapCroppin
      * @return the decoded bitmap data
      */
     @Override
-    protected BitmapCroppingWorkerTask.Result doInBackground(Void... params) {
+    protected Result doInBackground(Void... params) {
         try {
             if (!isCancelled()) {
 

@@ -179,7 +179,7 @@ public class ProHelperClass {
                     try {
                         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
 
-                        String notificationAPI = ProConstant.notification + "?user_id=" + com.android.llc.proringer.pro.proringerpro.helper.ProApplication.getInstance().getUserId();
+                        String notificationAPI = ProConstant.notification + "?user_id=" + ProApplication.getInstance().getUserId();
                         Logger.printMessage("notificationAPI", notificationAPI);
 
                         Request request = new Request.Builder()
@@ -259,7 +259,7 @@ public class ProHelperClass {
                         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
 
                         RequestBody requestBody = new FormBody.Builder()
-                                .add("user_id", com.android.llc.proringer.pro.proringerpro.helper.ProApplication.getInstance().getUserId())
+                                .add("user_id", ProApplication.getInstance().getUserId())
                                 .add(" email_newsletter", params[0])
                                 .add("email_chat_msg", params[1])
                                 .add("email_tips_article", params[2])
@@ -274,7 +274,7 @@ public class ProHelperClass {
                                 .add("mobile_acc_achieve", params[11])
                                 .build();
 
-                        Logger.printMessage("user_id", ":-" + com.android.llc.proringer.pro.proringerpro.helper.ProApplication.getInstance().getUserId());
+                        Logger.printMessage("user_id", ":-" + ProApplication.getInstance().getUserId());
                         Logger.printMessage("email_newsletter", ":-" + params[0]);
                         Logger.printMessage("email_chat_msg", ":-" + params[1]);
                         Logger.printMessage("email_tips_article", ":-" + params[2]);

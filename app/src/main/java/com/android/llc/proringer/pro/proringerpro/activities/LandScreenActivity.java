@@ -42,6 +42,8 @@ import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.RequestRev
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.SocialMediaFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.AccountAnalytics;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.TransactionHistory;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.getverification.GetVerifactionFifthverifyph;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.getverification.GetVerificationFifthFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.main_content.ProjectMessagingFragment;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
@@ -66,11 +68,11 @@ public class LandScreenActivity extends AppCompatActivity {
     private Toolbar back_toolbar = null;
     private ActionBarDrawerToggle toggle = null;
     private FragmentManager fragmentManager = null;
-    ProRegularTextView tv_title;
-    ImageView iv_pro_logo, search_local_pro_header, search_local_pro_header_backTool;
-    LinearLayout linear_buttombar;
-    private ImageView dashboard_image, my_projects_image, messages_image, fav_pro_image;
-    private ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
+      public ProRegularTextView tv_title;
+    public ImageView iv_pro_logo, search_local_pro_header, search_local_pro_header_backTool;
+   public   LinearLayout linear_buttombar;
+    public ImageView dashboard_image, my_projects_image, messages_image, fav_pro_image;
+    public ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
     ArrayList<SetGetAPIPostData> arrayList = null;
     public MyLoader myLoader = null;
     public String local_project_search_zip = "";
@@ -230,18 +232,7 @@ public class LandScreenActivity extends AppCompatActivity {
                 TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                 final String carrierName = manager.getNetworkOperatorName();
 
-                dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
-                dashboard_text.setTextColor(Color.parseColor("#505050"));
 
-                my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
-//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
-                my_projects_text.setTextColor(Color.parseColor("#505050"));
-
-                messages_image.setBackgroundResource(R.drawable.ic_message);
-                messages_text.setTextColor(Color.parseColor("#505050"));
-
-                fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
-                fav_pro_text.setTextColor(Color.parseColor("#505050"));
                 linear_buttombar.setVisibility(View.VISIBLE);
                 switch (tag) {
 
@@ -254,12 +245,65 @@ public class LandScreenActivity extends AppCompatActivity {
                         toolbar.setVisibility(View.VISIBLE);
                         iv_pro_logo.setVisibility(View.VISIBLE);
                         tv_title.setVisibility(View.GONE);
+                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                        dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                        my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                        messages_image.setBackgroundResource(R.drawable.ic_message);
+                        messages_text.setTextColor(Color.parseColor("#505050"));
+
+                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
 
                         break;
 
                     case NavigationHandler.ACCOUNT:
                         break;
-
+                    case NavigationHandler.UserInformation:
+                        Intent userinfo = new Intent(LandScreenActivity.this, UserInformationActivity.class);
+                        startActivity(userinfo);
+                        toggleProMapSearch(false);
+                        closeDrawer();
+                        break;
+                    case NavigationHandler.Company:
+                        Intent com = new Intent(LandScreenActivity.this, CompanyProfileActivity.class);
+                        startActivity(com);
+                        toggleProMapSearch(false);
+                        closeDrawer();
+                        break;
+                    case NavigationHandler.Service:
+                        Intent servic = new Intent(LandScreenActivity.this, AddServicesActivity.class);
+                        startActivity(servic);
+                        toggleProMapSearch(false);
+                        closeDrawer();
+                        break;
+                    case NavigationHandler.License:
+                        Intent lin = new Intent(LandScreenActivity.this, LicenceListActivity.class);
+                        startActivity(lin);
+                        toggleProMapSearch(false);
+                        closeDrawer();
+                        break;
+                    case NavigationHandler.Portfolio:
+                        Intent po = new Intent(LandScreenActivity.this, PortFolioActivity.class);
+                        startActivity(po);
+                        toggleProMapSearch(false);
+                        closeDrawer();
+                        break;
+                    case NavigationHandler.Servicarea:
+                        Intent servicare = new Intent(LandScreenActivity.this, AddServiceAreaActivity.class);
+                        startActivity(servicare);
+                        toggleProMapSearch(false);
+                        closeDrawer();
+                        break;
+                    case NavigationHandler.Loginsettings:
+                        Intent loginsettings = new Intent(LandScreenActivity.this, LoginSettingActivity.class);
+                        startActivity(loginsettings);
+                        toggleProMapSearch(false);
+                        closeDrawer();
+                        break;
                     case NavigationHandler.NOTIFICATION:
                         toggleProMapSearch(false);
                         closeDrawer();
@@ -268,6 +312,18 @@ public class LandScreenActivity extends AppCompatActivity {
                         tv_title.setText("Notifications");
                         transactNotification();
                         linear_buttombar.setVisibility(View.VISIBLE);
+                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                        dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                        my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                        messages_image.setBackgroundResource(R.drawable.ic_message);
+                        messages_text.setTextColor(Color.parseColor("#505050"));
+
+                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
                         break;
 
                     case NavigationHandler.QUICK_REPLY:
@@ -278,6 +334,18 @@ public class LandScreenActivity extends AppCompatActivity {
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("QUICK REPLY MESSAGE");
                         transactquickReply();
+                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                        dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                        my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                        messages_image.setBackgroundResource(R.drawable.ic_message);
+                        messages_text.setTextColor(Color.parseColor("#505050"));
+
+                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
                         break;
 
                     case NavigationHandler.AVAILABILITY:
@@ -288,6 +356,18 @@ public class LandScreenActivity extends AppCompatActivity {
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("AVAILABILITY");
+                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                        dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                        my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                        messages_image.setBackgroundResource(R.drawable.ic_message);
+                        messages_text.setTextColor(Color.parseColor("#505050"));
+
+                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
                         break;
 
                     case NavigationHandler.SOCIAL_MEDIA:
@@ -298,12 +378,36 @@ public class LandScreenActivity extends AppCompatActivity {
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("SOCIAL MEDIA");
+                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                        dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                        my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                        messages_image.setBackgroundResource(R.drawable.ic_message);
+                        messages_text.setTextColor(Color.parseColor("#505050"));
+
+                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
                         break;
 
                     case NavigationHandler.SHARE_PROFILE:
                         toggleProMapSearch(false);
                         closeDrawer();
                         linear_buttombar.setVisibility(View.VISIBLE);
+                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                        dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                        my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                        messages_image.setBackgroundResource(R.drawable.ic_message);
+                        messages_text.setTextColor(Color.parseColor("#505050"));
+
+                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
                         break;
 
                     case NavigationHandler.REQUEST_REVIEW:
@@ -314,6 +418,18 @@ public class LandScreenActivity extends AppCompatActivity {
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("REQUEST REVIEW");
+                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                        dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                        my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                        messages_image.setBackgroundResource(R.drawable.ic_message);
+                        messages_text.setTextColor(Color.parseColor("#505050"));
+
+                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
                         break;
 
                     case NavigationHandler.INVITE_FRIEND:
@@ -324,15 +440,31 @@ public class LandScreenActivity extends AppCompatActivity {
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("INVITE FRIEND");
+                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                        dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                        my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                        messages_image.setBackgroundResource(R.drawable.ic_message);
+                        messages_text.setTextColor(Color.parseColor("#505050"));
+
+                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
                         break;
 
                     case NavigationHandler.My_Profile:
                         toggleProMapSearch(false);
                         closeDrawer();
-
                         Intent intent = new Intent(LandScreenActivity.this, MyProfileActivity.class);
                         startActivity(intent);
-
+                        break;
+                    case NavigationHandler.Business_hours:
+                        toggleProMapSearch(false);
+                        closeDrawer();
+                        Intent i= new Intent(LandScreenActivity.this,BusinessHourActivity.class);
+                        startActivity(i);
                         break;
 
                     case NavigationHandler.TRANSACTION_HISTORY:
@@ -343,6 +475,18 @@ public class LandScreenActivity extends AppCompatActivity {
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("TRANSACTION HISTORY");
+                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                        dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                        my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                        messages_image.setBackgroundResource(R.drawable.ic_message);
+                        messages_text.setTextColor(Color.parseColor("#505050"));
+
+                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
                         break;
 
                     case NavigationHandler.CAMPAIGNS_SUMMARY:
@@ -353,6 +497,18 @@ public class LandScreenActivity extends AppCompatActivity {
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("CAMPAIGNS SUMMARY");
+                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                        dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                        my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                        messages_image.setBackgroundResource(R.drawable.ic_message);
+                        messages_text.setTextColor(Color.parseColor("#505050"));
+
+                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
                         break;
 
                     case NavigationHandler.ANALYTICS:
@@ -363,6 +519,18 @@ public class LandScreenActivity extends AppCompatActivity {
                         iv_pro_logo.setVisibility(View.GONE);
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("ACCOUNT ANALYTICS");
+                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                        dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                        my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                        messages_image.setBackgroundResource(R.drawable.ic_message);
+                        messages_text.setTextColor(Color.parseColor("#505050"));
+
+                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
                         break;
 
                     case NavigationHandler.LOGOUT:
@@ -628,7 +796,7 @@ public class LandScreenActivity extends AppCompatActivity {
      * \
      * Fragment transaction of DashBoardFragment
      */
-    private void transactquickReply() {
+    public void transactquickReply() {
         toggleToolBar(false);
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + QuickReplyFragment.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + QuickReplyFragment.class.getCanonicalName());
@@ -644,7 +812,7 @@ public class LandScreenActivity extends AppCompatActivity {
     }
 
 
-    private void transactInviteFriend() {
+    public void transactInviteFriend() {
 
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + InviteAfriendFragment.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + InviteAfriendFragment.class.getCanonicalName());
@@ -673,7 +841,7 @@ public class LandScreenActivity extends AppCompatActivity {
 //        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
 //    }
 
-    private void transactRequestReview() {
+    public void transactRequestReview() {
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + RequestReviewFragment.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + RequestReviewFragment.class.getCanonicalName());
 
@@ -687,7 +855,7 @@ public class LandScreenActivity extends AppCompatActivity {
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
     }
 
-    private void transactNotification() {
+    public void transactNotification() {
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + NotificationsFragment.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + NotificationsFragment.class.getCanonicalName());
 
@@ -701,7 +869,7 @@ public class LandScreenActivity extends AppCompatActivity {
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
     }
 
-    private void transactSocialMedia() {
+    public void transactSocialMedia() {
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + SocialMediaFragment.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + SocialMediaFragment.class.getCanonicalName());
 
@@ -715,7 +883,7 @@ public class LandScreenActivity extends AppCompatActivity {
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
     }
 
-    private void transactTimeAvailability() {
+    public void transactTimeAvailability() {
 
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + AvailabilityTimeSlotFragment.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + AvailabilityTimeSlotFragment.class.getCanonicalName());
@@ -883,6 +1051,25 @@ public class LandScreenActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container, new CampaignsSummary(), "" + CampaignsSummary.class.getCanonicalName());
         transaction.addToBackStack("" + CampaignsSummary.class.getCanonicalName());
+        transaction.commit();
+
+        Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+            Logger.printMessage("back_stack", "" + getSupportFragmentManager().getBackStackEntryAt(i).getName());
+        }
+    }
+
+    public void getverifactionpin()
+    {
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + GetVerifactionFifthverifyph.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + GetVerifactionFifthverifyph.class.getCanonicalName());
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + GetVerifactionFifthverifyph.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + GetVerifactionFifthverifyph.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new GetVerifactionFifthverifyph(), "" + GetVerifactionFifthverifyph.class.getCanonicalName());
+        transaction.addToBackStack("" + GetVerifactionFifthverifyph.class.getCanonicalName());
         transaction.commit();
 
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());

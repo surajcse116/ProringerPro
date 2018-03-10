@@ -45,12 +45,12 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
     }
 
     @Override
-    public WatchListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MyViewHolder(LayoutInflater.from(mcontext).inflate(R.layout.adapter_search_watch_list_rowitem, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final WatchListAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 //        callback.onItemPassed(position, jsonInfoArray.getJSONObject(position).getString("pros_id"));
 
         if (position == info_array.length() - 1) {
@@ -98,13 +98,13 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
                         try {
                             if (info_array.getJSONObject(position).getString("job_details").trim().length() >= 30) {
                                 contactTextOne = info_array.getJSONObject(position).getString("job_details").trim().trim().substring(0, 30) + "...";
+                                Spannable word1 = new SpannableString(contactTextOne);
+                                //word1.setSpan(new ForegroundColorSpan(mcontext.getResources().getColor(R.color.colorTextDark)), 0, contactTextOne.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                holder.tv_job_details.setText(word1);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Spannable word1 = new SpannableString(contactTextOne);
-                        //word1.setSpan(new ForegroundColorSpan(mcontext.getResources().getColor(R.color.colorTextDark)), 0, contactTextOne.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        holder.tv_job_details.setText(word1);
 
 
                         String contactTextClick = "Read More";
@@ -116,15 +116,12 @@ public class WatchListAdapter extends RecyclerView.Adapter<WatchListAdapter.MyVi
                                 // There is the OnCLick. put your intent to Register class here
                                 widget.invalidate();
                                 Logger.printMessage("SpanHello", "click");
-
-
                                 try {
                                     new ShowMyDialog(mcontext).showDescribetionDialog(info_array.getJSONObject(position).getString("prjct_name"), info_array.getJSONObject(position).getString("job_details").trim());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
-
                             @Override
                             public void updateDrawState(TextPaint ds) {
                                 ds.setColor(mcontext.getResources().getColor(R.color.colorAccent));

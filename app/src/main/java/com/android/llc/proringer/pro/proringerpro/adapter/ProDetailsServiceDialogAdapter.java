@@ -26,13 +26,13 @@ public class ProDetailsServiceDialogAdapter extends RecyclerView.Adapter<ProDeta
     }
 
     @Override
-    public ProDetailsServiceDialogAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_pro_details_service, parent, false);
-        return new ProDetailsServiceDialogAdapter.MyViewHolder(itemView);
+        return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ProDetailsServiceDialogAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         try {
             holder.tv_name.setText(serviceAreaJsonArray.getJSONObject(position).getString("service_name"));
         } catch (JSONException e) {

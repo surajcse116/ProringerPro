@@ -1,16 +1,22 @@
 package com.android.llc.proringer.pro.proringerpro.activities;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.TelephonyManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -38,6 +44,14 @@ import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.plus.PlusShare;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,17 +73,26 @@ public class MyProfileActivity extends AppCompatActivity {
     ProsDetailsBusinessHourAdapter prosDetailsBusinessHourAdapter;
     ProsDetailsLicenseAdapter prosDetailsLicenseAdapter;
     ProsDetailsImageAdapter prosDetailsImageAdapter;
+    ImageView img_share;
+    String profileimage;
+    String url="";
 
     RecyclerView rcv_service,rcv_business_hour,rcv_service_area,rcv_license,rcv_project_gallery;
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_my_profile);
         img_top = (ImageView) findViewById(R.id.img_top);
         img_profile = (ImageView)findViewById(R.id.img_profile);
         img_achievements = (ImageView) findViewById(R.id.img_achievements);
-
+        img_share=(ImageView)findViewById(R.id.img_share);
         rcv_service = (RecyclerView) findViewById(R.id.rcv_service);
         rcv_service.setLayoutManager(new GridLayoutManager(MyProfileActivity.this, 2));
 
@@ -91,6 +114,108 @@ public class MyProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
             }
+        });
+
+        img_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                String facebookId = "fb://page/<Facebook Page ID>";
+//                 String urlPage = "http://www.facebook.com";
+//                try {
+//                    startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(facebookId )));
+//                } catch (Exception e) {
+//                    Log.e( " ","Application not intalled.");
+//                    //Open url web page.
+//                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPage)));
+
+
+                LayoutInflater factory = LayoutInflater.from(MyProfileActivity.this);
+                 View deleteDialogView = factory.inflate(R.layout.shairprofile, null);
+                 final AlertDialog deleteDialog = new AlertDialog.Builder(MyProfileActivity.this).create();
+                deleteDialog.setView(deleteDialogView);
+                deleteDialog.show();
+
+
+                deleteDialogView.findViewById(R.id.imv_facebook).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        deleteDialog.dismiss();
+                        CallbackManager callbackManager = CallbackManager.Factory.create();
+                        ShareDialog shareDialog = new ShareDialog(MyProfileActivity.this);
+                        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+                            @Override
+                            public void onSuccess(Sharer.Result result) {
+                                Logger.printMessage("result",""+result.getPostId());
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+
+                            @Override
+                            public void onError(FacebookException error) {
+
+                            }
+                        });
+
+
+                        ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                                .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+                                .setQuote("ProringerPro")
+                                .setContentUrl(Uri.parse(url))
+                                .build();
+                        shareDialog.show(linkContent);
+                    }
+                });
+                deleteDialogView.findViewById(R.id.imv_twitter).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        deleteDialog.dismiss();
+
+                        Logger.printMessage("urdkjfd",url);
+                        String tweetUrl = "https://twitter.com/intent/tweet?text=ProringerPro:&url="+url;
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(tweetUrl)));
+
+
+                    }
+                });
+                deleteDialogView.findViewById(R.id.imv_googleplus).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        deleteDialog.dismiss();
+                        Intent shareIntent = new PlusShare.Builder(MyProfileActivity.this)
+                               .setText("Proringer pro:"+url)
+                                .setType("text/IMAGE")
+                                .setContentUrl(Uri.parse(" ProringerPro"))
+                                .setContentDeepLinkId(String.valueOf(Uri.parse("ProringerPro")))
+                                .getIntent();
+                        startActivityForResult(shareIntent, 0);
+                    }
+                });
+                deleteDialogView.findViewById(R.id.imv_gmail).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        deleteDialog.dismiss();
+                        String manufacturer = Build.MANUFACTURER;
+                        String model = Build.MODEL;
+                        int version = Build.VERSION.SDK_INT;
+                        String versionRelease = Build.VERSION.RELEASE;
+                        TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                        final String carrierName = manager.getNetworkOperatorName();
+                        String[] TOSuppory = {"proringer.com"};
+                        Uri uriSupport = Uri.parse("mailto:proringer.com")
+                                .buildUpon()
+                                .appendQueryParameter("subject", "link")
+                                .appendQueryParameter("body", "  \n \n \n ProRingerPro \n"+url)
+                                .build();
+                        Intent emailSupportIntent = new Intent(Intent.ACTION_SENDTO, uriSupport);
+                        emailSupportIntent.putExtra(Intent.EXTRA_EMAIL, TOSuppory);
+                        startActivity(Intent.createChooser(emailSupportIntent, "Send mail..."));
+                    }
+                });
+                }
+
         });
 
         myload = new MyLoader(MyProfileActivity.this);
@@ -124,7 +249,6 @@ public class MyProfileActivity extends AppCompatActivity {
                         intent.putExtra("total_review", infoArrayJsonObject.getString("total_review"));
                         startActivity(intent);
                     }
-
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -158,7 +282,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
                     if (!infoJsonObject.getString("profile_image").equals(""))
                         Glide.with(MyProfileActivity.this).load(infoJsonObject.getString("profile_image")).centerCrop().into(img_profile);
-
+                        profileimage=infoJsonObject.getString("profile_image");
 
                     if (infoJsonObject.getString("verified_status").trim().equalsIgnoreCase("Y")) {
                         ((ProRegularTextView) findViewById(R.id.tv_contact_pro_btn_unverified)).setVisibility(View.GONE);
@@ -166,6 +290,11 @@ public class MyProfileActivity extends AppCompatActivity {
                     } else {
                         ((LinearLayout) findViewById(R.id.LLVerified)).setVisibility(View.GONE);
                         ((ProRegularTextView) findViewById(R.id.tv_contact_pro_btn_unverified)).setVisibility(View.VISIBLE);
+                    }
+                    if (!infoJsonObject.getString("url").equals(""))
+                    {
+                        url=infoJsonObject.getString("url");
+                        Logger.printMessage("url",url);
                     }
 
 
@@ -405,7 +534,7 @@ public class MyProfileActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(MyProfileActivity.this, android.R.style.Theme_Light);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_dialogbox_portfolio);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         dialog.findViewById(R.id.RelativeMainLL).getLayoutParams().width = (MethodsUtils.getScreenHeightAndWidth(MyProfileActivity.this)[1]);
         dialog.findViewById(R.id.RelativeMainLL).getLayoutParams().height = MethodsUtils.getScreenHeightAndWidth(MyProfileActivity.this)[0];
@@ -459,5 +588,14 @@ public class MyProfileActivity extends AppCompatActivity {
 
 
         dialog.show();
+    }
+    public static Intent getOpenFacebookIntent(Context context) {
+
+        try {
+            context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/<id_here>"));
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/<user_name_here>"));
+        }
     }
 }

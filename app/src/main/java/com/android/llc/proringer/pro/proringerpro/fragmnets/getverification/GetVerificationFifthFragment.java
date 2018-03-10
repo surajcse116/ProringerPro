@@ -34,6 +34,7 @@ public class GetVerificationFifthFragment extends Fragment{
     ProLightEditText et_pin_number;
     ProRegularTextView tv_confirm,tv_close;
     MyLoader myLoader;
+    boolean val=false;
 
     @Nullable
     @Override
@@ -46,6 +47,15 @@ public class GetVerificationFifthFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         et_pin_number=view.findViewById(R.id.et_pin_number);
         tv_confirm=view.findViewById(R.id.tv_confirm_fifth);
+        boolean val=((GetVerificationActivity) getActivity()).verifyPin;
+        Log.d("hgdhsjjs", String.valueOf(val));
+
+
+        if(val==true)
+        {
+           et_pin_number.setVisibility(view.GONE);
+           tv_confirm.setVisibility(view.GONE);
+        }
         tv_close=view.findViewById(R.id.tv_close);
         myLoader=new MyLoader(getActivity());
         ((GetVerificationActivity) getActivity()).increaseStep();

@@ -3,67 +3,67 @@
     android:layout_width="match_parent"
     android:layout_height="64dp"
     android:orientation="horizontal"
-    android:weightSum="3">
+    >
 
-    <RelativeLayout
+    <LinearLayout
         android:gravity="bottom"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="0.3">
+        android:orientation="vertical">
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProLightTextView
             android:id="@+id/days_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="2dp"
+            android:paddingLeft="2dp"
             android:text="Mon"
+            android:layout_marginBottom="2dp"
             android:textColor="@color/colorTextDark"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
-        <RelativeLayout
-            android:layout_below="@+id/days_week"
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@color/colorAccent">
+            android:id="@+id/check_box"
+            android:src="@drawable/ic_basic_square"
+            />
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_check_white" />
-        </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <View
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight=".1" />
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-        android:layout_width="0dp"
-        android:layout_gravity="bottom"
-        android:layout_height="40dp"
-        android:layout_weight="1.25"
-        android:background="@drawable/background_white_with_border"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:text="8:00 am"
-        android:textColor="@color/colorTextBlack"></com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView>
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:layout_width="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:layout_height="40dp"
+            android:id="@+id/tv_start_time"
+            android:background="@drawable/background_white_with_border"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Time"
+            android:textSize="12sp"
+            android:textColor="@color/colorTextBlack"/>
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight=".1" />
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+            android:layout_width="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:id="@+id/tv_end_time"
+            android:layout_weight="1"
+            android:background="@drawable/background_white_with_border"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Time"
+            android:textSize="12sp"
+            android:textColor="@color/colorTextBlack"/>
 
-    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_gravity="bottom"
-        android:layout_weight="1.25"
-        android:background="@drawable/background_white_with_border"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:text="8:00 am"
-        android:textColor="@color/colorTextBlack"></com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView>
+    </LinearLayout>
 
 </LinearLayout>

@@ -39,7 +39,7 @@ public class ProsDetailsPortfolioImageAdapter extends RecyclerView.Adapter<ProsD
         GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) itemView.getLayoutParams();
         params.height = x;
         itemView.setLayoutParams(params);
-        return new ProsDetailsPortfolioImageAdapter.MyViewHolder(itemView);
+        return new MyViewHolder(itemView);
     }
 
     @Override

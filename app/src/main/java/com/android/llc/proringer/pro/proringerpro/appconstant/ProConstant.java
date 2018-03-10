@@ -83,6 +83,12 @@ public class ProConstant {
     public static String app_homeowner_allreview = BASEURL + "app_homeowner_allreview?";
     public static String app_homeowner_reportreview = BASEURL + "app_homeowner_reportreview";
     public static String app_homeowner_replyreview = BASEURL + "app_homeowner_replyreview";
+    public  static String app_transaction_history=BASEURL+"app_pro_transaction_history?";
+    public static  String app_campaign=BASEURL+"app_pro_campaign?";
+
+    public static String country = "";
+    public static String lat = "";
+    public static String lon = "";
 
 
     public static String latitude = "";
@@ -96,6 +102,7 @@ public class ProConstant {
     public static String state = "";
     public static String country1 = "";
     public static String id = "";
+    public static String firebasedevice_token = "";
 
     public static String placeid = "";
 }

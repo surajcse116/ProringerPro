@@ -59,12 +59,12 @@ public class ProjectDetailedMessageAdapter extends RecyclerView.Adapter<ProjectD
     }
 
     @Override
-    public ProjectDetailedMessageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(mcontext).inflate(R.layout.project_detailed_messge_row, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ProjectDetailedMessageAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         if (setGetProjectMessageDetailsArrayList != null && 0 <= position && position < setGetProjectMessageDetailsArrayList.size()) {
             // final String data = setGetProjectMessageDetailsArrayList.get(position).getTagName();

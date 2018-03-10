@@ -30,4 +30,6 @@ public class ProRegularTextView extends AppCompatTextView {
     public void init(Context context) {
         super.setTypeface(FontCache.get("OpenSans-Regular.ttf", context));
     }
+
+
 }

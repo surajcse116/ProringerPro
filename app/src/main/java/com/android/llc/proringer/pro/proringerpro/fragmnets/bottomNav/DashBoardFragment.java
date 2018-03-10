@@ -2,6 +2,7 @@ package com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,11 +25,14 @@ import android.widget.Toast;
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.AddServiceAreaActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.AddServicesActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.BusinessHourActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.CompanyProfileActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.GetVerificationActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.LicenceAddActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.LicenceListActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.LoginSettingActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.MyProfileActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PortFolioActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.PremiumActivity;
 import com.android.llc.proringer.pro.proringerpro.activities.UserInformationActivity;
@@ -41,6 +45,7 @@ import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
+import com.android.llc.proringer.pro.proringerpro.utils.ImageFilePath;
 import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
@@ -65,11 +70,13 @@ public class DashBoardFragment extends Fragment {
     ProSemiBoldTextView  tv_goto_premium,tv_name,tv_rating;
     TextView tv_active_projects;
     ProRegularTextView tv_address,tv_totalmessage,tv_favorite_pros;
-    RelativeLayout userInformation, servicearea, service_setting, licence, login_settings, Protofolio;
+    RelativeLayout userInformation, servicearea, service_setting, licence, login_settings, Protofolio,LoginSettings,notifaction,quickreply,Availity,socialmedia,shareprofile,requestreviw,invitefriend,myprofile,businesshours,transctionhistory,campaigns,analytics;
     RatingBar rbar;
     ImageView profile_pic;
     ArrayList<SetGetAPIPostData> arrayList=null;
     MyLoader myload;
+    String verfyphonesatus;
+    String premium_address_status;
 
     String pro_premium_status="";
     String Pro_verified="";
@@ -93,8 +100,22 @@ public class DashBoardFragment extends Fragment {
         service_setting = (RelativeLayout) view.findViewById(R.id.service_setting);
         licence = (RelativeLayout) view.findViewById(R.id.licence);
         login_settings = (RelativeLayout) view.findViewById(R.id.login_settings);
+        LoginSettings=(RelativeLayout)view.findViewById(R.id.LoginSettings);
         Protofolio = (RelativeLayout) view.findViewById(R.id.Protofolio);
+        notifaction=(RelativeLayout)view.findViewById(R.id.notifaction);
+        quickreply=(RelativeLayout)view.findViewById(R.id.quickreply);
+        Availity=(RelativeLayout)view.findViewById(R.id.Availity);
+        socialmedia=(RelativeLayout)view.findViewById(R.id.socialmedia);
+        shareprofile=(RelativeLayout)view.findViewById(R.id.shareprofile);
+        requestreviw=(RelativeLayout)view.findViewById(R.id.requestreviw);
+        invitefriend=(RelativeLayout)view.findViewById(R.id.invitefriend);
+        myprofile=(RelativeLayout)view.findViewById(R.id.myprofile);
+        businesshours=(RelativeLayout)view.findViewById(R.id.businesshours);
+        transctionhistory=(RelativeLayout)view.findViewById(R.id.transctionhistory);
+        campaigns=(RelativeLayout)view.findViewById(R.id.campaigns);
+        analytics=(RelativeLayout)view.findViewById(R.id.analytics);
         tv_goto_premium = (ProSemiBoldTextView) view.findViewById(R.id.tv_goto_premium);
+
         tv_active_projects=(TextView)view.findViewById(R.id.tv_active_projects);
         tv_name=(ProSemiBoldTextView)view.findViewById(R.id.tv_name);
         tv_address=(ProRegularTextView)view.findViewById(R.id.tv_address);
@@ -104,41 +125,65 @@ public class DashBoardFragment extends Fragment {
         profile_pic=(ImageView)view.findViewById(R.id.profile_pic);
         rbar=(RatingBar)view.findViewById(R.id.rbar);
         myload= new MyLoader(getActivity());
-
+        loadAndShowData();
 
         tv_goto_premium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //openGetVerifiedDialog();
-                if (CASEAPPLY==1)
+                Logger.printMessage("case1","case1");
+                if (CASEAPPLY==1&&premium_address_status.equals("0")&&verfyphonesatus.equals("0"))
                 {
                     //openGetVerifiedDialog();
-
+                     Logger.printMessage("case1","case1");
                     Intent intent=new Intent(getActivity(), GetVerificationActivity.class);
                     intent.putExtra("city",city);
                     intent.putExtra("state",state);
                     intent.putExtra("zip",zip);
                     intent.putExtra("address",address);
                     startActivityForResult(intent,1111);
+
                 }
-                else if (CASEAPPLY==2)
+                else if (CASEAPPLY==2&&premium_address_status.equals("1")&&verfyphonesatus.equals("1"))
                 {
                     Toast.makeText(getContext(),"Verified",Toast.LENGTH_SHORT).show();
+                    Logger.printMessage("case2","case2");
+
+//
                 }
-                else if (CASEAPPLY==3)
+                else if (CASEAPPLY==3 && verfyphonesatus.equals("0") && premium_address_status.equals("1"))
                 {
                     //openGetVerifiedDialog();
-                    Intent intent=new Intent(getActivity(), GetVerificationActivity.class);
-                    intent.putExtra("city",city);
-                    intent.putExtra("state",state);
-                    intent.putExtra("zip",zip);
-                    intent.putExtra("address",address);
-                    startActivityForResult(intent,1111);
-//                    Toast.makeText(getContext(),"already applied to verify",Toast.LENGTH_SHORT).show();
+//                    Intent intent=new Intent(getActivity(), GetVerificationActivity.class);
+//                    intent.putExtra("city",city);
+//                    intent.putExtra("state",state);
+//                    intent.putExtra("zip",zip);
+//                    intent.putExtra("address",address);
+//                    startActivityForResult(intent,1111);
+                    Logger.printMessage("case3","case3");
+                    if (verfyphonesatus.equals("0"))
+                    {
+                        ((LandScreenActivity) getActivity()).getverifactionpin();
+                    }
+                    else
+                    {
+                        Toast.makeText(getContext(),"already applied to verify",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                else if (CASEAPPLY==3 && verfyphonesatus.equals("1") && premium_address_status.equals("1"))
+                {
+                    Toast.makeText(getContext(),"already applied to verify",Toast.LENGTH_SHORT).show();
+                }
+                else if (CASEAPPLY==1 && verfyphonesatus.equals("0") && premium_address_status.equals("1"))
+                {
+                    Logger.printMessage("case4","case4");
+                        ((LandScreenActivity) getActivity()).getverifactionpin();
                 }
 
                 else if (CASEAPPLY==4)
                 {
+                    Logger.printMessage("case4","case4");
                     Intent i = new Intent(getActivity(), PremiumActivity.class);
                     startActivity(i);
                 }
@@ -188,6 +233,228 @@ public class DashBoardFragment extends Fragment {
                 startActivity(i);
             }
         });
+        LoginSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), LoginSettingActivity.class);
+                startActivity(i);
+            }
+        });
+        notifaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LandScreenActivity) getActivity()).transactNotification();
+                ((LandScreenActivity) getActivity()).iv_pro_logo.setVisibility(View.GONE);
+                ((LandScreenActivity) getActivity()).tv_title.setVisibility(View.VISIBLE);
+                ((LandScreenActivity) getActivity()).tv_title.setText("Notifications");
+                ((LandScreenActivity) getActivity()).dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                ((LandScreenActivity) getActivity()).dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                ((LandScreenActivity) getActivity()).my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).messages_image.setBackgroundResource(R.drawable.ic_message);
+                ((LandScreenActivity) getActivity()).messages_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                ((LandScreenActivity) getActivity()).fav_pro_text.setTextColor(Color.parseColor("#505050"));
+            }
+        });
+        quickreply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LandScreenActivity) getActivity()).transactquickReply();
+                ((LandScreenActivity) getActivity()).iv_pro_logo.setVisibility(View.GONE);
+                ((LandScreenActivity) getActivity()).tv_title.setVisibility(View.VISIBLE);
+                ((LandScreenActivity) getActivity()).tv_title.setText("QUICK REPLY MESSAGE");
+                ((LandScreenActivity) getActivity()).dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                ((LandScreenActivity) getActivity()).dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                ((LandScreenActivity) getActivity()).my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).messages_image.setBackgroundResource(R.drawable.ic_message);
+                ((LandScreenActivity) getActivity()).messages_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                ((LandScreenActivity) getActivity()).fav_pro_text.setTextColor(Color.parseColor("#505050"));
+
+
+            }
+        });
+        Availity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LandScreenActivity) getActivity()).transactTimeAvailability();
+                ((LandScreenActivity) getActivity()).iv_pro_logo.setVisibility(View.GONE);
+                ((LandScreenActivity) getActivity()).tv_title.setVisibility(View.VISIBLE);
+                ((LandScreenActivity) getActivity()).tv_title.setText("AVAILABILITY");
+                ((LandScreenActivity) getActivity()).dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                ((LandScreenActivity) getActivity()).dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                ((LandScreenActivity) getActivity()).my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).messages_image.setBackgroundResource(R.drawable.ic_message);
+                ((LandScreenActivity) getActivity()).messages_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                ((LandScreenActivity) getActivity()).fav_pro_text.setTextColor(Color.parseColor("#505050"));
+            }
+        });
+        socialmedia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LandScreenActivity) getActivity()). transactSocialMedia();
+                ((LandScreenActivity) getActivity()).iv_pro_logo.setVisibility(View.GONE);
+                ((LandScreenActivity) getActivity()).tv_title.setVisibility(View.VISIBLE);
+                ((LandScreenActivity) getActivity()).tv_title.setText("SOCIAL MEDIA");
+                ((LandScreenActivity) getActivity()).dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                ((LandScreenActivity) getActivity()).dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                ((LandScreenActivity) getActivity()).my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).messages_image.setBackgroundResource(R.drawable.ic_message);
+                ((LandScreenActivity) getActivity()).messages_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                ((LandScreenActivity) getActivity()).fav_pro_text.setTextColor(Color.parseColor("#505050"));
+
+            }
+        });
+        shareprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        requestreviw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LandScreenActivity) getActivity()). transactRequestReview();
+                ((LandScreenActivity) getActivity()).iv_pro_logo.setVisibility(View.GONE);
+                ((LandScreenActivity) getActivity()).tv_title.setVisibility(View.VISIBLE);
+                ((LandScreenActivity) getActivity()).tv_title.setText("REQUEST REVIEW");
+                ((LandScreenActivity) getActivity()).dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                ((LandScreenActivity) getActivity()).dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                ((LandScreenActivity) getActivity()).my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).messages_image.setBackgroundResource(R.drawable.ic_message);
+                ((LandScreenActivity) getActivity()).messages_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                ((LandScreenActivity) getActivity()).fav_pro_text.setTextColor(Color.parseColor("#505050"));
+            }
+        });
+         invitefriend.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+
+                 ((LandScreenActivity) getActivity()). transactInviteFriend();
+                 ((LandScreenActivity) getActivity()).iv_pro_logo.setVisibility(View.GONE);
+                 ((LandScreenActivity) getActivity()).tv_title.setVisibility(View.VISIBLE);
+                 ((LandScreenActivity) getActivity()).tv_title.setText("INVITE FRIEND");
+                 ((LandScreenActivity) getActivity()).dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                 ((LandScreenActivity) getActivity()).dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                 ((LandScreenActivity) getActivity()).my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                 ((LandScreenActivity) getActivity()).my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                 ((LandScreenActivity) getActivity()).messages_image.setBackgroundResource(R.drawable.ic_message);
+                 ((LandScreenActivity) getActivity()).messages_text.setTextColor(Color.parseColor("#505050"));
+
+                 ((LandScreenActivity) getActivity()).fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                 ((LandScreenActivity) getActivity()).fav_pro_text.setTextColor(Color.parseColor("#505050"));
+             }
+         });
+        myprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MyProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+        businesshours.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i= new Intent(getActivity(),BusinessHourActivity.class);
+                startActivity(i);
+            }
+        });
+        transctionhistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LandScreenActivity) getActivity()). transactTransactionHistory();
+                ((LandScreenActivity) getActivity()).iv_pro_logo.setVisibility(View.GONE);
+                ((LandScreenActivity) getActivity()).tv_title.setVisibility(View.VISIBLE);
+                ((LandScreenActivity) getActivity()).tv_title.setText("TRANSACTION HISTORY");
+                ((LandScreenActivity) getActivity()).dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                ((LandScreenActivity) getActivity()).dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                ((LandScreenActivity) getActivity()).my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).messages_image.setBackgroundResource(R.drawable.ic_message);
+                ((LandScreenActivity) getActivity()).messages_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                ((LandScreenActivity) getActivity()).fav_pro_text.setTextColor(Color.parseColor("#505050"));
+
+            }
+        });
+        campaigns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LandScreenActivity) getActivity()). transactCampaignsSummary();
+                ((LandScreenActivity) getActivity()).iv_pro_logo.setVisibility(View.GONE);
+                ((LandScreenActivity) getActivity()).tv_title.setVisibility(View.VISIBLE);
+                ((LandScreenActivity) getActivity()).tv_title.setText("CAMPAIGNS SUMMARY");
+                ((LandScreenActivity) getActivity()).dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                ((LandScreenActivity) getActivity()).dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                ((LandScreenActivity) getActivity()).my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).messages_image.setBackgroundResource(R.drawable.ic_message);
+                ((LandScreenActivity) getActivity()).messages_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                ((LandScreenActivity) getActivity()).fav_pro_text.setTextColor(Color.parseColor("#505050"));
+            }
+        });
+        analytics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LandScreenActivity) getActivity()). transactAccountAnalytics();
+                ((LandScreenActivity) getActivity()).iv_pro_logo.setVisibility(View.GONE);
+                ((LandScreenActivity) getActivity()).tv_title.setVisibility(View.VISIBLE);
+                ((LandScreenActivity) getActivity()).tv_title.setText("ACCOUNT ANALYTICS");
+                ((LandScreenActivity) getActivity()).dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                ((LandScreenActivity) getActivity()).dashboard_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+                ((LandScreenActivity) getActivity()).my_projects_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).messages_image.setBackgroundResource(R.drawable.ic_message);
+                ((LandScreenActivity) getActivity()).messages_text.setTextColor(Color.parseColor("#505050"));
+
+                ((LandScreenActivity) getActivity()).fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                ((LandScreenActivity) getActivity()).fav_pro_text.setTextColor(Color.parseColor("#505050"));
+            }
+        });
+
 
         view.findViewById(R.id.profile_pic).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +467,8 @@ public class DashBoardFragment extends Fragment {
             }
         });
 
-        loadAndShowData();
+
+
     }
 
     public  void loadAndShowData()
@@ -230,8 +498,11 @@ public class DashBoardFragment extends Fragment {
                         tv_active_projects.setText(jo.getString("total_review"));
                         tv_totalmessage.setText(jo.getString("total_msg"));
                         tv_favorite_pros.setText(jo.getString("project_watchlist"));
+                        verfyphonesatus= jo.getString("verify_phone_status");
+                        premium_address_status= jo.getString("premium_address_status");
+                        Logger.printMessage("verifyphone",verfyphonesatus);
+                        Logger.printMessage("addresssatus",premium_address_status);
                         Glide.with(getActivity()).load(jo.getString("profile_img")).into(profile_pic);
-
 
                         pro_premium_status=jo.getString("pro_premium_status");
                         Pro_verified=jo.getString("Pro_verified");
@@ -395,7 +666,7 @@ public class DashBoardFragment extends Fragment {
             }
         });
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // only for gingerbread and newer versions
 
             tv3.setText(Html.fromHtml(getResources().getString(R.string.get_verified_data2),Html.FROM_HTML_MODE_COMPACT));
@@ -506,6 +777,4 @@ public class DashBoardFragment extends Fragment {
 
         }
     }
-
-
 }

@@ -71,6 +71,8 @@ public class AddServicesActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        setGetServicePojoArrayList = new ArrayList<>();
+
         myLoader = new MyLoader(AddServicesActivity.this);
 
         linear_refine_service = (LinearLayout) findViewById(R.id.linear_refine_service);
@@ -313,7 +315,7 @@ public class AddServicesActivity extends AppCompatActivity {
 
     public void getCategoryAndSubCategory() {
 
-        setGetServicePojoArrayList = new ArrayList<>();
+        setGetServicePojoArrayList.clear();
 
         ArrayList<SetGetAPIPostData> setGetAPIArrayList = new ArrayList<>();
 
@@ -339,9 +341,6 @@ public class AddServicesActivity extends AppCompatActivity {
                         setGetServicePojo.setGetSubcategory(info_array.getJSONObject(i).getJSONArray("getSubcategory"));
                         setGetServicePojoArrayList.add(setGetServicePojo);
                     }
-
-                    Logger.printMessage("CatAndSubCatListSize-->", "" + setGetServicePojoArrayList.size());
-
                     Logger.printMessage("ListSize-->", "" + setGetServicePojoArrayList.size());
 
                     if (serviceOfferedAdapter == null) {
@@ -379,7 +378,6 @@ public class AddServicesActivity extends AppCompatActivity {
 
     public void addCategoryAndSubCategory(final String category_name, final String parent_category_id) {
 
-
         final ArrayList<SetGetServicePojo> ServicePojoArrayList=new ArrayList<>();
 
         boolean check = false;
@@ -409,7 +407,7 @@ public class AddServicesActivity extends AppCompatActivity {
                         JSONArray info_array = jsonObject.getJSONArray("info_array");
 
                         for (int c=0;c<info_array.length();c++){
-                            info_array.getJSONObject(c).put("cat_selected",0);
+                            info_array.getJSONObject(c).put("cat_selected",1);
                         }
 
                         Logger.printMessage("info_array-->",""+info_array);
@@ -519,8 +517,10 @@ public class AddServicesActivity extends AppCompatActivity {
                             Intent intent = new Intent();
 //                                    intent.putExtra("editTextValue", "value_here")
                             setResult(RESULT_OK, intent);
-                            finish();
+                            //finish();
 
+                            linear_refine_service.removeAllViews();
+                            category();
 
                         } catch (JSONException e) {
                             e.printStackTrace();

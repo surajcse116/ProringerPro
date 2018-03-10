@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="none"
     android:background="@color/colorBGblueShade"
     android:fillViewport="true"
     android:padding="10dp">
@@ -99,11 +100,118 @@
                 android:text="Profile views per month"
                 android:textColor="@color/colorTextDark"
                 android:textSize="16sp" />
-
-            <ImageView
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barchart"
+                android:layout_marginTop="0dp"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_below="@+id/tv_profile_view_12_month" />
+                android:layout_below="@+id/tv_profile_view_12_month"
+                android:layout_height="150dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/barchart"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="18dp"
+                android:weightSum="12">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="10dp"
+                    android:textColor="#161616"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Jan"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:textColor="#161616"
+                    android:layout_height="wrap_content"
+                    android:text="Feb" />
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:textColor="#161616"
+                    android:layout_height="wrap_content"
+                    android:text="Mar"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:textColor="#161616"
+                    android:layout_height="wrap_content"
+                    android:text="Apr"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:textColor="#161616"
+                    android:layout_height="wrap_content"
+                    android:text="May"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:textColor="#161616"
+                    android:layout_height="wrap_content"
+                    android:text="June"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:textColor="#161616"
+                    android:layout_height="wrap_content"
+                    android:text="July"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:textColor="#161616"
+                    android:layout_height="wrap_content"
+                    android:text="Aug"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:textColor="#161616"
+                    android:layout_height="wrap_content"
+                    android:text="Sep"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:textColor="#161616"
+                    android:layout_height="wrap_content"
+                    android:text="Oct"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:textColor="#161616"
+                    android:layout_height="wrap_content"
+                    android:text="Nov"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:textColor="#161616"
+                    android:layout_height="wrap_content"
+                    android:text="Dec"/>
+
+            </LinearLayout>
 
         </RelativeLayout>
 

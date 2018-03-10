@@ -26,12 +26,12 @@ public class ServiceAreaAdapter extends RecyclerView.Adapter<ServiceAreaAdapter.
     }
 
     @Override
-    public ServiceAreaAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MyViewHolder(LayoutInflater.from(mcontext).inflate(R.layout.adapter_service_area, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ServiceAreaAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         holder.tv_city.setText(stringArrayList.get(position));
         holder.img_delete.setOnClickListener(new View.OnClickListener() {
             @Override

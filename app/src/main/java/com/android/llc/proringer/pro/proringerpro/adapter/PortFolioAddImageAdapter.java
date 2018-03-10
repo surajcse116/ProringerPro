@@ -41,7 +41,7 @@ public class PortFolioAddImageAdapter extends RecyclerView.Adapter<PortFolioAddI
     }
 
     @Override
-    public PortFolioAddImageAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.adapter_edit_add_image, parent, false));
 
     }

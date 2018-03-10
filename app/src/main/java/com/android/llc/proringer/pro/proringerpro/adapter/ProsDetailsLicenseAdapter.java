@@ -27,13 +27,13 @@ public class ProsDetailsLicenseAdapter extends RecyclerView.Adapter<ProsDetailsL
     }
 
     @Override
-    public ProsDetailsLicenseAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_pro_details_license, parent, false);
-        return new ProsDetailsLicenseAdapter.MyViewHolder(itemView);
+        return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ProsDetailsLicenseAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         try {
             holder.tv_category_name.setText(licenseJsonArray.getJSONObject(position).getString("category_name"));

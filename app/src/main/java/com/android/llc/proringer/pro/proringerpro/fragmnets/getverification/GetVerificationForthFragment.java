@@ -2,9 +2,12 @@ package com.android.llc.proringer.pro.proringerpro.fragmnets.getverification;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +27,10 @@ import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by su on 15/1/18.
@@ -111,7 +117,39 @@ public class GetVerificationForthFragment extends Fragment {
 
         ((GetVerificationActivity) getActivity()).increaseStep();
     }
+    public void getAddress(Double lat, Double lng) {
+        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(lat, lng, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Address obj = addresses.get(0);
+        String add = obj.getAddressLine(0);
+        String currentAddress = obj.getSubAdminArea() + ","
+                + obj.getAdminArea();
+        String latitude = String.valueOf(obj.getLatitude());
+        String longitude = String.valueOf(obj.getLongitude());
+        String  currentCity= obj.getSubAdminArea();
+        String currentState= obj.getAdminArea();
+        add = add + "\n" + obj.getCountryName();
+        add = add + "\n" + obj.getCountryCode();
+        ProConstant.country= obj.getCountryCode();
+        Logger.printMessage("csfsfacfsas",ProConstant.country);
+        add = add + "\n" + obj.getAdminArea();
+        add = add + "\n" + obj.getPostalCode();
+        add = add + "\n" + obj.getSubAdminArea();
+        add = add + "\n" + obj.getLocality();
+        add = add + "\n" + obj.getSubThoroughfare();
 
+        Log.v("IGA", "Address" + add);
+        // Toast.makeText(this, "Address=>" + add,
+        // Toast.LENGTH_SHORT).show();
+
+        // TennisAppActivity.showDialog(add);
+
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -126,13 +164,20 @@ public class GetVerificationForthFragment extends Fragment {
                     Logger.printMessage("zip", "--->" + extras.getString("zip"));
                     Logger.printMessage("city", "--->" + extras.getString("city"));
                     Logger.printMessage("state", "--->" + extras.getString("state"));
-
+                    Logger.printMessage("lattitude", "--->" + extras.getString("lattitude"));
+                    Logger.printMessage("longttitude", "--->" + extras.getString("longttitude"));
 
 
                     txt_city.setText(extras.getString("city"));
                     txt_state.setText(extras.getString("state"));
                     txt_pincode.setText(extras.getString("zip"));
                     txt_address.setText(extras.getString("selectedPlace"));
+                    Double lat,lon;
+                    lat= Double.valueOf(extras.getString("lattitude"));
+                    lon=Double.valueOf(extras.getString("longttitude"));
+                    ProConstant.lat=extras.getString("lattitude");
+                    ProConstant.lon=extras.getString("longttitude");
+                    getAddress(lat,lon);
 
 
 
@@ -190,35 +235,38 @@ public class GetVerificationForthFragment extends Fragment {
     private void callVerifiedAddress() {
 
         Logger.printMessage("user_id", ProApplication.getInstance().getUserId());
-        Logger.printMessage("verify_country",  getActivity().getResources().getConfiguration().locale.getCountry());
+        Logger.printMessage("verify_country", ProConstant.country);
         Logger.printMessage("verify_address", txt_address.getText().toString().trim());
         Logger.printMessage("verify_city", txt_city.getText().toString().trim());
         Logger.printMessage("verify_state", txt_state.getText().toString().trim());
         Logger.printMessage("verify_zip", txt_pincode.getText().toString().trim());
+        Logger.printMessage("lat",ProConstant.lat);
+        Logger.printMessage("lon",ProConstant.lon);
 
         HashMap<String, String> params = new HashMap<>();
         params.put("user_id", ProApplication.getInstance().getUserId());
-        params.put("verify_country",  getActivity().getResources().getConfiguration().locale.getCountry());
+        params.put("verify_country",  ProConstant.country);
         params.put("verify_address", txt_address.getText().toString().trim().split(",")[0]);
         params.put("verify_city", txt_city.getText().toString().trim());
         params.put("verify_state", txt_state.getText().toString().trim());
         params.put("verify_zip", txt_pincode.getText().toString().trim());
-        params.put("verify_latitude", "");
-        params.put("verify_longitude", "");
+        params.put("verify_latitude", ProConstant.lat);
+        params.put("verify_longitude", ProConstant.lon);
 
         new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_verified_address, params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();
                 Logger.printMessage("resultDoc", result);
-                if (!((GetVerificationActivity) getActivity()).verifyPin) {
-                    ((GetVerificationActivity) getActivity()).callVerificationFragments(5);
-                } else {
-                    Intent intent = new Intent(getActivity(), LandScreenActivity.class);
-                    // set the new task and clear flags
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                }
+                ((GetVerificationActivity) getActivity()).callVerificationFragments(5);
+//                if (!((GetVerificationActivity) getActivity()).verifyPin) {
+//                    ((GetVerificationActivity) getActivity()).callVerificationFragments(5);
+//                } else {
+//                    Intent intent = new Intent(getActivity(), LandScreenActivity.class);
+//                    // set the new task and clear flags
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    startActivity(intent);
+//                }
             }
 
             @Override

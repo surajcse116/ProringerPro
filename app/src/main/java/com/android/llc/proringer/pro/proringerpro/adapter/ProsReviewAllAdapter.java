@@ -45,13 +45,13 @@ public class ProsReviewAllAdapter extends RecyclerView.Adapter<ProsReviewAllAdap
     }
 
     @Override
-    public ProsReviewAllAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_pros_review_all, parent, false);
-        return new ProsReviewAllAdapter.MyViewHolder(itemView);
+        return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final ProsReviewAllAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         try {
 
             if (!jsonInfoArray.getJSONObject(position).getString("profile_img").equals(""))

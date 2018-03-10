@@ -26,13 +26,13 @@ public class ProsDetailsBusinessHourAdapter extends RecyclerView.Adapter<ProsDet
     }
 
     @Override
-    public ProsDetailsBusinessHourAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_pro_details_business_hours, parent, false);
-        return new ProsDetailsBusinessHourAdapter.MyViewHolder(itemView);
+        return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ProsDetailsBusinessHourAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position) {
 
         try {
             holder.tv_day.setText(businessHoursJsonArray.getJSONObject(position).getString("day"));

@@ -32,6 +32,7 @@
     <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/premium_month"
         android:layout_toLeftOf="@+id/tv_level_amount"
         android:layout_toRightOf="@+id/tv_level_date"
         android:gravity="center"

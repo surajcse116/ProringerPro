@@ -43,7 +43,7 @@ public class ProsDetailsImageAdapter extends RecyclerView.Adapter<ProsDetailsIma
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_pro_details_images, parent, false);
-        return new ProsDetailsImageAdapter.MyViewHolder(itemView);
+        return new MyViewHolder(itemView);
     }
 
     @Override

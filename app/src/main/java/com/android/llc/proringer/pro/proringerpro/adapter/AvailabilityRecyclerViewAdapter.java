@@ -20,12 +20,12 @@ public class AvailabilityRecyclerViewAdapter extends RecyclerView.Adapter<Availa
     }
 
     @Override
-    public AvailabilityRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_avilability, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(AvailabilityRecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position) {
 
     }
 
