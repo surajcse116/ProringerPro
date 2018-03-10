@@ -32,7 +32,6 @@ import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialo
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
-import com.android.llc.proringer.pro.proringerpro.helper.ProHelperClass;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
 import com.android.llc.proringer.pro.proringerpro.helper.ProApplication;
@@ -42,21 +41,13 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEdit
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -65,10 +56,7 @@ import java.util.Locale;
  * Created by su on 8/17/17.
  */
 
-public class CompanyProfileActivity extends AppCompatActivity implements
-        LocationListener,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+public class CompanyProfileActivity extends AppCompatActivity {
 
     ProLightEditText et_name, et_email, et_companywesite, et_companyphone, et_employee, et_address, et_zip, et_city, et_state;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -81,16 +69,8 @@ public class CompanyProfileActivity extends AppCompatActivity implements
     PopupWindow popupWindow;
     JSONArray btype;
     int height, width;
-    String countrycod="";
-
+    String countryCod = "", latitude, longtitude = "",business_type_id="";
     String businessdata, accname;
-    GoogleApiClient mGoogleApiClient;
-    LocationRequest mLocationRequest;
-    android.location.Location mCurrentLocation;
-    private static final long INTERVAL = 1000 * 10;
-    private static final long FASTEST_INTERVAL = 1000 * 1;
-    private static final String TAG = "LocationActivity";
-    String mLastUpdateTime;
     int textLength = 0;
 
 
@@ -107,16 +87,6 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         if (!isGooglePlayServicesAvailable()) {
             finish();
         }
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(INTERVAL);
-        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-
 
         ScrollViewMAin = (ScrollView) findViewById(R.id.ScrollViewMAin);
         et_name = (ProLightEditText) findViewById(R.id.et_name);
@@ -233,12 +203,11 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                     et_zip.setText(extras.getString("zip"));
                     et_city.setText(extras.getString("city"));
                     et_state.setText(extras.getString("state"));
-                    Double lat,lon;
-                    lat= Double.valueOf(extras.getString("lattitude"));
-                    lon=Double.valueOf(extras.getString("longttitude"));
-                    ProConstant.lat=extras.getString("lattitude");
-                    ProConstant.lon=extras.getString("longttitude");
-                    getAddress(lat,lon);
+
+                    latitude = extras.getString("lattitude");
+                    longtitude = extras.getString("longttitude");
+
+                    getAddress(Double.valueOf(latitude), Double.valueOf(longtitude));
 
                 }
             }
@@ -268,22 +237,27 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                     JSONArray job = mainResponseObj.getJSONArray("info_array");
                     for (int i = 0; i < job.length(); i++) {
                         JSONObject jo = job.getJSONObject(i);
+
                         businessdata = jo.getString("business_desc");
                         accname = jo.getString("acc_name");
                         et_name.setText(jo.getString("company_name"));
                         et_email.setText(jo.getString("contact_email"));
+
                         et_companywesite.setText(jo.getString("company_website"));
                         et_companyphone.setText(jo.getString("company_phone"));
                         et_address.setText(jo.getString("str_address"));
+
                         et_zip.setText(jo.getString("zipcode"));
                         et_city.setText(jo.getString("city"));
                         et_state.setText(jo.getString("state"));
 
                         et_employee.setText(jo.getString("#employees"));
-                        JSONObject joi = jo.getJSONObject("business_type");
-                        et_busineestype.setText(joi.getString("value"));
-                        ProConstant.id = joi.getString("id");
-                        Logger.printMessage("AppDataId", ProConstant.id);
+                        et_busineestype.setText(jo.getJSONObject("business_type").getString("value"));
+                        business_type_id = jo.getJSONObject("business_type").getString("id");
+
+                        countryCod= jo.getString("country_name");
+                        latitude= jo.getString("latitude");
+                        longtitude= jo.getString("longitude");
 
                     }
                 } catch (JSONException e) {
@@ -351,7 +325,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
                 try {
                     et_busineestype.setText(value.getString("value"));
                     pros_contact_service = value.getString("id");
-                    ProConstant.id = pros_contact_service;
+                    business_type_id= pros_contact_service;
                     Logger.printMessage("value id", pros_contact_service);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -362,7 +336,7 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         rcv_.setAdapter(customListAdapterDialog);
         // some other visual settings
         popupWindow.setFocusable(false);
-        popupWindow.setWidth(width-30);
+        popupWindow.setWidth(width - 30);
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 
         // set the list view as pop up window content
@@ -446,79 +420,6 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // location-related task you need to do.
-                    if (ContextCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
-
-                        //Request location updates:
-                        ///////////////Here called location /////////////////
-
-                        mGoogleApiClient.connect();
-
-                        if (mGoogleApiClient.isConnected()) {
-                            PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-                            Logger.printMessage(TAG, "LocationActivity update started ..............: ");
-                            Logger.printMessage(TAG, "LocationActivity update resumed .....................");
-                        }
-                    }
-
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-
-                }
-                return;
-            }
-
-        }
-    }
-
-    @Override
-    public void onLocationChanged(android.location.Location location) {
-        Logger.printMessage(TAG, "Firing onLocationChanged..............................................");
-        mCurrentLocation = location;
-        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-        updateUI();
-
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        Logger.printMessage(TAG, "onConnected - isConnected ...............: " + mGoogleApiClient.isConnected());
-        if (checkLocationPermission()) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-
-                ///////////////Here called location /////////////////
-
-                PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-                Logger.printMessage(TAG, "LocationActivity update started ..............: ");
-            }
-        }
-
-    }
-
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Logger.printMessage(TAG, "Connection failed: " + connectionResult.toString());
-    }
 
     private boolean isGooglePlayServicesAvailable() {
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
@@ -534,123 +435,43 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         return true;
     }
 
-    private void updateUI() {
-        Logger.printMessage(TAG, "UI update initiated .............");
-        if (null != mCurrentLocation) {
-            String lattitude = String.valueOf(mCurrentLocation.getLatitude());
-            String longttitude = String.valueOf(mCurrentLocation.getLongitude());
-            ProConstant.latitude = lattitude;
-            ProConstant.longtitude = longttitude;
-            Logger.printMessage("LATTITUIDE", lattitude);
-            Logger.printMessage("Longtitude", longttitude);
 
-            ProHelperClass.getInstance(CompanyProfileActivity.this).setCurrentLatLng(lattitude, longttitude);
-
-            Logger.printMessage("updateUI", "At Time: " + mLastUpdateTime + "\n" +
-                    "Latitude: " + lattitude + "\n" +
-                    "Longitude: " + longttitude + "\n" +
-                    "Accuracy: " + mCurrentLocation.getAccuracy() + "\n" +
-                    "Provider: " + mCurrentLocation.getProvider());
-        } else {
-            Logger.printMessage(TAG, "location is null ...............");
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (checkLocationPermission()) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-
-                ///////////////Here called location /////////////////
-                mGoogleApiClient.connect();
-            }
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (checkLocationPermission()) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-
-                ///////////////Here called location /////////////////
-                if (mGoogleApiClient.isConnected()) {
-                    PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-                    Logger.printMessage(TAG, "LocationActivity update resumed .....................");
-                }
-            }
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (checkLocationPermission()) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-
-                ///////////////Here called location /////////////////
-                if (mGoogleApiClient.isConnected()) {
-                    LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-                    Logger.printMessage(TAG, "LocationActivity update stopped .......................");
-                }
-            }
-        }
-    }
-
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Logger.printMessage(TAG, "onStop fired ..............");
-        mGoogleApiClient.disconnect();
-        Logger.printMessage(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
-    }
     public void getAddress(Double lat, Double lng) {
         Geocoder geocoder = new Geocoder(CompanyProfileActivity.this, Locale.getDefault());
-            List<Address> addresses = null;
-            try {
-                addresses = geocoder.getFromLocation(lat, lng, 1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Address obj = addresses.get(0);
-            String add = obj.getAddressLine(0);
-            String currentAddress = obj.getSubAdminArea() + ","
-                    + obj.getAdminArea();
-             String latitude = String.valueOf(obj.getLatitude());
-            String longitude = String.valueOf(obj.getLongitude());
-            String  currentCity= obj.getSubAdminArea();
-            String currentState= obj.getAdminArea();
-            add = add + "\n" + obj.getCountryName();
-            add = add + "\n" + obj.getCountryCode();
-             ProConstant.country= obj.getCountryCode();
-            Logger.printMessage("csfsfacfsas",countrycod);
-            add = add + "\n" + obj.getAdminArea();
-            add = add + "\n" + obj.getPostalCode();
-            add = add + "\n" + obj.getSubAdminArea();
-            add = add + "\n" + obj.getLocality();
-            add = add + "\n" + obj.getSubThoroughfare();
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(lat, lng, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Address obj = addresses.get(0);
+        String add = obj.getAddressLine(0);
+        String currentAddress = obj.getSubAdminArea() + ","
+                + obj.getAdminArea();
+        String latitude = String.valueOf(obj.getLatitude());
+        String longitude = String.valueOf(obj.getLongitude());
+        String currentCity = obj.getSubAdminArea();
+        String currentState = obj.getAdminArea();
+        add = add + "\n" + obj.getCountryName();
+        add = add + "\n" + obj.getCountryCode();
+        countryCod = obj.getCountryCode();
+        Logger.printMessage("countrycod", countryCod);
+        add = add + "\n" + obj.getAdminArea();
+        add = add + "\n" + obj.getPostalCode();
+        add = add + "\n" + obj.getSubAdminArea();
+        add = add + "\n" + obj.getLocality();
+        add = add + "\n" + obj.getSubThoroughfare();
 
-            Log.v("IGA", "Address" + add);
-            // Toast.makeText(this, "Address=>" + add,
-            // Toast.LENGTH_SHORT).show();
+        Log.v("IGA", "Address" + add);
+        // Toast.makeText(this, "Address=>" + add,
+        // Toast.LENGTH_SHORT).show();
 
-            // TennisAppActivity.showDialog(add);
+        // TennisAppActivity.showDialog(add);
 
     }
 
 
     public void submit() {
-
         if (et_name.getText().toString().trim().equals("")) {
             et_name.setError("Please enter company name");
             et_name.requestFocus();
@@ -719,102 +540,103 @@ public class CompanyProfileActivity extends AppCompatActivity implements
 //                                                    Log.d("sbdsdsh",locale);
 
 
+                                                    Logger.printMessage("userid", ProApplication.getInstance().getUserId());
+                                                    Logger.printMessage("b_desc", businessdata);
+                                                    Logger.printMessage("comp_name", et_name.getText().toString().trim());
+                                                    Logger.printMessage("comp_email", et_email.getText().toString().trim());
+                                                    Logger.printMessage("website", et_companywesite.getText().toString().trim());
+                                                    Logger.printMessage("alt_phone", et_companyphone.getText().toString().trim());
+                                                    Logger.printMessage("bus_type", business_type_id);
+                                                    Logger.printMessage("num_emp", et_employee.getText().toString().trim());
+                                                    Logger.printMessage("com_address", et_address.getText().toString().trim());
+                                                    Logger.printMessage("city", et_city.getText().toString().trim());
+                                                    Logger.printMessage("state", et_state.getText().toString().trim());
+                                                    Logger.printMessage("zipcode", et_zip.getText().toString().trim());
+                                                    Logger.printMessage("acc_name", accname);
+
+                                                    Logger.printMessage("lat", latitude);
+                                                    Logger.printMessage("long", longtitude);
+                                                    Logger.printMessage("country", countryCod);
 
 
-                                                        Logger.printMessage("userid", ProApplication.getInstance().getUserId());
-                                                        Logger.printMessage("b_desc", businessdata);
-                                                        Logger.printMessage("comp_name", et_name.getText().toString().trim());
-                                                        Logger.printMessage("comp_email", et_email.getText().toString().trim());
-                                                        Logger.printMessage("website", et_companywesite.getText().toString().trim());
-                                                        Logger.printMessage("alt_phone", et_companyphone.getText().toString().trim());
-                                                        Logger.printMessage("bus_type", ProConstant.id);
-                                                        Logger.printMessage("num_emp", et_employee.getText().toString().trim());
-                                                        Logger.printMessage("com_address", et_address.getText().toString().trim());
-                                                        Logger.printMessage("city", et_city.getText().toString().trim());
-                                                        Logger.printMessage("state", et_state.getText().toString().trim());
-                                                        Logger.printMessage("zipcode", et_zip.getText().toString().trim());
-                                                        Logger.printMessage("acc_name", accname);
-                                                        Logger.printMessage("lat", ProConstant.lat);
-                                                        Logger.printMessage("long", ProConstant.lon);
-                                                        Logger.printMessage("country",  ProConstant.country);
+                                                    CustomAlert customAlert = new CustomAlert();
+                                                    customAlert.getEventFromNormalAlert(CompanyProfileActivity.this, "", "Confirm company profile update", "Ok", "Cancel", new CustomAlert.MyCustomAlertListener() {
+                                                        @Override
+                                                        public void callBackOk() {
 
+                                                            HashMap<String, String> Params = new HashMap<>();
+                                                            Params.put("user_id", ProApplication.getInstance().getUserId());
+                                                            Params.put("desc", businessdata);
+                                                            Params.put("comp_name", et_name.getText().toString().trim());
+                                                            Params.put("comp_email", et_email.getText().toString().trim());
+                                                            Params.put("website", et_companywesite.getText().toString().trim());
+                                                            Params.put("alt_phone", et_companyphone.getText().toString().trim());
+                                                            Params.put("bus_type", business_type_id);
+                                                            Params.put("num_emp", et_employee.getText().toString().trim());
+                                                            Params.put("com_address", et_address.getText().toString().trim());
+                                                            Params.put("city", et_city.getText().toString().trim());
+                                                            Params.put("state", et_state.getText().toString().trim());
+                                                            Params.put("zipcode", et_zip.getText().toString().trim());
+                                                            Params.put("acc_name", accname);
+                                                            Params.put("latitude", latitude);
+                                                            Params.put("longitude", longtitude);
+                                                            Params.put("country", countryCod);
 
-                                                        CustomAlert customAlert = new CustomAlert();
-                                                        customAlert.getEventFromNormalAlert(CompanyProfileActivity.this, "", "Confirm company profile update", "Ok", "Cancel", new CustomAlert.MyCustomAlertListener() {
-                                                            @Override
-                                                            public void callBackOk() {
-                                                                HashMap<String, String> Params = new HashMap<>();
-                                                                Params.put("user_id", ProApplication.getInstance().getUserId());
-                                                                Params.put("desc", businessdata);
-                                                                Params.put("comp_name", et_name.getText().toString().trim());
-                                                                Params.put("comp_email", et_email.getText().toString().trim());
-                                                                Params.put("website", et_companywesite.getText().toString().trim());
-                                                                Params.put("alt_phone", et_companyphone.getText().toString().trim());
-                                                                Params.put("bus_type", ProConstant.id);
-                                                                Params.put("num_emp", et_employee.getText().toString().trim());
-                                                                Params.put("com_address", et_address.getText().toString().trim());
-                                                                Params.put("city", et_city.getText().toString().trim());
-                                                                Params.put("country",  ProConstant.country);
-                                                                Params.put("state", et_state.getText().toString().trim());
-                                                                Params.put("zipcode", et_zip.getText().toString().trim());
-                                                                Params.put("acc_name", accname);
-                                                                Params.put("latitude", ProConstant.lat);
-                                                                Params.put("longitude", ProConstant.lon);
-                                                                Logger.printMessage("PARAMS", String.valueOf(Params));
+                                                            Logger.printMessage("PARAMS", String.valueOf(Params));
 
-                                                                new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, ProConstant.copanyinfosave, Params, null, new CustomJSONParser.CustomJSONResponse() {
-                                                                    @Override
-                                                                    public void onSuccess(String result) {
-                                                                        myLoader.dismissLoader();
-                                                                        Logger.printMessage("result", result);
-                                                                        try {
-                                                                            JSONObject job = new JSONObject(result);
-                                                                            String msg = job.getString("message");
+                                                            new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, ProConstant.copanyinfosave, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                                                @Override
+                                                                public void onSuccess(String result) {
+                                                                    myLoader.dismissLoader();
+                                                                    Logger.printMessage("result", result);
+                                                                    try {
+                                                                        JSONObject job = new JSONObject(result);
+                                                                        String msg = job.getString("message");
 
-                                                                            getData();
+                                                                        getData();
 
-                                                                            Toast.makeText(CompanyProfileActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
-                                                                        } catch (JSONException e) {
-                                                                            e.printStackTrace();
-                                                                        }
+                                                                        Toast.makeText(CompanyProfileActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
+                                                                    } catch (JSONException e) {
+                                                                        e.printStackTrace();
                                                                     }
+                                                                }
 
-                                                                    @Override
-                                                                    public void onError(String error, String response) {
-                                                                        myLoader.dismissLoader();
-                                                                        try {
-                                                                            JSONObject job = new JSONObject(response);
-                                                                            String message = job.getString("message");
-                                                                            Toast.makeText(CompanyProfileActivity.this, "" + message, Toast.LENGTH_SHORT).show();
-                                                                        } catch (JSONException e) {
-                                                                            e.printStackTrace();
-                                                                        }
+                                                                @Override
+                                                                public void onError(String error, String response) {
+                                                                    myLoader.dismissLoader();
+                                                                    try {
+                                                                        JSONObject job = new JSONObject(response);
+                                                                        String message = job.getString("message");
+                                                                        Toast.makeText(CompanyProfileActivity.this, "" + message, Toast.LENGTH_SHORT).show();
+                                                                    } catch (JSONException e) {
+                                                                        e.printStackTrace();
                                                                     }
+                                                                }
 
-                                                                    @Override
-                                                                    public void onError(String error) {
-                                                                        myLoader.dismissLoader();
-                                                                    }
+                                                                @Override
+                                                                public void onError(String error) {
+                                                                    myLoader.dismissLoader();
+                                                                }
 
-                                                                    @Override
-                                                                    public void onStart() {
-                                                                        myLoader.showLoader();
-                                                                    }
-                                                                });
-                                                            }
+                                                                @Override
+                                                                public void onStart() {
+                                                                    myLoader.showLoader();
+                                                                }
+                                                            });
+                                                        }
 
-                                                            @Override
-                                                            public void callBackCancel() {
+                                                        @Override
+                                                        public void callBackCancel() {
 
-                                                            }
-                                                        });
-                                                    }
-
+                                                        }
+                                                    });
                                                 }
+
                                             }
                                         }
                                     }
                                 }
+                            }
 
                         } else {
                             et_companywesite.setError("Please enter correct website");

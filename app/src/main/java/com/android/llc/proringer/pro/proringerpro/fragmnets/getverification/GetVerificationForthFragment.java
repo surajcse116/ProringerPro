@@ -43,6 +43,7 @@ public class GetVerificationForthFragment extends Fragment {
     ProRegularTextView tv_confirmlater, txt_address, txt_city, txt_state, txt_pincode;
     MyLoader myLoader;
     boolean confirmOrNot = false;
+    String country="",lattitude="",longttitude="";
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -135,8 +136,8 @@ public class GetVerificationForthFragment extends Fragment {
         String currentState= obj.getAdminArea();
         add = add + "\n" + obj.getCountryName();
         add = add + "\n" + obj.getCountryCode();
-        ProConstant.country= obj.getCountryCode();
-        Logger.printMessage("csfsfacfsas",ProConstant.country);
+        country= obj.getCountryCode();
+        Logger.printMessage("countryCode",country);
         add = add + "\n" + obj.getAdminArea();
         add = add + "\n" + obj.getPostalCode();
         add = add + "\n" + obj.getSubAdminArea();
@@ -175,8 +176,8 @@ public class GetVerificationForthFragment extends Fragment {
                     Double lat,lon;
                     lat= Double.valueOf(extras.getString("lattitude"));
                     lon=Double.valueOf(extras.getString("longttitude"));
-                    ProConstant.lat=extras.getString("lattitude");
-                    ProConstant.lon=extras.getString("longttitude");
+                    lattitude=extras.getString("lattitude");
+                    longttitude=extras.getString("longttitude");
                     getAddress(lat,lon);
 
 
@@ -235,23 +236,23 @@ public class GetVerificationForthFragment extends Fragment {
     private void callVerifiedAddress() {
 
         Logger.printMessage("user_id", ProApplication.getInstance().getUserId());
-        Logger.printMessage("verify_country", ProConstant.country);
+        Logger.printMessage("verify_country", country);
         Logger.printMessage("verify_address", txt_address.getText().toString().trim());
         Logger.printMessage("verify_city", txt_city.getText().toString().trim());
         Logger.printMessage("verify_state", txt_state.getText().toString().trim());
         Logger.printMessage("verify_zip", txt_pincode.getText().toString().trim());
-        Logger.printMessage("lat",ProConstant.lat);
-        Logger.printMessage("lon",ProConstant.lon);
+        Logger.printMessage("lat",lattitude);
+        Logger.printMessage("lon",longttitude);
 
         HashMap<String, String> params = new HashMap<>();
         params.put("user_id", ProApplication.getInstance().getUserId());
-        params.put("verify_country",  ProConstant.country);
+        params.put("verify_country",  country);
         params.put("verify_address", txt_address.getText().toString().trim().split(",")[0]);
         params.put("verify_city", txt_city.getText().toString().trim());
         params.put("verify_state", txt_state.getText().toString().trim());
         params.put("verify_zip", txt_pincode.getText().toString().trim());
-        params.put("verify_latitude", ProConstant.lat);
-        params.put("verify_longitude", ProConstant.lon);
+        params.put("verify_latitude", lattitude);
+        params.put("verify_longitude", longttitude);
 
         new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_verified_address, params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override

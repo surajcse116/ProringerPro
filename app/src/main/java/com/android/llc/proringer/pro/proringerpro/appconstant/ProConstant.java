@@ -86,11 +86,6 @@ public class ProConstant {
     public  static String app_transaction_history=BASEURL+"app_pro_transaction_history?";
     public static  String app_campaign=BASEURL+"app_pro_campaign?";
 
-    public static String country = "";
-    public static String lat = "";
-    public static String lon = "";
-
-
     public static String latitude = "";
     public static String longtitude = "";
     public static String f_name = "";
@@ -100,9 +95,6 @@ public class ProConstant {
     public static String password = "";
     public static String city = "";
     public static String state = "";
-    public static String country1 = "";
-    public static String id = "";
-    public static String firebasedevice_token = "";
 
     public static String placeid = "";
 }
