@@ -132,12 +132,16 @@ public class CompanyProfileActivity extends AppCompatActivity implements
         tv_save = (ProRegularTextView) findViewById(R.id.tv_save);
         et_address.setFocusable(false);
         et_address.setClickable(false);
+
         et_zip.setFocusable(false);
         et_zip.setClickable(false);
+
         et_city.setFocusable(false);
         et_city.setClickable(false);
+
         et_state.setFocusable(false);
         et_state.setClickable(false);
+
         myLoader = new MyLoader(CompanyProfileActivity.this);
 
         et_companyphone.addTextChangedListener(new TextWatcher() {
