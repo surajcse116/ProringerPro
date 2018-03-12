@@ -57,7 +57,6 @@ import java.util.Locale;
 public class CompanyProfileActivity extends AppCompatActivity {
 
     ProLightEditText et_name, et_email, et_companywesite, et_companyphone, et_employee, et_address, et_zip, et_city, et_state;
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     String pros_contact_service;
     ProRegularTextView et_busineestype, tv_save;
     ScrollView ScrollViewMAin;
