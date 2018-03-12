@@ -1,7 +1,5 @@
 package com.android.llc.proringer.pro.proringerpro.pushNotification;
 
-import android.util.Log;
-
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
