@@ -96,5 +96,7 @@ public class ProConstant {
     public static String city = "";
     public static String state = "";
 
+    public static String firebasedevice_token="";
+
     public static String placeid = "";
 }

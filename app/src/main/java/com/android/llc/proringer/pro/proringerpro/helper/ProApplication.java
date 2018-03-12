@@ -16,7 +16,6 @@ import com.android.llc.proringer.pro.proringerpro.pojo.SetGetProjectPostedData;
 public class ProApplication extends Application {
     private static ProApplication instance = null;
     private SharedPreferences userPreference = null;
-    private SharedPreferences devicePreference = null;
     private SharedPreferences notificationPreference = null;
     private SetGetProjectPostedData dataSelected = null;
 
@@ -33,7 +32,6 @@ public class ProApplication extends Application {
         instance = this;
         userPreference = getSharedPreferences("USER_PREFERENCE", MODE_PRIVATE);
         notificationPreference = getSharedPreferences("NOTIFICATION_PREFERENCE", MODE_PRIVATE);
-        devicePreference = getSharedPreferences("DEVICE_PREFERENCE", MODE_PRIVATE);
     }
 
     public void setUserPreference(String user_id,
@@ -118,18 +116,6 @@ public class ProApplication extends Application {
 
     public void setDataSelected(SetGetProjectPostedData dataSelected) {
         this.dataSelected = dataSelected;
-    }
-
-    public void putdevicetoken(String device_token)
-    {
-        Logger.printMessage("deviceshairpreferance",device_token);
-        devicePreference.edit().putString("device_token",device_token).apply();
-    }
-
-    public String getdevicetoken()
-    {
-       return devicePreference.getString("device_token",null);
-
     }
 
 

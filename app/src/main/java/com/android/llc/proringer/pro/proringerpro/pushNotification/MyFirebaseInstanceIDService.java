@@ -35,7 +35,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
         if (refreshedToken!=null)
         {
-            ProApplication.getInstance().putdevicetoken(refreshedToken);
+            ProConstant.firebasedevice_token=refreshedToken;
         }
 
 

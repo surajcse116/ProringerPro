@@ -96,7 +96,7 @@ public class LogInActivity extends AppCompatActivity {
                     Params.put("password", password.getText().toString().trim());
                     Params.put("device_type", "a");
                     Params.put("user_type", "C");
-                    Params.put("device_token",   ProApplication.getInstance().getdevicetoken());
+                    Params.put("device_token",   ProConstant.firebasedevice_token);
                   //  Logger.printMessage("device_token",ProApplication.getInstance().getdevicetoken());
                     Logger.printMessage("PARAMS", String.valueOf(Params));
                     new CustomJSONParser().fireAPIForPostMethod(LogInActivity.this, ProConstant.Login, Params, null, new CustomJSONParser.CustomJSONResponse() {
