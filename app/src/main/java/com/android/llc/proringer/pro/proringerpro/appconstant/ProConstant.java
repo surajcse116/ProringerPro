@@ -85,6 +85,8 @@ public class ProConstant {
     public static String app_homeowner_replyreview = BASEURL + "app_homeowner_replyreview";
     public  static String app_transaction_history=BASEURL+"app_pro_transaction_history?";
     public static  String app_campaign=BASEURL+"app_pro_campaign?";
+    public static  String app_pro_businesshours=BASEURL+"app_pro_businesshours?";
+    public static  String app_pro_businesshour_save=BASEURL+"app_pro_businesshour_save";
 
     public static String latitude = "";
     public static String longtitude = "";
