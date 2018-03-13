@@ -515,16 +515,6 @@ public class CustomJSONParser {
         }
     }
 
-    public interface CustomJSONResponse {
-        void onSuccess(String result);
-
-        void onError(String error, String response);
-
-        void onError(String error);
-
-        void onStart();
-    }
-
     public void fireAPIForPostMethodNormalTxtArray(Context mcontext, final String url, final HashMap<String, String> apiPostData, final HashMap<String, String> postArrayText, final CustomJSONResponse customJSONResponse) {
 
         if (NetworkUtil.getInstance().isNetworkAvailable(mcontext)) {
@@ -754,4 +744,15 @@ public class CustomJSONParser {
             customJSONResponse.onError("No internet connection found. Please check your internet connection.");
         }
     }
+
+    public interface CustomJSONResponse {
+        void onSuccess(String result);
+
+        void onError(String error, String response);
+
+        void onError(String error);
+
+        void onStart();
+    }
+
 }
