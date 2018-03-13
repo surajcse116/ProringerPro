@@ -57,7 +57,7 @@ public class CustomJSONParser {
                     while (myVeryOwnIterator.hasNext()) {
                         String key = (String) myVeryOwnIterator.next();
                         String value = (String) apiPostData.get(key);
-                        Logger.printMessage(key, value);
+                        Logger.printMessage(key, "-->"+value);
                         builderNew.addFormDataPart(key, value);
                     }
 
@@ -238,7 +238,7 @@ public class CustomJSONParser {
                     builderNew = new MultipartBody.Builder().setType(MultipartBody.FORM);
                     for (SetGetAPIPostData data : apiPostDataArrayList) {
                         builderNew.addFormDataPart("" + data.getPARAMS(), data.getValues());
-                        Logger.printMessage(data.getPARAMS(), data.getValues());
+                        Logger.printMessage(data.getPARAMS(),"-->"+ data.getValues());
                     }
 
                     if (Photos!=null) {
@@ -343,7 +343,7 @@ public class CustomJSONParser {
                     builderNew = new MultipartBody.Builder().setType(MultipartBody.FORM);
                     for (SetGetAPIPostData data : apiPostDataArrayList) {
                         builderNew.addFormDataPart("" + data.getPARAMS(), data.getValues());
-                        Logger.printMessage(data.getPARAMS(), data.getValues());
+                        Logger.printMessage(data.getPARAMS(),"-->"+ data.getValues());
                     }
                     int position=0;
                     for (File file : Photos) {
@@ -428,7 +428,7 @@ public class CustomJSONParser {
                     builderNew = new MultipartBody.Builder().setType(MultipartBody.FORM);
                     for (SetGetAPIPostData data : apiPostDataArrayList) {
                         builderNew.addFormDataPart("" + data.getPARAMS(), data.getValues());
-                        Logger.printMessage(data.getPARAMS(), data.getValues());
+                        Logger.printMessage(data.getPARAMS(),"-->"+ data.getValues());
                     }
 
                     if (Photos!=null) {

@@ -59,7 +59,7 @@ public class UserInformationActivity extends AppCompatActivity{
         setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
         arrayList.add(setGetAPIPostData);
         myload.showLoader();
-        showdata();
+        showData();
         tv_save_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,7 +169,7 @@ public class UserInformationActivity extends AppCompatActivity{
                                 try {
                                     mainResponseObj = new JSONObject(result);
                                     String message=mainResponseObj.getString("message");
-                                    showdata();
+                                    showData();
                                     Toast.makeText(UserInformationActivity.this, ""+message, Toast.LENGTH_SHORT).show();
 
                                 } catch (JSONException e) {
@@ -201,7 +201,7 @@ public class UserInformationActivity extends AppCompatActivity{
 
         }
     }
-    public void showdata()
+    public void showData()
     {
         new CustomJSONParser().fireAPIForGetMethod(UserInformationActivity.this, ProConstant.app_prouserinfo_list, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
