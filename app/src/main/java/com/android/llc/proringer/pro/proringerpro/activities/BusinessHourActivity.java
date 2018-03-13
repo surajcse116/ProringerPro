@@ -94,9 +94,6 @@ public class BusinessHourActivity extends AppCompatActivity {
     private void callapp_pro_businesshour_save() {
 
         HashMap<String, String> Params = new HashMap<>();
-        HashMap<String, String> Params1 = new HashMap<>();
-        HashMap<String, String> Params2 = new HashMap<>();
-        HashMap<String, String> Params3 = new HashMap<>();
 
         Params.put("user_id",ProApplication.getInstance().getUserId());
         Params.put("Business_hr_type",Business_hr_type);
@@ -106,45 +103,45 @@ public class BusinessHourActivity extends AppCompatActivity {
             if (businessHourArrayList.get(index).getDay_status().equalsIgnoreCase("Y"))
             {
                 if (businessHourArrayList.get(index).getDay_name().equalsIgnoreCase("Monday")){
-                    Params1.put("day"+"["+ index+"]","1");
-                    Params2.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
-                    Params3.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
+                    Params.put("day"+"["+ index+"]","1");
+                    Params.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
+                    Params.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
 
                 }else  if (businessHourArrayList.get(index).getDay_name().equalsIgnoreCase("Tuesday")){
-                    Params1.put("day"+"["+ index+"]","2");
-                    Params2.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
-                    Params3.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
+                    Params.put("day"+"["+ index+"]","2");
+                    Params.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
+                    Params.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
                 } else if (businessHourArrayList.get(index).getDay_name().equalsIgnoreCase("Wednesday")){
-                    Params1.put("day"+"["+ index+"]","3");
-                    Params2.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
-                    Params3.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
+                    Params.put("day"+"["+ index+"]","3");
+                    Params.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
+                    Params.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
                 }else if (businessHourArrayList.get(index).getDay_name().equalsIgnoreCase("Thursday")){
-                    Params1.put("day"+"["+ index+"]","4");
-                    Params2.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
-                    Params3.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
+                    Params.put("day"+"["+ index+"]","4");
+                    Params.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
+                    Params.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
                 }else if (businessHourArrayList.get(index).getDay_name().equalsIgnoreCase("Friday")){
-                    Params1.put("day"+"["+ index+"]","5");
-                    Params2.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
-                    Params3.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
+                    Params.put("day"+"["+ index+"]","5");
+                    Params.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
+                    Params.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
                 }else if (businessHourArrayList.get(index).getDay_name().equalsIgnoreCase("Saturday")){
-                    Params1.put("day"+"["+ index+"]","6");
-                    Params2.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
-                    Params3.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
+                    Params.put("day"+"["+ index+"]","6");
+                    Params.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
+                    Params.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
                 }else if (businessHourArrayList.get(index).getDay_name().equalsIgnoreCase("Sunday")){
-                    Params1.put("day"+"["+ index+"]","7");
-                    Params2.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
-                    Params3.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
+                    Params.put("day"+"["+ index+"]","7");
+                    Params.put("start_time"+"["+ index+"]",businessHourArrayList.get(index).getStartTime());
+                    Params.put("end_time"+"["+index+"]",businessHourArrayList.get(index).getEndTime());
                 }
             }else {
-                Params1.put("day"+"["+ index+"]","");
-                Params2.put("start_time"+"["+ index+"]","");
-                Params3.put("end_time"+"["+index+"]","");
+                Params.put("day"+"["+ index+"]","");
+                Params.put("start_time"+"["+ index+"]","");
+                Params.put("end_time"+"["+index+"]","");
             }
         }
         Logger.printMessage("Params-->",""+Params);
 
 
-        new CustomJSONParser().fireAPIForPostMethodNormalTxtThreeArray(BusinessHourActivity.this, ProConstant.app_pro_businesshour_save, Params, Params1,Params2,Params3, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForPostMethod(BusinessHourActivity.this, ProConstant.app_pro_businesshour_save, Params,null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();

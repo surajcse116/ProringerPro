@@ -467,8 +467,6 @@ public class AddServicesActivity extends AppCompatActivity {
         HashMap<String, String> Params = new HashMap<>();
         Params.put("user_id", ProApplication.getInstance().getUserId());
 
-        HashMap<String, String> ParamArrayPost = new HashMap<>();
-
         String serviceString="";
 
 
@@ -496,15 +494,14 @@ public class AddServicesActivity extends AppCompatActivity {
             String paramService[]=serviceString.split(",");
 
         for (int q=1;q<paramService.length;q++){
-            ParamArrayPost.put("subcategory" + "[" + q + "]", paramService[q]);
+            Params.put("subcategory" + "[" + q + "]", paramService[q]);
         }
 
-
             Logger.printMessage("PARAMS", String.valueOf(Params));
-            Logger.printMessage("PARAMS-->", String.valueOf(ParamArrayPost));
+
 
             if (atLeastOneChecked){
-                new CustomJSONParser().fireAPIForPostMethodNormalTxtArray(AddServicesActivity.this, ProConstant.app_proservices_save, Params, ParamArrayPost, new CustomJSONParser.CustomJSONResponse() {
+                new CustomJSONParser().fireAPIForPostMethod(AddServicesActivity.this, ProConstant.app_proservices_save, Params, null, new CustomJSONParser.CustomJSONResponse() {
                     @Override
                     public void onSuccess(String result) {
                         myLoader.dismissLoader();

@@ -240,11 +240,9 @@ public class AddServiceAreaActivity extends AppCompatActivity {
         HashMap<String, String> Params = new HashMap<>();
         Params.put("user_id", ProApplication.getInstance().getUserId());
 
-        HashMap<String, String> ParamArrayPost = new HashMap<>();
-
         try{
             for (int chooseArea=0;chooseArea<stringArrayList.size();chooseArea++){
-                ParamArrayPost.put("citi"+"["+chooseArea+"]", stringArrayList.get(chooseArea));
+                Params.put("citi"+"["+chooseArea+"]", stringArrayList.get(chooseArea));
             }
         }catch (Exception ex)
         {
@@ -253,7 +251,7 @@ public class AddServiceAreaActivity extends AppCompatActivity {
 
         Logger.printMessage("PARAMS", String.valueOf(Params));
 
-        new CustomJSONParser().fireAPIForPostMethodNormalTxtArray(AddServiceAreaActivity.this, ProConstant.serviceAreaSaveOfUserAPI, Params, ParamArrayPost, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForPostMethod(AddServiceAreaActivity.this, ProConstant.serviceAreaSaveOfUserAPI, Params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();
