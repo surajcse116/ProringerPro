@@ -33,7 +33,7 @@ import java.util.HashMap;
  * Created by su on 28/2/18.
  */
 
-public class GetVerifactionFifthverifyph extends Fragment {
+public class GetVerificationFifthPhoneFragment extends Fragment {
     ProLightEditText et_pin_number;
     ProRegularTextView tv_confirm,tv_close;
     MyLoader myLoader;

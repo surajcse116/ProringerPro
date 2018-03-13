@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwoFragment;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 
 import org.json.JSONArray;
@@ -20,9 +20,9 @@ import org.json.JSONException;
 public class CustomListAdapterDialogMonthYear extends RecyclerView.Adapter<CustomListAdapterDialogMonthYear.MyViewHolder> {
     Context mContext;
     JSONArray predictionsJsonArray;
-    RegistrationTwo.onOptionSelected callback;
+    RegistrationTwoFragment.onOptionSelected callback;
 
-    public CustomListAdapterDialogMonthYear(Context mContext, JSONArray predictionsJsonArray, RegistrationTwo.onOptionSelected callback) {
+    public CustomListAdapterDialogMonthYear(Context mContext, JSONArray predictionsJsonArray, RegistrationTwoFragment.onOptionSelected callback) {
         this.mContext = mContext;
         this.predictionsJsonArray = predictionsJsonArray;
         this.callback = callback;

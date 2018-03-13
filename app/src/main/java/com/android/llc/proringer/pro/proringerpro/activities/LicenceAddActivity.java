@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -32,7 +31,7 @@ import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialo
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.cropImagePackage.CropImage;
 import com.android.llc.proringer.pro.proringerpro.cropImagePackage.CropImageView;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwoFragment;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
@@ -41,7 +40,6 @@ import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.utils.ImageTakerActivityCamera;
 import com.android.llc.proringer.pro.proringerpro.utils.MethodsUtils;
 import com.android.llc.proringer.pro.proringerpro.utils.PermissionController;
-import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProRegularEditText;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.bumptech.glide.Glide;
@@ -375,7 +373,7 @@ public class LicenceAddActivity extends AppCompatActivity {
         RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
         rcv_.setLayoutManager(new LinearLayoutManager(LicenceAddActivity.this));
 
-        custom = new CustomListAdapterDialogCategory(LicenceAddActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
+        custom = new CustomListAdapterDialogCategory(LicenceAddActivity.this, PredictionsJsonArray, new RegistrationTwoFragment.onOptionSelected() {
             @Override
             public void onItemPassed(int position, JSONObject value) {
                 popupWindow.dismiss();

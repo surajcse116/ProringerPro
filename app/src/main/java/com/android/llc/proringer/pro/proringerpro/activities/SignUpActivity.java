@@ -10,8 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationOne;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationOneFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwoFragment;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 
 
@@ -53,30 +53,30 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void transactRegistrationFragmentOne() {
-        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + RegistrationOne.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + RegistrationOne.class.getCanonicalName());
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + RegistrationOneFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + RegistrationOneFragment.class.getCanonicalName());
 
-            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + RegistrationOne.class.getCanonicalName())).commit();
-            fragmentManager.popBackStack("" + RegistrationOne.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + RegistrationOneFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + RegistrationOneFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
         FragmentTransaction trasaction = fragmentManager.beginTransaction();
-        trasaction.replace(R.id.fragment_container, new RegistrationOne(), "" + RegistrationOne.class.getCanonicalName());
-        trasaction.addToBackStack("" + RegistrationOne.class.getCanonicalName());
+        trasaction.replace(R.id.fragment_container, new RegistrationOneFragment(), "" + RegistrationOneFragment.class.getCanonicalName());
+        trasaction.addToBackStack("" + RegistrationOneFragment.class.getCanonicalName());
         trasaction.commit();
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
 
     }
 
     public void transactRegistrationFragmentTwo() {
-        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + RegistrationTwo.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + RegistrationTwo.class.getCanonicalName());
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + RegistrationTwoFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + RegistrationTwoFragment.class.getCanonicalName());
 
-            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + RegistrationTwo.class.getCanonicalName())).commit();
-            fragmentManager.popBackStack("" + RegistrationTwo.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + RegistrationTwoFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + RegistrationTwoFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
         FragmentTransaction trasaction = fragmentManager.beginTransaction();
-        trasaction.replace(R.id.fragment_container, new RegistrationTwo(), "" + RegistrationTwo.class.getCanonicalName());
-        trasaction.addToBackStack("" + RegistrationTwo.class.getCanonicalName());
+        trasaction.replace(R.id.fragment_container, new RegistrationTwoFragment(), "" + RegistrationTwoFragment.class.getCanonicalName());
+        trasaction.addToBackStack("" + RegistrationTwoFragment.class.getCanonicalName());
         trasaction.commit();
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
 
@@ -91,8 +91,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName().equals(RegistrationTwo.class.getCanonicalName())) {
-            fragmentManager.popBackStack("" + RegistrationTwo.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName().equals(RegistrationTwoFragment.class.getCanonicalName())) {
+            fragmentManager.popBackStack("" + RegistrationTwoFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         } else {
             setResult(RESULT_CANCELED);
             finish();

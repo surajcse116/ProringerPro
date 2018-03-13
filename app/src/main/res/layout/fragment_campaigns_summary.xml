@@ -221,13 +221,20 @@
             android:text="Consider upgrading from the monthly subscription to an annual subscription and save big. Based on the days remaining on your current monthly subscription we calculate that if you upgrade to premuim service today your prorated amount due is reflected below."/>
 
 
-        <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProBoldEditText
+        <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:id="@+id/relval"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/backgroundtsolidorange_border"
+        android:layout_below="@+id/tv_upgrade_level">
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProBoldTextView
             android:id="@+id/et_member_money"
-            android:layout_below="@+id/tv_upgrade_level"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/edit_text_selecter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:layout_marginTop="5dp"
             android:hint="$343.33"
             android:inputType="text"
             android:paddingBottom="5dp"
@@ -236,6 +243,8 @@
             android:paddingTop="5dp"
             android:textColor="@color/colorTextBlack"
             android:textSize="14sp" />
+
+    </RelativeLayout>
 
 
         <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
@@ -246,7 +255,7 @@
             android:id="@+id/tv_cancel_member"
             android:layout_alignParentRight="true"
             android:textColor="@color/colorAccent"
-            android:layout_below="@+id/et_member_money"
+            android:layout_below="@+id/relval"
             android:text="Cancel Membership"/>
 
 

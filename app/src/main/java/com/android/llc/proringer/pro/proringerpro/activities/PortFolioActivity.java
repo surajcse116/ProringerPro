@@ -33,7 +33,7 @@ import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialo
 import com.android.llc.proringer.pro.proringerpro.adapter.CustomListAdapterDialogMonthYear;
 import com.android.llc.proringer.pro.proringerpro.adapter.PortFolioAdapter;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwo;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.registrationfragment.RegistrationTwoFragment;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomAlert;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
@@ -573,7 +573,7 @@ public class PortFolioActivity extends AppCompatActivity {
         RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
         rcv_.setLayoutManager(new LinearLayoutManager(PortFolioActivity.this));
 
-        customListAdapterDialogMonthYear = new CustomListAdapterDialogMonthYear(PortFolioActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
+        customListAdapterDialogMonthYear = new CustomListAdapterDialogMonthYear(PortFolioActivity.this, PredictionsJsonArray, new RegistrationTwoFragment.onOptionSelected() {
             @Override
             public void onItemPassed(int position, JSONObject value) {
                 popupWindow.dismiss();
@@ -612,7 +612,7 @@ public class PortFolioActivity extends AppCompatActivity {
         RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
         rcv_.setLayoutManager(new LinearLayoutManager(PortFolioActivity.this));
 
-        customListAdapterDialogMonthYear = new CustomListAdapterDialogMonthYear(PortFolioActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
+        customListAdapterDialogMonthYear = new CustomListAdapterDialogMonthYear(PortFolioActivity.this, PredictionsJsonArray, new RegistrationTwoFragment.onOptionSelected() {
             @Override
             public void onItemPassed(int position, JSONObject value) {
                 popupWindow.dismiss();
@@ -652,7 +652,7 @@ public class PortFolioActivity extends AppCompatActivity {
         RecyclerView rcv_ = (RecyclerView) dailogView.findViewById(R.id.rcv_);
         rcv_.setLayoutManager(new LinearLayoutManager(PortFolioActivity.this));
 
-        customListAdapterDialogCategory = new CustomListAdapterDialogCategory(PortFolioActivity.this, PredictionsJsonArray, new RegistrationTwo.onOptionSelected() {
+        customListAdapterDialogCategory = new CustomListAdapterDialogCategory(PortFolioActivity.this, PredictionsJsonArray, new RegistrationTwoFragment.onOptionSelected() {
             @Override
             public void onItemPassed(int position, JSONObject value) {
                 popupWindow.dismiss();

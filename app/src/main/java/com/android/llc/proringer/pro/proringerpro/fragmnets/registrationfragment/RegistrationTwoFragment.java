@@ -72,7 +72,7 @@ import java.util.Locale;
  * limitations under the License.
  */
 
-public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
+public class RegistrationTwoFragment extends Fragment implements MyCustomAlertListener {
 
     ProLightEditText edt_businessname, edt_city, edt_State, edt_zip, edt_phone, edt_email;
     ProRegularTextView protv_com, tv_service,tv_prolight_address,tv_service_area;

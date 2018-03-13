@@ -1,5 +1,6 @@
 package com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.android.llc.proringer.pro.proringerpro.R;
 import com.android.llc.proringer.pro.proringerpro.activities.LandScreenActivity;
+import com.android.llc.proringer.pro.proringerpro.activities.PremiumAnnualActivity;
 import com.android.llc.proringer.pro.proringerpro.adapter.AdapterTransactionHistory;
 import com.android.llc.proringer.pro.proringerpro.appconstant.ProConstant;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
@@ -32,13 +34,14 @@ import java.util.ArrayList;
  * Created by su on 2/20/18.
  */
 
-public class TransactionHistory extends Fragment{
+public class TransactionHistoryFragment extends Fragment{
     RecyclerView recyclerView;
     ArrayList<SetGetAPIPostData> arrayList = null;
-    ProRegularTextView current_campigan;
+    ProRegularTextView current_campigan,tv_managecampaign,tv_managepayment;
     ArrayList<Transctiondetails>Transctiondetil;
     AdapterTransactionHistory adapterTransactionHistory;
     public MyLoader myLoader = null;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,10 +53,26 @@ public class TransactionHistory extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         recyclerView=(RecyclerView) view.findViewById(R.id.rcv_transaction);
         current_campigan=(ProRegularTextView)view.findViewById(R.id.current_cam);
+        tv_managecampaign=(ProRegularTextView)view.findViewById(R.id.tv_managecampaign);
+        tv_managepayment=(ProRegularTextView)view.findViewById(R.id.tv_managepayment);
         Transctiondetil= new ArrayList<>();
         myLoader = new MyLoader(getActivity());
         transcationhistorydata();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        tv_managecampaign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LandScreenActivity) getActivity()). transactCampaignsSummary();
+            }
+        });
+        tv_managepayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i= new Intent(getActivity(), PremiumAnnualActivity.class);
+                startActivity(i);
+
+            }
+        });
     }
 
     public void transcationhistorydata()

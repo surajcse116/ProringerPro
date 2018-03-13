@@ -35,7 +35,7 @@ import com.bumptech.glide.request.target.Target;
  * -->
  */
 
-public class TutorialThree extends Fragment {
+public class TutorialOneFragment extends Fragment {
     ProRegularTextView header_text;
     ProLightTextView description;
     String url;
@@ -53,7 +53,6 @@ public class TutorialThree extends Fragment {
 
         header_text = (ProRegularTextView) view.findViewById(R.id.header_text);
         description = (ProLightTextView) view.findViewById(R.id.description);
-
         img = (AppCompatImageView) view.findViewById(R.id.img);
         Glide.with(getActivity()).load(url).listener(new RequestListener<String, GlideDrawable>() {
             @Override
@@ -67,7 +66,9 @@ public class TutorialThree extends Fragment {
             }
         }).into(img);
 
-        header_text.setText("SHOWCASE YOUR WORK");
-        description.setText("Upload new images and manage your\nproject gallaries to display some of\nyour best work");
+        header_text.setText("NEVER MISS A MESSAGE");
+        description.setText("Stay in touch with your clients\nthrough in-app messaging");
+
+
     }
 }

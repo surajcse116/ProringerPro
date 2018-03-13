@@ -35,11 +35,12 @@ import com.bumptech.glide.request.target.Target;
  * -->
  */
 
-public class TutorialFour extends Fragment {
+public class TutorialTwoFragment extends Fragment {
     ProRegularTextView header_text;
     ProLightTextView description;
     String url;
     AppCompatImageView img;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,8 +67,8 @@ public class TutorialFour extends Fragment {
             }
         }).into(img);
 
-        header_text.setText("RESPOND TO REVIEWS");
-        description.setText("Keep customers top of mind,even on\nthe go! Read and respond to reviews\ndirectly from the app");
+        header_text.setText("EDIT BUSINESS PROFILE");
+        description.setText("Edit your company logo, company\ninformation, business description, and\nhour of operation ");
 
     }
 }

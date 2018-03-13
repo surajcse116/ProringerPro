@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Created by su on 2/20/18.
  */
 
-public class AccountAnalytics extends Fragment {
+public class AccountAnalyticsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

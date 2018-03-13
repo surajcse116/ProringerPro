@@ -48,7 +48,7 @@ import java.util.HashMap;
  * limitations under the License.
  */
 
-public class RegistrationOne extends Fragment {
+public class RegistrationOneFragment extends Fragment {
     ProRegularTextView tv_next;
     ProLightEditText proet_fname, proet_lname, proet_email, proet_c_email, proet_phone, proet_password, proet_c_password;
     int textLength = 0;

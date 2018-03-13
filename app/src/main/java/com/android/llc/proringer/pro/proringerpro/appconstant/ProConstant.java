@@ -87,6 +87,7 @@ public class ProConstant {
     public static  String app_updatepassword=BASEURL+"app_control/change_password";
     public static  String app_updatemail=BASEURL+"app_control/change_email";
     public static  String app_vrificationcode=BASEURL+"app_control/validateVerificationCode";
+    public static  String app_pro_campaign_cancel=BASEURL+"app_pro_campaign_cancel";
 
     public static String latitude = "";
     public static String longtitude = "";

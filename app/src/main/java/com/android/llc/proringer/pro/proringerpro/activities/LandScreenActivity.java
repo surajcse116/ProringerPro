@@ -33,18 +33,17 @@ import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MessageFra
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.MyProjectsFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav.WatchListFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.AvailabilityTimeSlotFragment;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.CampaignsSummary;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.CampaignsSummaryFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.InviteAfriendFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.NotificationsFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.ProjectListFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.QuickReplyFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.RequestReviewFragment;
 import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.SocialMediaFragment;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.AccountAnalytics;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.TransactionHistory;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.getverification.GetVerifactionFifthverifyph;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.getverification.GetVerificationFifthFragment;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.main_content.ProjectMessagingFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.AccountAnalyticsFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.drawerNav.TransactionHistoryFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.getverification.GetVerificationFifthPhoneFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.maincontent.ProjectMessagingFragment;
 import com.android.llc.proringer.pro.proringerpro.helper.CustomJSONParser;
 import com.android.llc.proringer.pro.proringerpro.helper.Logger;
 import com.android.llc.proringer.pro.proringerpro.helper.MyLoader;
@@ -53,7 +52,6 @@ import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.BottomNav;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.NavigationHandler;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
-import com.bumptech.glide.Glide;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -1029,15 +1027,15 @@ public class LandScreenActivity extends AppCompatActivity {
     public void transactTransactionHistory() {
         toggleToolBar(false);
 
-        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + TransactionHistory.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + TransactionHistory.class.getCanonicalName());
-            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + TransactionHistory.class.getCanonicalName())).commit();
-            fragmentManager.popBackStack("" + TransactionHistory.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + TransactionHistoryFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + TransactionHistoryFragment.class.getCanonicalName());
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + TransactionHistoryFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + TransactionHistoryFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, new TransactionHistory(), "" + TransactionHistory.class.getCanonicalName());
-        transaction.addToBackStack("" + TransactionHistory.class.getCanonicalName());
+        transaction.replace(R.id.fragment_container, new TransactionHistoryFragment(), "" + TransactionHistoryFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + TransactionHistoryFragment.class.getCanonicalName());
         transaction.commit();
 
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
@@ -1053,15 +1051,15 @@ public class LandScreenActivity extends AppCompatActivity {
     public void transactCampaignsSummary() {
         toggleToolBar(false);
 
-        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + CampaignsSummary.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + CampaignsSummary.class.getCanonicalName());
-            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + CampaignsSummary.class.getCanonicalName())).commit();
-            fragmentManager.popBackStack("" + CampaignsSummary.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + CampaignsSummaryFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + CampaignsSummaryFragment.class.getCanonicalName());
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + CampaignsSummaryFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + CampaignsSummaryFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, new CampaignsSummary(), "" + CampaignsSummary.class.getCanonicalName());
-        transaction.addToBackStack("" + CampaignsSummary.class.getCanonicalName());
+        transaction.replace(R.id.fragment_container, new CampaignsSummaryFragment(), "" + CampaignsSummaryFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + CampaignsSummaryFragment.class.getCanonicalName());
         transaction.commit();
 
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
@@ -1152,15 +1150,15 @@ public class LandScreenActivity extends AppCompatActivity {
 
 
     public void getverifactionpin() {
-        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + GetVerifactionFifthverifyph.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + GetVerifactionFifthverifyph.class.getCanonicalName());
-            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + GetVerifactionFifthverifyph.class.getCanonicalName())).commit();
-            fragmentManager.popBackStack("" + GetVerifactionFifthverifyph.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + GetVerificationFifthPhoneFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + GetVerificationFifthPhoneFragment.class.getCanonicalName());
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + GetVerificationFifthPhoneFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + GetVerificationFifthPhoneFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, new GetVerifactionFifthverifyph(), "" + GetVerifactionFifthverifyph.class.getCanonicalName());
-        transaction.addToBackStack("" + GetVerifactionFifthverifyph.class.getCanonicalName());
+        transaction.replace(R.id.fragment_container, new GetVerificationFifthPhoneFragment(), "" + GetVerificationFifthPhoneFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + GetVerificationFifthPhoneFragment.class.getCanonicalName());
         transaction.commit();
 
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());
@@ -1176,15 +1174,15 @@ public class LandScreenActivity extends AppCompatActivity {
     public void transactAccountAnalytics() {
         toggleToolBar(false);
 
-        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + AccountAnalytics.class.getCanonicalName()) != null) {
-            Logger.printMessage("back_stack", "Removed *****" + AccountAnalytics.class.getCanonicalName());
-            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + AccountAnalytics.class.getCanonicalName())).commit();
-            fragmentManager.popBackStack("" + AccountAnalytics.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + AccountAnalyticsFragment.class.getCanonicalName()) != null) {
+            Logger.printMessage("back_stack", "Removed *****" + AccountAnalyticsFragment.class.getCanonicalName());
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + AccountAnalyticsFragment.class.getCanonicalName())).commit();
+            fragmentManager.popBackStack("" + AccountAnalyticsFragment.class.getCanonicalName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, new AccountAnalytics(), "" + AccountAnalytics.class.getCanonicalName());
-        transaction.addToBackStack("" + AccountAnalytics.class.getCanonicalName());
+        transaction.replace(R.id.fragment_container, new AccountAnalyticsFragment(), "" + AccountAnalyticsFragment.class.getCanonicalName());
+        transaction.addToBackStack("" + AccountAnalyticsFragment.class.getCanonicalName());
         transaction.commit();
 
         Logger.printMessage("Tag_frg", "" + getSupportFragmentManager().getBackStackEntryCount());

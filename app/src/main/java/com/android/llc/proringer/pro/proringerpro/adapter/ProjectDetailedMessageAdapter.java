@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.llc.proringer.pro.proringerpro.R;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.main_content.ProjectMessagingFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.maincontent.ProjectMessagingFragment;
 import com.android.llc.proringer.pro.proringerpro.pojo.SetGetProjectMessageDetails;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 import com.bumptech.glide.Glide;

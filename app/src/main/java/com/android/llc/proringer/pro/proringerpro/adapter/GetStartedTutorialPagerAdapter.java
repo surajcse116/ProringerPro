@@ -6,11 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
 
-import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.ScreenSlidePageFragment;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialFour;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialOne;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialThree;
-import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialTwo;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialFourFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialOneFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialThreeFragment;
+import com.android.llc.proringer.pro.proringerpro.fragmnets.getstarted.TutorialTwoFragment;
 
 import java.util.ArrayList;
 
@@ -70,37 +69,37 @@ public class GetStartedTutorialPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("url", stringArrayList.get(position));
-                TutorialOne tutorialOne=new TutorialOne();
-                tutorialOne.setArguments(bundle1);
-                return tutorialOne;
+                TutorialOneFragment tutorialOneFragment =new TutorialOneFragment();
+                tutorialOneFragment.setArguments(bundle1);
+                return tutorialOneFragment;
             case 1:
 
                 Bundle bundle2 = new Bundle();
                 bundle2.putString("url", stringArrayList.get(position));
-                TutorialTwo tutorialTwo=new TutorialTwo();
-                tutorialTwo.setArguments(bundle2);
-                return tutorialTwo;
+                TutorialTwoFragment tutorialTwoFragment =new TutorialTwoFragment();
+                tutorialTwoFragment.setArguments(bundle2);
+                return tutorialTwoFragment;
 
             case 2:
                 Bundle bundle3 = new Bundle();
                 bundle3.putString("url", stringArrayList.get(position));
-                TutorialThree tutorialThree=new TutorialThree();
-                tutorialThree.setArguments(bundle3);
-                return tutorialThree;
+                TutorialThreeFragment tutorialThreeFragment =new TutorialThreeFragment();
+                tutorialThreeFragment.setArguments(bundle3);
+                return tutorialThreeFragment;
 
             case 3:
                 Bundle bundle4 = new Bundle();
                 bundle4.putString("url", stringArrayList.get(position));
-                TutorialFour tutorialFour=new TutorialFour();
-                tutorialFour.setArguments(bundle4);
-                return tutorialFour;
+                TutorialFourFragment tutorialFourFragment =new TutorialFourFragment();
+                tutorialFourFragment.setArguments(bundle4);
+                return tutorialFourFragment;
 
             default:
                 Bundle bundle5 = new Bundle();
                 bundle5.putString("url", stringArrayList.get(position));
-                TutorialOne  tutorialOne1 =new TutorialOne();
-                tutorialOne1.setArguments(bundle5);
-                return tutorialOne1;
+                TutorialOneFragment tutorialOneFragment1 =new TutorialOneFragment();
+                tutorialOneFragment1.setArguments(bundle5);
+                return tutorialOneFragment1;
         }
     }
 
