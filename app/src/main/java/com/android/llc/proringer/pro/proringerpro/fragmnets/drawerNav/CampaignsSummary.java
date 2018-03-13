@@ -37,7 +37,7 @@ public class CampaignsSummary extends Fragment {
 
 
     ProRegularTextView tv_premium_monthly,tv_remaining_day,tv1,tv11,tv111,tv2,tv22,tv222,tv3,tv33,tv333;
-    ProBoldTextView et_member_money;
+    ProBoldEditText et_member_money;
     ImageView img_free_premium,img_premium_monthly,img_premium_annually;
     ArrayList<SetGetAPIPostData> arrayList = null;
     public MyLoader myLoader = null;
@@ -62,7 +62,7 @@ public class CampaignsSummary extends Fragment {
         tv3=(ProRegularTextView)view.findViewById(R.id.tv3);
         tv33=(ProRegularTextView)view.findViewById(R.id.tv33);
         tv333=(ProRegularTextView)view.findViewById(R.id.tv333);
-        et_member_money=(ProBoldTextView)view.findViewById(R.id.et_member_money);
+        et_member_money=(ProBoldEditText)view.findViewById(R.id.et_member_money);
         img_free_premium=(ImageView)view.findViewById(R.id.img_free_premium);
         img_premium_monthly=(ImageView)view.findViewById(R.id.img_premium_monthly);
         img_premium_annually=(ImageView)view.findViewById(R.id.img_premium_annually);
