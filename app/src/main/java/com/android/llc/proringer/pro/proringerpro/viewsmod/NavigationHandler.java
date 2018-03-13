@@ -481,7 +481,7 @@ public class NavigationHandler {
                 break;
 
             case SHARE_PROFILE:
-                listener.onClickItem(INVITE_FRIEND);
+                listener.onClickItem(SHARE_PROFILE);
                 RL_Share_Profile.setBackgroundColor(Color.parseColor("#656565"));
                 break;
 

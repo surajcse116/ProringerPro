@@ -53,6 +53,14 @@ import com.android.llc.proringer.pro.proringerpro.pojo.SetGetAPIPostData;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.BottomNav;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.NavigationHandler;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
+import com.bumptech.glide.Glide;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.plus.PlusShare;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,14 +76,17 @@ public class LandScreenActivity extends AppCompatActivity {
     private Toolbar back_toolbar = null;
     private ActionBarDrawerToggle toggle = null;
     private FragmentManager fragmentManager = null;
-      public ProRegularTextView tv_title;
+    public ProRegularTextView tv_title;
     public ImageView iv_pro_logo, search_local_pro_header, search_local_pro_header_backTool;
-   public   LinearLayout linear_buttombar;
+    public LinearLayout linear_buttombar;
     public ImageView dashboard_image, my_projects_image, messages_image, fav_pro_image;
     public ProRegularTextView dashboard_text, my_projects_text, messages_text, fav_pro_text;
     ArrayList<SetGetAPIPostData> arrayList = null;
     public MyLoader myLoader = null;
     public String local_project_search_zip = "";
+    JSONObject infoArrayJsonObject = null;
+    JSONObject infoJsonObject = null;
+    public String profileUrl="";
 
     NavigationHandler navigationHandler = null;
 
@@ -395,19 +406,20 @@ public class LandScreenActivity extends AppCompatActivity {
                     case NavigationHandler.SHARE_PROFILE:
                         toggleProMapSearch(false);
                         closeDrawer();
+                        shareprofile();
                         linear_buttombar.setVisibility(View.VISIBLE);
-                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
-                        dashboard_text.setTextColor(Color.parseColor("#505050"));
-
-                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
-//                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
-                        my_projects_text.setTextColor(Color.parseColor("#505050"));
-
-                        messages_image.setBackgroundResource(R.drawable.ic_message);
-                        messages_text.setTextColor(Color.parseColor("#505050"));
-
-                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
-                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
+//                        dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+//                        dashboard_text.setTextColor(Color.parseColor("#505050"));
+//
+//                        my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+////                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
+//                        my_projects_text.setTextColor(Color.parseColor("#505050"));
+//
+//                        messages_image.setBackgroundResource(R.drawable.ic_message);
+//                        messages_text.setTextColor(Color.parseColor("#505050"));
+//
+//                        fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+//                        fav_pro_text.setTextColor(Color.parseColor("#505050"));
                         break;
 
                     case NavigationHandler.REQUEST_REVIEW:
@@ -463,7 +475,7 @@ public class LandScreenActivity extends AppCompatActivity {
                     case NavigationHandler.Business_hours:
                         toggleProMapSearch(false);
                         closeDrawer();
-                        Intent i= new Intent(LandScreenActivity.this,BusinessHourActivity.class);
+                        Intent i = new Intent(LandScreenActivity.this, BusinessHourActivity.class);
                         startActivity(i);
                         break;
 
@@ -675,7 +687,6 @@ public class LandScreenActivity extends AppCompatActivity {
         });
 
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.nav_toggle_icon, null));
-
         redirectToDashBoard();
 
 
@@ -1059,8 +1070,88 @@ public class LandScreenActivity extends AppCompatActivity {
         }
     }
 
-    public void getverifactionpin()
-    {
+    public void shareprofile() {
+        LayoutInflater factory = LayoutInflater.from(LandScreenActivity.this);
+        View deleteDialogView = factory.inflate(R.layout.shairprofile, null);
+        final AlertDialog deleteDialog = new AlertDialog.Builder(LandScreenActivity.this).create();
+        deleteDialog.setView(deleteDialogView);
+        deleteDialog.show();
+
+        deleteDialogView.findViewById(R.id.imv_facebook).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteDialog.dismiss();
+                CallbackManager callbackManager = CallbackManager.Factory.create();
+                ShareDialog shareDialog = new ShareDialog(LandScreenActivity.this);
+                shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+                    @Override
+                    public void onSuccess(Sharer.Result result) {
+                        Logger.printMessage("result", "" + result.getPostId());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+
+                    }
+                });
+                ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                        .setQuote("ProringerPro")
+                        .setContentUrl(Uri.parse(profileUrl))
+                        .build();
+                shareDialog.show(linkContent);
+            }
+        });
+        deleteDialogView.findViewById(R.id.imv_twitter).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteDialog.dismiss();
+
+                Logger.printMessage("url", profileUrl);
+                String tweetUrl = "https://twitter.com/intent/tweet?text=ProringerPro:&url=" + profileUrl;
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(tweetUrl)));
+
+
+            }
+        });
+        deleteDialogView.findViewById(R.id.imv_googleplus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteDialog.dismiss();
+                Intent shareIntent = new PlusShare.Builder(LandScreenActivity.this)
+                        .setText("Proringer pro:" + profileUrl)
+                        .setType("text/IMAGE")
+                        .setContentUrl(Uri.parse(" ProringerPro"))
+                        .setContentDeepLinkId(String.valueOf(Uri.parse("ProringerPro")))
+                        .getIntent();
+                startActivityForResult(shareIntent, 0);
+            }
+        });
+        deleteDialogView.findViewById(R.id.imv_gmail).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteDialog.dismiss();
+                String[] TOSuppory = {"proringer.com"};
+                Uri uriSupport = Uri.parse("mailto:proringer.com")
+                        .buildUpon()
+                        .appendQueryParameter("subject", "link")
+                        .appendQueryParameter("body", "  \n \n \n ProRingerPro \n" + profileUrl)
+                        .build();
+                Intent emailSupportIntent = new Intent(Intent.ACTION_SENDTO, uriSupport);
+                emailSupportIntent.putExtra(Intent.EXTRA_EMAIL, TOSuppory);
+                startActivity(Intent.createChooser(emailSupportIntent, "Send mail..."));
+            }
+        });
+
+
+    }
+
+
+    public void getverifactionpin() {
         if (fragmentManager.getBackStackEntryCount() > 0 && fragmentManager.findFragmentByTag("" + GetVerifactionFifthverifyph.class.getCanonicalName()) != null) {
             Logger.printMessage("back_stack", "Removed *****" + GetVerifactionFifthverifyph.class.getCanonicalName());
             fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("" + GetVerifactionFifthverifyph.class.getCanonicalName())).commit();
@@ -1079,7 +1170,7 @@ public class LandScreenActivity extends AppCompatActivity {
     }
 
 
-  /**
+    /**
      * Fragment transaction for transact Analytics
      */
     public void transactAccountAnalytics() {
@@ -1113,6 +1204,7 @@ public class LandScreenActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * Toggle toolbar header for message details
@@ -1211,5 +1303,49 @@ public class LandScreenActivity extends AppCompatActivity {
         toggleProMapSearch(true);
         bottomNavInstance.highLightSelected(BottomNav.CREATE_PROJECT);
         transactProjectList();
+    }
+
+    public void loadProfileLink() {
+        arrayList = new ArrayList<SetGetAPIPostData>();
+        SetGetAPIPostData setGetAPIPostData = new SetGetAPIPostData();
+        setGetAPIPostData.setPARAMS("user_id");
+        setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
+        arrayList.add(setGetAPIPostData);
+         new CustomJSONParser().fireAPIForGetMethod(LandScreenActivity.this, ProConstant.app_pro_myprofile, arrayList, new CustomJSONParser.CustomJSONResponse() {
+             @Override
+             public void onSuccess(String result) {
+                 JSONObject jsonObject = null;
+                 try {
+                     jsonObject = new JSONObject(result);
+                     infoArrayJsonObject = jsonObject.getJSONObject("info_array");
+                     infoJsonObject = infoArrayJsonObject.getJSONObject("info");
+                     if (!infoJsonObject.getString("url").equals(""))
+                     {
+                         profileUrl=infoJsonObject.getString("url");
+                         Logger.printMessage("url",profileUrl);
+                     }
+
+                 } catch (JSONException e) {
+                     e.printStackTrace();
+                 }
+                 Logger.printMessage("result", String.valueOf(jsonObject));
+             }
+
+             @Override
+             public void onError(String error, String response) {
+
+             }
+
+             @Override
+             public void onError(String error) {
+
+             }
+
+             @Override
+             public void onStart() {
+
+             }
+         });
+
     }
 }

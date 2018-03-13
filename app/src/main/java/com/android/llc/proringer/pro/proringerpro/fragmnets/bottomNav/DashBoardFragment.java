@@ -1,6 +1,7 @@
 package com.android.llc.proringer.pro.proringerpro.fragmnets.bottomNav;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -8,6 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -51,6 +54,13 @@ import com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEdit
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView;
 import com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView;
 import com.bumptech.glide.Glide;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.plus.PlusShare;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -135,7 +145,7 @@ public class DashBoardFragment extends Fragment {
                 if (CASEAPPLY==1&&premium_address_status.equals("0")&&verfyphonesatus.equals("0"))
                 {
                     //openGetVerifiedDialog();
-                     Logger.printMessage("case1","case1");
+                    Logger.printMessage("case1","case1");
                     Intent intent=new Intent(getActivity(), GetVerificationActivity.class);
                     intent.putExtra("city",city);
                     intent.putExtra("state",state);
@@ -178,7 +188,7 @@ public class DashBoardFragment extends Fragment {
                 else if (CASEAPPLY==1 && verfyphonesatus.equals("0") && premium_address_status.equals("1"))
                 {
                     Logger.printMessage("case4","case4");
-                        ((LandScreenActivity) getActivity()).getverifactionpin();
+                    ((LandScreenActivity) getActivity()).getverifactionpin();
                 }
 
                 else if (CASEAPPLY==4)
@@ -212,6 +222,7 @@ public class DashBoardFragment extends Fragment {
             }
         });
 
+
         licence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -240,6 +251,8 @@ public class DashBoardFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+
         notifaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -330,7 +343,7 @@ public class DashBoardFragment extends Fragment {
         shareprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ((LandScreenActivity) getActivity()).  shareprofile();
             }
         });
         requestreviw.setOnClickListener(new View.OnClickListener() {
@@ -354,28 +367,28 @@ public class DashBoardFragment extends Fragment {
                 ((LandScreenActivity) getActivity()).fav_pro_text.setTextColor(Color.parseColor("#505050"));
             }
         });
-         invitefriend.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
+        invitefriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-                 ((LandScreenActivity) getActivity()). transactInviteFriend();
-                 ((LandScreenActivity) getActivity()).iv_pro_logo.setVisibility(View.GONE);
-                 ((LandScreenActivity) getActivity()).tv_title.setVisibility(View.VISIBLE);
-                 ((LandScreenActivity) getActivity()).tv_title.setText("INVITE FRIEND");
-                 ((LandScreenActivity) getActivity()).dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
-                 ((LandScreenActivity) getActivity()).dashboard_text.setTextColor(Color.parseColor("#505050"));
+                ((LandScreenActivity) getActivity()). transactInviteFriend();
+                ((LandScreenActivity) getActivity()).iv_pro_logo.setVisibility(View.GONE);
+                ((LandScreenActivity) getActivity()).tv_title.setVisibility(View.VISIBLE);
+                ((LandScreenActivity) getActivity()).tv_title.setText("INVITE FRIEND");
+                ((LandScreenActivity) getActivity()).dashboard_image.setBackgroundResource(R.drawable.ic_dashboard);
+                ((LandScreenActivity) getActivity()).dashboard_text.setTextColor(Color.parseColor("#505050"));
 
-                 ((LandScreenActivity) getActivity()).my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
+                ((LandScreenActivity) getActivity()).my_projects_image.setBackgroundResource(R.drawable.ic_my_project);
 //                my_projects_text.setTextColor(getColor(R.color.colorTextDark));
-                 ((LandScreenActivity) getActivity()).my_projects_text.setTextColor(Color.parseColor("#505050"));
+                ((LandScreenActivity) getActivity()).my_projects_text.setTextColor(Color.parseColor("#505050"));
 
-                 ((LandScreenActivity) getActivity()).messages_image.setBackgroundResource(R.drawable.ic_message);
-                 ((LandScreenActivity) getActivity()).messages_text.setTextColor(Color.parseColor("#505050"));
+                ((LandScreenActivity) getActivity()).messages_image.setBackgroundResource(R.drawable.ic_message);
+                ((LandScreenActivity) getActivity()).messages_text.setTextColor(Color.parseColor("#505050"));
 
-                 ((LandScreenActivity) getActivity()).fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
-                 ((LandScreenActivity) getActivity()).fav_pro_text.setTextColor(Color.parseColor("#505050"));
-             }
-         });
+                ((LandScreenActivity) getActivity()).fav_pro_image.setBackgroundResource(R.drawable.ic_fav_pro);
+                ((LandScreenActivity) getActivity()).fav_pro_text.setTextColor(Color.parseColor("#505050"));
+            }
+        });
         myprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -539,6 +552,9 @@ public class DashBoardFragment extends Fragment {
                         tv_address.setText(jo.getString("city")+","+jo.getString("state")+jo.getString("zipcode"));
                         rbar.setStepSize((float) 0.5);
                         rbar.setRating(Float.parseFloat(jo.getString("avg_rating")));
+
+                        ((LandScreenActivity)getActivity()).loadProfileLink();
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

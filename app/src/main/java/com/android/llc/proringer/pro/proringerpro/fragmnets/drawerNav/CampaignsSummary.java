@@ -34,8 +34,6 @@ import java.util.ArrayList;
  */
 
 public class CampaignsSummary extends Fragment {
-
-
     ProRegularTextView tv_premium_monthly,tv_remaining_day,tv1,tv11,tv111,tv2,tv22,tv222,tv3,tv33,tv333;
     ProBoldEditText et_member_money;
     ImageView img_free_premium,img_premium_monthly,img_premium_annually;
