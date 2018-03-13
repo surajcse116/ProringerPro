@@ -82,7 +82,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Logger.printMessage("PushResponse", "==" + Object.toString());
             sendNotification(Object.toString());
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -117,7 +116,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
     private void sendNotification(String messageBody) {
-
         try {
 
             Bitmap icon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_pro);

@@ -59,11 +59,13 @@ import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.plus.PlusShare;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class LandScreenActivity extends AppCompatActivity {
@@ -687,36 +689,35 @@ public class LandScreenActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.nav_toggle_icon, null));
         redirectToDashBoard();
 
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Logger.printMessage("Refresh_token", "-->" + refreshedToken);
 
-        //String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        //Logger.printMessage("Refresh_token", "-->" + refreshedToken);
 
+        HashMap<String, String> Params = new HashMap<>();
+        Params.put("user_id",  ProApplication.getInstance().getUserId());
+        Params.put("device_token", refreshedToken);
 
-//        HashMap<String, String> Params = new HashMap<>();
-//        Params.put("user_id",  ProApplication.getInstance().getUserId());
-//        Params.put("device_token", refreshedToken);
+        new CustomJSONParser().fireAPIForPostMethod(getApplication(), ProConstant.BASEURL + "users_device_update", Params, null, new CustomJSONParser.CustomJSONResponse() {
+            @Override
+            public void onSuccess(String result) {
 
-//        new CustomJSONParser().fireAPIForPostMethod(getApplication(), ProConstant.BASEURL + "users_device_update", Params, null, new CustomJSONParser.CustomJSONResponse() {
-//            @Override
-//            public void onSuccess(String result) {
-//
-//            }
-//
-//            @Override
-//            public void onError(String error, String response) {
-//
-//            }
-//
-//            @Override
-//            public void onError(String error) {
-//
-//            }
-//
-//            @Override
-//            public void onStart() {
-//
-//            }
-//        });
+            }
+
+            @Override
+            public void onError(String error, String response) {
+
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+        });
     }
 
     @Override
