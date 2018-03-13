@@ -315,7 +315,7 @@ public class IndividualMessageActivity extends AppCompatActivity {
         Params.put("attach_file","");
         Params.put("ios_mod","");
 
-        new CustomJSONParser().fireAPIForPostMethod(IndividualMessageActivity.this, ProConstant.send_message, Params, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForPostMethod(IndividualMessageActivity.this, ProConstant.app_pro_project_message_send, Params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
 
@@ -381,7 +381,7 @@ public class IndividualMessageActivity extends AppCompatActivity {
         filesImages.add(file);
 
         CustomJSONParser.ImageParam = "attach_file";
-        new CustomJSONParser().APIForWithPhotoPostMethod(IndividualMessageActivity.this, ProConstant.send_message, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().APIForWithPhotoPostMethod(IndividualMessageActivity.this, ProConstant.app_pro_project_message_send, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 Logger.printMessage("Respose",result);

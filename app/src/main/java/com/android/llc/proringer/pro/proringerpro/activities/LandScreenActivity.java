@@ -562,7 +562,7 @@ public class LandScreenActivity extends AppCompatActivity {
                                 setGetAPIPostData.setValues("1");
                                 arrayList.add(setGetAPIPostData);
 
-                                new CustomJSONParser().fireAPIForGetMethod(LandScreenActivity.this, ProConstant.Logout, arrayList, new CustomJSONParser.CustomJSONResponse() {
+                                new CustomJSONParser().fireAPIForGetMethod(LandScreenActivity.this, ProConstant.app_logout, arrayList, new CustomJSONParser.CustomJSONResponse() {
                                     @Override
                                     public void onSuccess(String result) {
                                         try {

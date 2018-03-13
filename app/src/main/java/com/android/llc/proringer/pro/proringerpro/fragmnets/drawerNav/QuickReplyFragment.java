@@ -78,7 +78,7 @@ public class QuickReplyFragment extends Fragment {
 
     public void loadPage() {
 
-        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.autoquickreply, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_pro_quickreply, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();
@@ -169,7 +169,7 @@ public class QuickReplyFragment extends Fragment {
 
                 Logger.printMessage("PARAMS", String.valueOf(Params));
 
-                new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.quicksave, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_quickreply_save, Params, null, new CustomJSONParser.CustomJSONResponse() {
                     @Override
                     public void onSuccess(String result) {
 

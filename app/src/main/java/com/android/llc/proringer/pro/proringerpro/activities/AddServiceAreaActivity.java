@@ -173,7 +173,7 @@ public class AddServiceAreaActivity extends AppCompatActivity {
 
     public void showData() {
 
-        new CustomJSONParser().fireAPIForGetMethod(AddServiceAreaActivity.this, ProConstant.serviceAreaOfUserAPI, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(AddServiceAreaActivity.this, ProConstant.app_pro_servicearea, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 Logger.printMessage("result", result);
@@ -251,7 +251,7 @@ public class AddServiceAreaActivity extends AppCompatActivity {
 
         Logger.printMessage("PARAMS", String.valueOf(Params));
 
-        new CustomJSONParser().fireAPIForPostMethod(AddServiceAreaActivity.this, ProConstant.serviceAreaSaveOfUserAPI, Params, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForPostMethod(AddServiceAreaActivity.this, ProConstant.app_pro_servicearea_save, Params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();

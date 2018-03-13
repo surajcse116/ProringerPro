@@ -158,7 +158,7 @@ public class UserInformationActivity extends AppCompatActivity{
 
                         Logger.printMessage("PARAMS", String.valueOf(Params));
 
-                        new CustomJSONParser().fireAPIForPostMethod( UserInformationActivity.this, ProConstant.updateuserinfo,Params,null, new CustomJSONParser.CustomJSONResponse() {
+                        new CustomJSONParser().fireAPIForPostMethod( UserInformationActivity.this, ProConstant.app_prouserinfo_save,Params,null, new CustomJSONParser.CustomJSONResponse() {
                             @Override
                             public void onSuccess(String result) {
                                 myload.dismissLoader();
@@ -203,7 +203,7 @@ public class UserInformationActivity extends AppCompatActivity{
     }
     public void showdata()
     {
-        new CustomJSONParser().fireAPIForGetMethod(UserInformationActivity.this, ProConstant.showuserinformation, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(UserInformationActivity.this, ProConstant.app_prouserinfo_list, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();

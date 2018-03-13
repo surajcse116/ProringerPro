@@ -479,7 +479,7 @@ public class DashBoardFragment extends Fragment {
         setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
         arrayList.add(setGetAPIPostData);
 
-        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.dashboard, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_pro_dashboard, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();

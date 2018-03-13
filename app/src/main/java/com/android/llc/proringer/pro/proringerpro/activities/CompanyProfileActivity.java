@@ -216,7 +216,7 @@ public class CompanyProfileActivity extends AppCompatActivity {
         setGetAPI.setPARAMS("user_id");
         setGetAPI.setValues(ProApplication.getInstance().getUserId());
         arrayList.add(setGetAPI);
-        new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, ProConstant.companyinformation, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, ProConstant.app_procompany_info, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 Logger.printMessage("result", result);
@@ -334,7 +334,7 @@ public class CompanyProfileActivity extends AppCompatActivity {
     }
 
     public void dropDownData() {
-        new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, ProConstant.companybusinessoptionapi, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(CompanyProfileActivity.this, ProConstant.app_probusiness_option, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 //Logger.printMessage("business",result);
@@ -530,7 +530,7 @@ public class CompanyProfileActivity extends AppCompatActivity {
 
                                                                     Logger.printMessage("PARAMS", String.valueOf(Params));
 
-                                                                    new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, ProConstant.copanyinfosave, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                                                    new CustomJSONParser().fireAPIForPostMethod(CompanyProfileActivity.this, ProConstant.app_procompany_info_save, Params, null, new CustomJSONParser.CustomJSONResponse() {
                                                                         @Override
                                                                         public void onSuccess(String result) {
                                                                             myLoader.dismissLoader();

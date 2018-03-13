@@ -368,7 +368,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
     }
 
     public void category() {
-        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_categorylist, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 // Logger.printMessage("responese",result);
@@ -510,7 +510,7 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                                 myload.showLoader();
 
 
-                                                new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.Signup, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                                new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_signup, Params, null, new CustomJSONParser.CustomJSONResponse() {
                                                     @Override
                                                     public void onSuccess(String result) {
                                                         myload.dismissLoader();
@@ -527,8 +527,6 @@ public class RegistrationTwo extends Fragment implements MyCustomAlertListener {
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
                                                         }
-
-
                                                     }
 
                                                     @Override

@@ -179,7 +179,7 @@ public class ProHelperClass {
                     try {
                         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(6000, TimeUnit.MILLISECONDS).retryOnConnectionFailure(true).build();
 
-                        String notificationAPI = ProConstant.notification + "?user_id=" + ProApplication.getInstance().getUserId();
+                        String notificationAPI = ProConstant.app_pro_notification + "?user_id=" + ProApplication.getInstance().getUserId();
                         Logger.printMessage("notificationAPI", notificationAPI);
 
                         Request request = new Request.Builder()
@@ -287,12 +287,12 @@ public class ProHelperClass {
                         Logger.printMessage("mobile_job_post", ":-" + params[9]);
                         Logger.printMessage("mobile_new_reviews", ":-" + params[10]);
                         Logger.printMessage("mobile_acc_achieve", ":-" + params[11]);
-                        Logger.printMessage("updateNotificationDetailsAPI", ProConstant.updateNotificationDetailsAPI);
+                        Logger.printMessage("updateNotificationDetailsAPI", ProConstant.app_pronotification_save);
 
 
                         Request request = new Request.Builder()
                                 .post(requestBody)
-                                .url(ProConstant.updateNotificationDetailsAPI)
+                                .url(ProConstant.app_pronotification_save)
                                 .build();
 
                         Response response = client.newCall(request).execute();

@@ -318,7 +318,7 @@ public class LicenceAddActivity extends AppCompatActivity {
 
                             CustomJSONParser.ImageParam = "image_info";
 
-                            new CustomJSONParser().APIForWithPhotoPostMethod(LicenceAddActivity.this, ProConstant.licenseadd, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
+                            new CustomJSONParser().APIForWithPhotoPostMethod(LicenceAddActivity.this, ProConstant.app_prolicense_add, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
                                 @Override
                                 public void onSuccess(String result) {
                                     Logger.printMessage("result", result);

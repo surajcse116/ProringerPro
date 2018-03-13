@@ -100,7 +100,7 @@ public class LicenceListActivity extends AppCompatActivity {
 
     public void showData() {
 
-        new CustomJSONParser().fireAPIForGetMethod(LicenceListActivity.this, ProConstant.liencelist, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(LicenceListActivity.this, ProConstant.app_prolicense_list, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 Logger.printMessage("result", result);

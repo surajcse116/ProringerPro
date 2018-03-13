@@ -278,7 +278,7 @@ public class AddServicesActivity extends AppCompatActivity {
     }
 
     public void category() {
-        new CustomJSONParser().fireAPIForGetMethod(AddServicesActivity.this, ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(AddServicesActivity.this, ProConstant.app_categorylist, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 // Logger.printMessage("responese",result);

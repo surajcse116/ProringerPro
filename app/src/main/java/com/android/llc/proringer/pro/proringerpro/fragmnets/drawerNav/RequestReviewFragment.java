@@ -126,7 +126,7 @@ public class RequestReviewFragment extends Fragment {
                                 }
                                 Logger.printMessage("parms", String.valueOf(Params));
 
-                                new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.replyreviw, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                                new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_request_review, Params, null, new CustomJSONParser.CustomJSONResponse() {
                                     @Override
                                     public void onSuccess(String result) {
                                         myload.dismissLoader();

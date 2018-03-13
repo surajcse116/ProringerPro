@@ -571,7 +571,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
         Params.put("user_id", ProApplication.getInstance().getUserId());
         Params.put("portfolio_id", port_id);
         Logger.printMessage("PARAMS", String.valueOf(Params));
-        new CustomJSONParser().fireAPIForPostMethod(PortfolioEditActivity.this, ProConstant.deleteportfolio, Params, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForPostMethod(PortfolioEditActivity.this, ProConstant.ap_protfolio_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();
@@ -627,7 +627,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
         Params.put("user_id", ProApplication.getInstance().getUserId());
         Params.put("image_id", image_id);
         Logger.printMessage("PARAMS", String.valueOf(Params));
-        new CustomJSONParser().fireAPIForPostMethod(PortfolioEditActivity.this, ProConstant.deleteportfolioImage, Params, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForPostMethod(PortfolioEditActivity.this, ProConstant.app_portfolio_image_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();
@@ -730,7 +730,7 @@ public class PortfolioEditActivity extends AppCompatActivity {
 
         CustomJSONParser.ImageParam = "gallery_image";
 
-        new CustomJSONParser().APIForWithPhotosMultiplePostMethod(PortfolioEditActivity.this, ProConstant.proportfolio_edit, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().APIForWithPhotosMultiplePostMethod(PortfolioEditActivity.this, ProConstant.app_proportfolio_edit, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 Logger.printMessage("result", result);

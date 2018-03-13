@@ -99,7 +99,7 @@ public class LogInActivity extends AppCompatActivity {
                     Params.put("device_token",   ProConstant.firebasedevice_token);
                   //  Logger.printMessage("device_token",ProApplication.getInstance().getdevicetoken());
                     Logger.printMessage("PARAMS", String.valueOf(Params));
-                    new CustomJSONParser().fireAPIForPostMethod(LogInActivity.this, ProConstant.Login, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                    new CustomJSONParser().fireAPIForPostMethod(LogInActivity.this, ProConstant.app_pro_login, Params, null, new CustomJSONParser.CustomJSONResponse() {
                         @Override
                         public void onSuccess(String result) {
 
@@ -118,7 +118,7 @@ public class LogInActivity extends AppCompatActivity {
                                 setGetAPIPostData.setValues(ProApplication.getInstance().getUserId());
                                 arrayList.add(setGetAPIPostData);
 
-                                new CustomJSONParser().fireAPIForGetMethod(LogInActivity.this, ProConstant.dashboard, arrayList, new CustomJSONParser.CustomJSONResponse() {
+                                new CustomJSONParser().fireAPIForGetMethod(LogInActivity.this, ProConstant.app_pro_dashboard, arrayList, new CustomJSONParser.CustomJSONResponse() {
                                     @Override
                                     public void onSuccess(String result) {
                                         //Logger.printMessage("business",result);

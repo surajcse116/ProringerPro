@@ -117,7 +117,7 @@ public class InviteAfriendFragment extends Fragment {
 
                             Logger.printMessage("params", String.valueOf(Params));
 
-                            new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.invitefriend, Params, null, new CustomJSONParser.CustomJSONResponse() {
+                            new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_invite_friend, Params, null, new CustomJSONParser.CustomJSONResponse() {
                                 @Override
                                 public void onSuccess(String result) {
                                     Logger.printMessage("result", result);

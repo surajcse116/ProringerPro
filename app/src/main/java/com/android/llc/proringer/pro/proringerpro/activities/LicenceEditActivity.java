@@ -582,7 +582,7 @@ public class LicenceEditActivity extends AppCompatActivity {
                         CustomJSONParser.ImageParam = "image_info";
 
 
-                        new CustomJSONParser().APIForWithPhotoPostMethod(LicenceEditActivity.this, ProConstant.licenseedit, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
+                        new CustomJSONParser().APIForWithPhotoPostMethod(LicenceEditActivity.this, ProConstant.app_prolicense_edit, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
                             @Override
                             public void onSuccess(String result) {
                                 Logger.printMessage("result", result);
@@ -633,7 +633,7 @@ public class LicenceEditActivity extends AppCompatActivity {
         HashMap<String, String> Params = new HashMap<>();
         Params.put("user_id", ProApplication.getInstance().getUserId());
         Params.put("license_id", licenseid);
-        new CustomJSONParser().fireAPIForPostMethod(LicenceEditActivity.this, ProConstant.deletelicense, Params, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForPostMethod(LicenceEditActivity.this, ProConstant.app_prolicense_delete, Params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myLoader.dismissLoader();

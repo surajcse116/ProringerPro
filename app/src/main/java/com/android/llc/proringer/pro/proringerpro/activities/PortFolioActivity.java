@@ -486,8 +486,6 @@ public class PortFolioActivity extends AppCompatActivity {
                 } else {
                     portFolioAddImageAdapter.notifyDataSetChanged();
                 }
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -530,7 +528,7 @@ public class PortFolioActivity extends AppCompatActivity {
 
 
     public void category() {
-        new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, ProConstant.catagory, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, ProConstant.app_categorylist, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 // Logger.printMessage("responese",result);
@@ -683,7 +681,7 @@ public class PortFolioActivity extends AppCompatActivity {
 
     public void showData() {
         showPortFolioArrayList.clear();
-        new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, ProConstant.portfoliolist, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(PortFolioActivity.this, ProConstant.app_pro_portfolio, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 Logger.printMessage("result", result);
@@ -829,7 +827,7 @@ public class PortFolioActivity extends AppCompatActivity {
 
         CustomJSONParser.ImageParam = "gallery_image";
 
-        new CustomJSONParser().APIForWithPhotosMultiplePostMethod(PortFolioActivity.this, ProConstant.proportfolio_add, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().APIForWithPhotosMultiplePostMethod(PortFolioActivity.this, ProConstant.app_proportfolio_add, arrayListPostParamsValues, filesImages, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 Logger.printMessage("result", result);

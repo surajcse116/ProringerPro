@@ -282,7 +282,7 @@ public class SocialMediaFragment extends Fragment {
         arrayList.add(setGetAPIPostData);
 
 
-        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.socialmedia, arrayList, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForGetMethod(getActivity(), ProConstant.app_pro_socialmedia, arrayList, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();
@@ -362,7 +362,7 @@ public class SocialMediaFragment extends Fragment {
         Params.put("instagramlink", et_instagram.getText().toString().trim());
         Params.put("skypelink", et_skype.getText().toString().trim());
         Params.put("paypallink", paypal);
-        new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.save, Params, null, new CustomJSONParser.CustomJSONResponse() {
+        new CustomJSONParser().fireAPIForPostMethod(getActivity(), ProConstant.app_pro_socialmedia_save, Params, null, new CustomJSONParser.CustomJSONResponse() {
             @Override
             public void onSuccess(String result) {
                 myload.dismissLoader();
