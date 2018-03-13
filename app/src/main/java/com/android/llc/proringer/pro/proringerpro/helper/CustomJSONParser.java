@@ -407,8 +407,6 @@ public class CustomJSONParser {
         }
     }
 
-
-
     public void APIForWithPhotoPostMethodMultipleKeyImageParams(final Context context, final String URL, final ArrayList<SetGetAPIPostData> apiPostDataArrayList,final ArrayList<String> stringArrayListPhotos, final ArrayList<File> Photos, final CustomJSONResponse customJSONResponse) {
         if (NetworkUtil.getInstance().isNetworkAvailable(context)) {
             final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/*");
@@ -516,9 +514,6 @@ public class CustomJSONParser {
             customJSONResponse.onError(context.getResources().getString(R.string.please_check_your_internet_connection));
         }
     }
-
-
-
 
     public interface CustomJSONResponse {
         void onSuccess(String result);
