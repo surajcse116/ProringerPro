@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_gravity="center_vertical"
+    android:orientation="vertical">
+
+
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProRegularTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="OTP"
+        android:textAllCaps="true"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/colorTextDark"
+        android:textSize="15sp" />
+
+    <com.android.llc.proringer.pro.proringerpro.viewsmod.edittext.ProLightEditText
+        android:id="@+id/confirm_otp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_selecter"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:textColor="@color/colorTextDark"
+        android:textSize="14sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+            android:id="@+id/prosemi_cancle"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="115dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Cancel"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="20dp" />
+
+        <com.android.llc.proringer.pro.proringerpro.viewsmod.textview.ProSemiBoldTextView
+            android:id="@+id/prosemi_ok"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@+id/prosemi_cancle"
+            android:layout_marginStart="14dp"
+            android:layout_toEndOf="@+id/prosemi_cancle"
+            android:gravity="center"
+            android:text="ok"
+            android:textColor="@color/colorAccent"
+            android:textSize="20dp" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
